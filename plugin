@@ -1,0 +1,173 @@
+Script started on Saturday 12 October 2013 03:08:20 PM IST
+nishant@Nishant-PC:~/rails/voucherApp$ irbrails c[4Pirb[Kscript/plugin install auto_complete
+bash: script/plugin: No such file or directory
+nishant@Nishant-PC:~/rails/voucherApp$ script/plugin install auto_complete
+bash: script/plugin: No such file or directory
+nishant@Nishant-PC:~/rails/voucherApp$ script/plugin install auto_complete[Kscript/plugin install auto_complete[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+bash: script/plugin: No such file or directory
+nishant@Nishant-PC:~/rails/voucherApp$ script/plugin install git://github.com/ra ils/auto_complete.git
+bash: script/plugin: No such file or directory
+nishant@Nishant-PC:~/rails/voucherApp$ script/plugin install git://github.com/raiils/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[6Pauto_complete
+[K[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cgit://github.com/raiils/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rail[1Ps/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rails[1P/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clugin install git://github.com/rails/[1Pauto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rails/a[1Puto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rails/au[1Pto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rails/aut[1Po_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cplugin install git://github.com/rails/auto[1P_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Crplugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Caplugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ciplugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clplugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csplugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C plugin install git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+/var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require': cannot load such file -- rails/commands/plugin (LoadError)
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `block in require'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:213:in `load_dependency'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require'
+	from /var/lib/gems/1.9.1/gems/railties-4.0.0/lib/rails/commands.rb:49:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+nishant@Nishant-PC:~/rails/voucherApp$ rails plugin install git://github.com/raills/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Chgit://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ctgit://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ctgit://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cpgit://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Csgit://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C:git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C/git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C/git://github.com/rails/auto_complete.git[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+
+/var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require': cannot load such file -- rails/commands/plugin (LoadError)
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `block in require'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:213:in `load_dependency'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require'
+	from /var/lib/gems/1.9.1/gems/railties-4.0.0/lib/rails/commands.rb:49:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+nishant@Nishant-PC:~/rails/voucherApp$ gem install rails3-jquery-autocomplete
+
+
+^Z
+[1]+  Stopped                 gem install rails3-jquery-autocomplete
+nishant@Nishant-PC:~/rails/voucherApp$ 
+nishant@Nishant-PC:~/rails/voucherApp$ script/plugin install git://github.com/rails/auto_complete.git[1P[1P[1P[1P[1P[1P[1P[1@r[1@a[1@i[1@l[1@s[1@ 
+/var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require': cannot load such file -- rails/commands/plugin (LoadError)
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `block in require'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:213:in `load_dependency'
+	from /var/lib/gems/1.9.1/gems/activesupport-4.0.0/lib/active_support/dependencies.rb:228:in `require'
+	from /var/lib/gems/1.9.1/gems/railties-4.0.0/lib/rails/commands.rb:49:in `<top (required)>'
+	from bin/rails:4:in `require'
+	from bin/rails:4:in `<main>'
+nishant@Nishant-PC:~/rails/voucherApp$ bundle install
+Fetching gem metadata from https://rubygems.org/.........
+Fetching gem metadata from https://rubygems.org/..
+Resolving dependencies...
+sudo: unable to resolve host Nishant-PC
+Enter your password to install the bundled RubyGems to your system: 
+Using rake (10.1.0) 
+sudo: unable to resolve host Nishant-PC
+Using i18n (0.6.5) 
+sudo: unable to resolve host Nishant-PC
+Using minitest (4.7.5) 
+sudo: unable to resolve host Nishant-PC
+Using multi_json (1.8.1) 
+sudo: unable to resolve host Nishant-PC
+Using atomic (1.1.14) 
+sudo: unable to resolve host Nishant-PC
+Using thread_safe (0.1.3) 
+sudo: unable to resolve host Nishant-PC
+Using tzinfo (0.3.38) 
+sudo: unable to resolve host Nishant-PC
+Using activesupport (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using builder (3.1.4) 
+sudo: unable to resolve host Nishant-PC
+Using erubis (2.7.0) 
+sudo: unable to resolve host Nishant-PC
+Using rack (1.5.2) 
+sudo: unable to resolve host Nishant-PC
+Using rack-test (0.6.2) 
+sudo: unable to resolve host Nishant-PC
+Using actionpack (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using mime-types (1.25) 
+sudo: unable to resolve host Nishant-PC
+Using polyglot (0.3.3) 
+sudo: unable to resolve host Nishant-PC
+Using treetop (1.4.15) 
+sudo: unable to resolve host Nishant-PC
+Using mail (2.5.4) 
+sudo: unable to resolve host Nishant-PC
+Using actionmailer (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activemodel (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activerecord-deprecated_finders (1.0.3) 
+sudo: unable to resolve host Nishant-PC
+Using arel (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activerecord (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using bcrypt-ruby (3.1.2) 
+Using bundler (1.3.5) 
+
+[33mGem::RemoteFetcher::FetchError: bad response Connection timed out 503 (https://rubygems.global.ssl.fastly.net/gems/coffee-script-source-1.6.3.gem)[0m
+[31mAn error occurred while installing coffee-script-source (1.6.3), and Bundler cannot continue.
+Make sure that `gem install coffee-script-source -v '1.6.3'` succeeds before bundling.[0m
+nishant@Nishant-PC:~/rails/voucherApp$ bundle install
+Fetching gem metadata from https://rubygems.org/.........
+Fetching gem metadata from https://rubygems.org/..
+Resolving dependencies...
+sudo: unable to resolve host Nishant-PC
+Using rake (10.1.0) 
+sudo: unable to resolve host Nishant-PC
+Using i18n (0.6.5) 
+sudo: unable to resolve host Nishant-PC
+Using minitest (4.7.5) 
+sudo: unable to resolve host Nishant-PC
+Using multi_json (1.8.1) 
+sudo: unable to resolve host Nishant-PC
+Using atomic (1.1.14) 
+sudo: unable to resolve host Nishant-PC
+Using thread_safe (0.1.3) 
+sudo: unable to resolve host Nishant-PC
+Using tzinfo (0.3.38) 
+sudo: unable to resolve host Nishant-PC
+Using activesupport (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using builder (3.1.4) 
+sudo: unable to resolve host Nishant-PC
+Using erubis (2.7.0) 
+sudo: unable to resolve host Nishant-PC
+Using rack (1.5.2) 
+sudo: unable to resolve host Nishant-PC
+Using rack-test (0.6.2) 
+sudo: unable to resolve host Nishant-PC
+Using actionpack (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using mime-types (1.25) 
+sudo: unable to resolve host Nishant-PC
+Using polyglot (0.3.3) 
+sudo: unable to resolve host Nishant-PC
+Using treetop (1.4.15) 
+sudo: unable to resolve host Nishant-PC
+Using mail (2.5.4) 
+sudo: unable to resolve host Nishant-PC
+Using actionmailer (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activemodel (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activerecord-deprecated_finders (1.0.3) 
+sudo: unable to resolve host Nishant-PC
+Using arel (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using activerecord (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using bcrypt-ruby (3.1.2) 
+Using bundler (1.3.5) 
+sudo: unable to resolve host Nishant-PC
+Using coffee-script-source (1.6.3) 
+sudo: unable to resolve host Nishant-PC
+Using execjs (2.0.2) 
+sudo: unable to resolve host Nishant-PC
+Using coffee-script (2.2.0) 
+sudo: unable to resolve host Nishant-PC
+Using thor (0.18.1) 
+sudo: unable to resolve host Nishant-PC
+Using railties (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using coffee-rails (4.0.0) 
+sudo: unable to resolve host Nishant-PC
+Using orm_adapter (0.4.0) 
+sudo: unable to resolve host Nishant-PC
+Using warden (1.2.3) 
+sudo: unable to resolve host Nishant-PC
+Using devise (3.1.1) 
+sudo: unable to resolve host Nishant-PC
+Using multipart-post (1.2.0) 
+sudo: unable to resolve host Nishant-PC
+Using faraday (0.8.8) 
+sudo: unable to resolve host Nishant-PC
+Using hashie (2.0.5) 

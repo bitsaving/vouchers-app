@@ -1,0 +1,43 @@
+.row-fluid {
+  float :right;
+  background: image-url('Vinsol.png');
+  background-size:250px 48px;
+  background-repeat:no-repeat;
+  height:1000px;
+  margin-top:-48px;
+  background-position: right top;
+  margin-right:-10px;
+ }
+#formContainer {
+ width:500px;
+ position:absolute;
+ top :-40px;
+  color:black;
+  float:right;
+  margin-right: 150px;
+  position:absolute;
+  top :70px;
+  
+
+}
+#flashContainer
+{
+  position:relative;
+  top:50px;
+  left :40px;
+
+  font-size:15px;
+  text-align:center;
+font-style: bold;
+ 
+}
+
+.login
+{
+
+font-size: 20px;
+position: absolute;
+top: 100px;
+left: 100px;
+
+}

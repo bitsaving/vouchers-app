@@ -1,0 +1,121 @@
+
+<div class = "voucher_form">
+<%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+ <% if @voucher.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@voucher.errors.count, "error") %> prohibited this line_item from being saved:</h2>
+
+      <ul>
+      <% @voucher.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>   
+<fieldset>
+<legend>Enter voucher Details</legend>
+<div class="control-group">
+    <%= f.label :date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :date, :class => 'date-field',:value => Date.today  %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :pay_type, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.select :pay_type, Voucher::PAYMENT_TYPES ,prompt: "Please select a mode of payment" ,:class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :bill_attachment, :class => 'control-label' %>
+    <div class="radiobutton">
+      <%= f.radio_button :bill_attachment, "yes" %>
+<%= f.label :yes,:class => '.radio-inline'%>
+    <%= f.radio_button :bill_attachment, "no" %>
+<%= f.label :no,:class=> 'radio-inline'%>
+    </div>
+  </div>
+  <%= f.fields_for :uploads do |builder| %>
+    <div class="control-group radioBox">
+      <%= builder.label :file,'upload bill', :class => 'control-label' %>
+      <div class="controls">  
+         <% if ! @voucher.new_record? %>
+         <% @voucher.uploads.each do |upload|  %> 
+          <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>
+
+        
+           
+   
+    
+       <%= builder.file_field :avatar %>
+       <%end%>
+         <% else %>
+           <%= builder.file_field :avatar %>
+        <% end %>
+      </div>
+    </div>
+    <%end%>
+
+  <div class="control-group">
+       <%= f.label :debit_from_id, "debit from",:class => 'control-label' %>
+    <div class="controls">
+   <%= text_field_tag :debit, params[:debit_from_id] , data: { autocomplete_source:"#{escape_javascript url_for(:action => 'index',:controller => 'accounts')}", hidden_field_id: 'voucher_debit_from_id',textbox_id:'debit'} , :class => 'text-field autocomplete'%>
+ 
+    </div>
+  </div>
+  
+    <div class="controls">
+     <%=  f.hidden_field :debit_from_id %>
+    </div>
+      <div class="control-group">
+       <%= f.label :credit_to_id, "credit to",:class => 'control-label' %>
+    <div class="controls">
+   <%= text_field_tag :credit, params[:credit_to_id] , data: { autocomplete_source:"#{escape_javascript url_for(:action => 'index',:controller => 'accounts')}", hidden_field_id: 'voucher_credit_to_id', textbox_id: 'credit'} , :class => 'text-field autocomplete'%>
+ 
+    </div>
+  </div>
+  
+    <div class="controls">
+     <%=  f.hidden_field :credit_to_id %>
+    </div>
+  <div class="control-group">
+    <%= f.label :from_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :from_date, :class => 'date-field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :to_date, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :to_date, :class => 'date-field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :amount, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :amount, :class => 'text_field' %>
+    </div>
+  </div>
+<!--   <div class="control-group">
+    <%= f.label :transfer_from_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :transfer_from_id, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :transfer_to_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :transfer_to_id, :class => 'text_field' %>
+    </div>
+  </div> -->
+
+
+  <div class="form-actions buttons">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                vouchers_path, :class => 'btn' %>
+  </div>
+</fieldset>
+
+<% end %>
+</div>
