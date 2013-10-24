@@ -4,7 +4,7 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     if auth_details.info['email'].split("@")[1] == "vinsol.com"
       user = User.from_omniauth(request.env["omniauth.auth"])
       if user.persisted?
-        flash.notice = "Signed in Through Vinsol!"
+        flash.alert = "Signed in Through Vinsol!"
         sign_in_and_redirect user
       else
         session["devise.user_attributes"] = user.attributes
@@ -13,7 +13,7 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       end
     else
       redirect_to new_user_session_path
-      flash.notice = "We're sorry, at this time we do not allow access to our app."
+      flash.notice = "Kindly login through vinsol account"
     end
   end
   

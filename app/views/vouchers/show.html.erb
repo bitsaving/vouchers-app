@@ -1,18 +1,92 @@
+<% if (flash[:notice]) %>
+  <div id="flashContainer">
+    <%= flash[:notice] %>
+    <% flash[:notice] = nil %>
+  </div>
+<% end %>
 <%- model_class = Voucher -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+<div class="content label">
+  <%if !@voucher.assigned_to_id.nil?%>
+    <p>Assigned to <%=@voucher.assigned_to.first_name%>
+    </p>
+  <%end%>
 </div>
 
+<div class="voucher_form">
+	<fieldset>
+		<legend>Here is your voucher</legend>
+    <div class="label">
+      <strong>Voucher Id:</strong>
+    </div>
+    <div class="content">
+      <%= @voucher.id %>
+    </div>
+    <div class="label">
+      <strong>Voucher created at </strong>
+    </div>
+    <div class="content">
+      <%= format_date( @voucher.date ) %> 
+    </div>
+    <div class="label">
+      <strong>Payment type:</strong>
+    </div>
+    <div class="content">
+      <%= @voucher.pay_type %>
+    </div>
+    <div class="label">
+      <strong>Reference number:</strong>
+    </div>
+    <div class="content">
+      <%= @voucher.reference %>
+    </div>
+    <div class="label">
+    	<strong>Bill attachment</strong>
+    </div>
+    <div class="content">
+      <% @voucher.uploads.each do |upload|  %> 
+        <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>      
+       <%end%>
+    </div>
+    <div class="label">
+      <strong>Debit from account:</strong>
+    </div>
+    <div class="content">
+      <%= @voucher.debit_from.name %>
+    </div>
+    <div class="label">
+      <strong>Credit to account:</strong>
+     </div>
+     <div class="content">
+      <%= @voucher.credit_to.name %>
+    </div>
+    <div class="label">
+      <strong>Amount:</strong>
+    </div>
+    <div class="content">
+      <%= number_to_currency(@voucher.amount,:unit => "Rs.") %>
+    </div>
+    <div class="label">
+      <strong>From date:</strong>
+    </div>
+    <div class="content">
+     <%= format_date( @voucher.from_date ) %> 
+    </div>
+    <div class="label">
+      <strong>To date:</strong>
+    </div>
+    <div class="content">
+     <%= format_date( @voucher.to_date ) %> 
+    </div>
+    <p></p>
+  </fieldset>
+</div>
+<div class="label">
+<% if @voucher.current_state < :pending %>
+  <%= link_to "edit your voucher" ,edit_voucher_path(@voucher)%> 
+<%end%>
+</div>
+<%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
+<%=  render 'assign' %>
 
-<!-- <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              vouchers_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_voucher_path(@voucher), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              voucher_path(@voucher),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
-</div> -->
-<%=link_to @voucher.uploads[0].avatar.url%>

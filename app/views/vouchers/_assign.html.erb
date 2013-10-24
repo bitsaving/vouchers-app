@@ -1,0 +1,15 @@
+<%= form_tag change_status_voucher_path(:id => @voucher) do %>
+  <% if (@voucher.workflow_state != 'Accepted' && @voucher.assigned_to_id.nil?)  %>
+    <div class ="assignment">
+      <div class="control-group">
+        <%= label_tag :Assign,"Assign for approval to" ,:class => 'control-label' %>
+        <div class="controls">
+          <%= select_tag 'voucher[assigned_to_id]', options_for_select(user_options ), prompt: "Select the person" %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= submit_tag 'send for approval',:class=>'btn',data: {confirm: "Are you sure you want to send it for approval", disable_with: "Please wait..." }%>
+      </div>
+    </div>
+  <%end%>
+<% end %>

@@ -1,16 +1,19 @@
 VoucherApp::Application.routes.draw do
+  resources :comments
+
   resources :uploads
   resources :accounts
-  resources :vouchers
-  resources :users
   root :to => 'users#show'
-
-
+  get 'users', to: 'users#index' , :as => :user
+  get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
+  resources :vouchers do
+    post 'change_status' ,on: :member
+  end 
   devise_for :user, controllers: {
     omniauth_callbacks: "omni_auth/omniauth_callbacks", 
-    #registrations: "controller_devise/registrations",
-  sessions: "omni_auth/sessions"
+    sessions: "omni_auth/sessions"
   }
+ get '*unmatched_route', :to => 'application#render_404'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

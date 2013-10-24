@@ -1,0 +1,18 @@
+ <%= form_tag comments_path(voucher_id: @voucher.id) do %>
+  <%if current_user.current_state < :being_reviewed %>
+    <div class="add_comments">
+      <div class="control-group">
+        <div class="controls">
+          <%= text_area_tag :description, params[:description],:cols => 80, :rows => 5 ,placeholder: 'Enter your comment..'%>
+        </div>
+      </div>
+      <div class="actions">
+        <%= submit_tag "add comment" ,:class => 'btn',data: { disable_with: "Please wait..." }%>
+      </div>
+      <div class="actions">
+        <%= submit_tag "Accepted" ,:class => 'btn',data: { disable_with: "Please wait..." }%>
+        <%= submit_tag "Rejected" ,:class => 'btn',data: { disable_with: "Please wait..." }%>
+      </div>
+    <%end%>
+  <% end %>
+</div>

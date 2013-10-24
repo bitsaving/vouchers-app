@@ -27,22 +27,45 @@ ul.ui-autocomplete {
     }
   }
 } 
+.assignment{
+position:relative;
+bottom:100px;
+left:990px;
+}
+.accounts{
+
+position:absolute;
+top:90px;
+right:10px;}
+.heading{
+float:right !important; 
+width:auto;
+font-size:30px;
+font-style:italic;
+padding-right:20px;
+font-weight:bold;
+}
 .voucher_form {
+ margin: 0 auto;
+ width:600px;
 fieldset {
-background: #efe;
+background: #e6e6fa;
 legend {
 color: #dfd;
-background: #141;
+background: #0000cc;
 font-family: sans-serif;
 }
 }
+
 form {
+
 label {
-width: 5em;
+width: 3em;
+
 float: left;
 text-align: right;
 padding-top: 0.2em;
-margin-right: 0.1em;
+
 display: block;
 }
 select, textarea, input {
@@ -58,7 +81,20 @@ display: none
 }
 .buttons{
 color: #dfd;
-background: #141;
+background: #0000cc;
 font-family: sans-serif;
 padding: 0.2em 1em;
+}
+.remove_bill {
+position:relative;
+left :425px;
+width : 100px;
+}
+.bill_attachment{
+position:relative;
+left:-70px;
+margin-left:30px;
+}
+.addFields {
+position:relative;
 }

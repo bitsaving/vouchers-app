@@ -11,16 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131015125951) do
+ActiveRecord::Schema.define(version: 20131024062149) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "active",     default: true
   end
 
+  create_table "comments", force: true do |t|
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "voucher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["voucher_id"], name: "index_comments_on_voucher_id", using: :btree
+
   create_table "uploads", force: true do |t|
-    t.integer  "vouchers_id"
+    t.integer  "voucher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar_file_name"
@@ -30,23 +42,20 @@ ActiveRecord::Schema.define(version: 20131015125951) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "",       null: false
-    t.string   "encrypted_password",     default: "",       null: false
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,        null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "user_type"
-    t.integer  "worth",                  default: 1
     t.string   "first_name"
     t.string   "last_name"
-    t.string   "type",                   default: "normal"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -55,21 +64,19 @@ ActiveRecord::Schema.define(version: 20131015125951) do
   create_table "vouchers", force: true do |t|
     t.date     "date"
     t.string   "pay_type"
-    t.boolean  "bill_attachment"
     t.integer  "debit_from_id"
     t.integer  "credit_to_id"
     t.date     "from_date"
     t.date     "to_date"
-    t.decimal  "amount",              precision: 8, scale: 2
+    t.decimal  "amount",           precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
     t.integer  "user_id"
+    t.string   "reference"
+    t.integer  "assigned_to_id"
+    t.string   "workflow_state"
   end
 
   add_index "vouchers", ["credit_to_id"], name: "index_vouchers_on_credit_to_id", using: :btree

@@ -1,0 +1,40 @@
+<% if (flash[:notice]) %>
+  <div id="flashContainer">
+    <%= flash[:notice] %>
+    <% flash[:notice] = nil %>
+  </div>
+<% end %>
+<%= form_for @account, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+  <% if @account.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>
+      <ul>
+      <% @account.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+
+      </ul>
+    </div>
+  <% end %>   
+  <div class ="control-group accounts">
+    <%=label_tag :accounts,"Available accounts are" ,:class=>'control-label'%>
+  <div class="controls">
+    <%= select_tag 'account[name]', options_for_select(account_options ), prompt: "Available" %>
+    </div>
+  </div>
+  <div class ="voucher_form">
+    <fieldset>
+      <legend>Enter Account details</legend>
+      <div class="control-group">
+        <%= f.label :name, :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :name, :class => 'text-field' %>
+        </div>
+      </div>
+      <div class="form-actions buttons">
+        <%= f.submit nil, :class => 'btn',data: { confirm: "are you sure you want to create an account" } ,:remote=>true%>
+        <%= link_to "back", new_voucher_path ,:class => 'btn '%>
+      </div>
+    <% end %>
+  </fieldset>
+</div>

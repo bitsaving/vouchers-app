@@ -12,6 +12,7 @@ gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootst
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
+gem 'date_validator'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
@@ -36,7 +37,7 @@ group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
 end
-
+gem 'kaminari'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -49,3 +50,4 @@ gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+gem "workflow", "1.0.0"

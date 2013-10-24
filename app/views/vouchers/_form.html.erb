@@ -1,121 +1,100 @@
-
-<div class = "voucher_form">
+<% if (flash[:notice]) %>
+  <div id="flashContainer">
+    <%= flash[:notice] %>
+    <% flash[:notice] = nil %>
+  </div>
+<% end %>
 <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
- <% if @voucher.errors.any? %>
+  <% if @voucher.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@voucher.errors.count, "error") %> prohibited this line_item from being saved:</h2>
+      <h2><%= pluralize(@voucher.errors.count, "error") %> prohibited this voucher from being saved:</h2>
 
       <ul>
       <% @voucher.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
+
       </ul>
     </div>
   <% end %>   
-<fieldset>
-<legend>Enter voucher Details</legend>
-<div class="control-group">
-    <%= f.label :date, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :date, :class => 'date-field',:value => Date.today  %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :pay_type, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.select :pay_type, Voucher::PAYMENT_TYPES ,prompt: "Please select a mode of payment" ,:class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :bill_attachment, :class => 'control-label' %>
-    <div class="radiobutton">
-      <%= f.radio_button :bill_attachment, "yes" %>
-<%= f.label :yes,:class => '.radio-inline'%>
-    <%= f.radio_button :bill_attachment, "no" %>
-<%= f.label :no,:class=> 'radio-inline'%>
-    </div>
-  </div>
-  <%= f.fields_for :uploads do |builder| %>
-    <div class="control-group radioBox">
-      <%= builder.label :file,'upload bill', :class => 'control-label' %>
-      <div class="controls">  
-         <% if ! @voucher.new_record? %>
-         <% @voucher.uploads.each do |upload|  %> 
-          <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>
-
-        
-           
-   
-    
-       <%= builder.file_field :avatar %>
-       <%end%>
-         <% else %>
-           <%= builder.file_field :avatar %>
-        <% end %>
+<div class = "voucher_form">
+  <fieldset>
+    <legend>Enter Voucher Details</legend>
+    <div class="control-group">
+      <%= f.label :date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :date, :class => 'date-field',:value => Date.today  %>
       </div>
     </div>
-    <%end%>
-
-  <div class="control-group">
-       <%= f.label :debit_from_id, "debit from",:class => 'control-label' %>
-    <div class="controls">
-   <%= text_field_tag :debit, params[:debit_from_id] , data: { autocomplete_source:"#{escape_javascript url_for(:action => 'index',:controller => 'accounts')}", hidden_field_id: 'voucher_debit_from_id',textbox_id:'debit'} , :class => 'text-field autocomplete'%>
- 
+    <div class="control-group">
+      <%= f.label :pay_type, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.select :pay_type, Voucher::PAYMENT_TYPES ,prompt: "Select payment mode" ,:class => 'text_field' %>
+      </div>
     </div>
-  </div>
-  
-    <div class="controls">
-     <%=  f.hidden_field :debit_from_id %>
+    <div class ="control-group select hidden">
+       <%= f.label :reference, "Cheque/Credit/Bank Reference No", :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :reference, :class => 'text-field'%>
+      </div>
     </div>
-      <div class="control-group">
-       <%= f.label :credit_to_id, "credit to",:class => 'control-label' %>
-    <div class="controls">
-   <%= text_field_tag :credit, params[:credit_to_id] , data: { autocomplete_source:"#{escape_javascript url_for(:action => 'index',:controller => 'accounts')}", hidden_field_id: 'voucher_credit_to_id', textbox_id: 'credit'} , :class => 'text-field autocomplete'%>
- 
+    <div class="control-group radioBox addFields">
+      <%= f.fields_for :uploads do |builder| %>
+        <%=render 'upload_fields' ,:f=>builder %> 
+      <% end %>
+      <div class =" radioBox addFields ">
+        <%= link_to_add_fields "Add more...click here", f, :uploads %>
+      </div>
+    <div class="control-group">
+      <%= f.label :debit_from_id, "debit from",:class => 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :debit,params[:debit],  data: { hidden_field_id: 'voucher_debit_from_id',  textbox_id:'debit'} , :class => 'text-field autocomplete',:value =>get_entered_data('debit')%>
+      </div>
     </div>
-  </div>
-  
     <div class="controls">
-     <%=  f.hidden_field :credit_to_id %>
+      <%=  f.hidden_field :debit_from_id %>
     </div>
-  <div class="control-group">
-    <%= f.label :from_date, :class => 'control-label' %>
+    <div class="control-group">
+      <%= f.label :credit_to_id, "credit to",:class => 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :credit, params[:credit_to_id] , data: {hidden_field_id: 'voucher_credit_to_id', textbox_id: 'credit'} , :class => 'text-field autocomplete',:value=>get_entered_data('credit')%>
+      </div>
+    </div>
     <div class="controls">
-      <%= f.text_field :from_date, :class => 'date-field' %>
+      <%=  f.hidden_field :credit_to_id %>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :to_date, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :to_date, :class => 'date-field' %>
+    <div class="control-group">
+      <%= f.label :from_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :from_date, :class => 'date-field' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :amount, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :amount, :class => 'text_field' %>
+    <div class="control-group">
+      <%= f.label :to_date, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :to_date, :class => 'date-field' %>
+      </div>
     </div>
-  </div>
-<!--   <div class="control-group">
-    <%= f.label :transfer_from_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :transfer_from_id, :class => 'text_field' %>
+    <div class="control-group">
+      <%= f.label :amount, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :amount, :class => 'text_field' %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :transfer_to_id, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :transfer_to_id, :class => 'text_field' %>
+    <div class="control-group">
+      <%= f.fields_for :comments do |builder| %>
+        <%= builder.label :comments ,"comments",:class=>'control-label' %>
+        <div class="controls">
+          <%= builder.text_area :description,:cols => 80, :rows => 5 ,placeholder: 'Enter your comment..'%>
+        </div>
+        <div class="controls">
+          <%= builder.hidden_field :user_id%>
+        </div>
+      <% end %>
+    </div>   
+    <div class="form-actions buttons">
+      <%= f.submit nil, :class => 'btn',data: { confirm: "are you sure you want to submit the voucher" }%>
     </div>
-  </div> -->
-
-
-  <div class="form-actions buttons">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                vouchers_path, :class => 'btn' %>
-  </div>
-</fieldset>
-
-<% end %>
+    </fieldset>
+  <% end %>
 </div>

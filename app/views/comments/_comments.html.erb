@@ -1,0 +1,14 @@
+<div class ="comments">
+  <% for comment in voucher.comments %>
+    <div class = "commentator">
+      <%= simple_format(comment.description) %>
+      <div class ="commentator_name">
+  	    <%= "comment added by #{current_user.first_name}" %>
+      </div>
+    </div>
+  <% end %>
+  <% if voucher.current_state > :pending%>
+    <%= render :partial => 'comments/form' %>
+  <%end%>
+</div>
+

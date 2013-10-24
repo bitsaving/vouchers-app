@@ -1,6 +1,9 @@
 <%- model_class = Voucher -%>
 <div class="page-header">
-  <!-- <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1> -->
 </div>
- 
+ <div class="accounts">
+ 	<div class="btn">
+ 		<%= link_to "manage accounts" , new_account_path%>
+ 	</div>
+ </div>
 <%= render :partial => 'form' %>

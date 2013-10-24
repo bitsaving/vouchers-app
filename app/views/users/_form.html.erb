@@ -6,30 +6,6 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :encrypted_password, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :encrypted_password, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :reset_password_token, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :reset_password_token, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :reset_password_sent_at, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :reset_password_sent_at, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :remember_created_at, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :remember_created_at, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
     <%= f.label :current_sign_in_at, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :current_sign_in_at, :class => 'text_field' %>
@@ -53,18 +29,8 @@
       <%= f.text_field :last_sign_in_ip, :class => 'text_field' %>
     </div>
   </div>
-  <div class="control-group">
-    <%= f.label :user_type, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :user_type, :class => 'text_field' %>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :worth, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :worth, :class => 'text_field' %>
-    </div>
-  </div>
+
+  
   <div class="control-group">
     <%= f.label :first_name, :class => 'control-label' %>
     <div class="controls">
@@ -78,9 +44,4 @@
     </div>
   </div>
 
-  <div class="form-actions">
-    <%= f.submit nil, :class => 'btn btn-primary' %>
-    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-                users_path, :class => 'btn' %>
-  </div>
 <% end %>

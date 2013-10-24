@@ -16,12 +16,12 @@
 #columns {
   position:absolute;
   top:100px;
-  background: #141;
+  background: #6b8fb2;
   #side {
     float: left;
     padding: 1em 2em;
-    width: 13em;
-    background: #141;
+    width: 11em;
+    background: #6b8fb2;
 
 /* START_HIGHLIGHT */
   
@@ -36,8 +36,8 @@
         list-style: none;
 
         a {
-          color: #bfb;
-          font-size: medium;
+          color: #0000cc;
+          font-size:16px;;
           font-style:italic;
           
         }
@@ -45,6 +45,10 @@
     }
   }
 }
-.row-fluid {
-background-color: #ffcc99;
+#pending li{
+list-style:none;
+width:150px;
+background-color:#f5f5f5;
+text-align:center;
+border:solid 1px black;
 }
