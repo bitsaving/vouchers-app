@@ -60,11 +60,11 @@ class VouchersController < ApplicationController
     end
   end
   def pending_vouchers
-    @vouchers = Voucher.where(workflow_state: 'pending').all
- 
+    @vouchers = Voucher.where(workflow_state: 'pending').where(user_id: current_user.id).all
     render :json => @vouchers
-
-end
+  end
+  def waiting_for_approval
+    @vouchers = Voucher.where(workflow_state: )
 # end
 #  def accepted_vouchers
 #     @vouchers = Voucher.find_by_status(current_user.worth + 2).page(params[:page]).per(15)
@@ -87,21 +87,13 @@ end
       format.json { head :no_content }
     end
   end
-     def change_status
-            @voucher = Voucher.find(params[:id])
-
-      #       @voucher = Voucher.find(params[:id])
-      # Rails.logger.debug "#{@voucher.workflow_state}"
-      Rails.logger.debug params[:voucher][:assigned_to_id]
-
-
-      @voucher.send_for_approval!
-      @voucher.assigned_to_id = params[:voucher][:assigned_to_id]
-      @voucher.save!
-         Rails.logger.debug  @voucher.assigned_to_id
-      Rails.logger.debug "%%%%%%%%%%%%%%"
-      redirect_to new_user_session_path
-    end
+  def change_status
+    @voucher = Voucher.find(params[:id])
+    @voucher.send_for_approval!
+    @voucher.assigned_to_id = params[:voucher][:assigned_to_id]
+    @voucher.save!
+    redirect_to new_user_session_path
+  end
   protected
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
