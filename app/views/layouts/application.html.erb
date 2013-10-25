@@ -79,6 +79,11 @@
     </div>
     <div class="container-fluid">    
       <div class="row-fluid">
+        <% if getAssignedUser %>
+        <%=  'you have'%> 
+        <%= getAssignedUser%> <%="vouchers pending review." %>
+        <%=link_to "Click here",waiting_for_approval_vouchers_path%>
+        <%end%>
         <%= yield %>
       </div><!--/row-->
     </div> <!-- /container -->

@@ -18,5 +18,7 @@ module ApplicationHelper
    def format_date(date)
     date ? date.strftime('%a %b %d') : nil
   end
-  
+  def getAssignedUser
+    Voucher.find(:all,:conditions=> "assigned_to_id = #{current_user.id} and workflow_state != 'accepted'").count
+  end
 end
