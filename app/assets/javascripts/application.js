@@ -31,7 +31,7 @@ function dateFieldHandler(){
 function voucherStatusHandler(){
   $.ajax({
     type: "get",
-    url: "../pending",
+    url: "vouchers/pending_vouchers",
     dataType:'json',
     success: function(response){
       var i = 0;

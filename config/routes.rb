@@ -5,8 +5,10 @@ VoucherApp::Application.routes.draw do
   resources :accounts
   root :to => 'users#show'
   get 'users', to: 'users#index' , :as => :user
-  get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
+  # get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
   resources :vouchers do
+    get 'pending_vouchers',on: :collection
+    get 'waiting_for_approval', on: :collection
     post 'change_status' ,on: :member
   end 
   devise_for :user, controllers: {

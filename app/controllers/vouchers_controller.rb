@@ -64,13 +64,15 @@ class VouchersController < ApplicationController
     render :json => @vouchers
   end
   def waiting_for_approval
-    @vouchers = Voucher.where(workflow_state: )
+    @vouchers = Voucher.where.not(workflow_state: 'accepted').where(assigned_to_id: current_user.id).page(params[:page])
+    respond_to do |format|
+      format.html { render action: 'index' }
+   end
+  end
 # end
 #  def accepted_vouchers
 #     @vouchers = Voucher.find_by_status(current_user.worth + 2).page(params[:page]).per(15)
-#     respond_to do |format|
-#       format.html { render action: 'index' }
-#   end
+#    
 # end
 #  def rejected_vouchers
 #     @vouchers = Voucher.find_by_status(current_user.worth)
