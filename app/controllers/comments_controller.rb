@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   before_action :set_user ,only: [:create]
   def create
      @comment = Comment.new(comment_params)
+     #FIXME_AB: What would happen if comment is not saved
      if(@comment.save)
       respond_to do |format|
         format.html { redirect_to :back }
@@ -11,6 +12,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    #FIXME_AB: @comment.destroy would always return true, how would you ensure that it is destroyed.
     if(@comment.destroy)
       respond_to do |format|
         format.html { redirect_to :back }
@@ -28,6 +30,7 @@ class CommentsController < ApplicationController
       params.permit(:description,:accepted,:voucher_id,:user_id)
     end
   
+    #FIXME_AB: It is not the right way to set user
     def set_user
       params[:user_id] = current_user.id
     end

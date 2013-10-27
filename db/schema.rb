@@ -64,24 +64,25 @@ ActiveRecord::Schema.define(version: 20131024062149) do
   create_table "vouchers", force: true do |t|
     t.date     "date"
     t.string   "pay_type"
+    t.string   "reference"
     t.integer  "debit_from_id"
     t.integer  "credit_to_id"
+    t.integer  "user_id"
     t.date     "from_date"
     t.date     "to_date"
     t.decimal  "amount",           precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
+    t.integer  "assigned_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "reference"
-    t.integer  "assigned_to_id"
-    t.string   "workflow_state"
   end
 
+  add_index "vouchers", ["assigned_to_id"], name: "index_vouchers_on_assigned_to_id", using: :btree
   add_index "vouchers", ["credit_to_id"], name: "index_vouchers_on_credit_to_id", using: :btree
   add_index "vouchers", ["debit_from_id"], name: "index_vouchers_on_debit_from_id", using: :btree
   add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
   add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
+  add_index "vouchers", ["user_id"], name: "index_vouchers_on_user_id", using: :btree
 
 end

@@ -11,6 +11,7 @@ module CurrentUser
   private
   def set_user
     @user = current_user
+    #FIXME_AB: I would prefer not to catch this exception instead we should avoid having such situations
   rescue ActiveRecord::RecordNotFound
 redirect_to sessions_new_path
   end
