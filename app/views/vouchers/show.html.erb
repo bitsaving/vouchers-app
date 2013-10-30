@@ -1,92 +1,81 @@
-<% if (flash[:notice]) %>
-  <div id="flashContainer">
-    <%= flash[:notice] %>
-    <% flash[:notice] = nil %>
-  </div>
-<% end %>
-<%- model_class = Voucher -%>
-<div class="page-header">
-</div>
-<div class="content label">
-  <%if !@voucher.assigned_to_id.nil?%>
-    <p>Assigned to <%=@voucher.assigned_to.first_name%>
-    </p>
-  <%end%>
-</div>
 
-<div class="voucher_form">
-	<fieldset>
-		<legend>Here is your voucher</legend>
-    <div class="label">
-      <strong>Voucher Id:</strong>
-    </div>
-    <div class="content">
+<div class ="voucher_display">
+  <div class="page-header">
+  </div>
+  <div class ="content">
+    <div class = "voucherId"> 
       <%= @voucher.id %>
     </div>
-    <div class="label">
-      <strong>Voucher created at </strong>
-    </div>
-    <div class="content">
-      <%= format_date( @voucher.date ) %> 
-    </div>
-    <div class="label">
-      <strong>Payment type:</strong>
-    </div>
-    <div class="content">
-      <%= @voucher.pay_type %>
-    </div>
-    <div class="label">
-      <strong>Reference number:</strong>
-    </div>
-    <div class="content">
-      <%= @voucher.reference %>
-    </div>
-    <div class="label">
-    	<strong>Bill attachment</strong>
-    </div>
-    <div class="content">
-      <% @voucher.uploads.each do |upload|  %> 
-        <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>      
-       <%end%>
-    </div>
-    <div class="label">
-      <strong>Debit from account:</strong>
-    </div>
-    <div class="content">
+  </div>
+  <div class = "status">
+    <%= @voucher.workflow_state%>
+    <% if @voucher.assignee_id && @voucher.assignee_id != current_user.id%>
+      <%= "(" %>
+      <%= @voucher.assigned_to.first_name %>
+      <%= ")"%>
+    <%end%>
+  </div>
+  <div class ="date">
+    <%= format_date( @voucher.date ) %> 
+  </div>
+  <div class = "separator">
+  </div>
+  <div class ="column_separator">
+    <div class = "debitCredit">
+      <div class="labels">Debit
+      </div>
       <%= @voucher.debit_from.name %>
     </div>
-    <div class="label">
-      <strong>Credit to account:</strong>
-     </div>
-     <div class="content">
+    <div class="debitCredit">
+      <div class ="labels">Credit</div> 
       <%= @voucher.credit_to.name %>
     </div>
-    <div class="label">
-      <strong>Amount:</strong>
+    <div class="date_period" >
+      <div class ="date_field">From :</div>
+      <%= format_date( @voucher.from_date ) %> 
+      <div class="date_field" >To :</div>
+      <%= format_date( @voucher.to_date ) %> 
     </div>
-    <div class="content">
-      <%= number_to_currency(@voucher.amount,:unit => "Rs.") %>
+    <div class = "payment_mode">
+      <div class="payment_label">Payment Mode :</div>
+      <%= @voucher.payment_type %>
+      <div class="payment_label">Reference Number :</div>
+      <%= @voucher.payment_reference %> 
+    </div> 
+    <% counter = 0 %>
+    <%if @voucher.uploads.length > 0 %>
+      <div class ="debitCredit">
+        <div class="labels">Bill attachments
+        </div>
+        <% @voucher.uploads.each do |upload|  %> 
+          <div><%= (counter += 1).to_s+". "%><%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%></div>     
+        <%end%>
+      </div> 
+    <%end%>
+    <div class ="payment">
+      <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
+      </div>
     </div>
-    <div class="label">
-      <strong>From date:</strong>
+    <% if(!(@voucher.workflow_state == 'accepted' || @voucher.workflow_state == 'approved' || @voucher.assignee_id != current_user.id))%>
+      <%=  render 'assign' %>
+    <%end%>
+    <%if @voucher.workflow_state == "new" %>
+      <%= render 'assign' %>
+    <%end%>
+    <div class = "edit_voucher">
+      <% if((@voucher.current_state < :pending || @voucher.current_state == :rejected) && @voucher.creator_id == current_user.id )%>
+        <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary'%> 
+      <%end%>
     </div>
-    <div class="content">
-     <%= format_date( @voucher.from_date ) %> 
+    <div class ="print_voucher">
+      <%= link_to "Print" ,"",:class=>'btn btn-primary'%> 
     </div>
-    <div class="label">
-      <strong>To date:</strong>
+    <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
+  </div>
+  <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
+    <div class ="final_state">
+      <%= link_to "Accepted" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
+      <%= link_to "Rejected" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post%>
     </div>
-    <div class="content">
-     <%= format_date( @voucher.to_date ) %> 
-    </div>
-    <p></p>
-  </fieldset>
+  <%end%>
 </div>
-<div class="label">
-<% if @voucher.current_state < :pending %>
-  <%= link_to "edit your voucher" ,edit_voucher_path(@voucher)%> 
-<%end%>
-</div>
-<%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
-<%=  render 'assign' %>
-

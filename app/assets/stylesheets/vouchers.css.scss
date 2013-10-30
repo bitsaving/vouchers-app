@@ -28,9 +28,21 @@ ul.ui-autocomplete {
   }
 } 
 .assignment{
-position:relative;
-bottom:100px;
-left:990px;
+  padding-top: 10px;
+
+  position:absolute;
+top:200px;
+  left:841px;
+  padding-bottom: 30px;
+  margin-top: 100px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding-left: 30px;
+  padding-right: 20px;
+}
+
+.approval_button {
+margin-top: 20px;
 }
 .accounts{
 
@@ -87,7 +99,7 @@ padding: 0.2em 1em;
 }
 .remove_bill {
 position:relative;
-left :425px;
+left :755px;
 width : 100px;
 }
 .bill_attachment{
@@ -98,3 +110,217 @@ margin-left:30px;
 .addFields {
 position:relative;
 }
+.content{
+  background-color: #f6fbff;
+float:left;
+height:50px;
+width:100px;
+margin-top: -55px;
+margin-left: 20px;
+
+border:solid 1px black;
+display:inline-block;
+
+
+}
+.voucherId{
+  padding-top: 15px;
+  padding-left: 30px;
+  padding-bottom: 25px;
+font-size: 25px;
+font-weight: bold;
+display: inline-block;
+}
+.status{
+  margin-top: -25px;
+  position: absolute;
+  left: 380px;
+  font-size: 18px;
+  font-weight: bold;
+display: inline-block;
+margin-bottom: -50px;
+}
+.date{
+  position: absolute;
+  left:1000px;
+  margin-top: -25px;
+width:150px;
+font-size: 18px;
+font-weight: bold;
+padding-right: 30px;
+margin-bottom: -20px;
+}
+.separator{
+border-top: dotted 1px black;
+}
+.debitCredit
+{
+  margin-left: 20px;
+ width:590px;
+ padding-left: 10px;
+font-size: 14px;
+}
+.column_separator {
+
+  width:830px;
+border-right: dotted 1px black;
+margin-bottom: -20px;
+padding-bottom: 20px;}
+.row_separator {
+margin-top: 10px;
+width:830px;
+border-top: dotted 1px black;
+
+
+}
+.payment_mode
+{
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 10px;
+ width:590px;
+ padding-left: 10px;
+
+font-size: 14px;
+}
+.edit_voucher{
+position: absolute;
+top:90px;
+left:1050px;
+width:60px;
+
+.btn {
+width: 60px !important;
+
+}
+}
+.print_voucher{
+position: absolute;
+top:90px;
+left:1150px;
+width:60px;
+
+.btn {
+width: 60px !important;
+
+}
+}
+
+.labels{
+
+ padding-right: 20px;
+
+font-size: 15px;
+font-weight: bold;
+padding-top: 10px;
+margin-bottom: 2px;
+}
+.payment_label{
+display: inline-block;
+ padding-right: 5px;
+padding-left: 10px;
+font-size: 15px;
+font-weight: bold;
+
+}
+
+.voucher_display{
+  background-color: #fafdff;
+  margin-top: 40px;
+width:1100px;
+padding-bottom: 20px;
+margin-right: 150px;
+border: solid 1px black;
+}
+/*body .date_field {
+font-size: 14px !important;
+}*/
+.date_period {
+display: inline-block;
+
+  margin-left: 20px;
+  padding-top: 10px;
+
+   width:600px;
+}
+ .date_field{
+  display: inline-block;
+font-size: 15px;
+font-weight: bold;
+padding-right: 5px;
+padding-left: 10px;
+ }
+ .payment{
+  position: absolute;
+  top:270px;
+  left:850px;
+  height:30px;
+  width:268px;
+  border-bottom: dotted 1px black;
+
+  }
+  .assign{
+    margin-left: 40px;
+    margin-top: 50px;}
+      .assignn{
+    margin-left: 20px;
+    margin-bottom:400px;}
+  .dropDown {
+    position: absolute;
+margin-top: 30px;
+margin-left: -15px;
+  }
+ .amount{
+display: inline-block;
+position: absolute;
+right: 100px;
+top:-25px;
+font-size: 23px;
+font-weight: bold;
+  }
+  .add_more_uploads{
+font-size: 14px !important;
+position: relative;
+left: 500px;
+
+  }
+  .add_more_uploads .controls {
+
+    position: relative;
+    left:-500px;}
+  .final_state{
+position: absolute;
+left:910px;
+top:360px;
+height: 40px;
+  }
+.uploaded_links {
+position: relative;
+left:30px;}
+    .Or_label{
+position: absolute;
+
+top:130px;
+left:90px;
+font-size: 20px;
+font-weight: bold;
+    }
+
+  .voucher_form{
+width:1000px;
+background-color: #f6fbff;
+margin-left: 100px;
+margin-right: 100px;
+label {
+position: absolute;
+
+left:400px;
+font-size: 18px;
+font-weight: italic;
+width:200px;
+}
+input ,textarea,select{
+position: relative;
+left: 300px;}
+  }
+

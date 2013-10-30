@@ -1,23 +1,56 @@
 <%- model_class = Voucher -%>
 <div class="page-header">
+  <h3><%=controller.action_name.titleize%></h3>
 </div>
-<table>
-   <tbody>
-    <%=paginate @vouchers%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:debit) %></th>
+      <th><%= model_class.human_attribute_name(:credit) %></th>
+      <th><%= model_class.human_attribute_name(:date) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+      <th><%= model_class.human_attribute_name(:assigned_to) %></th>
+      <th><%= model_class.human_attribute_name(:state) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+
     <% @vouchers.each do |voucher| %>
       <tr>
+        <td><%= link_to voucher.id, voucher_path(voucher) %></td>
+        <td><%= link_to voucher.debit_from.name,account_path(getAccount(voucher.account_debited)),:class=>'debit_credit' %></td>
         <td>
-          <div class="control-group">
-            <%= label_tag :voucher,"Voucher Number #{voucher.id}",  :class => 'control-label' %>
-          </div>
-        </td> 
-        <td>
-          <div class='btn'>
-            <%= link_to "view", voucher %>
-          </div>
-          
+          <% if voucher.credit_to != nil %>
+            <%= link_to voucher.credit_to.name, account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %>
+           <%end%>
+        </td>
+        <td><%= voucher.date%></td>
+        <td><%= voucher.amount%></td>
+        <% if voucher.assigned_to.nil? %>
+        <td> <%=" "%>
+        <%else%>
+        <td><%= voucher.assigned_to.first_name%></td>
+          <%end%>
+         <td><%= voucher.workflow_state%></td>
+         <td>
+          <% if voucher.creator_id == current_user.id && (voucher.current_state == :new || voucher.current_state == :rejected) %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      voucher_path(voucher),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+                      <%end%>
+          <%= link_to t('.details', :default => t("helpers.links.details")),
+                      voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>
     <% end %>
-   </tbody>
- </table>
+  </tbody>
+</table>
+<%=paginate @vouchers%>

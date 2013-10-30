@@ -1,19 +1,16 @@
 class User < ActiveRecord::Base
-  has_many :vouchers
+  acts_as_paranoid
+  has_many :vouchers,:foreign_key=>"creator_id"
   has_many :comments
-  devise :database_authenticatable, :registerable, :omniauthable,
-          :recoverable, :rememberable, :trackable, :validatable, :omniauth_providers => [:google_oauth2]
+  devise :database_authenticatable, :omniauthable,
+          :recoverable, :rememberable, :trackable,  :omniauth_providers => [:google_oauth2]
+  validates :first_name,:last_name,:email ,presence: true
+  validates :email, uniqueness: true
 
-  def self.from_omniauth(access_token, signed_in_resource=nil)
-     data = access_token.info
-    user = User.where(:email => data["email"]).first
-
-    unless user
-        user = User.create(name: data["name"],
-             email: data["email"],
-             password: Devise.friendly_token[0,20]
-            )
-    end
+   def self.from_omniauth(access_token, signed_in_resource=nil)
+      data = access_token.info
+      user = User.where(:email => data["email"]).first
     user
   end
+
 end

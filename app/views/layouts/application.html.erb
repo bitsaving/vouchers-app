@@ -36,7 +36,7 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body style ="background-color:#e8f0ff">
+  <body style ="background-color:#f9f9f9">
 
     <div class="navbar navbar-fluid-top">
       <div class="navbar-inner upperContainer">
@@ -50,41 +50,47 @@
           <div class="container-fluid nav-collapse">
             <% if current_user %>  
               <ul class="nav nav-tabs  ">
-                <li id="pending_vouchers"><%= link_to "Pending" , "javascript::void(0)", :class => "my-class"%>
-                  <ul id ="pending" class="hidden">
-                  </ul>
+                <li><%= link_to "Home" , root_path%></li>
+                <li>
+                  <div class="dropdown" id="VoucherContainer">
+                    <a id="voucherUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
+                      <span class="voucher">Vouchers</span>
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="voucherList">
+                      <li role="presentation" ><%= link_to "Create New" , new_voucher_path%></li>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" ><%= link_to "Pending" ,pending_vouchers_vouchers_path%></li>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" ><%= link_to "accepted" ,accepted_vouchers_vouchers_path %></li>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" ><%= link_to "rejected" ,rejected_vouchers_vouchers_path %></li>
+                    </ul>
+                  </div> 
                 </li>
-                <li><a href="#">Accepted</a>
-                  <ul id ="accepted">
-                  </ul>
-                </li>
-                <li><a href="#">Rejected</a>
-                  <ul id ="rejected">
-                  </ul>
-                </li>
-                <li><%= link_to "Create New" , new_voucher_path%></a></li>
+                <% if current_user.user_type == 'admin'%>
+                  <li><%= link_to "Users" , admin_users_path%></li>
+                <%end%>
+                <li><%= link_to "Accounts" , accounts_path%></li>
               </ul>
-              <div class="settings">
-                <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-              </div>
-              <div id="userDetails">
-                <span class="initials">Welcome</span>
-                <span class="initials"><%= current_user.first_name %></span>
+            </ul> 
+            <div class="settings">
+              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            </div>
+            <div id="userDetails">   
+              <span class="initials"><%= current_user.first_name %></span>
                <span class="initials"><%= current_user.last_name %></span>
-              </div>
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="container-fluid">    
+  </div>
+  <div class="container-fluid">    
       <div class="row-fluid">
-        <% if getAssignedUser %>
-        <%=  'you have'%> 
-        <%= getAssignedUser%> <%="vouchers pending review." %>
-        <%=link_to "Click here",waiting_for_approval_vouchers_path%>
-        <%end%>
-        <%= yield %>
+        <%= bootstrap_flash %>
+        <%=yield%>
+      </div>
       </div><!--/row-->
     </div> <!-- /container -->
   </body>
