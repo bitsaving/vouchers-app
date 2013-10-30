@@ -11,13 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024062149) do
+ActiveRecord::Schema.define(version: 20131030045245) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active",     default: true
+  end
+
+  create_table "admins", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "comments", force: true do |t|
@@ -42,12 +47,12 @@ ActiveRecord::Schema.define(version: 20131024062149) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",       null: false
+    t.string   "encrypted_password",     default: "",       null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -56,6 +61,8 @@ ActiveRecord::Schema.define(version: 20131024062149) do
     t.datetime "updated_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "user_type",              default: "normal"
+    t.time     "deleted_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -63,24 +70,24 @@ ActiveRecord::Schema.define(version: 20131024062149) do
 
   create_table "vouchers", force: true do |t|
     t.date     "date"
-    t.string   "pay_type"
-    t.integer  "debit_from_id"
-    t.integer  "credit_to_id"
+    t.string   "payment_type"
+    t.integer  "account_debited"
+    t.integer  "account_credited"
     t.date     "from_date"
     t.date     "to_date"
-    t.decimal  "amount",           precision: 8, scale: 2
+    t.decimal  "amount",            precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.string   "reference"
-    t.integer  "assigned_to_id"
+    t.integer  "creator_id"
+    t.string   "payment_reference"
+    t.integer  "assignee_id"
     t.string   "workflow_state"
   end
 
-  add_index "vouchers", ["credit_to_id"], name: "index_vouchers_on_credit_to_id", using: :btree
-  add_index "vouchers", ["debit_from_id"], name: "index_vouchers_on_debit_from_id", using: :btree
+  add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree
+  add_index "vouchers", ["account_debited"], name: "index_vouchers_on_account_debited", using: :btree
   add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
   add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
 
