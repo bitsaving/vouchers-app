@@ -30,6 +30,7 @@ class CommentsController < ApplicationController
   def comment_params
     params.permit(:description,:accepted,:voucher_id).merge({ user_id: current_user.id })
   end
+  
 end
 
 
