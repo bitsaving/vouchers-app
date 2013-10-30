@@ -70,16 +70,26 @@ ActiveRecord::Schema.define(version: 20131030045245) do
 
   create_table "vouchers", force: true do |t|
     t.date     "date"
+<<<<<<< HEAD
     t.string   "payment_type"
     t.integer  "account_debited"
     t.integer  "account_credited"
+=======
+    t.string   "pay_type"
+    t.string   "reference"
+    t.integer  "debit_from_id"
+    t.integer  "credit_to_id"
+    t.integer  "user_id"
+>>>>>>> 3cd885915b7726b2726707acbcdba4561818f7e6
     t.date     "from_date"
     t.date     "to_date"
     t.decimal  "amount",            precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
+    t.integer  "assigned_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
     t.integer  "creator_id"
     t.string   "payment_reference"
     t.integer  "assignee_id"
@@ -88,7 +98,15 @@ ActiveRecord::Schema.define(version: 20131030045245) do
 
   add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree
   add_index "vouchers", ["account_debited"], name: "index_vouchers_on_account_debited", using: :btree
+=======
+  end
+
+  add_index "vouchers", ["assigned_to_id"], name: "index_vouchers_on_assigned_to_id", using: :btree
+  add_index "vouchers", ["credit_to_id"], name: "index_vouchers_on_credit_to_id", using: :btree
+  add_index "vouchers", ["debit_from_id"], name: "index_vouchers_on_debit_from_id", using: :btree
+>>>>>>> 3cd885915b7726b2726707acbcdba4561818f7e6
   add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
   add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
+  add_index "vouchers", ["user_id"], name: "index_vouchers_on_user_id", using: :btree
 
 end
