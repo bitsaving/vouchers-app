@@ -8,7 +8,7 @@ body {
 
 p, ol, ul, td {
   font-family: verdana, arial, helvetica, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 18px;
 }
 
@@ -19,13 +19,8 @@ pre {
 }
 
 a {
-  color: #000;
-  &:visited {
-    color: #666;
-  }
-  &:hover {
-    color: blue;
-  }
+  color:#000
+ 
 }
 
 div {
@@ -44,6 +39,7 @@ padding:20px;
 #error_explanation {
   width: 450px;
   border: 1px solid red;
+  margin: 0 auto;
   padding: 3px;
   padding-bottom: 0;
   margin-bottom: 20px;

@@ -15,10 +15,21 @@ module ApplicationHelper
   def user_options
     User.pluck( 'first_name ', 'id' )
   end
-   def format_date(date)
-    date ? date.strftime('%a %b %d') : nil
+
+  def format_date(date)
+    date ? date.strftime('%d %b %Y') : nil
   end
-  def getAssignedUser
-    Voucher.find(:all,:conditions=> "assigned_to_id = #{current_user.id} and workflow_state != 'accepted'").count
+
+  def get_pending_vouchers(account_id)
+    @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?) OR account_credited IN (?)", account_id,account_id]).page(params[:page]).per(50)
+ end
+
+  def get_pending_of_users(user_id)
+    @vouchers = Voucher.where(workflow_state:'pending').where(creator_id: user_id).page(params[:page]).per(50)
   end
+
+  def getAccount(id)
+    @account = Account.find(id)
+  end
+  
 end
