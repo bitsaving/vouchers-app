@@ -1,12 +1,8 @@
+<div>
+ <% if (flash[:alert]) %>
+    <%= flash[:alert] %>
+    <% flash[:alert] = nil %>
+<% end %>
+<%= render "devise/shared/links" %>  
+ </div>
 
-<div id="container">
-  <div id="formContainer">
-    <% if (flash[:notice]) %>
-      <div id="flashContainer">
-        <%= flash[:notice] %>
-        <% flash[:notice] = nil %>
-      </div>
-    <% end %>
-    <%= render "devise/shared/links" %>  
-  </div>
-</div>

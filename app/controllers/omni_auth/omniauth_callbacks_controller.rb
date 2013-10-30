@@ -1,10 +1,11 @@
 class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+ 
 	def google_oauth2
     auth_details = request.env["omniauth.auth"]
     if auth_details.info['email'].split("@")[1] == "vinsol.com"
       user = User.from_omniauth(request.env["omniauth.auth"])
       if user.persisted?
-        flash.alert = "Signed in Through Vinsol!"
+        flash.notice = "Signed in Through Vinsol!"
         sign_in_and_redirect user
       else
         session["devise.user_attributes"] = user.attributes

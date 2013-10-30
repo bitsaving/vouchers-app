@@ -1,36 +1,35 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
-  before_action :set_user ,only: [:create]
+  
   def create
-     @comment = Comment.new(comment_params)
-     if(@comment.save)
+    @comment = Comment.new(comment_params)
+    if(@comment.save)
       respond_to do |format|
         format.html { redirect_to :back }
       end
-    end
-  end
-
-  def destroy
-    if(@comment.destroy)
+    else
       respond_to do |format|
-        format.html { redirect_to :back }
+        format.html do 
+          redirect_to :back
+          flash[:notice] = "Comment could not be added"
+        end
+        format.js do
+        end
       end
     end
   end
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
+  def set_comment
+    @comment = Comment.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to :back
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def comment_params
-      params.permit(:description,:accepted,:voucher_id,:user_id)
-    end
-  
-    def set_user
-      params[:user_id] = current_user.id
-    end
-
+  def comment_params
+    params.permit(:description,:accepted,:voucher_id).merge({ user_id: current_user.id })
+  end
 end
+
 

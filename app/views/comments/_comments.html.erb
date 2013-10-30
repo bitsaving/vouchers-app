@@ -1,14 +1,22 @@
+<% if voucher.comments.count > 0 %>
 <div class ="comments">
+  <h6> Comments </h6>
   <% for comment in voucher.comments %>
     <div class = "commentator">
       <%= simple_format(comment.description) %>
       <div class ="commentator_name">
-  	    <%= "comment added by #{current_user.first_name}" %>
-      </div>
+ <div>
+        <%= User.find(comment.user_id).first_name %>
+        </div>
+      <%= comment.created_at.localtime.strftime("%I:%M:%S")%>
+     
     </div>
+    </div>
+     <!--  <%= "-----------------"%> -->
   <% end %>
-  <% if voucher.current_state > :pending%>
+
+  <% if voucher.current_state >= :pending && voucher.current_state < :accepted && voucher.assignee_id == current_user.id%>
     <%= render :partial => 'comments/form' %>
   <%end%>
 </div>
-
+<%end%>

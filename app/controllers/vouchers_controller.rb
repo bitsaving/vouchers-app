@@ -1,18 +1,20 @@
 class VouchersController < ApplicationController
-  # include CurrentUser
-  before_action :authorize
-  before_action :set_voucher, only: [:show, :edit, :update, :destroy]
- before_action :set_user_for_comments ,only: :create
+
+  before_action :set_voucher, only: [:show, :edit, :update, :destroy,:rename_file]
  
   # GET /vouchers
   # GET /vouchers.json
   def index
-    @vouchers = Voucher.where(user_id: current_user.id).page(params[:page]).per(15)
+    @vouchers = Voucher.where(creator_id: current_user.id).page(params[:page]).per(50)
   end
 
   # GET /vouchers/1
   # GET /vouchers/1.json
   def show
+    respond_to do |format|
+      format.html  
+      format.js {}
+    end
   end
 
 
@@ -33,8 +35,8 @@ class VouchersController < ApplicationController
   # POST /vouchers
   # POST /vouchers.json
   def create
-   @voucher = Voucher.new(voucher_params)
-    current_user.vouchers << @voucher
+   @voucher = current_user.vouchers.build(voucher_params)
+   @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
     respond_to do |format|
       if @voucher.save
         format.html { redirect_to @voucher, notice: 'Voucher was successfully created.' }
@@ -59,27 +61,54 @@ class VouchersController < ApplicationController
       end
     end
   end
+
   def pending_vouchers
-    @vouchers = Voucher.where(workflow_state: 'pending').where(user_id: current_user.id).all
-    render :json => @vouchers
-  end
-  def waiting_for_approval
-    @vouchers = Voucher.where.not(workflow_state: 'accepted').where(assigned_to_id: current_user.id).page(params[:page])
+    if params[:account_id]
+      @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(10)
+    elsif params[:user_id]
+      @vouchers = Voucher.where(workflow_state: 'pending').where(creator_id: params[:user_id]).page(params[:page]).per(10)
+    else
+      @vouchers = Voucher.where(workflow_state: 'pending').page(params[:page]).per(50)
+    end
     respond_to do |format|
       format.html { render action: 'index' }
-   end
+      format.js {}
+    end
   end
-# end
-#  def accepted_vouchers
-#     @vouchers = Voucher.find_by_status(current_user.worth + 2).page(params[:page]).per(15)
-#    
-# end
-#  def rejected_vouchers
-#     @vouchers = Voucher.find_by_status(current_user.worth)
-#     respond_to do |format|
-#       format.html { render action: 'index' }
-#   end
-# end
+
+  def waiting_for_approval
+    @vouchers =  Voucher.where("workflow_state not in ('accepted','rejected')  and assignee_id = #{current_user.id}").page(params[:page]).per(50)
+    respond_to do |format|
+      format.html { render action: 'index' }
+    end
+  end
+
+  def accepted_vouchers
+    if params[:account_id]
+      @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(10)
+    elsif params[:user_id]
+      @vouchers = Voucher.where(workflow_state: 'accepted').where(creator_id: params[:user_id]).page(params[:page]).per(10)
+    else
+      @vouchers = Voucher.where(workflow_state: 'accepted').page(params[:page]).per(50)
+    end
+    respond_to do |format|
+      format.html { render action: 'index' }
+      format.js {}
+    end  
+  end
+  def rejected_vouchers
+    if params[:account_id]
+      @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?) OR account_debited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(50)
+    elsif params[:user_id]
+      @vouchers = Voucher.where(workflow_state: 'rejected').where(creator_id: params[:user_id]).page(params[:page]).per(50)
+    else
+      @vouchers = @vouchers = Voucher.where(workflow_state: 'rejected').page(params[:page]).per(50)
+    end
+    respond_to do |format|
+      format.html { render action: 'index' }
+      format.js {}
+    end
+  end
   # DELETE /vouchers/1
   # DELETE /vouchers/1.json
   def destroy
@@ -89,13 +118,35 @@ class VouchersController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def change_status
+ 
+  def increment_state
     @voucher = Voucher.find(params[:id])
-    @voucher.send_for_approval!
-    @voucher.assigned_to_id = params[:voucher][:assigned_to_id]
+    case "#{@voucher.current_state}"
+      when "rejected" then @voucher.send_for_approval!
+      when "new" then @voucher.send_for_approval!
+      when "pending" then @voucher.approve!
+      when "approved" then @voucher.accept!
+    end    
+    if @voucher.current_state == :accepted
+      @voucher.assignee_id = nil
+    else    
+      @voucher.assignee_id = params[:voucher][:assignee_id]
+    end
     @voucher.save!
-    redirect_to new_user_session_path
+    redirect_to :back
   end
+ 
+  def decrement_state
+     @voucher = Voucher.find(params[:id])
+    case "#{@voucher.current_state}"
+      when "pending" then @voucher.reject!
+      when "approved" then @voucher.reject!
+    end
+    @voucher.assignee_id = @voucher.creator_id
+    @voucher.save!
+    redirect_to :back
+  end
+  
   protected
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
@@ -104,15 +155,7 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:from_date,:to_date,:reference,:assigned_to_id,:credit_to_id,:debit_from_id,:amount,:pay_type,:assigned_to_id,uploads_attributes:[:avatar,:id,:_destroy],comments_attributes:[:description,:id,:_destroy,:user_id])
-   
+      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type,uploads_attributes:[:avatar,:id,:_destroy],comments_attributes:[:description,:id,:_destroy,:user_id])
     end
-    def set_user_for_comments
-      
-     params["voucher"]["comments_attributes"]["0"]["user_id"] = current_user.id
-     if params["voucher"]["uploads_attributes"]["0"].length == 1
-      params["voucher"]["uploads_attributes"]["0"]["_destroy"]=true
-    end
-  end
   
 end

@@ -1,15 +1,28 @@
-<%= form_tag change_status_voucher_path(:id => @voucher) do %>
-  <% if (@voucher.workflow_state != 'Accepted' && @voucher.assigned_to_id.nil?)  %>
-    <div class ="assignment">
-      <div class="control-group">
-        <%= label_tag :Assign,"Assign for approval to" ,:class => 'control-label' %>
-        <div class="controls">
-          <%= select_tag 'voucher[assigned_to_id]', options_for_select(user_options ), prompt: "Select the person" %>
-        </div>
-      </div>
-      <div class="actions">
-        <%= submit_tag 'send for approval',:class=>'btn',data: {confirm: "Are you sure you want to send it for approval", disable_with: "Please wait..." }%>
+<%= form_tag increment_state_voucher_path(:id => @voucher),:class=>"assign_form" do %>
+  <div class ="assignment">
+    <div class="control-group">    
+      <div class="controls dropDown">
+        <%= select_tag 'voucher[assignee_id]', options_for_select(user_options ), prompt: "Select the person" %>
       </div>
     </div>
-  <%end%>
+    <div class="actions approval_button">
+      <div class="actions">
+        <%if @voucher.current_state == :new || @voucher.current_state == :rejected%>
+          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign'%>
+        <%else%>
+          <%if(@voucher.current_state == :pending)%>
+            <div >
+            <%= link_to " Approve "  ,voucher_path(@voucher),:class=>'btn submit_accepted btn-primary assign',:remote=> true%>
+          </div>
+          <div class ="Or_label">
+            <%=" OR "%>
+          </div>
+          <%else%>
+            <%= link_to "Accept  " , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary assign ',method: :post%>
+          <%end%>
+            <%= link_to "Reject " , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assign',method: :post%>
+        <%end%>
+      </div>
+    </div>
+  </div>
 <% end %>

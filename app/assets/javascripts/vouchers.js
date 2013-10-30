@@ -8,8 +8,8 @@ function VoucherEventsHandler() {
   hiddenFieldHandler(); 
   autocomplete();
 
-}
 
+}
 
 function autocomplete() {
 $('.autocomplete').on('keyup',function() {
@@ -23,16 +23,11 @@ function autoCompleteFieldHandler() {
   $.ajax({
 
     type: 'get',
-    url: '/accounts', 
+    url: '/accounts.json', 
     dataType: "json", 
     success: function(data){
       $('.autocomplete').autocomplete({
-        source:  function( request, response ) {
-        var matcher = new RegExp( "^" + $.ui.autocomplete.escapeRegex( request.term ), "i" );
-        response( $.grep( data, function( item ,index){
-            return matcher.test( item["label"] );
-        }) );
-    },
+        source: data,
     select: function(event, ui) {
       console.log(ui.item.value);
       event.preventDefault();
@@ -51,12 +46,7 @@ function autoCompleteFieldHandler() {
 
 }
 function hiddenFieldHandler(){
- $(document).on('change', '#voucher_pay_type', function() {
+ $(document).on('change', '#voucher_payment_type', function() {
    $('.select').removeClass("hidden");
   });
 }
-// function disabledInput(){
-// $('.disable_input :input').prop('disabled', true);
-// $('.disable_input :input[type="submit"]').hide();
-
-// }

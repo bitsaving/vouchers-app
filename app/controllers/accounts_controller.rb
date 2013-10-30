@@ -1,37 +1,56 @@
 class AccountsController < ApplicationController
-  before_action :authorize
+
   before_action :set_account, only: [:show, :edit, :update, :destroy]	
+  
   def index  
-    @accounts= Account.all
-    render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact
+    @accounts= Account.all.page(params[:page]).per(50)
+    respond_to do |format|
+      format.html { }
+      format.json { render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact}
+    end
   end
-
-  # GET /accounts/1
-  # GET /accounts/1.json
-  def show
-  end
-
-  # GET /vouchers/new
-  def new   
+  def new
     @account = Account.new
   end
-
-  # GET /vouchers/1/edit
-  def edit  
-  end
-
+ 
   # POST /accounts
   # POST /accounts.json
   def create
     @account = Account.new(account_params)
     respond_to do |format|
       if @account.save
-        format.html { redirect_to :back, notice: 'account was successfully created.' }
+        format.html { redirect_to @account, notice: 'Account was successfully created.' }
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }
          format.json { render json: @account.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def edit
+  end
+  
+  def show 
+  end
+  
+  def update
+     respond_to do |format|
+      if @account.update(account_params)
+        format.html { redirect_to @account, notice: 'Account was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @account.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+  
+  def destroy
+    @account.destroy
+    respond_to do |format|
+      format.html { redirect_to accounts_url }
+      format.json { head :no_content }
     end
   end
 
