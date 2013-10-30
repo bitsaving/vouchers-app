@@ -1,8 +1,26 @@
 class AccountsController < ApplicationController
+<<<<<<< HEAD
 
   before_action :set_account, only: [:show, :edit, :update, :destroy]	
   
   def index  
+=======
+<<<<<<< HEAD
+=======
+  #FIXME_AB: authorize can be moved to application_controller
+  before_action :authorize
+  before_action :set_account, only: [:show, :edit, :update, :destroy]	
+
+  def index  
+    @accounts= Account.all
+    render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact
+  end
+>>>>>>> 3cd885915b7726b2726707acbcdba4561818f7e6
+
+  before_action :set_account, only: [:show, :edit, :update, :destroy] 
+  
+  def index  
+>>>>>>> b5a45e7b6ce0c9f6da9cff1281d61989c0096a58
     @accounts= Account.all.page(params[:page]).per(50)
     respond_to do |format|
       format.html { }
@@ -58,6 +76,7 @@ class AccountsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_account
       @account = Account.find(params[:id])
+      #FIXME_AB: what if account not found with that id
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
