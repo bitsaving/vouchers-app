@@ -1,16 +1,34 @@
 VoucherApp::Application.routes.draw do
+  # resources :admins
+
   resources :comments
 
   resources :uploads
   resources :accounts
   root :to => 'users#show'
-  get 'users', to: 'users#index' , :as => :user
+  # get 'users', to: 'users#index' , :as => :user
   # get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
-  resources :vouchers do
-    get 'pending_vouchers',on: :collection
-    get 'waiting_for_approval', on: :collection
-    post 'change_status' ,on: :member
-  end 
+  # scope 'users/:id' do
+    resources :vouchers do
+      get 'pending_vouchers',on: :collection
+      get 'accepted_vouchers',on: :collection
+      get 'rejected_vouchers',on: :collection
+      get "debit_vouchers" ,on: :collection
+      get "credit_vouchers" ,on: :collection
+      get 'waiting_for_approval', on: :collection
+      post 'increment_state' ,on: :member
+      post 'decrement_state',on: :member
+    end
+    namespace 'admin' do
+        # get 'users/new' ,to: 'users#new'
+        # get 'users',to: 'users#index'
+        resources :users
+      scope 'users/:id' do
+          get 'vouchers', to: 'vouchers#index'
+          # post 'edit',to:'users#edit'
+      end
+    end
+ get 'users/:id' ,to: 'users#show'
   devise_for :user, controllers: {
     omniauth_callbacks: "omni_auth/omniauth_callbacks", 
     sessions: "omni_auth/sessions"

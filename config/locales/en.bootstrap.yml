@@ -11,6 +11,9 @@ en:
       destroy: "Delete"
       new: "New"
       edit: "Edit"
+      details: "Details"
+      debit: "Debit"
+      credit: "Credit"
     titles:
       edit: "Edit %{model}"
       save: "Save %{model}"
