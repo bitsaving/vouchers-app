@@ -1,2 +1,3 @@
 $('.voucher_status').html("<%= escape_javascript render 'vouchers' %>");
+$('#paginator').html('<%= escape_javascript(paginate(@vouchers, :remote => true).to_s) %>');
 $('.associated_voucher li.rejected').addClass('active').siblings().removeClass('active');

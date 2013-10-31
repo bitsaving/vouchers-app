@@ -7,7 +7,7 @@
             new_account_path,
             :class => 'btn new_button btn-primary' %>
 </div>
-<table class="table table-striped">
+<table class="table table-striped accountss">
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:name) %></th>
@@ -29,4 +29,7 @@
     <% end %>
   </tbody>
 </table>
-<%=paginate @accounts%> 
+ <div id="paginator">
+ 
+ <%=paginate @accounts, :remote => true %>
+  </div>

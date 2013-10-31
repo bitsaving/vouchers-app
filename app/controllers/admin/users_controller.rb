@@ -5,7 +5,11 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all.page(params[:page]).per(50)
+    @users = User.all.page(params[:page]).per(10)
+     respond_to do |format|
+      format.js {}
+      format.html{}
+    end
   end
 
   def new
@@ -47,6 +51,10 @@ class Admin::UsersController < ApplicationController
       @user = User.find(params[:id])
     else
       redirect_to waiting_for_approval_vouchers_path
+    end
+     respond_to do |format|
+     format.js {}
+     format.html {}
     end
   end
 

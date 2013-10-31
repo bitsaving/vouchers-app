@@ -1,0 +1,13 @@
+
+<% @accounts.each do |account| %>
+  <tr>
+    <!--   -->
+    <td><%= link_to account.name, account_path(account) %></td>
+
+    <td>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_account_path(account), :class => 'btn btn-mini btn-primary' %>
+     
+    </td>
+  </tr>
+<% end %>

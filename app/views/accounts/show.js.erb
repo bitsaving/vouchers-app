@@ -1,0 +1,1 @@
+$('.voucher_status').html('<%= escape_javascript(render partial: 'vouchers/vouchers', locals: {:@vouchers => get_pending_vouchers(@account.id ) }) %>');

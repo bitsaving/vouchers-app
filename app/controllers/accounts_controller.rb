@@ -2,11 +2,14 @@ class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update, :destroy] 
   
-  def index  
+  def index
+    Rails.logger.debug "#{params[:page]}\n\n\n\n"
     @accounts= Account.all.page(params[:page]).per(50)
+    Rails.logger.debug "#{@accounts.inspect}\n\n\n\n#{@accounts.count}"
     respond_to do |format|
       format.html { }
       format.json { render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact}
+      format.js {}
     end
   end
   def new
@@ -32,6 +35,10 @@ class AccountsController < ApplicationController
   end
   
   def show 
+     respond_to do |format|
+     format.js {}
+     format.html {}
+    end
   end
   
   def update

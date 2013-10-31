@@ -6,6 +6,10 @@ class VouchersController < ApplicationController
   # GET /vouchers.json
   def index
     @vouchers = Voucher.where(creator_id: current_user.id).page(params[:page]).per(50)
+     respond_to do |format|
+      format.html  
+      format.js {}
+    end
   end
 
   # GET /vouchers/1
@@ -64,11 +68,11 @@ class VouchersController < ApplicationController
 
   def pending_vouchers
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'pending').where(creator_id: params[:user_id]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'pending').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
-      @vouchers = Voucher.where(workflow_state: 'pending').page(params[:page]).per(50)
+      @vouchers = Voucher.where(workflow_state: 'pending').page(params[:page]).order('updated_at desc').per(10)
     end
     respond_to do |format|
       format.html { render action: 'index' }
@@ -77,7 +81,7 @@ class VouchersController < ApplicationController
   end
 
   def waiting_for_approval
-    @vouchers =  Voucher.where("workflow_state not in ('accepted','rejected')  and assignee_id = #{current_user.id}").page(params[:page]).per(50)
+    @vouchers =  Voucher.where("workflow_state not in ('accepted','rejected')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(50)
     respond_to do |format|
       format.html { render action: 'index' }
     end
@@ -85,11 +89,11 @@ class VouchersController < ApplicationController
 
   def accepted_vouchers
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'accepted').where(creator_id: params[:user_id]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'accepted').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
-      @vouchers = Voucher.where(workflow_state: 'accepted').page(params[:page]).per(50)
+      @vouchers = Voucher.where(workflow_state: 'accepted').order('updated_at desc').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html { render action: 'index' }
@@ -98,11 +102,11 @@ class VouchersController < ApplicationController
   end
   def rejected_vouchers
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?) OR account_debited IN (?)", params[:account_id],params[:account_id]]).page(params[:page]).per(50)
+      @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?) OR account_debited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(50)
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'rejected').where(creator_id: params[:user_id]).page(params[:page]).per(50)
+      @vouchers = Voucher.where(workflow_state: 'rejected').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
-      @vouchers = @vouchers = Voucher.where(workflow_state: 'rejected').page(params[:page]).per(50)
+      @vouchers = @vouchers = Voucher.where(workflow_state: 'rejected').page(params[:page]).order('updated_at desc').per(10)
     end
     respond_to do |format|
       format.html { render action: 'index' }
