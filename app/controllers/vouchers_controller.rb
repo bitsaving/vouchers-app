@@ -1,5 +1,6 @@
 class VouchersController < ApplicationController
 
+
   before_action :set_voucher, only: [:show, :edit, :update, :destroy,:rename_file]
  
   # GET /vouchers
@@ -33,7 +34,10 @@ class VouchersController < ApplicationController
   end
 
   # GET /vouchers/1/edit
-  def edit  
+  def edit 
+    if(!(current_user.user_type == "admin" || params[:id] == current_user.id))
+      redirect_to root_path, notice: "No editing privileges for you"
+    end 
   end
 
   # POST /vouchers
