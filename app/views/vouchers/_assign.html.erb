@@ -1,5 +1,5 @@
 <%= form_tag increment_state_voucher_path(:id => @voucher),:class=>"assign_form" do %>
-  <div class ="assignment">
+  <div class ="assignment onprint">
     <div class="control-group">    
       <div class="controls dropDown">
         <%= select_tag 'voucher[assignee_id]', options_for_select(user_options ), prompt: "Select the person" %>

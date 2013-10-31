@@ -65,7 +65,7 @@
     <% @voucher.uploads.each do |upload|  %> 
       <div class="controls uploaded_links">
         <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>
-        <%=link_to_remove_fields "remove" , f %>
+        <%= link_to 'Destroy', @,voucher :confirm => 'Are you sure?', :method => :delete_attachment %>
       </div>
     <%end%>
   <%else%> 

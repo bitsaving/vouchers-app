@@ -23,7 +23,10 @@ class VouchersController < ApplicationController
   end
 
 
-
+  def delete_attachment
+    @voucher = current_user.vouchers.find(params[:id])
+  @voucher.uploads[0] = nil
+end
 
   # GET /vouchers/new
   def new

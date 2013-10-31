@@ -68,12 +68,12 @@
       <%end%>
     </div>
     <div class ="print_voucher">
-      <%= link_to "Print" ,"",:class=>'btn btn-primary'%> 
+      <%= link_to "Print" ,"javascript:print()",:class=>'btn btn-primary onprint'%> 
     </div>
     <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
   </div>
   <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
-    <div class ="final_state">
+    <div class ="final_state onprint">
       <%= link_to "Accepted" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
       <%= link_to "Rejected" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post%>
     </div>
