@@ -1,0 +1,4 @@
+<% if !(activity.trackable.nil?) %>
+  <%= User.find(activity.recipient_id).first_name %>
+  assigned you a  <%= link_to("VOUCHER", activity.trackable) %> for approval 
+<% end %>

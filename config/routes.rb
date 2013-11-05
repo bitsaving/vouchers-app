@@ -1,4 +1,5 @@
 VoucherApp::Application.routes.draw do
+  get "notifications/index"
   # resources :admins
 
   resources :comments

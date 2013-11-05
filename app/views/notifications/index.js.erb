@@ -1,0 +1,19 @@
+<% if !(@notifications.empty?) %>
+  $('.notifications_output').html('').append('<div id="result"></div>');
+  <% @notifications.each do |notification| %>
+    <% notification.seen =true %>
+    <% notification.save!%>
+    <% notification_output = render_activity(notification) %>
+    <% if notification_output != '' %>
+      $('#result').append('<div class= "notifications"><%= escape_javascript notification_output%></div>');
+    <% end %>
+  <% end %> 
+<%end%>
+  $('.notifications_output').siblings('.notifications_link').remove();
+  $('.notifications_link,.notifications_link img').click(function(e) {
+    e.preventDefault();
+    $('#result').show();
+  });
+  $('body').bind('click keyup', function(event){
+    $('#result').hide(); 
+  });

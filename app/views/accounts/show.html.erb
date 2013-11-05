@@ -18,7 +18,7 @@
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(account_id: @account.id),:remote=>true%></li>
     <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(account_id: @account.id) ,:remote=>true%></li>
     <div class ="voucher_status">
-      <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_pending_vouchers(@account.id ) }%>
+      <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_pending_vouchers(@account.id ) }  %>
      </div>
   </ul>
 </div>

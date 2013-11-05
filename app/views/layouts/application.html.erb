@@ -73,16 +73,27 @@
                   <li><%= link_to "Users" , admin_users_path%></li>
                 <%end%>
                 <li><%= link_to "Accounts" , accounts_path%></li>
+
               </ul>
             </ul> 
-            <div class="settings">
-              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-            </div>
+            
             <div id="userDetails">   
               <span class="initials"><%= current_user.first_name %></span>
                <span class="initials"><%= current_user.last_name %></span>
             </div>
-          <% end %>
+            <div class="settings">
+              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+            </div>
+
+                <div id="notifications"> 
+                  <%= link_to image_tag('notification.png'), notifications_index_path,remote: true %>
+                  <div class ="number_of_notifications notifications_link">
+                    <%= getUserNotifications %>
+                  </div>
+                  <div class = "notifications_output">
+                  </div>
+                </div>
+              <% end %>
         </div>
       </div>
     </div>

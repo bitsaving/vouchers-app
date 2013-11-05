@@ -62,7 +62,7 @@
     <%if @voucher.workflow_state == "new" %>
       <%= render 'assign' %>
     <%end%>
-    <div class = "edit_voucher">
+    <div class = "edit_voucher onprint">
       <% if((@voucher.current_state < :pending || @voucher.current_state == :rejected) && @voucher.creator_id == current_user.id )%>
         <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary'%> 
       <%end%>

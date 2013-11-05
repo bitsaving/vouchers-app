@@ -61,23 +61,20 @@
       <%= f.text_field :payment_reference, :class => 'text-field'%>
     </div>
   </div>
-  <% if(!@voucher.new_record?) %>
-    <% @voucher.uploads.each do |upload|  %> 
-      <div class="controls uploaded_links">
-        <%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%>
-        <%= link_to 'Destroy', @,voucher :confirm => 'Are you sure?', :method => :delete_attachment %>
-      </div>
-    <%end%>
-  <%else%> 
     <div class="control-group radioBox addFields">
+      <% @counter = -1 %>
       <%= f.fields_for :uploads do |builder| %>
-        <%=render 'upload_fields' ,:f=>builder %> 
+      <% @counter += 1 %>
+        <%=render 'upload_fields' ,:f=>builder %>
+
       <% end %>
-  <%end%>   
+    </div>
+
+
     <div class =" add_more_uploads radioBox addFields ">
       <%= link_to_add_fields "Add more files", f, :uploads %>
     </div>
-  </div>
+ 
   <div class="control-group">
     <%= f.label :amount, "Amount *",:class => 'control-label' %>
     <div class="controls">
@@ -87,13 +84,15 @@
 
     <div class="control-group">
       <%= f.fields_for :comments do |builder| %>
+         <% if(builder.object.user_id == current_user.id ) %>
         <%= builder.label :comments ,"comments",:class=>'control-label' %>
-        <div class="controls">
+         <div class="controls">
           <%= builder.text_area :description,:cols => 80, :rows => 5 ,placeholder: 'Enter your comment..'%>
-        </div>
+         </div>
         <div class="controls">
           <%= builder.hidden_field :user_id%>
         </div>
+        <%end%>
       <% end %>
     </div>   
     <div class="form-actions ">

@@ -52,3 +52,4 @@ gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 # gem 'debugger', group: [:development, :test]
 gem "workflow", "1.0.0"
 gem 'paranoia', '~> 2.0'
+gem 'public_activity'

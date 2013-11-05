@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131030045245) do
+ActiveRecord::Schema.define(version: 20131104064503) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -19,6 +19,24 @@ ActiveRecord::Schema.define(version: 20131030045245) do
     t.datetime "updated_at"
     t.boolean  "active",     default: true
   end
+
+  create_table "activities", force: true do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.boolean  "seen",           default: false
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "admins", force: true do |t|
     t.datetime "created_at"
@@ -70,44 +88,16 @@ ActiveRecord::Schema.define(version: 20131030045245) do
 
   create_table "vouchers", force: true do |t|
     t.date     "date"
-<<<<<<< HEAD
     t.string   "payment_type"
     t.integer  "account_debited"
     t.integer  "account_credited"
-=======
-<<<<<<< HEAD
-    t.string   "payment_type"
-    t.integer  "account_debited"
-    t.integer  "account_credited"
-=======
-<<<<<<< HEAD
-    t.string   "payment_type"
-    t.integer  "account_debited"
-    t.integer  "account_credited"
-=======
-    t.string   "pay_type"
-    t.string   "reference"
-    t.integer  "debit_from_id"
-    t.integer  "credit_to_id"
-    t.integer  "user_id"
->>>>>>> 3cd885915b7726b2726707acbcdba4561818f7e6
->>>>>>> b5a45e7b6ce0c9f6da9cff1281d61989c0096a58
->>>>>>> f01e2da8c6384e5dff3e14723a433bf8bf33d6e2
     t.date     "from_date"
     t.date     "to_date"
     t.decimal  "amount",            precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
-    t.integer  "assigned_to_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> b5a45e7b6ce0c9f6da9cff1281d61989c0096a58
->>>>>>> f01e2da8c6384e5dff3e14723a433bf8bf33d6e2
     t.integer  "creator_id"
     t.string   "payment_reference"
     t.integer  "assignee_id"
@@ -116,21 +106,7 @@ ActiveRecord::Schema.define(version: 20131030045245) do
 
   add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree
   add_index "vouchers", ["account_debited"], name: "index_vouchers_on_account_debited", using: :btree
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-=======
-  end
-
-  add_index "vouchers", ["assigned_to_id"], name: "index_vouchers_on_assigned_to_id", using: :btree
-  add_index "vouchers", ["credit_to_id"], name: "index_vouchers_on_credit_to_id", using: :btree
-  add_index "vouchers", ["debit_from_id"], name: "index_vouchers_on_debit_from_id", using: :btree
->>>>>>> 3cd885915b7726b2726707acbcdba4561818f7e6
->>>>>>> b5a45e7b6ce0c9f6da9cff1281d61989c0096a58
->>>>>>> f01e2da8c6384e5dff3e14723a433bf8bf33d6e2
   add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
   add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
-  add_index "vouchers", ["user_id"], name: "index_vouchers_on_user_id", using: :btree
 
 end

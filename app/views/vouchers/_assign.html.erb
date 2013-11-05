@@ -1,27 +1,23 @@
-<%= form_tag increment_state_voucher_path(:id => @voucher),:class=>"assign_form" do %>
+<%= form_tag increment_state_voucher_path(:id => @voucher) do %>
   <div class ="assignment onprint">
     <div class="control-group">    
       <div class="controls dropDown">
-        <%= select_tag 'voucher[assignee_id]', options_for_select(user_options ), prompt: "Select the person" %>
+        <%= select_tag 'voucher[assignee_id]', options_for_select(user_options )%>
       </div>
     </div>
     <div class="actions approval_button">
       <div class="actions">
         <%if @voucher.current_state == :new || @voucher.current_state == :rejected%>
-          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign'%>
+          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign '%>
         <%else%>
-          <%if(@voucher.current_state == :pending)%>
-            <div >
-            <%= link_to " Approve "  ,voucher_path(@voucher),:class=>'btn submit_accepted btn-primary assign',:remote=> true%>
-          </div>
-          <div class ="Or_label">
-            <%=" OR "%>
-          </div>
-          <%else%>
-            <%= link_to "Accept  " , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary assign ',method: :post%>
-          <%end%>
-            <%= link_to "Reject " , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assign',method: :post%>
-        <%end%>
+        <div >
+            <%= submit_tag "Approve" ,:class=>'btn btn-primary assign submit_accepted'%>
+        </div>
+        <div class ="Or_label">
+          <%=" OR "%>
+        </div>
+        <%= link_to "Reject " , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assign submit_accepted',method: :post%>
+       <%end%>
       </div>
     </div>
   </div>

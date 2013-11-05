@@ -16,6 +16,7 @@
   left:300px;
   top:-140px;
 }
+
 .nav-tags li.active {
 background-color:#f9f9f9;}
 .voucher_display .page-header {
@@ -123,12 +124,14 @@ padding-left: 400px;}
 #userDetails {
   position: absolute;
   top:20px;
-  left:900px;
+  left:1000px;
   width:auto;
   font-size: 20px;
 }
 .navbar-inner {
-  min-height:50px;}
+  min-height:50px;
+background-image:linear-gradient(to bottom, #ffffff, #747171);
+}
 .well{
   min-height: 100px;
   width: 200px;

@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
+  include PublicActivity::Common
+  has_many :notifications
   has_many :vouchers,:foreign_key=>"creator_id"
   has_many :comments
   devise :database_authenticatable, :omniauthable,

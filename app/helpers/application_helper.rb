@@ -13,7 +13,7 @@ module ApplicationHelper
     Account.pluck( 'name', 'id' )
   end
   def user_options
-    User.pluck( 'first_name ', 'id' )
+    User.where.not(id:  current_user.id).pluck( 'first_name ', 'id' )
   end
 
   def format_date(date)
@@ -31,5 +31,14 @@ module ApplicationHelper
   def getAccount(id)
     @account = Account.find(id)
   end
+  def getUserNotifications
+    # PublicActivity::Activity.where('owner_id = ?', current_user.id).order("created_at desc")
+    notifications = PublicActivity::Activity.where('owner_id = ? and seen = false', current_user.id).order('id desc').count
+    if notifications > 0
+      notifications
+    else
+     ""
+   end 
+     end
   
 end

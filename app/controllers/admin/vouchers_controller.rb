@@ -8,4 +8,5 @@ class Admin::VouchersController < ApplicationController
       redirect_to voucher_path
     end
   end
+ 
 end

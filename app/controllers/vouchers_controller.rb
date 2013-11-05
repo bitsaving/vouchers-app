@@ -23,22 +23,18 @@ class VouchersController < ApplicationController
   end
 
 
-  def delete_attachment
-    @voucher = current_user.vouchers.find(params[:id])
-  @voucher.uploads[0] = nil
-end
-
-  # GET /vouchers/new
+ # GET /vouchers/new
   def new
     
     @voucher = Voucher.new
     uploads = @voucher.uploads.build
     comments =@voucher.comments.build
+    @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
   end
 
   # GET /vouchers/1/edit
   def edit 
-    if(!(current_user.user_type == "admin" || params[:id] == current_user.id))
+    if(!(current_user.user_type == "admin" || current_user.id == @voucher.creator_id))
       redirect_to root_path, notice: "No editing privileges for you"
     end 
   end
@@ -47,7 +43,7 @@ end
   # POST /vouchers.json
   def create
    @voucher = current_user.vouchers.build(voucher_params)
-   @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
+   # @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
     respond_to do |format|
       if @voucher.save
         format.html { redirect_to @voucher, notice: 'Voucher was successfully created.' }
@@ -138,13 +134,16 @@ end
       when "pending" then @voucher.approve!
       when "approved" then @voucher.accept!
     end    
-    if @voucher.current_state == :accepted
-      @voucher.assignee_id = nil
-    else    
-      @voucher.assignee_id = params[:voucher][:assignee_id]
-    end
-    @voucher.save!
-    redirect_to :back
+    @voucher.add_comment(current_user.id) if !(@voucher.current_state == :pending)
+      if @voucher.current_state == :accepted
+        @voucher.assignee_id = nil
+      else    
+        @voucher.assignee_id = params[:voucher][:assignee_id]
+      end
+      @voucher.save!
+      @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assigned_to,recipient: current_user
+      # @voucher.create_activity key: 'voucher.change_state', owner: @voucher.creator
+      redirect_to :back
   end
  
   def decrement_state
@@ -153,6 +152,7 @@ end
       when "pending" then @voucher.reject!
       when "approved" then @voucher.reject!
     end
+    @voucher.add_comment(current_user.id) 
     @voucher.assignee_id = @voucher.creator_id
     @voucher.save!
     redirect_to :back

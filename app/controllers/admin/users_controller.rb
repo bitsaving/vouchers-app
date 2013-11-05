@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :authorize
+
   before_action :set_user, :only => [:edit,:destroy, :update]
   before_action :check_admin
   # GET /users
@@ -75,6 +75,7 @@ class Admin::UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+  
   def check_admin
     if !(current_user.reload.user_type == "admin")
       redirect_to new_user_session_path, flash: { error: "You are not an admin" }
