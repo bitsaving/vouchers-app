@@ -36,6 +36,9 @@ left:300px;
 .navbar .brand {
 padding-top:20px !important;
 }
+.brand {
+color:black !important;
+}
 .dl-horizontal dt {
 width:100px !important;
 font-size: 20px !important;
@@ -130,7 +133,7 @@ padding-left: 400px;}
 }
 .navbar-inner {
   min-height:50px;
-background-image:linear-gradient(to bottom, #ffffff, #747171);
+background-image:linear-gradient(to bottom, #ffffff, #bebaba);
 }
 .well{
   min-height: 100px;

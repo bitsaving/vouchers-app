@@ -1,6 +1,4 @@
-<% if @user.id == current_user.id %>
-  redirect_to waiting_for_approval_vouchers_path 
-<%else%>
+
 <%- model_class = User -%>
 <div class="page-header">
   <h2><%= "User Information" %></h2>
@@ -30,5 +28,5 @@
               :class => 'btn btn-danger' %>
 </div>
 
-<%end%>
+
 <!-- </div> -->

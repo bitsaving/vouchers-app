@@ -28,8 +28,8 @@
             <%= link_to voucher.credit_to.name, account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %>
            <%end%>
         </td>
-        <td><%= voucher.date%></td>
-        <td><%= voucher.amount%></td>
+        <td><%= format_date(voucher.date)%></td>
+        <td><%= number_to_currency(voucher.amount,:unit=> "₹ ")%></td>
         <% if voucher.assigned_to.nil? %>
         <td> <%=" "%>
         <%else%>

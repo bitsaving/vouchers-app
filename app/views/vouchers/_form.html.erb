@@ -1,6 +1,4 @@
-<div class ="voucher_form">
-  <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
-  <% if @voucher.errors.any? %>
+<% if @voucher.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@voucher.errors.count, "error") %> prohibited this voucher from being saved:</h2>
 
@@ -12,6 +10,9 @@
       </ul>
     </div>
   <% end %>   
+<div class ="voucher_form">
+  <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+  
   <legend> Voucher Details</legend>
     <div class="control-group">
       <%= f.label :date, :class => 'control-label' %>
@@ -20,7 +21,7 @@
       </div>
     </div>
     <div class="control-group">
-      <%= f.label :account_debited, "Debit From *",:class => 'control-label' %>
+      <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
     <div class="controls">
       <%= text_field_tag :debit , params[:debit],  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit'} , :class => 'text-field autocomplete',:value =>get_entered_data('debit')%>
     </div>
@@ -29,7 +30,7 @@
       <%=  f.hidden_field :account_debited %>
   </div>
   <div class="control-group">
-    <%= f.label :account_credited, "Credit To *",:class => 'control-label' %>
+    <%= f.label :account_credited, "Credit To",:class => 'control-label compulsory-field' %>
     <div class="controls">
       <%= text_field_tag :credit, params[:credit] , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit'} , :class => 'text-field autocomplete',:value=>get_entered_data('credit')%>
     </div>
@@ -50,7 +51,7 @@
     </div>
   </div>
   <div class="control-group">
-    <%= f.label :payment_type,"Payment Mode *", :class => 'control-label' %>
+    <%= f.label :payment_type,"Payment Mode", :class => 'control-label compulsory-field' %>
     <div class="controls">
       <%= f.select :payment_type, Voucher::PAYMENT_TYPES ,prompt: "Select payment mode" ,:class => 'text_field' %>
     </div>
@@ -76,7 +77,7 @@
     </div>
  
   <div class="control-group">
-    <%= f.label :amount, "Amount *",:class => 'control-label' %>
+    <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
     <div class="controls">
        <%= f.text_field :amount, :class => 'text_field' %>
       </div>
