@@ -80,7 +80,7 @@ class Admin::UsersController < ApplicationController
   
   def check_admin
     if !(current_user.reload.user_type == "admin")
-      redirect_to new_user_session_path, flash: { error: "You are not an admin" }
+      redirect_to "/", flash: { error: "You are not an admin" }
     end
   end
 end

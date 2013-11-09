@@ -47,7 +47,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#"> VoucherApp</a>
+          <div class="brand"> VoucherApp</div>
           <div class="container-fluid nav-collapse ">
             <% if current_user %>  
               <ul class="nav nav-tabs  ">
@@ -78,8 +78,8 @@
             </ul> 
             
             <div id="userDetails">   
-              <span class="initials"><%= current_user.first_name %></span>
-               <span class="initials"><%= current_user.last_name %></span>
+              <span class="initials"><%= current_user.first_name + " " + current_user.last_name %></span>
+              <!--  <span class="initials"><%= current_user.last_name %></span> -->
             </div>
             <div class="settings">
               <%= link_to "Logout", destroy_user_session_path, method: :delete %>

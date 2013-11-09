@@ -8,11 +8,11 @@ $('body').bind('click keyup', function(event){
 
 function notifications_view() {
   $('.notifications').bind('click keyup', function(event) {
-    var activity_idd = $(this).find('a.activity').text();
+    var activity_id = $(this).find('a.activity').text();
     var url = $(this).find('a.voucher').text();
     $.ajax({
       url:'/notifications/seen_notifications',
-      data:{activity_id: activity_idd,voucher_id: url},
+      data:{activity_id: activity_id,voucher_id: url},
       type:'get',
       success: function(responseData) {
         window.location.href = responseData;
@@ -26,12 +26,14 @@ function notifications_view() {
     <%notification.visited=true%>
     <%notification.save!%>
     <% notification_output = render_activity(notification) %>
-    <% if !notification.seen%>
-      $('#result').append('<div class= "notifications" id="<%=notification.id%>"><%= escape_javascript notification_output%></div>');
-    <%else%>
-      $('#result').append('<div class= "notifications seen_notifications" id="<%=notification.id%>"><%= escape_javascript notification_output%></div>');
-    <%end%>
-  <% end %> 
+    <% if notification_output != ''%>
+      <% if !(notification.seen)%>
+        $('#result').append('<div class= "notifications" id="<%=notification.id%>"><%= escape_javascript notification_output%></div>');
+      <%else%>
+        $('#result').append('<div class= "notifications seen_notifications" id="<%=notification.id%>"><%= escape_javascript notification_output%></div>');
+      <%end%>
+    <% end %>
+  <%end%> 
   $('.notifications_output').siblings('.notifications_link').remove();
   notifications_view();
 <%end%>

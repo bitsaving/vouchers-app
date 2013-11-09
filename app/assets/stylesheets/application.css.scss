@@ -124,25 +124,25 @@ z-index: 100;
 }
 #result{
 
-border:dotted 1px black;
+border:solid 1px black;
 border-top:none;
-
+border-radius: 2px;
 
 }
 .notifications{
 width:auto;
 height:40px;
-padding-top: 10px;
-padding-right: 5px;
-padding-left: 5px;
+padding-top: 15px;
+padding-right: 15px;
+padding-left: 15px;
 border-top: dotted 1px black;
-background-color:#f5f9f9;
+background-color:#f5f5f5;
   a {
 color:blue;
   }
 }
 .seen_notifications {
-background-color:white;
+background-color:#fafdff
 }
 
 .number_of_notifications{

@@ -96,7 +96,7 @@
  
 
     <div class="control-group">
-       <%= f.label :comments ,"comments",:class=>'control-label' %>
+       <%= f.label :comments ,"Comment",:class=>'control-label' %>
       <%= f.fields_for :comments do |builder| %>
 
       <% if(builder.object.user_id == current_user.id ) %>
