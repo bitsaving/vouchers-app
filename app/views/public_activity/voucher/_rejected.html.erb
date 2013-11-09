@@ -1,6 +1,5 @@
 <% if !(activity.trackable.nil?) %>
-  <%= User.find(activity.recipient_id).first_name %>
-  assigned you a  <%= link_to("VOUCHER", activity.trackable) %> for approval 
+  Your voucher with ID <%= link_to activity.trackable.id,activity.trackable %> has been rejected
   <%=link_to activity.id, "#",:class=>"hidden activity"%>
   <%= link_to activity.trackable.id,"#",:class=>"hidden voucher"%>
 <% end %>

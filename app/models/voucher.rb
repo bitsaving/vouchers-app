@@ -20,11 +20,11 @@ class Voucher < ActiveRecord::Base
     end
   end
   PAYMENT_TYPES = [ "Check", "Credit card", "Bank transfers","Cash" ]
-  has_many :comments
+  has_many :comments,:dependent=>:destroy
   validates :date,:payment_type,:amount ,presence: true
   validates :account_credited,:account_debited ,:presence=>true,:on => :create
   validates :to_date, :date => { :after_or_equal_to => :from_date,
-    :message => 'must be after start date of project'}
+    :message => 'must be after start date of project'} ,:allow_blank=> true
 
   validates :amount, numericality: { greater_than: 0.01}
   belongs_to :debit_from, :class_name => 'Account', :foreign_key => "account_debited"

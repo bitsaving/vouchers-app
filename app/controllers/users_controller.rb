@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
-
+  # before_action :set_user, :only => [:show]
+  
   # include CurrentUser
-  # before_action :set_user, :only => [:edit,  :update]
+  # 
 
   # GET /users
   # GET /users.json
@@ -51,7 +52,11 @@ class UsersController < ApplicationController
 
   def show
     if(current_user)
-        redirect_to waiting_for_approval_vouchers_path 
+      @user = current_user
+     # respond_to do |format|
+     #    format.html {}
+     #  end
+     #    # redirect_to waiting_for_approval_vouchers_path 
       # end
       else
         respond_to do |format|

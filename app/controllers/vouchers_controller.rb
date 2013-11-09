@@ -1,8 +1,7 @@
 class VouchersController < ApplicationController
 
 
-  before_action :set_voucher, only: [:show, :edit, :update, :destroy,:rename_file]
- 
+  before_action :set_voucher, only: [:show, :edit, :update, :destroy]
   # GET /vouchers
   # GET /vouchers.json
   def index
@@ -29,11 +28,13 @@ class VouchersController < ApplicationController
     @voucher = Voucher.new
     uploads = @voucher.uploads.build
     comments =@voucher.comments.build
-    @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
+    @voucher.comments.each do |comment| 
+      comment.user_id = current_user.id
+    end #if !@voucher.comments[0].nil?
   end
 
   # GET /vouchers/1/edit
-  def edit 
+  def edit
     if(!(current_user.user_type == "admin" || current_user.id == @voucher.creator_id))
       redirect_to root_path, notice: "No editing privileges for you"
     end 
@@ -42,7 +43,11 @@ class VouchersController < ApplicationController
   # POST /vouchers
   # POST /vouchers.json
   def create
+
    @voucher = current_user.vouchers.build(voucher_params)
+    @voucher.comments.each do |comment| 
+      comment.user_id = current_user.id
+    end
    # @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
     respond_to do |format|
       if @voucher.save
@@ -58,6 +63,10 @@ class VouchersController < ApplicationController
   # PATCH/PUT /vouchers/1
   # PATCH/PUT /vouchers/1.json
   def update
+    params[:voucher][:comments_attributes].each do |comment_id ,content|
+      content[:user_id] =current_user.id if content[:user_id].blank?
+    end 
+      Rails.logger.debug "*******#{voucher_params}"
     respond_to do |format|
       if @voucher.update(voucher_params)
         format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
@@ -67,6 +76,7 @@ class VouchersController < ApplicationController
         format.json { render json: @voucher.errors, status: :unprocessable_entity }
       end
     end
+
   end
 
   def pending_vouchers
@@ -155,6 +165,7 @@ class VouchersController < ApplicationController
     @voucher.add_comment(current_user.id) 
     @voucher.assignee_id = @voucher.creator_id
     @voucher.save!
+     @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
     redirect_to :back
   end
   
@@ -166,7 +177,6 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type,uploads_attributes:[:avatar,:id,:_destroy],comments_attributes:[:description,:id,:_destroy,:user_id])
+      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar, :avatar_file_name] )
     end
-  
 end

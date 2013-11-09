@@ -1,16 +1,6 @@
-  
+
 <p class ="radioBox link controls">
-	<%if @voucher.new_record? %>
-  <%= f.file_field :avatar %>    
-
+  <%= f.file_field :avatar ,:id=> "file" + @counter.to_s %>   
+  <%=f.text_field :tagname,:class=>"filename"  %>
   <%= link_to_remove_fields "remove" , f %>
-<%elsif @voucher.uploads.length > 0 %>
-	<%= link_to @voucher.uploads[@counter].avatar_file_name ,@voucher.uploads[@counter].avatar.url(:original)%>
-	<%= link_to_remove_fields "remove" , f %>
-<%else%>
-<%= f.file_field :avatar %>    
-
-  <%= link_to_remove_fields "remove" , f %>
-<%end%>
-
-</p>         
+</p>

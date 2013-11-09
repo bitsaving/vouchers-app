@@ -33,7 +33,7 @@ module ApplicationHelper
   end
   def getUserNotifications
     # PublicActivity::Activity.where('owner_id = ?', current_user.id).order("created_at desc")
-    notifications = PublicActivity::Activity.where('owner_id = ? and seen = false', current_user.id).order('id desc').count
+    notifications = PublicActivity::Activity.where('owner_id = ? and visited=false', current_user.id).order('id desc').count
     if notifications > 0
       notifications
     else

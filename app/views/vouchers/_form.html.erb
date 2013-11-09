@@ -63,18 +63,29 @@
     </div>
   </div>
     <div class="control-group radioBox addFields">
-      <% @counter = -1 %>
+      <% counter = 0 %>
       <%= f.fields_for :uploads do |builder| %>
-      <% @counter += 1 %>
-        <%=render 'upload_fields' ,:f=>builder %>
-
+      <p class ="link radioBox controls">
+  
+        <%if @voucher.new_record? %>
+              <%= builder.file_field :avatar %>
+                <%=builder.text_field :tagname,:class=>"filename"  %>
+        <%else%>
+            <%= link_to @voucher.uploads[counter].avatar_file_name ,@voucher.uploads[counter].avatar.url(:original)%>
+           <%=builder.text_field :tagname,:class=>"filename hidden"  %>
+             
+       
+        <%end%>   
+          
+           <%= link_to_remove_fields "  Remove" , builder %>
+          
+        <% counter += 1 %>
       <% end %>
-    </div>
-
-
-    <div class =" add_more_uploads radioBox addFields ">
-      <%= link_to_add_fields "Add more files", f, :uploads %>
-    </div>
+    </p>
+  </div>
+  <div class =" add_more_uploads radioBox addFields ">
+    <%= link_to_add_fields "Add files", f, :uploads %>
+  </div>
  
   <div class="control-group">
     <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
@@ -82,20 +93,22 @@
        <%= f.text_field :amount, :class => 'text_field' %>
       </div>
     </div>
+ 
 
     <div class="control-group">
+       <%= f.label :comments ,"comments",:class=>'control-label' %>
       <%= f.fields_for :comments do |builder| %>
-         <% if(builder.object.user_id == current_user.id ) %>
-        <%= builder.label :comments ,"comments",:class=>'control-label' %>
-         <div class="controls">
-          <%= builder.text_area :description,:cols => 80, :rows => 5 ,placeholder: 'Enter your comment..'%>
-         </div>
-        <div class="controls">
-          <%= builder.hidden_field :user_id%>
-        </div>
+
+      <% if(builder.object.user_id == current_user.id ) %>
+        
+          
+        <%=render 'comment_fields' ,:f=>builder %>
         <%end%>
       <% end %>
-    </div>   
+    </div>  
+     <div class =" add_more_uploads radioBox addFields ">
+      <%= link_to_add_fields "Add comments", f, :comments %>
+    </div>
     <div class="form-actions ">
       <%= f.submit nil, :class => 'btn btn-primary'%>
     </div>

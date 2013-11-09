@@ -1,5 +1,6 @@
 VoucherApp::Application.routes.draw do
   get "notifications/index"
+  get "notifications/seen_notifications"
   # resources :admins
 
   resources :comments

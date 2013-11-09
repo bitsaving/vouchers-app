@@ -8,7 +8,7 @@
       <%= @voucher.id %>
     </div>
   </div>
-  <div class = "status">
+  <div class = "status onprint">
     <%= @voucher.workflow_state%>
     <% if @voucher.assignee_id && @voucher.assignee_id != current_user.id%>
       <%= "(" %>
@@ -31,12 +31,14 @@
       <div class ="labels">Credit</div> 
       <%= @voucher.credit_to.name %>
     </div>
+    <% if @voucher.from_date %>
     <div class="date_period" >
       <div class ="date_field">From :</div>
       <%= format_date( @voucher.from_date ) %> 
       <div class="date_field" >To :</div>
       <%= format_date( @voucher.to_date ) %> 
     </div>
+    <%end%>
     <div class = "payment_mode">
       <div class="payment_label">Payment Mode :</div>
       <%= @voucher.payment_type %>
@@ -50,6 +52,7 @@
         </div>
         <% @voucher.uploads.each do |upload|  %> 
           <div><%= (counter += 1).to_s+". "%><%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%></div>     
+      
         <%end%>
       </div> 
     <%end%>

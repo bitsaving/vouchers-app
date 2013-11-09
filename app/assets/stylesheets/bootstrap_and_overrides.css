@@ -6,7 +6,7 @@
   =require twitter-bootstrap-static/fontawesome
   */
   .settings {
-  margin-top: 20px;
+  margin-top: 24px;
   color: black;
   font-size: 15px !important;
   float:right;
@@ -126,7 +126,7 @@ background-color: black;}*/
 padding-left: 400px;}
 #userDetails {
   position: absolute;
-  top:20px;
+  top:25px;
   left:1000px;
   width:auto;
   font-size: 20px;

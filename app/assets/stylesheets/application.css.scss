@@ -107,34 +107,64 @@ br {
 display: none
 }
 }
-#notifications {
+#notifications_panel {
 position: absolute;
-left:640px;
+left:870px;
 top:18px;
+z-index: 100;
+
+}
+#notification-icon {
+  background-position: -2px -1435px !important;
+  background-size:auto !important;
+  background-repeat: no-repeat !important;
+  background-image: url(/assets/notification.png) !important;
+  height: 30px;
+  width: 30px;
+}
+#result{
+
+border:dotted 1px black;
+border-top:none;
 
 
 }
-#result{
-border:solid 1px black;
-border-top:none;
-background-color: #f5f5f5;}
 .notifications{
 width:auto;
-height:30px;
-padding-top: 5px;
+height:40px;
+padding-top: 10px;
 padding-right: 5px;
 padding-left: 5px;
 border-top: dotted 1px black;
+background-color:#f5f9f9;
+  a {
+color:blue;
+  }
 }
+.seen_notifications {
+background-color:white;
+}
+
 .number_of_notifications{
   display: inline-block;
-font-size:27px;
-color:red;
+font-size:15px;
+color:white;
 position: relative;
-left:-18px;
-bottom: 5px;
+left:20px;
+bottom: 28px;
 font-weight: bold;
+width:10px;
+background-color: red;
+padding-left: 5px;
+border-radius: 5px;
 }
-.notifications_output {
-z-index:100;
+.voucher_management,.voucher_management p {
+text-align: center;
+font-size: 30px;
+font-weight: bold;
+margin-top: 100px;
+color:black;
+ a{
+color:red;
+ }
 }

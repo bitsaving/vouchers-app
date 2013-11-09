@@ -1,9 +1,13 @@
 class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
- 
+  skip_before_action :authorize ,only: :google_oauth2
 	def google_oauth2
+    Rails.logger.debug "*************"
+
     auth_details = request.env["omniauth.auth"]
+    Rails.logger.debug "^^^^^^^**********#{auth_details}"
     # if auth_details.info['email'].split("@")[1] == "vinsol.com"
       user = User.from_omniauth(request.env["omniauth.auth"])
+
       if user.persisted?
         flash.notice = "Signed in Through Vinsol!"
         sign_in_and_redirect user

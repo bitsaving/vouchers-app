@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
-
   before_action :set_user, :only => [:edit,:destroy, :update]
+  
   before_action :check_admin
   # GET /users
   # GET /users.json
@@ -50,7 +50,9 @@ class Admin::UsersController < ApplicationController
     if params[:id]
       @user = User.find(params[:id])
     else
-      redirect_to waiting_for_approval_vouchers_path
+      @user = current_user
+    # else
+    #   redirect_to waiting_for_approval_vouchers_path
     end
      respond_to do |format|
      format.js {}

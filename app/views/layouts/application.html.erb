@@ -51,7 +51,7 @@
           <div class="container-fluid nav-collapse ">
             <% if current_user %>  
               <ul class="nav nav-tabs  ">
-                <li><%= link_to "Home" , root_path%></li>
+                <li><%= link_to "Home" , waiting_for_approval_vouchers_path%></li>
                 <li>
                   <div class="dropdown" id="VoucherContainer">
                     <a id="voucherUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
@@ -84,15 +84,16 @@
             <div class="settings">
               <%= link_to "Logout", destroy_user_session_path, method: :delete %>
             </div>
-
-                <div id="notifications"> 
-                  <%= link_to image_tag('notification.png'), notifications_index_path,remote: true %>
+                <div id ="notifications_panel">
+                <div id="notifications">
+                  <%= link_to "<div id='notification-icon'></div>".html_safe, notifications_index_path, remote: true %>
                   <div class ="number_of_notifications notifications_link">
                     <%= getUserNotifications %>
                   </div>
                   <div class = "notifications_output">
                   </div>
                 </div>
+              </div>
               <% end %>
         </div>
       </div>
