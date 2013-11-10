@@ -8,7 +8,7 @@
           <div>
             <%= User.find(comment.user_id).first_name %>
           </div>
-            <%= comment.updated_at.localtime.strftime("%I:%M:%S")%>
+            <%= comment.updated_at.localtime.strftime("%A , %I:%M:%S")%>
         </div>
       </div>
       <div class ="comment_separator">

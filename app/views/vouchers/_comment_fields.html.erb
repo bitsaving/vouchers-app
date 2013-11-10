@@ -1,6 +1,8 @@
  <div class="controls">
    <%= f.text_area :description,:cols => 80, :rows => 5 ,placeholder: 'Enter your comment..'%>
-        </div>
+   <%= link_to_remove_fields "remove" , f %>
+ </div>
+
    <div class="controls">
     <%= f.hidden_field :user_id%>
  </div>
