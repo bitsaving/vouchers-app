@@ -3,11 +3,15 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-* Run the admin rake task to create an admin account in the databse.
-* once the admin has been created login through a valid vinsol account.
-* after authentication it will take u to the page containg the vouchers waiting for ur approval.
-* u can create delete view all the corresponding vouchers.
+VoucherApp
+This application is developed in rails that allows you to create vouchers and send it for further approval by the next authority.
+the other person can accept ,reject your vouchers.this is implemented by maintaing states.
 
+To run this application kindly run the rake task to create an admin by running rake admin:create on console.
+Once the admin is created you can log in and now have the ability to create users , accounts and corresponding vouchers.
+After creation of admin u can log in via any valid google account which is verified via omniauth.
+
+Once u are logged in u can create vouchers.
 
 
 Please feel free to use a different markup language if you do not plan to run
