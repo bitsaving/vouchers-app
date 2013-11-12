@@ -8,6 +8,7 @@ class CreateActivities < ActiveRecord::Migration
       t.string  :key
       t.text    :parameters
       t.boolean :seen ,:default=>false
+      t.boolean :visited ,:default=>false
       t.belongs_to :recipient, :polymorphic => true
 
       t.timestamps

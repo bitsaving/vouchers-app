@@ -31,6 +31,7 @@ function dateFieldHandler(){
 function remove_fields(link) {
   $(link).prev("input[type=hidden]").val("1");
   $(link).closest(".radioBox").hide();
+  $(link).closest(".radioBox").siblings('.tagname').hide();
 
 }
 function remove_class(){ 

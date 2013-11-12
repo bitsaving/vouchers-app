@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     if(@comment.save)
       respond_to do |format|
         format.html { redirect_to :back }
+        format.js { @voucher = Voucher.find(params[:voucher_id])}
       end
     else
       respond_to do |format|

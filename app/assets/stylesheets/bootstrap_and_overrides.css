@@ -16,7 +16,6 @@
   left:300px;
   top:-140px;
 }
-
 .nav-tags li.active {
 background-color:#f9f9f9;}
 .voucher_display .page-header {
@@ -25,7 +24,7 @@ border: none !important;
 .table-striped th {
 font-size: 22px;}
 .table-striped td {
-font-size: 17px;}
+font-size: 14px;}
 .form-horizontal .control-label {
 width:200px;
 margin-left:-100px;}

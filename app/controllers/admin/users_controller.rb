@@ -49,10 +49,10 @@ class Admin::UsersController < ApplicationController
   def show
     if params[:id]
       @user = User.find(params[:id])
-    else
-      @user = current_user
     # else
-    #   redirect_to waiting_for_approval_vouchers_path
+    #   # @user = current_user
+    else
+      redirect_to waiting_for_approval_vouchers_path
     end
      respond_to do |format|
      format.js {}

@@ -34,11 +34,11 @@
     <div class="control-group">
       <%= f.label :admin, :class => 'control-label' %>
       <div class="controls">
-        <%= check_box_tag :user_type  %><br />
+        <%= f.check_box :user_type  %><br />
       </div>
    </div>
-    <div >
-      <%=f.hidden_field :user_type %>
+    <div>
+      <%=f.hidden_field :user_type ,:class=>"user_type"%>
     </div>
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary'%>

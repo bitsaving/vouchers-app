@@ -1,4 +1,4 @@
-<%- model_class = Account -%>
+  <%- model_class = Account -%>
 <div class="page-header">
 <h3> Accounts </h3>
 </div>
@@ -7,6 +7,7 @@
             new_account_path,
             :class => 'btn new_button btn-primary' %>
 </div>
+<% if @accounts.count >0 %>
 <table class="table table-striped accountss">
   <thead>
     <tr>
@@ -33,3 +34,4 @@
  
  <%=paginate @accounts, :remote => true %>
   </div>
+<%end%>

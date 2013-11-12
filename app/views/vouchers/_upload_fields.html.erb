@@ -1,6 +1,9 @@
 
 <p class ="radioBox link controls">
   <%= f.file_field :avatar ,:id=> "file" + @counter.to_s %>   
-  <%=f.text_field :tagname,:class=>"filename"  %>
+  
   <%= link_to_remove_fields "remove" , f %>
+<p class ="radioBox link controls tagname">
+  <%=f.text_field :tagname,:class=>"filename" ,placeholder: "caption"  %>
+</p>
 </p>

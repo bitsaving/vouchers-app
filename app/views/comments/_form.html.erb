@@ -1,4 +1,4 @@
- <%= form_tag comments_path(voucher_id: @voucher.id) ,:class=>"assign_form" do %>
+ <%= form_tag comments_path(voucher_id: @voucher.id) ,:remote=>true,:class=>"assign_form" do %>
   
     <div class="add_comments onprint">
       <div class="control-group">
@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="actions">
-        <%= submit_tag "Save comment" ,:class => 'btn btn-primary',data: { disable_with: "Please wait..."}%>
+        <%= submit_tag "Save" ,:class => 'btn btn-primary',data: { disable_with: "Please wait..."}%>
       </div>
 
       

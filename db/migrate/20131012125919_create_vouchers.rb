@@ -13,6 +13,9 @@ class CreateVouchers < ActiveRecord::Migration
       t.references :transfer_from , index: true
       t.references :transfer_to , index: true
       t.references :assigned_to , index:true
+      t.integer :accepted_by
+      t.integer :approved_by
+      t.string :workflow_state
       t.timestamps
     end
   end

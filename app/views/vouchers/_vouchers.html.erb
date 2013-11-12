@@ -1,7 +1,9 @@
+
 <%- model_class = Voucher -%>
 <div class="page-header">
 
 </div>
+<% if @vouchers.count >0 %>
 <table class="table table-striped account_vouchers">
   <thead>
     <tr>
@@ -49,3 +51,4 @@
   </tbody>
 </table>
 <%= paginate @vouchers, :remote => true %>
+<%end%>

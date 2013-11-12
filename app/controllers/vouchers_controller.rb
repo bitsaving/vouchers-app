@@ -30,7 +30,7 @@ class VouchersController < ApplicationController
     comments =@voucher.comments.build
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
-    end #if !@voucher.comments[0].nil?
+    end
   end
 
   # GET /vouchers/1/edit
@@ -66,7 +66,6 @@ class VouchersController < ApplicationController
     params[:voucher][:comments_attributes].each do |comment_id ,content|
       content[:user_id] =current_user.id if content[:user_id].blank?
     end 
-      Rails.logger.debug "*******#{voucher_params}"
     respond_to do |format|
       if @voucher.update(voucher_params)
         format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
@@ -80,17 +79,21 @@ class VouchersController < ApplicationController
   end
 
   def pending_vouchers
-    if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+   if params[:account_id]
+       if params[:account_type]
+        @vouchers = Voucher.where(workflow_state: 'pending').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      else  
+        @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      end
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: 'pending').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
-      @vouchers = Voucher.where(workflow_state: 'pending').page(params[:page]).order('updated_at desc').per(10)
+      @vouchers = Voucher.where(workflow_state: 'pending').order('updated_at desc').page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
-    end
+    end  
   end
 
   def waiting_for_approval
@@ -102,7 +105,11 @@ class VouchersController < ApplicationController
 
   def accepted_vouchers
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?) OR account_credited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+       if params[:account_type]
+        @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      else  
+        @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      end
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: 'accepted').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
@@ -115,7 +122,11 @@ class VouchersController < ApplicationController
   end
   def rejected_vouchers
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?) OR account_debited IN (?)", params[:account_id],params[:account_id]]).order('updated_at desc').page(params[:page]).per(50)
+      if params[:account_type]
+        @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      else  
+        @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      end
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: 'rejected').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else
@@ -141,8 +152,8 @@ class VouchersController < ApplicationController
     case "#{@voucher.current_state}"
       when "rejected" then @voucher.send_for_approval!
       when "new" then @voucher.send_for_approval!
-      when "pending" then @voucher.approve!
-      when "approved" then @voucher.accept!
+      when "pending" then @voucher.approve!(current_user.id)
+      when "approved" then @voucher.accept!(current_user.id)
     end    
     @voucher.add_comment(current_user.id) if !(@voucher.current_state == :pending)
       if @voucher.current_state == :accepted
@@ -159,8 +170,8 @@ class VouchersController < ApplicationController
   def decrement_state
      @voucher = Voucher.find(params[:id])
     case "#{@voucher.current_state}"
-      when "pending" then @voucher.reject!
-      when "approved" then @voucher.reject!
+      when "pending" then @voucher.reject!(current_user.id)
+      when "approved" then @voucher.reject!(current_user.id)
     end
     @voucher.add_comment(current_user.id) 
     @voucher.assignee_id = @voucher.creator_id

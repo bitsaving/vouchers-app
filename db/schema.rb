@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20131107151101) do
     t.string   "key"
     t.text     "parameters"
     t.boolean  "seen",           default: false
+    t.boolean  "visited",        default: false
     t.integer  "recipient_id"
     t.string   "recipient_type"
     t.datetime "created_at"
@@ -37,11 +38,6 @@ ActiveRecord::Schema.define(version: 20131107151101) do
   add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
-
-  create_table "admins", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "comments", force: true do |t|
     t.text     "description"
@@ -92,21 +88,25 @@ ActiveRecord::Schema.define(version: 20131107151101) do
     t.string   "payment_type"
     t.integer  "account_debited"
     t.integer  "account_credited"
+    t.integer  "creator_id"
     t.date     "from_date"
     t.date     "to_date"
     t.decimal  "amount",            precision: 8, scale: 2
     t.integer  "transfer_from_id"
     t.integer  "transfer_to_id"
+    t.integer  "assignee_id"
+    t.integer  "accepted_by"
+    t.integer  "approved_by"
+    t.string   "workflow_state"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "creator_id"
     t.string   "payment_reference"
-    t.integer  "assignee_id"
-    t.string   "workflow_state"
   end
 
   add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree
   add_index "vouchers", ["account_debited"], name: "index_vouchers_on_account_debited", using: :btree
+  add_index "vouchers", ["assignee_id"], name: "index_vouchers_on_assignee_id", using: :btree
+  add_index "vouchers", ["creator_id"], name: "index_vouchers_on_creator_id", using: :btree
   add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
   add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
 

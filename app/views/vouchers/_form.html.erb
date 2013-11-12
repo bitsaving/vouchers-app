@@ -53,7 +53,7 @@
   <div class="control-group">
     <%= f.label :payment_type,"Payment Mode", :class => 'control-label compulsory-field' %>
     <div class="controls">
-      <%= f.select :payment_type, Voucher::PAYMENT_TYPES ,prompt: "Select payment mode" ,:class => 'text_field' %>
+      <%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %>
     </div>
   </div>
   <div class ="control-group select hidden">
@@ -68,16 +68,20 @@
       <p class ="link radioBox controls">
   
         <%if @voucher.new_record? %>
-              <%= builder.file_field :avatar %>
-                <%=builder.text_field :tagname,:class=>"filename"  %>
+          <%= builder.file_field :avatar %>
+          <%= link_to_remove_fields "  Remove" , builder %>
+          <p class ="radioBox link controls tagname">
+            <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
+          </p>
         <%else%>
-            <%= link_to @voucher.uploads[counter].avatar_file_name ,@voucher.uploads[counter].avatar.url(:original)%>
+           <%= link_to @voucher.uploads[counter].avatar_file_name ,@voucher.uploads[counter].avatar.url(:original)%>
+
            <%=builder.text_field :tagname,:class=>"filename hidden"  %>
-             
+           <%= link_to_remove_fields "  Remove" , builder %>  
        
         <%end%>   
           
-           <%= link_to_remove_fields "  Remove" , builder %>
+           
           
         <% counter += 1 %>
       <% end %>
@@ -91,6 +95,10 @@
     <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
     <div class="controls">
        <%= f.text_field :amount, :class => 'text_field' %>
+       <div class="symbol">
+        <%= "(in rupees)"%>
+      </div>
+
       </div>
     </div>
  
@@ -99,16 +107,18 @@
        <%= f.label :comments ,"Comment",:class=>'control-label' %>
       <%= f.fields_for :comments do |builder| %>
 
-      <% if(builder.object.user_id == current_user.id ) %>
+      <% if(builder.object.user_id == current_user.id  || @voucher.new_record?) %>
         
           
         <%=render 'comment_fields' ,:f=>builder %>
         <%end%>
       <% end %>
     </div>  
+    <% if !@voucher.new_record? %>
      <div class =" add_more_uploads radioBox addFields ">
       <%= link_to_add_fields "Add comments", f, :comments %>
     </div>
+    <%end%>
     <div class="form-actions ">
       <%= f.submit nil, :class => 'btn btn-primary'%>
     </div>

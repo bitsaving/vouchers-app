@@ -52,11 +52,11 @@ class UsersController < ApplicationController
 
   def show
     if(current_user)
-      @user = current_user
-     # respond_to do |format|
-     #    format.html {}
-     #  end
-     #    # redirect_to waiting_for_approval_vouchers_path 
+     #  @user = current_user
+     # # respond_to do |format|
+     # #    format.html {}
+     # #  end
+      redirect_to waiting_for_approval_vouchers_path 
       # end
       else
         respond_to do |format|
