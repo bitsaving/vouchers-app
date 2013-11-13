@@ -79,17 +79,7 @@ class VouchersController < ApplicationController
   end
 
   def pending_vouchers
-   if params[:account_id]
-       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: 'pending').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      else  
-        @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      end
-    elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'pending').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
-    else
-      @vouchers = Voucher.where(workflow_state: 'pending').order('updated_at desc').page(params[:page]).per(10)
-    end
+    get_vouchers('pending')
     respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
@@ -104,34 +94,14 @@ class VouchersController < ApplicationController
   end
 
   def accepted_vouchers
-    if params[:account_id]
-       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      else  
-        @vouchers = Voucher.where(workflow_state: 'accepted').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      end
-    elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'accepted').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
-    else
-      @vouchers = Voucher.where(workflow_state: 'accepted').order('updated_at desc').page(params[:page]).per(10)
-    end
-    respond_to do |format|
+    get_vouchers('accepted')
+     respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
     end  
   end
   def rejected_vouchers
-    if params[:account_id]
-      if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      else  
-        @vouchers = Voucher.where(workflow_state: 'rejected').where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      end
-    elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: 'rejected').where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
-    else
-      @vouchers = @vouchers = Voucher.where(workflow_state: 'rejected').page(params[:page]).order('updated_at desc').per(10)
-    end
+    get_vouchers('rejected')
     respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
@@ -179,8 +149,24 @@ class VouchersController < ApplicationController
      @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
     redirect_to :back
   end
+
   
   protected
+
+  def get_vouchers(state)
+     if params[:account_id]
+       if params[:account_type]
+        @vouchers = Voucher.where(workflow_state: state).where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      else  
+        @vouchers = Voucher.where(workflow_state: state).where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      end
+    elsif params[:user_id]
+      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
+    else
+      @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
+    end
+  end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
       @voucher = Voucher.find(params[:id])
@@ -188,6 +174,6 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar, :avatar_file_name] )
+      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
     end
 end
