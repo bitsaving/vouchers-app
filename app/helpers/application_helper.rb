@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def format_date(date)
-    date ? date.strftime('%d %b %Y') : nil
+    date ? date.strftime(' %Y-%b-%d') : nil
   end
 
   def get_pending_vouchers(account_id)
@@ -26,6 +26,9 @@ module ApplicationHelper
 
   def get_pending_of_users(user_id)
     @vouchers = Voucher.where(workflow_state:'pending').where(creator_id: user_id).order('updated_at desc').page(params[:page]).per(10)
+  end
+   def get_pending_by_date(to,from)
+    @vouchers = Voucher.where(workflow_state:'pending').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
   end
 
   def getAccount(id)

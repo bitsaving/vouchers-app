@@ -5,7 +5,11 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    @vouchers = Voucher.where(creator_id: current_user.id).page(params[:page]).per(50)
+    if params[:tag]
+      @vouchers = Voucher.tagged_with(params[:tag]).where(creator_id: current_user.id).page(params[:page]).per(50)
+    else
+      @vouchers = Voucher.where(creator_id: current_user.id).page(params[:page]).per(50)
+    end
      respond_to do |format|
       format.html  
       format.js {}
@@ -21,6 +25,18 @@ class VouchersController < ApplicationController
     end
   end
 
+  def report  
+  end
+
+  def generate_report
+    if params[:from].nil? or params[:from].to_date > params[:to].to_date
+      redirect_to report_path , notice: "Please enter valid values"
+    end
+    respond_to do |format|
+      format.html  {}
+      format.js {}
+    end
+  end
 
  # GET /vouchers/new
   def new
@@ -138,7 +154,7 @@ class VouchersController < ApplicationController
   end
  
   def decrement_state
-     @voucher = Voucher.find(params[:id])
+    @voucher = Voucher.find(params[:id])
     case "#{@voucher.current_state}"
       when "pending" then @voucher.reject!(current_user.id)
       when "approved" then @voucher.reject!(current_user.id)
@@ -158,9 +174,12 @@ class VouchersController < ApplicationController
       @vouchers = Voucher.where(workflow_state: state).where(["account_#{params[:account_type]}ed IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
-    else
+    elsif(params[:to] && params[:from])
+       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
+     else
       @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
     end
+    
   end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -170,6 +189,6 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
+      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
     end
 end

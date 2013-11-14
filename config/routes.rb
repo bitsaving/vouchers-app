@@ -2,7 +2,8 @@ VoucherApp::Application.routes.draw do
   get "notifications/index"
   get "notifications/seen_notifications"
   # resources :admins
-
+  get 'tags' ,to: 'tags#index'
+  get 'tags/:tag', to: 'vouchers#index', as: :tag
   resources :comments
 
   resources :uploads
@@ -15,12 +16,15 @@ VoucherApp::Application.routes.draw do
       get 'pending_vouchers',on: :collection
       get 'accepted_vouchers',on: :collection
       get 'rejected_vouchers',on: :collection
-      get "debit_vouchers" ,on: :collection
-      get "credit_vouchers" ,on: :collection
+      # get "debit_vouchers" ,on: :collection
+      # get "credit_vouchers" ,on: :collection
       get 'waiting_for_approval', on: :collection
       post 'increment_state' ,on: :member
       post 'decrement_state',on: :member
+
     end
+    get 'voucher_report' ,to: 'vouchers#report' ,as: :report
+    get 'generate_report' ,to: 'vouchers#generate_report'
     namespace 'admin' do
         # get 'users/new' ,to: 'users#new'
         # get 'users',to: 'users#index'

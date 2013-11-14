@@ -59,13 +59,13 @@
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="voucherList">
-                      <li role="presentation" ><%= link_to "Create New" , new_voucher_path%></li>
+                      <li role="presentation" ><%= link_to "New" , new_voucher_path%></li>
                       <li role="presentation" class="divider"></li>
                       <li role="presentation" ><%= link_to "Pending" ,pending_vouchers_vouchers_path%></li>
                       <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "accepted" ,accepted_vouchers_vouchers_path %></li>
+                      <li role="presentation" ><%= link_to "Accepted" ,accepted_vouchers_vouchers_path %></li>
                       <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "rejected" ,rejected_vouchers_vouchers_path %></li>
+                      <li role="presentation" ><%= link_to "Rejected" ,rejected_vouchers_vouchers_path %></li>
                     </ul>
                   </div> 
                 </li>
@@ -73,8 +73,19 @@
                   <li><%= link_to "Users" , admin_users_path%></li>
                 <%end%>
                 <li><%= link_to "Accounts" , accounts_path%></li>
-
-              </ul>
+                <li>
+                 <div class="dropdown">
+                    <a id="reportUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
+                      <span class="voucher">Reports</span>
+                      <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="voucherList">
+                      <li role="presentation" > <%= link_to "Vouchers" , report_path %></li>
+                      <li role="presentation" class="divider"></li>
+                      <li role="presentation" ><%= link_to "Accounts" ,pending_vouchers_vouchers_path%></li>
+                    </ul>
+                  </div>
+          
             </ul> 
             
             <div id="userDetails">   
@@ -90,7 +101,7 @@
                   <div class ="number_of_notifications notifications_link">
                     <%= getUserNotifications %>
                   </div>
-                  <div class = "notifications_output">
+                  <div id="notifications-box" class="notifications_output">
                   </div>
                 </div>
               </div>

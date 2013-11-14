@@ -1,11 +1,11 @@
-$('.notifications_link,.notifications_link img').click(function(e) {
+$('#notifications_icon').one('click',function(e) {
   e.preventDefault();
   $('#result').show();
 });
 $('body').bind('click keyup', function(event){
   $('#result').hide(); 
 });
-
+//.notifications_link,.notifications_link img
 function notifications_view() {
   $('.notifications').bind('click keyup', function(event) {
     var activity_id = $(this).find('a.activity').text();

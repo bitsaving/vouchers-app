@@ -1,0 +1,7 @@
+<div class = "span9  associated_voucher">
+  <ul class="nav nav-tabs">
+    <li class="active pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(from: start_date.to_date ,to: end_date.to_date) ,:remote=>true%></li>
+    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(from: start_date.to_date ,to: end_date.to_date),:remote=>true%></li>
+    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(from: start_date.to_date ,to: end_date.to_date) ,:remote=>true%></li>
+  </ul>
+</div>

@@ -1,7 +1,9 @@
 class Voucher < ActiveRecord::Base 
   include PublicActivity::Common
   include Workflow
+    acts_as_taggable
   workflow_column :workflow_state
+# xattr_accessible :tag_list
   workflow do
     state :new do
       event :send_for_approval,:transitions_to=> :pending
@@ -22,7 +24,7 @@ class Voucher < ActiveRecord::Base
   PAYMENT_TYPES = [ "Cash" , "Check", "Credit card", "Bank transfers" ]
   has_many :comments,:dependent=>:destroy
   validates :date,:payment_type,:amount ,presence: true
-  validates :account_credited,:account_debited ,:presence=>true,:on => :create
+  validates :account_credited,:account_debited ,:presence => {:message =>" by this name does not exist"}
   validates :to_date, :date => { :after_or_equal_to => :from_date,
     :message => 'must be after start date of project'} ,:allow_blank=> true
 
@@ -48,4 +50,12 @@ class Voucher < ActiveRecord::Base
   def reject(user_id)
     update_attributes({accepted_by: nil ,approved_by: nil})
   end
+
+#  def tag_list
+#   @voucher.tag_list if @voucher
+#   end
+
+# def tag_list=(name)
+#   self.tag_list
+# end
 end

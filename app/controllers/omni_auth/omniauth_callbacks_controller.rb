@@ -2,11 +2,11 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
   skip_before_action :authorize ,only: :google_oauth2
 	def google_oauth2
     auth_details = request.env["omniauth.auth"]
-    if Rails.env.production?
-      user = User.from_omniauth(request.env["omniauth.auth"]) if auth_details.info['email'].split("@")[1] == "vinsol.com"
-    else
+    # if Rails.env.production?
+    #   user = User.from_omniauth(request.env["omniauth.auth"]) if auth_details.info['email'].split("@")[1] == "vinsol.com"
+    # else
        user = User.from_omniauth(request.env["omniauth.auth"])
-    end
+    # end
     if !user.nil?
       if user.persisted?
         flash.notice = "Signed in Through Vinsol!"

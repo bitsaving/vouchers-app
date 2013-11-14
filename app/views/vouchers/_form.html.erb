@@ -13,7 +13,7 @@
 <div class ="voucher_form">
   <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
   
-  <legend> Voucher Details</legend>
+  <legend><%=controller.action_name%> voucher</legend>
     <div class="control-group">
       <%= f.label :date, :class => 'control-label' %>
       <div class="controls">
@@ -99,6 +99,7 @@
 
       </div>
     </div>
+
  
 
     <div class="control-group">
@@ -117,6 +118,12 @@
       <%= link_to_add_fields "Add comments", f, :comments %>
     </div>
     <%end%>
+    <div class="control-group">
+      <%= f.label :tag_list, "Tags" %><br />
+      <div class="controls">
+        <%= f.text_field :tag_list ,:class=>"tag" %>
+      </div>
+    </div>
     <div class="form-actions ">
       <%= f.submit nil, :class => 'btn btn-primary'%>
     </div>

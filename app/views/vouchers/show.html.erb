@@ -78,6 +78,10 @@
         </div>
       </div>
     <%end%>
+
+   <div class="tags">
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, tag_path(t),:class=>"taglist"}.join(',') %>
+    </div>
     <div class ="payment">
       <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
       </div>
@@ -98,6 +102,7 @@
     </div>
 
     <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
+
   </div>
   <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
     <div class ="final_state onprint">

@@ -8,7 +8,7 @@ function UserEventsHandler(){
 function setAdmin() {
   if($('.user_type').val() == 'admin')
     $('#user_user_type').prop('checked',true) 
-  $('#user_user_type').click(function() {
+  	$('#user_user_type').click(function() {
   	if($(this).is( ':checked' )) {
   		$('.user_type').val('admin');
   	}

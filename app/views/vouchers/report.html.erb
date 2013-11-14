@@ -1,0 +1,24 @@
+<%= form_tag generate_report_path(:format => "js") ,:method=>'get',:remote=>true do %>
+  <div class = "report">
+    <div class="control-group"> 
+      <%=label_tag  :from ,"From", :class => 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :from , "", :class => 'date-field'  %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%=label_tag  :to ,"To", :class => 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :to  , "" ,:class => 'date-field' %>
+      </div>
+    </div>
+    <div class="display_vouchers">
+      <%=submit_tag "Generate Report",:class => 'btn btn-primary' ,:id=> "generate_vouchers"%>
+    </div>
+  </div>
+<%end%>
+<div class ="voucher_reports">
+</div>
+<div class="voucher_status">
+</div>
+

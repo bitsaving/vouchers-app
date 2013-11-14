@@ -19,6 +19,9 @@
 .nav-tags li.active {
   background-color:#f9f9f9;
 }
+input,select,textarea{
+width:270px;
+}
 .voucher_display .page-header {
   border: none !important;
 }
@@ -37,7 +40,7 @@
   left:300px;
 }
 .navbar .brand {
-  padding-top:22px !important;
+
 }
 .brand {
   color:black !important;
@@ -52,11 +55,17 @@
 }
 
 .btn-mini{
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
   font-size: 15px !important;
-  padding:1px !important;
-  width:70px;
+  width:auto;
+}
+/*table.voucherss{
+  table-layout: fixed !important;
+}*/
+.voucherss td.account_name{
+width:20px;
+word-wrap:break-word; !
 }
 .new_button {
   position: absolute;
@@ -74,7 +83,7 @@
 }
 .brand{
   position: relative;
-  top:15px;
+  top:12px;
 }
 .navbar .nav > li > a{
   width:30px !important;
@@ -111,7 +120,7 @@
 #userDetails {
   position: absolute;
   top:25px;
-  left:1000px;
+  right:140px;
   width:auto;
   font-size: 20px;
 }
