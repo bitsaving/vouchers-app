@@ -13,106 +13,69 @@
  *= require_tree 
  .
  */
- img.gear
- {position:relative;
- top:-20px;
-  height: 25px;
-  width: 25px;
- }
- .voucher{
-font-size: 15px;
- width :30px;
- background-color:none; }
-#columns {
-  position:absolute;
-  top:100px;
-  background: #6b8fb2;
-  #side {
-    float: left;
-    padding: 1em 2em;
-    width: 11em;
-    background: #6b8fb2;
-
-/* START_HIGHLIGHT */
-  
-
-    
-
-/* END_HIGHLIGHT */
-    ul {
-      padding: 0;
-
-      li {
-        list-style: none;
-
-        a {
-          color: #0000cc;
-          font-size:16px;;
-          font-style:italic;
-          
-        }
-      }
-    }
-  }
+ a.abc {
+  width:30px;
+  height:10px;
+  background-color: #f5f5f5;
+  padding:2px;
+  border: solid 1px grey;
+  border-radius: 5px;
+}
+.voucher{
+  font-size: 15px;
+  width :30px;
+  background-color:none; 
 }
 #pending li{
-list-style:none;
-width:150px;
-background-color:#f5f5f5;
-text-align:center;
-border:solid 1px black;
+  list-style:none;
+  width:150px;
+  background-color:#f5f5f5;
+  text-align:center;
+  border:solid 1px black;
 }
-.date-field{
+.date-field {
   background-image:url( 'calendar.jpeg');
   background-repeat:no-repeat;
   background-position: right;
   background-size: 12%;
 }
 
-
 .alignment{
-position: absolute;
-right: -400px;
-width: 600px;
-top:130px;
-float:right;
+  position: absolute;
+  right: -400px;
+  width: 600px;
+  top:130px;
+  float:right;
 }
 .align {
-background-color:#f5f9f9;
-margin:0 auto;
-width:500px;
+  background-color:#f5f9f9;
+  margin:0 auto;
+  width:500px;
 }
 .account_align {
-margin:0 auto;
-width:500px;
-background-color: #f5f9f9;
+  margin:0 auto;
+  width:500px;
+  background-color: #f5f9f9;
 }
 form {
-
-label {
-width: 3em;
-text-align: center;
-
-padding-top: 0.2em;
-
-display: block;
-}
-select, textarea, input {
-margin-left: 0.5em;
-}
-.submit {
-
-}
-br {
-display: none
-}
+  label {
+    width: 3em;
+    text-align: center;
+    padding-top: 0.2em;
+    display: block;
+  }
+  select, textarea, input {
+    margin-left: 0.5em;
+  }
+  br {
+    display: none;
+  }
 }
 #notifications_panel {
-position: absolute;
-left:870px;
-top:18px;
-z-index: 100;
-
+  position: absolute;
+  left:870px;
+  top:18px;
+  z-index: 100;
 }
 #notification-icon {
   background-position: -2px -1435px !important;
@@ -124,47 +87,47 @@ z-index: 100;
 }
 #result{
 
-border:solid 1px black;
-border-top:none;
-border-radius: 2px;
+  border:solid 1px black;
+  border-top:none;
+  border-radius: 2px;
 
 }
 .notifications{
-width:auto;
-height:40px;
-padding-top: 15px;
-padding-right: 15px;
-padding-left: 15px;
-border-top: dotted 1px black;
-background-color:#f5F5F5;
+  width:auto;
+  height:40px;
+  padding-top: 15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border-top: dotted 1px black;
+  background-color:#f5F5F5;
   a {
-color:blue;
+    color:blue;
   }
 }
 .seen_notifications {
-background-color:white
+  background-color:white
 }
 
 .number_of_notifications{
   display: inline-block;
-font-size:15px;
-color:white;
-position: relative;
-left:20px;
-bottom: 28px;
-font-weight: bold;
-width:10px;
-background-color: red;
-padding-left: 5px;
-border-radius: 5px;
+  font-size:15px;
+  color:white;
+  position: relative;
+  left:20px;
+  bottom: 28px;
+  font-weight: bold;
+  width:10px;
+  background-color: red;
+  padding-left: 5px;
+  border-radius: 5px;
 }
 .voucher_management,.voucher_management p {
-text-align: center;
-font-size: 30px;
-font-weight: bold;
-margin-top: 100px;
-color:black;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 100px;
+  color:black;
  a{
-color:red;
+  color:red;
  }
 }
