@@ -154,12 +154,8 @@ class VouchersController < ApplicationController
   protected
 
   def get_vouchers(state)
-     if params[:account_id]
-       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: state).where(["account_credited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      else  
-        @vouchers = Voucher.where(workflow_state: state).where(["account_debited IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
-      end
+    if params[:account_id]
+      @vouchers = Voucher.where(workflow_state: state).where(["account_#{params[:account_type]}ed IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     else

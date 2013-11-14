@@ -61,7 +61,12 @@ class Admin::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
+    begin
+      @user.destroy
+      flash[:notice] = "User #{@user.name} deleted"
+      rescue Exception => e
+      flash[:notice] = e.message
+    end
     respond_to do |format|
       format.html { redirect_to admin_users_url }
       format.json { head :no_content }
