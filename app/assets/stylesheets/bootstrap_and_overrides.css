@@ -20,7 +20,7 @@
   background-color:#f9f9f9;
 }
 input,select,textarea{
-width:270px;
+  width:270px;
 }
 .voucher_display .page-header {
   border: none !important;
@@ -39,9 +39,7 @@ width:270px;
   position: relative;
   left:300px;
 }
-.navbar .brand {
 
-}
 .brand {
   color:black !important;
 }
@@ -64,8 +62,8 @@ width:270px;
   table-layout: fixed !important;
 }*/
 .voucherss td.account_name{
-width:20px;
-word-wrap:break-word; !
+  width:20px;
+  word-wrap:break-word;
 }
 .new_button {
   position: absolute;
