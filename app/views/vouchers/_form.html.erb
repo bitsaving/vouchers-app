@@ -13,7 +13,7 @@
 <div class ="voucher_form">
   <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
   
-  <legend><%=controller.action_name%> voucher</legend>
+  <legend><%=controller.action_name.capitalize%> voucher</legend>
     <div class="control-group">
       <%= f.label :date, :class => 'control-label' %>
       <div class="controls">
@@ -23,7 +23,7 @@
     <div class="control-group">
       <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
     <div class="controls">
-      <%= text_field_tag :debit , params[:debit],  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit'} , :class => 'text-field autocomplete',:value =>get_entered_data('debit')%>
+      <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit'} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 %>
     </div>
   </div>
   <div class="controls">
@@ -32,7 +32,7 @@
   <div class="control-group">
     <%= f.label :account_credited, "Credit To",:class => 'control-label compulsory-field' %>
     <div class="controls">
-      <%= text_field_tag :credit, params[:credit] , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit'} , :class => 'text-field autocomplete',:value=>get_entered_data('credit')%>
+      <%= text_area_tag :credit,get_entered_data('credit') , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit'} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
     </div>
   </div>
   <div class="controls">
@@ -95,7 +95,7 @@
     <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
     <div class="controls">
        <%= f.text_field :amount, :class => 'text_field' %>
-        <span class="add_on">Rupees</span>
+        <span class="add_on">Rs.</span>
 
       </div>
     </div>

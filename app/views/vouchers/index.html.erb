@@ -62,5 +62,9 @@
 
 <%=paginate @vouchers%>
 <%else%>
+  <% if controller.action_name == "waiting_for_approval" %>
  <h3> No vouchers assigned </h3>
+ <%else%>
+ <h3> No <%= controller.action_name.titleize %></h3>
+ <%end%>
 <%end%>

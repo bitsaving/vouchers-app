@@ -68,7 +68,7 @@ input,select,textarea{
 .new_button {
   position: absolute;
   width:60px;
-  left:570px;
+  right:10px;
   top:60px;
 }
 .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th {

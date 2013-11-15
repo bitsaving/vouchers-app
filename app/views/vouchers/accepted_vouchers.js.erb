@@ -1,6 +1,6 @@
 $('.voucher_status').html("<%= escape_javascript render 'vouchers' %>");
 // $('#paginator').html('<%= escape_javascript(paginate(@vouchers, :remote => true).to_s) %>');
 $('.associated_voucher li.accepted').addClass('active').siblings().removeClass('active');
-<%if !params[:account_type]%>
+<%if !params[:_]%>
   $('#account').val('debit')
 <%end%>
