@@ -8,7 +8,9 @@ class AccountsController < ApplicationController
     
     respond_to do |format|
       format.html { }
+      #FIXME_AB: formatting issues
       format.json { render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact}
+      #FIXME_AB: DO we need this format.js?
       format.js {}
     end
   end
@@ -22,6 +24,7 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     respond_to do |format|
       if @account.save
+        #FIXME_AB: Modify flash message "Account 'account name' was successfully created."
         format.html { redirect_to accounts_url, notice: 'Account was successfully created.' }
         format.json { render action: 'show', status: :created, location: @voucher }
       else
@@ -36,6 +39,7 @@ class AccountsController < ApplicationController
   
   def show 
      respond_to do |format|
+      #FIXME_AB: no {} needed
      format.js {}
      format.html {}
     end
@@ -54,6 +58,7 @@ class AccountsController < ApplicationController
   end
   
   def destroy
+    #FIXME_AB: We don't need to destroy the account so remove thsi action. also make sure account should not be deletable if I do account.destroy
     @account.destroy
     respond_to do |format|
       format.html { redirect_to accounts_url }
@@ -65,6 +70,7 @@ class AccountsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_account
       @account = Account.find(params[:id])
+      #FIXME_AB: What if account is not found?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
