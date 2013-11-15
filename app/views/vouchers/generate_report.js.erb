@@ -1,4 +1,4 @@
 <%=@voucher_startDate = params[:from]%>
 <%=@voucher_endDate = params[:to]%>
 $('.voucher_reports').html("<%= escape_javascript render partial: 'voucher_status' ,locals: {start_date: @voucher_startDate,end_date:@voucher_endDate} %>");
-$('.voucher_status').html("<%= escape_javascript render partial: 'vouchers',locals: {vouchers: get_pending_by_date(@voucher_startDate.to_date,@voucher_endDate.to_date)}%>")
+$('.voucher_status').html("<%= escape_javascript render partial: 'vouchers',locals: {vouchers: get_new_by_date(@voucher_startDate.to_date,@voucher_endDate.to_date)}%>")

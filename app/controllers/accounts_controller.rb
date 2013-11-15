@@ -3,14 +3,20 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy] 
   
   def index
-    @accounts= Account.all.page(params[:page]).per(50)
-    
+    request_type = request.env["HTTP_ACCEPT"].split(',')
+    if !request_type.index("text/javascript").nil?
+      @accounts = Account.all
+    else
+      @accounts= Account.all.page(params[:page]).per(50)
+    end
     respond_to do |format|
       format.html { }
       format.json { render :json => @accounts.collect {|x| {:label=>x.name, :value=>x.id}}.compact}
       format.js {}
     end
   end
+
+
   def new
     @account = Account.new
   end

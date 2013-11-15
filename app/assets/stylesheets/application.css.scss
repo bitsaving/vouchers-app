@@ -34,11 +34,15 @@
 }
 
 .alignment{
-  position: absolute;
-  right: 10px;
-  width: 600px;
-  top:130px;
-  float:right;
+   float:right;
+   margin-top: -10px;
+}
+.note{
+  position: relative;
+  top:23px;
+  left:50px;
+  font-size: 13px;
+  font-weight: bold;
 }
 .align {
   background-color:#f5f9f9;
@@ -91,6 +95,9 @@ form {
   border-top:none;
   border-radius: 2px;
 
+}
+.associated_voucher{
+margin-left: 3px !important;
 }
 .notifications{
   width:auto;

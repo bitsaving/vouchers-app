@@ -12,6 +12,7 @@ function VoucherEventsHandler() {
 }
 
 function autocomplete() {
+  $('.date-field').css('cursor', 'pointer');
 $('.autocomplete').on('keyup',function() {
     if(this.value.length == 1) {
       autoCompleteFieldHandler();
@@ -28,7 +29,7 @@ function getTags(){
   }
   $.ajax({
     type: 'get',
-    url: '/tags.json', 
+    url: $('.tag').data('path'), 
     dataType: "json", 
     success: function(data){
       $('.tag').autocomplete({ 
@@ -54,7 +55,7 @@ function getTags(){
 function autoCompleteFieldHandler() {
   $.ajax({
     type: 'get',
-    url: '/accounts.json', 
+    url: $('.autocomplete').data('path'), 
     dataType: "json", 
     success: function(data){
       $('.autocomplete').autocomplete({

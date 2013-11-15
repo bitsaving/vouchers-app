@@ -13,6 +13,9 @@ VoucherApp::Application.routes.draw do
   # get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
   # scope 'users/:id' do
     resources :vouchers do
+      get 'all_vouchers' , on: :collection
+      get 'approved_vouchers' ,on: :collection
+      get 'new_vouchers', on: :collection
       get 'pending_vouchers',on: :collection
       get 'accepted_vouchers',on: :collection
       get 'rejected_vouchers',on: :collection

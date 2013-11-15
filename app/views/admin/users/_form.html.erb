@@ -35,7 +35,11 @@
       <%= f.label :admin, :class => 'control-label' %>
       <div class="controls">
         <%= f.check_box :user_type  %><br />
+
       </div>
+      <span class="note">
+        <%= "Note: Admin has the rights to add/delete user"%>
+      </span>
    </div>
     <div>
       <%=f.hidden_field :user_type ,:class=>"user_type"%>

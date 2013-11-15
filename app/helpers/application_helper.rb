@@ -20,15 +20,15 @@ module ApplicationHelper
     date ? date.strftime('%d-%b- %Y') : nil
   end
 
-  def get_pending_vouchers(account_id)
-    @vouchers = Voucher.where(workflow_state: 'pending').where(["account_debited IN (?)",account_id]).order('updated_at desc').page(params[:page]).per(10)
+  def get_new_vouchers(account_id)
+    @vouchers = Voucher.where(workflow_state: 'new').where(["account_debited IN (?)",account_id]).order('updated_at desc').page(params[:page]).per(10)
   end
 
-  def get_pending_of_users(user_id)
-    @vouchers = Voucher.where(workflow_state:'pending').where(creator_id: user_id).order('updated_at desc').page(params[:page]).per(10)
+  def get_new_of_users(user_id)
+    @vouchers = Voucher.where(workflow_state:'new').where(creator_id: user_id).order('updated_at desc').page(params[:page]).per(10)
   end
-   def get_pending_by_date(to,from)
-    @vouchers = Voucher.where(workflow_state:'pending').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
+   def get_new_by_date(to,from)
+    @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
   end
 
   def getAccount(id)

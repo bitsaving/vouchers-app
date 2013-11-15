@@ -72,21 +72,23 @@ ul.ui-autocomplete {
   margin-left: 20px !important;
 }
 .assignment{
+float:right;
+margin-right: -250px;
+
   padding-top: 10px;
-  position:absolute;
-  top:200px;
-  left:841px;
   padding-bottom: 30px;
-  margin-top: 100px;
+
   margin-left: 20px;
-  margin-right: 20px;
+
   padding-left: 30px;
   padding-right: 20px;
 }
 .tags{
   padding-top: 15px;
-  padding-left: 20px; 
+  padding-left: 20px;
+
   margin-left: 10px;
+  margin-bottom: 10px;
   font-weight: bold;
   font-size: 14px;
 }
@@ -94,7 +96,7 @@ ul.ui-autocomplete {
   width:30px;
   height:10px;
   background-color: #f5f5f5;
-  padding:1px;
+  padding:5px;
   border: dotted 1px grey;
   border-radius: 5px;
   margin-left: 10px;
@@ -154,6 +156,7 @@ ul.ui-autocomplete {
     } 
   }
 }
+
 .buttons{
   color: #dfd;
   background: #0000cc;
@@ -193,16 +196,18 @@ ul.ui-autocomplete {
 }
 .status{
   margin-top: -25px;
-  position: absolute;
-  left: 460px;
   font-size: 18px;
   font-weight: bold;
   display: inline-block;
   margin-bottom: -50px;
+  float: right;
+  padding-right: 530px;
 }
 .date{
-  position: absolute;
-  left:1050px;
+  /*position: absolute;
+  left:30px;*/
+  float:right;
+ padding-right: 30px;
   margin-top: -25px;
   width:150px;
   font-size: 18px;
@@ -243,21 +248,27 @@ ul.ui-autocomplete {
   font-size: 14px;
 }
 .edit_voucher{
-  position: absolute;
-  top:90px;
-  left:1050px;
-  width:60px;
+  float: left;
+ margin-left:900px;
+ margin-top: -280px;
+/*  left:890px;
+  bottom: 300px;*/
+   /*float: right;
+   margin-right: -150px;
+   width:50px;
+   margin-top: -340px;*/
   .btn {
-    width: 60px !important;
+    width: 50px !important;
   }
 }
 .print_voucher{
-  position: absolute;
-  top:90px;
-  left:1150px;
-  width:60px;
+  float: left;
+  margin-left:1000px;
+margin-top: -280px;
+  width:50px;
+
   .btn {
-    width: 60px !important;
+    width: 50px !important;
   }
 }
 
@@ -278,11 +289,14 @@ ul.ui-autocomplete {
 
 .voucher_display{
   background-color: #fafdff;
-  margin-top: 40px;
+  
   width:1100px;
-  margin-left: 75px;
-  margin-right: 150px;
+  /*margin-left: 75px;
+  margin-right: 150px;*/
+  margin: 0 auto;
   border: solid 1px black;
+  margin-top: 80px;
+
   padding-bottom: 290px !important;
   select {
     width:210px;
@@ -302,33 +316,42 @@ ul.ui-autocomplete {
   padding-left: 10px;
 }
 .payment{
-  position: absolute;
-  top:270px;
-  left:930px;
+  float:left;
+  margin-left: 830px;
   height:30px;
   width:268px;
   border-bottom: dotted 1px black;
+  margin-top: -100px;
+padding-bottom: 30px;
 }
 .assign{
-  margin-left: 115px;
-  margin-top: 50px;
+  margin-left: 60px;
+  margin-top: 30px;
 }
 .assignn{
-  margin-left: 125px;
+  margin-left: 65px;
   margin-top:50px;
 }
-.dropDown {
+/*.dropDown {
   position: absolute;
   margin-top: 10px;
   margin-left: 55px;
-}
+}*/
 .amount{
-  display: inline-block;
+ /* display: inline-block;
   position: absolute;
   right: 100px;
   top:-25px;
+
+*/
+  padding-left: 80px;  
   font-size: 23px;
   font-weight: bold;
+padding-bottom: 30px;
+}
+.all_vouchers{
+margin-bottom: 30px;
+
 }
 .add_more_uploads{
   font-size: 14px !important;
@@ -342,8 +365,11 @@ ul.ui-autocomplete {
 }
 .final_state{
   position: absolute;
-  left:990px;
-  top:360px;
+  right: 30px;
+
+  /*float: right;
+  margin-right: -200px;
+  margin-top: -300px;*/
   height: 40px;
 }
 .uploaded_links {
@@ -351,9 +377,9 @@ ul.ui-autocomplete {
   left:30px;
 }
 .Or_label{
-  position: absolute;
-  top:130px;
-  left:170px;
+  margin-top: 30px;
+  margin-left: 80px;
+ margin-bottom: -10px;
   font-size: 20px;
   font-weight: bold;
 }
@@ -390,6 +416,7 @@ top:100px;
 position: absolute;
 top: 400px;}
 .voucher_form{
+
   width:1200px;
   background-color: #f6fbff;
 /*  margin-left: 100px;

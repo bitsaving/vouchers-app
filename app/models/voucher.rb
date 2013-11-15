@@ -21,7 +21,7 @@ class Voucher < ActiveRecord::Base
       event :send_for_approval ,:transitions_to => :pending
     end
   end
-  PAYMENT_TYPES = [ "Cash" , "Check", "Credit card", "Bank transfers" ]
+  PAYMENT_TYPES = [ "Cash" , "Cheque", "Credit card", "Bank transfers" ]
   has_many :comments,:dependent=>:destroy
   validates :date,:payment_type,:amount ,presence: true
   validates :account_credited,:account_debited ,:presence => {:message =>" by this name does not exist"}

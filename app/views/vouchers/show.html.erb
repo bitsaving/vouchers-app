@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class = "status onprint">
-    <%= @voucher.workflow_state%>
+    <%= @voucher.workflow_state.capitalize%>
     <% if @voucher.assignee_id && @voucher.assignee_id != current_user.id%>
       <%= "(" %>
       <%= @voucher.assigned_to.first_name %>
@@ -45,6 +45,19 @@
       <div class="payment_label">Reference Number :</div>
       <%= @voucher.payment_reference %> 
     </div> 
+
+      <div class = "edit_voucher onprint">
+      <% if((@voucher.current_state < :pending || @voucher.current_state == :rejected) && @voucher.creator_id == current_user.id )%>
+        <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary'%> 
+      <%end%>
+    </div>
+    <div class ="print_voucher">
+      <%= link_to "Print" ,"javascript:print()",:class=>'btn btn-primary onprint'%> 
+    </div>
+    <div class ="payment">
+      <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
+      </div>
+    </div>
     <% counter = 0 %>
     <%if @voucher.uploads.length > 0 %>
       <div class ="debitCredit">
@@ -55,6 +68,11 @@
       
         <%end%>
       </div> 
+    <%end%>
+    <%if @voucher.tag_list.length >0 %>
+     <div class="tags">
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, tag_path(t),:class=>"taglist"}.join(',') %>
+    </div>
     <%end%>
     <%if !@voucher.approved_by.nil?%>
       <div class="status_label">
@@ -79,32 +97,21 @@
       </div>
     <%end%>
 
-   <div class="tags">
-      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, tag_path(t),:class=>"taglist"}.join(',') %>
-    </div>
-    <div class ="payment">
-      <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
-      </div>
-    </div>
+  
+    
     <% if(!(@voucher.workflow_state == 'accepted' || @voucher.workflow_state == 'approved' || @voucher.assignee_id != current_user.id))%>
       <%=  render 'assign' %>
     <%end%>
     <%if @voucher.workflow_state == "new" %>
       <%= render 'assign' %>
     <%end%>
-    <div class = "edit_voucher onprint">
-      <% if((@voucher.current_state < :pending || @voucher.current_state == :rejected) && @voucher.creator_id == current_user.id )%>
-        <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary'%> 
-      <%end%>
-    </div>
-    <div class ="print_voucher">
-      <%= link_to "Print" ,"javascript:print()",:class=>'btn btn-primary onprint'%> 
-    </div>
+    
 
     <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
 
   </div>
-  <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
+   <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
+
     <div class ="final_state onprint">
       <%= link_to "Accept" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
       <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post%>

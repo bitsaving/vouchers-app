@@ -102,6 +102,29 @@ class VouchersController < ApplicationController
     end  
   end
 
+  def all_vouchers 
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
+  def approved_vouchers 
+     get_vouchers('approved')
+    respond_to do |format|
+      format.html { render action: 'index' }
+      format.js {}
+    end  
+  end
+
+  def new_vouchers
+    get_vouchers('new')
+    respond_to do |format|
+      format.html { render action: 'index' }
+      format.js {}
+    end  
+  end
+
   def waiting_for_approval
     @vouchers =  Voucher.where("workflow_state not in ('accepted','rejected')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(50)
     respond_to do |format|

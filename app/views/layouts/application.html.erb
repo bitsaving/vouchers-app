@@ -52,22 +52,7 @@
             <% if current_user %>  
               <ul class="nav nav-tabs  ">
                 <li><%= link_to "Home" , waiting_for_approval_vouchers_path%></li>
-                <li>
-                  <div class="dropdown" id="VoucherContainer">
-                    <a id="voucherUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
-                      <span class="voucher">Vouchers</span>
-                      <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="voucherList">
-                      <li role="presentation" ><%= link_to "New" , new_voucher_path%></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "Pending" ,pending_vouchers_vouchers_path%></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "Accepted" ,accepted_vouchers_vouchers_path %></li>
-                      <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "Rejected" ,rejected_vouchers_vouchers_path %></li>
-                    </ul>
-                  </div> 
+                <li><%= link_to "Vouchers" , all_vouchers_vouchers_path%>
                 </li>
                 <% if current_user.user_type == 'admin'%>
                   <li><%= link_to "Users" , admin_users_path%></li>

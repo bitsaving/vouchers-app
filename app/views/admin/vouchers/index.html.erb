@@ -9,11 +9,13 @@
             </div>
 <div class = "span9 associated_voucher ">
   <ul class="nav nav-tabs">
-    <li class="active pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="active new"><%= link_to "New" ,new_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="approved"><%= link_to "Approved" ,approved_vouchers_vouchers_path(user_id: @user.id),:remote=>true%></li>
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(user_id: @user.id),:remote=>true%></li>
     <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
     <div class ="voucher_status">
-        <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_pending_of_users(@user.id ) }%>
+        <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_new_of_users(@user.id ) }%>
     </div>
   </ul>
 </div>

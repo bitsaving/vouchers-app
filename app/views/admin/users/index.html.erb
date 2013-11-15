@@ -19,7 +19,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.id, admin_user_path(user) %></td>
-        <td><%= user.first_name + " " + user.last_name %></td>
+        <td><%= link_to user.first_name + " " + user.last_name , admin_user_path(user.id)%></td>
         <td><%= user.email %></td>
         <td>
           <% if user.user_type == "normal" %>
