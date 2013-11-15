@@ -1,3 +1,4 @@
+// #FIXME_AB: If not needed then remove it 
 // function remove_fields(link) {
 
 //   $(link).prev("input[type=hidden]").val("1");

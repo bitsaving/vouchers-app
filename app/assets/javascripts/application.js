@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require_tree .
 
+// #FIXME_AB: Object oriented architecture please 
 $(document).ready(ApplicationFieldHandler)
 document.addEventListener("page:load", ApplicationFieldHandler);
 function ApplicationFieldHandler(){

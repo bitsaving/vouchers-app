@@ -5,6 +5,7 @@ document.addEventListener("page:load", UserEventsHandler);
 function UserEventsHandler(){
  setAdmin();
 }
+// #FIXME_AB: I am not sure why you need to do this from JS? 
 function setAdmin() {
   if($('.user_type').val() == 'admin')
     $('#user_user_type').prop('checked',true) 

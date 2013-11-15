@@ -26,6 +26,8 @@ function getTags(){
   function extractLast( term ) {
     return split( term ).pop();
   }
+  // #FIXME_AB: Follow OOPs 
+  // #FIXME_AB: What if routes for tags.json or accounts.json changes. You would need to update the js file. What you you can do is pass these urls from application view through rails app. 
   $.ajax({
     type: 'get',
     url: '/tags.json', 

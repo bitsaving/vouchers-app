@@ -1,3 +1,4 @@
+// #FIXME_AB: Where is all the learning gone. YOu should use object oriented concept here for JS  
 $(document).ready(AccountsHandler)
 document.addEventListener("page:load", AccountsHandler);
 function AccountsHandler(){
