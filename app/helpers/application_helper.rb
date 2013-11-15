@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def format_date(date)
-    date ? date.strftime(' %Y-%b-%d') : nil
+    date ? date.strftime('%d-%b- %Y') : nil
   end
 
   def get_pending_vouchers(account_id)
