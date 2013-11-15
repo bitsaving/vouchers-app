@@ -29,7 +29,7 @@ gem 'jquery-ui-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
-
+gem 'rspec' ,'~> 2.0.0'
 gem 'acts-as-taggable-on'
 #gem 'rails3-jquery-autocomplete'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
