@@ -6,7 +6,7 @@
   <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
   <dd><%= @account.name %></dd>
 </dl>
-<%= select_tag :account, options_for_select(Account::ACCOUNT_TYPES),:name=>@account.id  %>
+<%= select_tag :account, options_for_select(Account::TYPES),:name=>@account.id  %>
 <div class="alignment ">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               accounts_path, :class => 'btn btn-primary'  %>

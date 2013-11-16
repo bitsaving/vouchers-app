@@ -17,32 +17,41 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(ApplicationFieldHandler)
-document.addEventListener("page:load", ApplicationFieldHandler);
-function ApplicationFieldHandler(){
-  dateFieldHandler();
-}
+// #FIXME_AB: Object oriented architecture please 
 
-function dateFieldHandler(){
-  $(".date-field").datepicker({
-    dateFormat: "dd/mm/yy"
-  });
-}
-function remove_fields(link) {
-  $(link).prev("input[type=hidden]").val("1");
-  $(link).closest(".radioBox").hide();
-  $(link).closest(".radioBox").siblings('.tagname').hide();
+// function Fields() {
+//   this.remove = function(link){
+//     $(link).prev("input[type=hidden]").val("1");
+//     $(link).closest(".well").fadeOut(1000);
+//   }
+//   this.add = function(link, association, content) {
+//     var new_id = new Date().getTime();
+//     var regexp = new RegExp("new_" + association, "g");
+//     $(link).parent().before(content.replace(regexp, new_id)).prev().hide().slideDown(1000);
+//   }
+// }
+// var part_fields = new Fields();
+// var diamond_fields = new Fields()
 
+$(document).ready(function(){
+  var applicationHandler = new ApplicationHandler();
+})
+var ApplicationHandler = function() {
+  this.init();
 }
-function remove_class(){ 
-  $('.create_new').click(function() {
-  $(this).addClass('hidden');
-  $('li.create_new_user').removeClass('hidden');
-});
-}
-
-function add_fields(link, association, content) {
-  var new_id = new Date().getTime();
-  var regexp = new RegExp("new_" + association, "g")
-  $(link).before(content.replace(regexp, new_id));
+ApplicationHandler.prototype = {
+  init: function() {
+    this.dateFieldHandler();
+    document.addEventListener("page:load", this.dateFieldHandler);
+  },
+// $(document).ready(ApplicationFieldHandler)
+// document.addEventListener("page:load", ApplicationFieldHandler);
+// function ApplicationHandler(){
+//   dateFieldHandler();
+// }
+  dateFieldHandler : function(){
+    $(".date-field").datepicker({
+      dateFormat: "dd/mm/yy"
+    });
+  }
 }

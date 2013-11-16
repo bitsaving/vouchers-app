@@ -1,6 +1,4 @@
 class VouchersController < ApplicationController
-
-
   before_action :set_voucher, only: [:show, :edit, :update, :destroy]
   # GET /vouchers
   # GET /vouchers.json
@@ -164,7 +162,7 @@ class VouchersController < ApplicationController
       when "pending" then @voucher.approve!(current_user.id)
       when "approved" then @voucher.accept!(current_user.id)
     end    
-    @voucher.add_comment(current_user.id) if !(@voucher.current_state == :pending)
+    @voucher.record_state_change(current_user.id) if !(@voucher.current_state == :pending)
       if @voucher.current_state == :accepted
         @voucher.assignee_id = nil
       else    
@@ -182,10 +180,10 @@ class VouchersController < ApplicationController
       when "pending" then @voucher.reject!(current_user.id)
       when "approved" then @voucher.reject!(current_user.id)
     end
-    @voucher.add_comment(current_user.id) 
+    @voucher.record_state_change(current_user.id)
     @voucher.assignee_id = @voucher.creator_id
     @voucher.save!
-     @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
+    @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
     redirect_to :back
   end
 
