@@ -1,7 +1,7 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update, :destroy] 
-  
+  #FIXME_AB: Remove unused empty css files
   def index
     #FIXME_AB: Why are you just using first 50 records. In auto complete my account will not be displayed if it is the 51th record
     @accounts= Account.all.page(params[:page]).per(50)

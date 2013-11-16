@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   acts_as_paranoid
   include PublicActivity::Common
   has_many :notifications
+  #FIXME_AB: You may need other associations like assigned_vouchers, owned_vouchers etc..
   has_many :vouchers,:foreign_key=>"creator_id",:dependent=>:destroy
   has_many :comments ,:dependent=>:destroy
   devise :database_authenticatable, :omniauthable,

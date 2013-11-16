@@ -16,7 +16,9 @@ class Admin::UsersController < ApplicationController
     @user =User.new
   end
 
+
   def edit
+    #FIXME_AB: What is before_action :set_user is doing. If you have to find out user again. You are doing the same thing again
     @user = User.find(params[:id])
   end
   # POST /accounts
@@ -48,6 +50,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     if params[:id]
+      #FIXME_AB: Can't you use set_user before action for finding the user. 
       @user = User.find(params[:id])
     # else
     #   # @user = current_user
@@ -60,6 +63,7 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  #FIXME_AB: We are not sure about handling user's destroy. What to do with vouchers assigned to them or created by them etc. So Lets not allow them to be destroyed. Comment this action. Also ensure that user should not be deletable from rails console too. even when I am  doing user.destroy, 
   def destroy
     begin
       @user.destroy
@@ -80,10 +84,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def set_user
+    #FIXME_AB: What if user is not found with this ID
     @user = User.find(params[:id])
   end
   
+  #FIXME_AB: This method should be defined in application controller so that it can be used in any controller as needed.. Like we would be calling it in all admin controllers
   def check_admin
+    #FIXME_AB: admin check should be done by something like current_user.admin?. Got it? define a method in user model
     if !(current_user.reload.user_type == "admin")
       redirect_to "/", flash: { error: "You are not an admin" }
     end
