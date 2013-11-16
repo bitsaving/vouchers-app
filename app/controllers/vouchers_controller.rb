@@ -52,6 +52,7 @@ class VouchersController < ApplicationController
   # GET /vouchers/1/edit
   def edit
     if(!(current_user.user_type == "admin" || current_user.id == @voucher.creator_id))
+      #FIXME_AB: Redirect to back instead of home page
       redirect_to root_path, notice: "No editing privileges for you"
     end 
   end

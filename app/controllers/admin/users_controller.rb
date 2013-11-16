@@ -92,6 +92,8 @@ class Admin::UsersController < ApplicationController
   def check_admin
     #FIXME_AB: admin check should be done by something like current_user.admin?. Got it? define a method in user model
     if !(current_user.reload.user_type == "admin")
+      #FIXME_AB: Flash message should be "You are not authorized to access this page"
+      #FIXME_AB: Also redirect to back. not to the home page
       redirect_to "/", flash: { error: "You are not an admin" }
     end
   end
