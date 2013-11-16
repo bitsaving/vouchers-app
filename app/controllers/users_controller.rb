@@ -1,3 +1,4 @@
+#FIXME_AB: Remove the code which is not required
 class UsersController < ApplicationController
   # before_action :set_user, :only => [:show]
   
