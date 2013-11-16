@@ -15,6 +15,7 @@
 </div>
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
+    <% #FIXME_AB: pending_voouchers_vouchers_path, did it looks ok to you. To me it clearly looks like something is wrong. Should be pending_vouchers_path. For this you should name you action to pending not pending_vouchers. Voucher is itself communicated by controller's name -%> 
     <li class="active pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit'),:remote=>true%></li>
     <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>

@@ -1,10 +1,12 @@
 
 <% @accounts.each do |account| %>
   <tr>
+    <% #FIXME_AB: remove empty html comment -%>
     <!--   -->
     <td><%= link_to account.name, account_path(account) %></td>
 
     <td>
+      <% #FIXME_AB: We are not using translation at other places so lets also not use here. -%>
       <%= link_to t('.edit', :default => t("helpers.links.edit")),
                   edit_account_path(account), :class => 'btn btn-mini btn-primary' %>
      
