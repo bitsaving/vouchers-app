@@ -89,5 +89,5 @@ class Admin::UsersController < ApplicationController
   end
   
   #FIXME_AB: This method should be defined in application controller so that it can be used in any controller as needed.. Like we would be calling it in all admin controllers
- #fixed
+   #fixed
 end

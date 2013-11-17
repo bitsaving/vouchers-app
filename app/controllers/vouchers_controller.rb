@@ -53,9 +53,8 @@ class VouchersController < ApplicationController
 
   # GET /vouchers/1/edit
   def edit
-    # if(!(current_user.admin? || current_user.id == @voucher.creator_id))
-    #   redirect_to root_path, notice: "You are not authorized to access this page."
-    # end 
+    #FIXME_AB: Redirect to back instead of home page
+    #fixed 
   end
 
   # POST /vouchers
@@ -196,7 +195,7 @@ class VouchersController < ApplicationController
 
   def check_voucher_state
     if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
-      redirect_to '/' , notice: " You are not authorized to edit"
+      redirect_to :back , notice: " You are not authorized to edit"
     end
   end
 

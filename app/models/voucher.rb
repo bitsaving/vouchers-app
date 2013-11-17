@@ -1,5 +1,7 @@
 #FIXME_AB: code formatting issue. Please put some spaces between methods
 #Fixed
+#FIXME_AB: Voucher should also have approved_at and accepted_at datetime column which should be updated on their respective actions[Just in db, not to display on frontend for now]
+#fixed
 class Voucher < ActiveRecord::Base 
   include PublicActivity::Common
   include Workflow

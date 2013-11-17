@@ -8,7 +8,7 @@ class Admin::VouchersController < ApplicationController
       #fixed
       #FIXME_AB: In other words in the below line you are just finding vouchers of the above user so can't you just use user.vouchers
       #fixed
-      @vouchers = @user.vouchers.page(params[:page]).per(50)
+    @vouchers = @user.vouchers.page(params[:page]).per(50)
   end
 
   def set_user
