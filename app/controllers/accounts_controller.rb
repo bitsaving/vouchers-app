@@ -34,13 +34,10 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         #FIXME_AB: Modify flash message "Account 'account name' was successfully created."
-<<<<<<< HEAD
         #Fixed
         format.html { redirect_to accounts_url, notice: 'Account ' + @account.name + ' was successfully created.' }
-=======
         #FIXME_AB: After account is created I should be redirected on the new account page so that I can add more account. Make sure that the success message is displayed to intimate me that account was created
-        format.html { redirect_to accounts_url, notice: 'Account was successfully created.' }
->>>>>>> ca3986fc9daa0db721979d19b4c98dc6dd19440d
+        #fixed
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }
