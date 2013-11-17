@@ -15,6 +15,8 @@ VoucherEventsHandler.prototype = {
     this.getTags();
     document.addEventListener("page:load", this.hiddenFieldHandler());
     document.addEventListener("page:load", this.autoCompleteFieldHandler());
+    // window.addEventListener("page:fetch", this.autoCompleteFieldHandler());
+    //  window.addEventListener("page:fetch", this.getTags());
     document.addEventListener("page:load", this.getTags());
   },
   getTags: function(){
@@ -66,9 +68,11 @@ VoucherEventsHandler.prototype = {
         $('.autocomplete').autocomplete({
           source: data,
           select: function(event, ui) { 
+            console.log(ui.item.value);
             event.preventDefault();
             this.value = ui.item.label;
             $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
+            console.log($('#'+ $(this).data('hidden-field-id')).val(ui.item.value));
           },
           focus: function(event, ui) {
             event.preventDefault();

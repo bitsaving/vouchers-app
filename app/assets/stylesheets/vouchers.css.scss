@@ -108,7 +108,7 @@ margin-right: -250px;
   margin-left: 10px;
 }
 .approval_button {
-  margin-top: 20px;
+  margin-top: -20px;
 }
 .accounts{
   position:absolute;
@@ -333,17 +333,15 @@ padding-bottom: 30px;
 }
 .assign{
   margin-left: 60px;
-  margin-top: 30px;
+  margin-top: 10px;
 }
 .assignn{
   margin-left: 65px;
-  margin-top:50px;
+  margin-top:30px;
 }
-/*.dropDown {
-  position: absolute;
-  margin-top: 10px;
-  margin-left: 55px;
-}*/
+.dropDown {
+ margin-top: -10px;
+}
 .amount{
  /* display: inline-block;
   position: absolute;
@@ -372,7 +370,7 @@ margin-bottom: 20px;
 }
 .final_state{
 float: right;
-margin-top:-500px;
+margin-top:-10px;
 margin-right: -200px;
 height: 40px;
 }
