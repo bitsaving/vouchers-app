@@ -23,7 +23,7 @@
       <td><% if(!(voucher.credit_to.nil?)) %>
     <%= link_to voucher.credit_to.name,account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %></td>
       <%end%>
-      <td><%= format_date(voucher.date)%></td>
+      <td><%= voucher.date.to_s(:string_format)%></td>
       <td><%= number_to_currency(voucher.amount,:unit=>"₹ ")%></td>
       <% if voucher.assigned_to.nil? %>
       <td> <%=" "%>

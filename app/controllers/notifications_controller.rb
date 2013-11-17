@@ -2,7 +2,7 @@ class NotificationsController < ApplicationController
   def index
     #FIXME_AB: we should get notification via associations. like current_user.notifications
   	#fixed
-    @notifications = current_user.notifications  
+    @notifications = current_user.notifications.order('created_at desc')
     respond_to do |format|
       format.html {}
       format.js {}

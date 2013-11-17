@@ -11,25 +11,16 @@ var VoucherEventsHandler = function() {
 VoucherEventsHandler.prototype = {
   init: function() {
     this.hiddenFieldHandler(); 
-    this.autocomplete();
+    this.autoCompleteFieldHandler();
     this.getTags();
     document.addEventListener("page:load", this.hiddenFieldHandler());
-    document.addEventListener("page:load", this.autocomplete());
+    document.addEventListener("page:load", this.autoCompleteFieldHandler());
     document.addEventListener("page:load", this.getTags());
-  },
-  autocomplete: function() {
-    console.log(":fdg")
-    var that = this;
-    $('.date-field').css('cursor', 'pointer');
-    $('.autocomplete').on('keyup',function() {
-      if(this.value.length == 1) {
-        that.autoCompleteFieldHandler();
-      }
-    });
   },
   getTags: function(){
     var that = this
     console.log(":fddfg")
+    console.log($('.tag'))
   // #FIXME_AB: Follow OOPs 
   // #FIXME_AB: What if routes for tags.json or accounts.json changes. You would need to update the js file. What you you can do is pass these urls from application view through rails app. 
   //fixed
@@ -65,6 +56,8 @@ VoucherEventsHandler.prototype = {
     return this.split( term ).pop();
   },
   autoCompleteFieldHandler: function() {
+    console.log($('.autocomplete').data('path'))
+    $('.date-field').css('cursor', 'pointer');
     $.ajax({
       type: 'get',
       url: $('.autocomplete').data('path'), 
@@ -73,11 +66,9 @@ VoucherEventsHandler.prototype = {
         $('.autocomplete').autocomplete({
           source: data,
           select: function(event, ui) { 
-            console.log(ui.item.value);
             event.preventDefault();
             this.value = ui.item.label;
             $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
-            console.log($('#'+ $(this).data('hidden-field-id')).val(ui.item.value));
           },
           focus: function(event, ui) {
             event.preventDefault();

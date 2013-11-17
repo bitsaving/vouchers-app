@@ -17,7 +17,7 @@
     <%end%>
   </div>
   <div class ="date">
-    <%= format_date( @voucher.date ) %> 
+    <%= @voucher.date.to_s(:string_format) %> 
   </div>
   <div class = "separator">
   </div>
@@ -34,7 +34,7 @@
     <% if @voucher.from_date %>
     <div class="date_period" >
       <div class ="date_field">From :</div>
-      <%= format_date( @voucher.from_date ) %> 
+      <%= @voucher.from_date.to_s(:string_format) %> 
       <div class="date_field" >To :</div>
       <%= @voucher.to_date.to_s(:string_format) %> 
     </div>
@@ -58,6 +58,13 @@
       <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
       </div>
     </div>
+    <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
+    <div class ="final_state onprint">
+      <%= link_to "Accept" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
+      <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post%>
+    </div>
+    <%end%>
+
     <% counter = 0 %>
     <%if @voucher.uploads.length > 0 %>
       <div class ="debitCredit">
@@ -110,11 +117,4 @@
     <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
 
   </div>
-   <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
-
-    <div class ="final_state onprint">
-      <%= link_to "Accept" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
-      <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post%>
-    </div>
-  <%end%>
 </div>

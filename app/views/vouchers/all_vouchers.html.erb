@@ -1,8 +1,6 @@
 <div class="all_vouchers">
 <div class="new_button">
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_voucher_path,
-            :class => 'btn new_button btn-primary' %>
+<%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
 </div>
 </div>
 
