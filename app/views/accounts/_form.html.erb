@@ -1,4 +1,5 @@
 <%= form_for @account, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+  <% #FIXME_AB: We might be displaying errors at several other places in the app. Like we are showing below. There we must be duplicating the same code. So we can extract it in a helper method where we can pass the object and display errors. So please extract following error code in a helper method -%>
   <% if @account.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@account.errors.count, "error") %> prohibited this account from being saved:</h2>

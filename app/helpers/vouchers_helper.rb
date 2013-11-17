@@ -1,4 +1,6 @@
 module VouchersHelper
+  #FIXME_AB: Why we need this method
+  # it is neede for view portion
   def get_entered_data(field)
     if !@voucher.new_record?
    	  if field == "debit"

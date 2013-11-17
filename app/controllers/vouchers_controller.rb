@@ -1,5 +1,7 @@
 class VouchersController < ApplicationController
-  before_action :set_voucher, only: [:show, :edit, :update, :destroy]
+  before_action :set_voucher, only: [:show, :edit, :update, :destroy,:check_voucher_state,:check_user_type]
+  before_action :check_voucher_state ,only: [:edit]
+  before_action :check_user_type ,only: [:edit]
   # GET /vouchers
   # GET /vouchers.json
   def index
@@ -13,6 +15,17 @@ class VouchersController < ApplicationController
       format.js {}
     end
   end
+# GET /vouchers/new
+  def new
+    
+    @voucher = Voucher.new
+    uploads = @voucher.uploads.build
+    comments =@voucher.comments.build
+    @voucher.comments.each do |comment| 
+      comment.user_id = current_user.id
+    end
+  end
+
 
   # GET /vouchers/1
   # GET /vouchers/1.json
@@ -36,22 +49,13 @@ class VouchersController < ApplicationController
     end
   end
 
- # GET /vouchers/new
-  def new
-    
-    @voucher = Voucher.new
-    uploads = @voucher.uploads.build
-    comments =@voucher.comments.build
-    @voucher.comments.each do |comment| 
-      comment.user_id = current_user.id
-    end
-  end
+ 
 
   # GET /vouchers/1/edit
   def edit
-    if(!(current_user.user_type == "admin" || current_user.id == @voucher.creator_id))
-      redirect_to root_path, notice: "No editing privileges for you"
-    end 
+    # if(!(current_user.admin? || current_user.id == @voucher.creator_id))
+    #   redirect_to root_path, notice: "You are not authorized to access this page."
+    # end 
   end
 
   # POST /vouchers
@@ -92,7 +96,7 @@ class VouchersController < ApplicationController
 
   end
 
-  def pending_vouchers
+  def pending
     get_vouchers('pending')
     respond_to do |format|
       format.html { render action: 'index' }
@@ -107,7 +111,7 @@ class VouchersController < ApplicationController
     end
   end
 
-  def approved_vouchers 
+  def approved 
      get_vouchers('approved')
     respond_to do |format|
       format.html { render action: 'index' }
@@ -130,14 +134,14 @@ class VouchersController < ApplicationController
     end
   end
 
-  def accepted_vouchers
+  def accepted
     get_vouchers('accepted')
      respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
     end  
   end
-  def rejected_vouchers
+  def rejected
     get_vouchers('rejected')
     respond_to do |format|
       format.html { render action: 'index' }
@@ -171,7 +175,7 @@ class VouchersController < ApplicationController
       @voucher.save!
       @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assigned_to,recipient: current_user
       # @voucher.create_activity key: 'voucher.change_state', owner: @voucher.creator
-      redirect_to :back
+      redirect_to :back , notice: "Voucher "  + @voucher.id.to_s + " has been assigned to " + @voucher.assigned_to.first_name
   end
  
   def decrement_state
@@ -189,6 +193,16 @@ class VouchersController < ApplicationController
 
   
   protected
+
+  def check_voucher_state
+    if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
+      redirect_to '/' , notice: " You are not authorized to edit"
+    end
+  end
+
+  def check_user_type
+    current_user.admin? || current_user.id == @voucher.creator_id
+  end
 
   def get_vouchers(state)
     if params[:account_id]
@@ -212,4 +226,5 @@ class VouchersController < ApplicationController
     def voucher_params
       params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
     end
+
 end

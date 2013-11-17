@@ -12,19 +12,19 @@
   <% end %>   
   <div class="voucher_div">
 <div class ="voucher_form">
-  <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+  <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true } } do |f| %>
   
   <legend><%=controller.action_name.capitalize%> voucher</legend>
     <div class="control-group">
-      <%= f.label :date, :class => 'control-label' %>
+      <%= f.label :date, :class => 'control-label compulsory-field' %>
       <div class="controls">
-        <%= f.text_field :date, :class => 'date-field',:value => Date.today  %>
+        <%= f.text_field :date, :class => 'date-field ',:value => Date.today  %>
       </div>
     </div>
     <div class="control-group">
       <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
     <div class="controls">
-      <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 %>
+      <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 ,:autofocus => true%>
     </div>
   </div>
   <div class="controls">
@@ -43,12 +43,15 @@
     <%= f.label :from_date,"From Date", :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :from_date, :class => 'date-field' %>
+       <span class="hint">Note: The date your voucher will be valid from</span>
     </div>
   </div>
   <div class="control-group">
     <%= f.label :to_date, "To Date ", :class => 'control-label' %>
+   
     <div class="controls">
       <%= f.text_field :to_date, :class => 'date-field' %>
+       <span class="hint">Note: The date your voucher will be valid To</span>
     </div>
   </div>
   <div class="control-group">
@@ -96,7 +99,7 @@
     <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
     <div class="controls">
        <%= f.text_field :amount, :class => 'text_field' %>
-        <span class="add_on">Rs.</span>
+        <span class="add_on">₹</span>
 
       </div>
     </div>
@@ -123,7 +126,7 @@
       <%= f.label :tag_list, "Tags" %><br />
       <div class="controls">
         <%= f.text_field :tag_list ,:class=>"tag", data: {path: tags_path(:json)}%>
-        <span class="note">( Tags separated by comma's )</span>
+        <span class="hint">( Tags separated by comma's )</span>
       </div>
 
     </div>

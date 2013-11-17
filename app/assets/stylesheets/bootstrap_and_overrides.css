@@ -26,14 +26,14 @@ input,select,textarea{
   border: none !important;
 }
 .table-striped th {
-  font-size: 22px;
+  font-size: 18px;
 }
 .table-striped td {
   font-size: 14px;
 }
 .form-horizontal .control-label {
   width:200px;
-  margin-left:-100px;
+  margin-left:-80px;
 }
 .link a {
   position: relative;
@@ -45,11 +45,14 @@ input,select,textarea{
 }
 .dl-horizontal dt {
   width:100px !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
 }
 .dl-horizontal dd{
   margin-left: 140px !important;
-  font-size: 20px !important;
+  font-size: 18px !important;
+}
+table th {
+  font-size: 15px !important;
 }
 
 .btn-mini{
@@ -58,18 +61,18 @@ input,select,textarea{
   font-size: 15px !important;
   width:auto;
 }
-/*table.voucherss{
-  table-layout: fixed !important;
-}*/
-.voucherss td.account_name{
-  width:20px;
-  word-wrap:break-word;
+table{
+ table-layout: fixed !important;*/
 }
+td{
+ word-wrap:break-word;
+}
+
 .new_button {
   position: absolute;
   width:60px;
   right:10px;
-  top:60px;
+  top:45px;
 }
 .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th {
   background-color:#e8f0ff !important;
@@ -87,7 +90,7 @@ input,select,textarea{
   width:30px !important;
 }
 .page-header{
-  padding-top: 8px !important;
+ margin-top: -2px !important;
 }
 .navbar .nav > li > a:hover {
   border-bottom: none;
@@ -95,6 +98,8 @@ input,select,textarea{
 .nav-tabs {
   border: 1px solid transparent;
 }
+.page-header {
+border-bottom: none;}
 .sidebar-nav {
   margin-top:80px;
 }

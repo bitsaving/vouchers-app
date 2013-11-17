@@ -1,1 +1,1 @@
-$('.voucher_status').html('<%= escape_javascript(render partial: 'vouchers/vouchers', locals: {:@vouchers => get_pending_of_users(@user.id ) }) %>');
+$('.voucher_status').html('<%= escape_javascript(render partial: 'vouchers/vouchers', locals: {:@vouchers => @user.vouchers.New.order('updated_at desc').page(params[:page]).per(10) }) %>');

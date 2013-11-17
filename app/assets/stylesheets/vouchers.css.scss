@@ -27,11 +27,17 @@ ul.ui-autocomplete {
     }
   }
 } 
+.hint{
+  position: relative;
+  left:310px;
+  font-size: 13px;
+  font-weight: bold;
+}
 .voucher_reports{
   margin-top:80px;
 }
 .add_on {
-  margin-left: -30px;
+  margin-left: -4px;
   font-size:15px;
   font-weight:bold;
 }
@@ -46,7 +52,7 @@ ul.ui-autocomplete {
   margin-top: 10px;
   width:383px;
   margin-left: -2px;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: bold;
   padding-left: 30px;
   display: inline-block;
@@ -180,16 +186,17 @@ margin-right: -250px;
   background-color: #f6fbff;
   float:left;
   height:50px;
-  width:100px;
+  width:auto;
   margin-top: -55px;
   margin-left: 20px;
   border:solid 1px black;
   display:inline-block;
 }
 .voucherId{
-  padding-top: 15px;
-  padding-left: 30px;
-  padding-bottom: 25px;
+  text-align: center;
+  padding-top: 17px;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 25px;
   font-weight: bold;
   display: inline-block;
@@ -296,7 +303,7 @@ margin-top: -280px;
   margin: 0 auto;
   border: solid 1px black;
   margin-top: 80px;
-
+padding-top: 30px;
   padding-bottom: 290px !important;
   select {
     width:210px;
@@ -350,7 +357,7 @@ padding-bottom: 30px;
 padding-bottom: 30px;
 }
 .all_vouchers{
-margin-bottom: 30px;
+margin-bottom: 20px;
 
 }
 .add_more_uploads{

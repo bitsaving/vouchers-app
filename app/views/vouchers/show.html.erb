@@ -36,7 +36,7 @@
       <div class ="date_field">From :</div>
       <%= format_date( @voucher.from_date ) %> 
       <div class="date_field" >To :</div>
-      <%= format_date( @voucher.to_date ) %> 
+      <%= @voucher.to_date.to_s(:string_format) %> 
     </div>
     <%end%>
     <div class = "payment_mode">

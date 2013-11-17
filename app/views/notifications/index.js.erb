@@ -1,3 +1,4 @@
+// #FIXME_AB: Please update this as per other comments in the project
 $('#notifications_icon').one('click',function(e) {
   e.preventDefault();
   $('#result').show();
@@ -11,8 +12,8 @@ function notifications_view() {
     var activity_id = $(this).find('a.activity').text();
     var url = $(this).find('a.voucher').text();
     $.ajax({
-      url:'/notifications/seen_notifications',
-      data:{activity_id: activity_id,voucher_id: url},
+      url:'/notifications/seen',
+      data:{ activity_id: activity_id , voucher_id: url },
       type:'get',
       success: function(responseData) {
         window.location.href = responseData;

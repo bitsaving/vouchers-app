@@ -19,20 +19,6 @@
 
 // #FIXME_AB: Object oriented architecture please 
 
-// function Fields() {
-//   this.remove = function(link){
-//     $(link).prev("input[type=hidden]").val("1");
-//     $(link).closest(".well").fadeOut(1000);
-//   }
-//   this.add = function(link, association, content) {
-//     var new_id = new Date().getTime();
-//     var regexp = new RegExp("new_" + association, "g");
-//     $(link).parent().before(content.replace(regexp, new_id)).prev().hide().slideDown(1000);
-//   }
-// }
-// var part_fields = new Fields();
-// var diamond_fields = new Fields()
-
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
 })
@@ -44,11 +30,6 @@ ApplicationHandler.prototype = {
     this.dateFieldHandler();
     document.addEventListener("page:load", this.dateFieldHandler);
   },
-// $(document).ready(ApplicationFieldHandler)
-// document.addEventListener("page:load", ApplicationFieldHandler);
-// function ApplicationHandler(){
-//   dateFieldHandler();
-// }
   dateFieldHandler : function(){
     $(".date-field").datepicker({
       dateFormat: "dd/mm/yy"

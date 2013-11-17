@@ -30,6 +30,7 @@ class Voucher < ActiveRecord::Base
   has_many :comments,:dependent => :destroy
   validates :date,:payment_type , :amount , presence: true
   validates :account_credited , :account_debited , :presence => {:message =>" by this name does not exist"}
+  scope :New , -> { where(workflow_state: 'new').order('updated_at desc') }
   validates :to_date , :date => { :after_or_equal_to => :from_date ,
     :message => 'must be after start date of project'} , :allow_blank=> true
 
@@ -71,11 +72,12 @@ class Voucher < ActiveRecord::Base
     update_attributes({accepted_by: nil ,approved_by: nil})
   end
 
-#  def tag_list
-#   @voucher.tag_list if @voucher
-#   end
+  def assignee?(user_id)
+    assignee_id == user_id
+  end
+  
+  def can_be_commented?
+    current_state >= :pending && current_state < :accepted
+  end
 
-# def tag_list=(name)
-#   self.tag_list
-# end
-end
+  end

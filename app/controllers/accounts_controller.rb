@@ -1,14 +1,15 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update, :destroy] 
-   #FIXME_AB: Why are you just using first 50 records. In auto complete my account will not be displayed if it is the 51th record
-   #Fixed
+  #FIXME_AB: Why are you just using first 50 records. In auto complete my account will not be displayed if it is the 51th record
+  #Fixed
+  #FIXME_AB: Remove unused empty css files
   def index
     request_type = request.env["HTTP_ACCEPT"].split(',')
     if !request_type.index("text/javascript").nil?
       @accounts = Account.all
     else
-      @accounts= Account.all.page(params[:page]).per(50)
+      @accounts = Account.all.page(params[:page]).per(50)
     end
     respond_to do |format|
       format.html {}
@@ -34,7 +35,7 @@ class AccountsController < ApplicationController
       if @account.save
         #FIXME_AB: Modify flash message "Account 'account name' was successfully created."
         #Fixed
-        format.html { redirect_to accounts_url, notice: 'Account #{@account.name} was successfully created.' }
+        format.html { redirect_to accounts_url, notice: 'Account ' + @account.name + ' was successfully created.' }
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }

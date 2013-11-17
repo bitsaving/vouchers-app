@@ -1,18 +1,17 @@
-<%- model_class = User -%>
 <div class="page-header">
    <h2><%= "USERS" %></h2>
 </div>
 <div class="new_button">
-  <%= link_to t('.new', :default => t("helpers.links.new")),new_admin_user_path,:class => 'btn new_button btn-primary' %>
+  <%= link_to "New",new_admin_user_path,:class => 'btn new_button btn-primary' %>
 </div>
 <table class="table table-striped userss">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:email) %></th>
-      <th><%= model_class.human_attribute_name(:type) %> </th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th width= "10%"><%= "Id" %></th>
+      <th width= "30%"><%= "Name" %></th>
+      <th width= "30%"><%= "Email" %></th>
+      <th width= "10%"><%= "Privilege" %> </th>
+      <th width= "20%"><%= "Actions" %></th>
     </tr>
   </thead>
   <tbody> 
@@ -29,8 +28,8 @@
           <%end%>
           </td>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),                 edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),admin_user_path(user),:method => :delete,:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },:class => 'btn btn-mini btn-danger' %>
+          <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
+          <%= link_to "Delete",admin_user_path(user),:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
           <%= link_to "vouchers",admin_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>

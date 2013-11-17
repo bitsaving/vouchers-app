@@ -9,10 +9,10 @@
           <%else%>
             <%= user.user_type%>     
           <%end%>
-          </td>
-      <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),                 edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),admin_user_path(user),:method => :delete,:data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },:class => 'btn btn-mini btn-danger' %>
+        </td>
+        <td>
+          <%= link_to "Edit", edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
+          <%= link_to "Destroy", admin_user_path(user),:method => :delete,:data => { :confirm => "Are u Sure" },:class => 'btn btn-mini btn-danger' %>
           <%= link_to "vouchers",admin_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>

@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :set_user, :only => [:edit,:destroy, :update]
-  
+  before_action :set_user, :only => [:edit,:destroy, :update,:show]
   before_action :check_admin
   # GET /users
   # GET /users.json
@@ -16,8 +15,10 @@ class Admin::UsersController < ApplicationController
     @user =User.new
   end
 
+
   def edit
-    @user = User.find(params[:id])
+    # #FIXME_AB: What is before_action :set_user is doing. If you have to find out user again. You are doing the same thing again
+    # @user = User.find(params[:id])
   end
   # POST /accounts
   # POST /accounts.json
@@ -47,11 +48,9 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    if params[:id]
-      @user = User.find(params[:id])
-    # else
-    #   # @user = current_user
-    else
+    if !params[:id]
+      #FIXME_AB: Can't you use set_user before action for finding the user. 
+      #fixed
       redirect_to waiting_for_approval_vouchers_path
     end
      respond_to do |format|
@@ -60,18 +59,20 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  def destroy
-    begin
-      @user.destroy
-      flash[:notice] = "User #{@user.name} deleted"
-      rescue Exception => e
-      flash[:notice] = e.message
-    end
-    respond_to do |format|
-      format.html { redirect_to admin_users_url }
-      format.json { head :no_content }
-    end
-  end
+  #FIXME_AB: We are not sure about handling user's destroy. What to do with vouchers assigned to them or created by them etc. So Lets not allow them to be destroyed. Comment this action. Also ensure that user should not be deletable from rails console too. even when I am  doing user.destroy, 
+  #fixed
+  # def destroy
+  #   begin
+  #     @user.destroy
+  #     flash[:notice] = "User #{@user.name} deleted"
+  #     rescue Exception => e
+  #     flash[:notice] = e.message
+  #   end
+  #   respond_to do |format|
+  #     format.html { redirect_to admin_users_url }
+  #     format.json { head :no_content }
+  #   end
+  # end
 
   protected
   
@@ -80,12 +81,13 @@ class Admin::UsersController < ApplicationController
   end
 
   def set_user
+    #FIXME_AB: What if user is not found with this ID
+    #fixed
     @user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to :back
   end
   
-  def check_admin
-    if !(current_user.reload.user_type == "admin")
-      redirect_to "/", flash: { error: "You are not an admin" }
-    end
-  end
+  #FIXME_AB: This method should be defined in application controller so that it can be used in any controller as needed.. Like we would be calling it in all admin controllers
+ #fixed
 end

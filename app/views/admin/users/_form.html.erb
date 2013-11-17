@@ -3,10 +3,9 @@
     <div id="error_explanation">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
-      <% @user.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>   
@@ -16,9 +15,7 @@
       <div class="controls">
         <%= f.text_field :email, :class => 'text_field' %>
       </div>
-    </div>
-
-    
+    </div>  
     <div class="control-group">
       <%= f.label :first_name, "First name",:class => 'compulsory-field control-label' %>
       <div class="controls">
@@ -35,12 +32,11 @@
       <%= f.label :admin, :class => 'control-label' %>
       <div class="controls">
         <%= f.check_box :user_type  %><br />
-
       </div>
       <span class="note">
         <%= "Note: Admin has the rights to add/delete user"%>
       </span>
-   </div>
+    </div>
     <div>
       <%=f.hidden_field :user_type ,:class=>"user_type"%>
     </div>

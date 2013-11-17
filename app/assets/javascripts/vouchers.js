@@ -18,6 +18,7 @@ VoucherEventsHandler.prototype = {
     document.addEventListener("page:load", this.getTags());
   },
   autocomplete: function() {
+    console.log(":fdg")
     var that = this;
     $('.date-field').css('cursor', 'pointer');
     $('.autocomplete').on('keyup',function() {
@@ -28,6 +29,7 @@ VoucherEventsHandler.prototype = {
   },
   getTags: function(){
     var that = this
+    console.log(":fddfg")
   // #FIXME_AB: Follow OOPs 
   // #FIXME_AB: What if routes for tags.json or accounts.json changes. You would need to update the js file. What you you can do is pass these urls from application view through rails app. 
   //fixed

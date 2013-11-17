@@ -1,27 +1,27 @@
-<%- model_class = Account -%>
 <div class="page-header">
-  <h3> Account Information</h3>
+  <div class="account_name">
+  <strong><%= @account.name %></strong>
+</div>
 </div>
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @account.name %></dd>
+  <dd></dd>
 </dl>
 <%= select_tag :account, options_for_select(Account::TYPES),:name=>@account.id  %>
 <div class="alignment ">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              accounts_path, :class => 'btn btn-primary'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_account_path(@account), :class => 'btn btn-primary' %>
+  <%= link_to "Back",accounts_path, :class => 'btn btn-primary'  %>
+  <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
 </div>
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
     <li class="active new"><%= link_to "New" ,new_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
-    <li class="pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
-     <li class="approved"><%= link_to "Approved" ,approved_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit'),:remote=>true%></li>
-    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit'),:remote=>true%></li>
-    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
+    <li class="pending"><%= link_to "Pending" ,pending_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
+     <li class="approved"><%= link_to "Approved" ,approved_vouchers_path(account_id: @account.id,account_type: 'debit'),:remote=>true%></li>
+    <% #FIXME_AB: pending_voouchers_vouchers_path, did it looks ok to you. To me it clearly looks like something is wrong. Should be pending_vouchers_path. For this you should name you action to pending not pending_vouchers. Voucher is itself communicated by controller's name -%> 
+    <%#fixed%>
+    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path(account_id: @account.id,account_type: 'debit'),:remote=>true%></li>
+    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_path(account_id: @account.id,account_type: 'debit') ,:remote=>true%></li>
     <div class ="voucher_status">
-      <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_new_vouchers(@account.id)}  %>
+      <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @account.vouchers_debited.New.page(params[:page]).per(10)}  %>
      </div>
   </ul>
 </div>

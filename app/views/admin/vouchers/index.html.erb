@@ -4,18 +4,17 @@
 <h3><%= @user.first_name + " " + @user.last_name%></h3>
 </div>
 <div class="alignment">
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              admin_users_path, :class => 'btn btn-primary'  %>
+<%= link_to "Back",admin_users_path, :class => 'btn btn-primary'  %>
             </div>
 <div class = "span9 associated_voucher ">
   <ul class="nav nav-tabs">
     <li class="active new"><%= link_to "New" ,new_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
-    <li class="pending"><%= link_to "Pending" ,pending_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
-    <li class="approved"><%= link_to "Approved" ,approved_vouchers_vouchers_path(user_id: @user.id),:remote=>true%></li>
-    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_vouchers_path(user_id: @user.id),:remote=>true%></li>
-    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="pending"><%= link_to "Pending" ,pending_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="approved"><%= link_to "Approved" ,approved_vouchers_path(user_id: @user.id),:remote=>true%></li>
+    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path(user_id: @user.id),:remote=>true%></li>
+    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
     <div class ="voucher_status">
-        <%= render :template => 'vouchers/_vouchers' , locals: {vouchers: get_new_of_users(@user.id ) }%>
+        <%= render :template => 'vouchers/_vouchers' , locals: {:@vouchers=> @user.vouchers.New.order('updated_at desc').page(params[:page]).per(10) }%>
     </div>
   </ul>
 </div>

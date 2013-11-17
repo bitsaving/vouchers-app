@@ -1,6 +1,6 @@
 VoucherApp::Application.routes.draw do
   get "notifications/index"
-  get "notifications/seen_notifications"
+  get "notifications/seen"
   # resources :admins
   get 'tags' ,to: 'tags#index'
   get 'tags/:tag', to: 'vouchers#index', as: :tag
@@ -14,11 +14,11 @@ VoucherApp::Application.routes.draw do
   # scope 'users/:id' do
     resources :vouchers do
       get 'all_vouchers' , on: :collection
-      get 'approved_vouchers' ,on: :collection
+      get 'approved' ,on: :collection
       get 'new_vouchers', on: :collection
-      get 'pending_vouchers',on: :collection
-      get 'accepted_vouchers',on: :collection
-      get 'rejected_vouchers',on: :collection
+      get 'pending',on: :collection
+      get 'accepted',on: :collection
+      get 'rejected',on: :collection
       # get "debit_vouchers" ,on: :collection
       # get "credit_vouchers" ,on: :collection
       get 'waiting_for_approval', on: :collection

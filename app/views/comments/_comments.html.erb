@@ -1,19 +1,25 @@
 <div class ="comment_panel">
-  <% if voucher.comments.count > 0 %>
+  <% #FIXME_AB: voucher.comments.exists? fixed -%>
+  <% if voucher.comments.exists? %>
     <div class ="comments">
       <h6> Comments </h6>
-      <% for comment in voucher.comments %>
+      <% #FIXME_AB: use vouchers.comments.each fixed-%>
+      <% voucher.comments.each do |comment| %>
         <div class = "commentator">
           <%= simple_format(comment.description) %>
           <div class ="commentator_name">
             <div>
-              <%= User.find(comment.user_id).first_name %>
+              <% #FIXME_AB: comment.user.first_name. We should avoid Model calls in view fixed-%>
+              <%= comment.user.first_name %>
             </div>
-              <%= comment.updated_at.localtime.strftime("%e-%b-%y , %I:%M")%>
+              <% #FIXME_AB: Add a desired time format so that you can use it like comment.updated_at.to_s(:my_format). We have covered this one in one session #fixed-%>
+              <%= comment.updated_at.localtime.to_s(:short_ordinal)%>
+
           </div>
         </div>
       <% end %>
-      <% if voucher.current_state >= :pending && voucher.current_state < :accepted && voucher.assignee_id == current_user.id%>
+      <% #FIXME_AB: There are too many conditions in the following if statement. In such cases we should extract them in one method and use that method. For example in this case we can have a method like " if voucher.owner?(current_user) && voucher.can_be_commented? fixed"-%>
+      <% if voucher.assignee?(current_user.id) && voucher.can_be_commented? %>
         <%= render :partial => 'comments/form' %>
       <%end%>
     </div>

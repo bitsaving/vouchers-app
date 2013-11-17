@@ -3,13 +3,13 @@
     <div class="control-group"> 
       <%=label_tag  :from ,"From", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :from , "", :class => 'date-field'  %>
+        <%= text_field_tag :from , "", :class => 'date-field' ,:value=> Date.today.beginning_of_month().to_s(:normal_format) %>
       </div>
     </div>
     <div class="control-group">
       <%=label_tag  :to ,"To", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :to  , "" ,:class => 'date-field' %>
+        <%= text_field_tag :to  , "" ,:class => 'date-field',:value=> Date.today.end_of_month().to_s(:normal_format) %>
       </div>
     </div>
     <div class="display_vouchers">
@@ -18,7 +18,9 @@
   </div>
 <%end%>
 <div class ="voucher_reports">
+  <%= render partial: 'voucher_status', locals: { start_date: Date.today.beginning_of_month(), end_date: Date.today.end_of_month() } %>
 </div>
 <div class="voucher_status">
+  <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> get_new_by_date(Date.today.beginning_of_month(),Date.today.end_of_month())}  %>
 </div>
 
