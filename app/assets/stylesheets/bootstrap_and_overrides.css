@@ -62,7 +62,7 @@ table th {
   width:auto;
 }
 table{
- table-layout: fixed !important;*/
+ table-layout: fixed !important;
 }
 td{
  word-wrap:break-word;
