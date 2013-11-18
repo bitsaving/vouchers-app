@@ -1,138 +1,115 @@
 <% if @voucher.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@voucher.errors.count, "error") %> prohibited this voucher from being saved:</h2>
-
-      <ul>
-      <% @voucher.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-
-      </ul>
-    </div>
-  <% end %>   
+  <%= render "shared/error_messages", :target => @voucher %>   
   <div class="voucher_div">
-<div class ="voucher_form">
-  <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true } } do |f| %>
-  
-  <legend><%=controller.action_name.capitalize%> voucher</legend>
-    <div class="control-group">
-      <%= f.label :date, :class => 'control-label compulsory-field' %>
-      <div class="controls">
-        <%= f.text_field :date, :class => 'date-field ',:value => Date.today  %>
+    <div class ="voucher_form">
+      <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true } } do |f| %>
+        <legend><%=controller.action_name.capitalize%> voucher</legend>
+        <div class="control-group">
+          <%= f.label :date, :class => 'control-label compulsory-field' %>
+          <div class="controls">
+            <%= f.text_field :date, :class => 'date-field ',:value => Date.today  %>
+          </div>
+        </div>
+        <div class="control-group">
+          <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
+        <div class="controls">
+          <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 ,:autofocus => true%>
+        </div>
       </div>
-    </div>
-    <div class="control-group">
-      <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
-    <div class="controls">
-      <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 ,:autofocus => true%>
-    </div>
-  </div>
-  <div class="controls">
-      <%=  f.hidden_field :account_debited %>
-  </div>
-  <div class="control-group">
-    <%= f.label :account_credited, "Credit To",:class => 'control-label compulsory-field' %>
-    <div class="controls">
-      <%= text_area_tag :credit,get_entered_data('credit') , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
-    </div>
-  </div>
-  <div class="controls">
-    <%=f.hidden_field :account_credited %>
-  </div>
-  <div class="control-group">
-    <%= f.label :from_date,"From Date", :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_field :from_date, :class => 'date-field' %>
-       <span class="hint">Note: The date your voucher will be valid from</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :to_date, "To Date ", :class => 'control-label' %>
-   
-    <div class="controls">
-      <%= f.text_field :to_date, :class => 'date-field' %>
-       <span class="hint">Note: The date your voucher will be valid To</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :payment_type,"Payment Mode", :class => 'control-label compulsory-field' %>
-    <div class="controls">
-      <%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %>
-    </div>
-  </div>
-  <div class ="control-group select hidden">
-    <%= f.label :payment_reference, "Cheque/Credit/Bank Reference No", :class => 'control-label compulsory-field' %>
-    <div class="controls">
-      <%= f.text_field :payment_reference, :class => 'text-field'%>
-    </div>
-  </div>
-    <div class="control-group radioBox addFields">
-      <% counter = 0 %>
-      <%= f.fields_for :uploads do |builder| %>
-      <p class ="link radioBox controls">
-  
-        <%if @voucher.new_record? %>
-          <%= builder.file_field :avatar %>
-          <%= link_to_remove_fields "  Remove" , builder %>
-          <p class ="radioBox link controls tagname">
-            <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
-          </p>
-        <%else%>
-           <%= link_to @voucher.uploads[counter].avatar_file_name ,@voucher.uploads[counter].avatar.url(:original)%>
-
-           <%=builder.text_field :tagname,:class=>"filename hidden"  %>
-           <%= link_to_remove_fields "  Remove" , builder %>  
+      <div class="controls">
+          <%=  f.hidden_field :account_debited %>
+      </div>
+      <div class="control-group">
+        <%= f.label :account_credited, "Credit To",:class => 'control-label compulsory-field' %>
+        <div class="controls">
+          <%= text_area_tag :credit,get_entered_data('credit') , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
+        </div>
+      </div>
+      <div class="controls">
+        <%=f.hidden_field :account_credited %>
+      </div>
+      <div class="control-group">
+        <%= f.label :from_date,"From Date", :class => 'control-label' %>
+        <div class="controls">
+          <%= f.text_field :from_date, :class => 'date-field' %>
+           <span class="hint">Note: The date your voucher will be valid from</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <%= f.label :to_date, "To Date ", :class => 'control-label' %>
        
-        <%end%>   
-          
-           
-          
-        <% counter += 1 %>
-      <% end %>
-    </p>
-  </div>
-  <div  class =" add_more_uploads radioBox addFields">
-    <%= link_to_add_fields "Add Another File", f, :uploads %>
-  </div>
- 
-  <div class="control-group">
-    <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
-    <div class="controls">
-       <%= f.text_field :amount, :class => 'text_field' %>
-        <span class="add_on">₹</span>
-
+        <div class="controls">
+          <%= f.text_field :to_date, :class => 'date-field' %>
+           <span class="hint">Note: The date your voucher will be valid To</span>
+        </div>
       </div>
-    </div>
+      <div class="control-group">
+        <%= f.label :payment_type,"Payment Mode", :class => 'control-label compulsory-field' %>
+        <div class="controls">
+          <%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %>
+        </div>
+      </div>
+      <div class ="control-group select hidden">
+        <%= f.label :payment_reference, "Cheque/Credit/Bank Reference No", :class => 'control-label compulsory-field' %>
+        <div class="controls">
+          <%= f.text_field :payment_reference, :class => 'text-field'%>
+        </div>
+      </div>
+        <div class="control-group radioBox addFields">
+          <% counter = 0 %>
+          <%= f.fields_for :uploads do |builder| %>
+          <p class ="link radioBox controls">
+      
+            <%if @voucher.new_record? %>
+              <%= builder.file_field :avatar %>
+              <%= link_to_remove_fields "  Remove" , builder %>
+              <p class ="radioBox link controls tagname">
+                <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
+              </p>
+            <%else%>
+               <%= link_to @voucher.uploads[counter].avatar_file_name ,@voucher.uploads[counter].avatar.url(:original)%>
 
- 
-
-    <div class="control-group">
-       <%= f.label :comments ,"Comment",:class=>'control-label' %>
-      <%= f.fields_for :comments do |builder| %>
-
-      <% if(builder.object.user_id == current_user.id  || @voucher.new_record?) %>
-        
-          
-        <%=render 'comment_fields' ,:f=>builder %>
+               <%=builder.text_field :tagname,:class=>"filename hidden"  %>
+               <%= link_to_remove_fields "  Remove" , builder %>     
+            <%end%>            
+            <% counter += 1 %>
+          <% end %>
+        </p>
+      </div>
+      <div  class =" add_more_uploads radioBox addFields">
+        <%= link_to_add_fields "Add Another File", f, :uploads %>
+      </div>  
+      <div class="control-group">
+        <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
+        <div class="controls">
+           <%= f.text_field :amount, :class => 'text_field' %>
+            <span class="add_on">₹</span>
+          </div>
+        </div> 
+        <div class="control-group">
+          <%= f.label :comments ,"Comment",:class=>'control-label' %>
+          <%= f.fields_for :comments do |builder| %>
+            <% if(builder.object.user_id == current_user.id  || @voucher.new_record?) %> 
+              <%=render 'comment_fields' ,:f=>builder %>
+            <%end%>
+          <% end %>
+        </div>  
+        <% if !@voucher.new_record? %>
+         <div class =" add_more_uploads radioBox addFields ">
+          <%= link_to_add_fields "Add comments", f, :comments %>
+        </div>
         <%end%>
-      <% end %>
-    </div>  
-    <% if !@voucher.new_record? %>
-     <div class =" add_more_uploads radioBox addFields ">
-      <%= link_to_add_fields "Add comments", f, :comments %>
-    </div>
-    <%end%>
-    <div class="control-group">
-      <%= f.label :tag_list, "Tags" %><br />
-      <div class="controls">
-        <%= f.text_field :tag_list ,:class=>"tag", data: {path: tags_path(:json)}%>
-        <span class="hint">( Tags separated by comma's )</span>
-      </div>
+        <div class="control-group">
+          <%= f.label :tag_list, "Tags" %><br />
+          <div class="controls">
+            <%= f.text_field :tag_list ,:class=>"tag", data: {path: tags_path(:json)}%>
+            <span class="hint">( Tags separated by comma's )</span>
+          </div>
 
-    </div>
-    <div class="form-actions ">
-      <%= f.submit nil, :class => 'btn btn-primary'%>
-    </div>
-  <%end %>
-</div>
+        </div>
+        <div class="form-actions ">
+          <%= f.submit nil, :class => 'btn btn-primary'%>
+        </div>
+    <%end %>  
+  </div>
 </div>

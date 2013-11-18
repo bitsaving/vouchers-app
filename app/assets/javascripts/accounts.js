@@ -15,8 +15,8 @@ AccountsHandler.prototype = {
   getVouchersByState: function(){
     $(document).on('change', '#account', function() {
       pathname = $(this).siblings('.associated_voucher').find('ul').children('li.active').text();
-      if(pathname == "New")
-        pathname = pathname + "_vouchers"
+      // if(pathname == "New")
+      //   pathname = pathname + "_vouchers"
       info = {account_type: $(this).val(),account_id: $(this).attr('name')}
       $.ajax({
         url:'/vouchers/' + pathname.toLowerCase(),

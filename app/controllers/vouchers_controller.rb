@@ -111,14 +111,17 @@ class VouchersController < ApplicationController
   end
 
   def approved 
-     get_vouchers('approved')
+    get_vouchers('approved')
     respond_to do |format|
       format.html { render action: 'index' }
       format.js {}
     end  
   end
 
-  def new_vouchers
+  def drafted
+    # if params[:user_id] == current_user.id
+
+    #   @vouchers =  @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     get_vouchers('new')
     respond_to do |format|
       format.html { render action: 'index' }
@@ -226,5 +229,4 @@ class VouchersController < ApplicationController
     def voucher_params
       params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
     end
-
 end

@@ -1,4 +1,3 @@
-<%- model_class = Voucher -%>
 <div class="page-header">
   <h3> Vouchers </h3>
 <h3><%= @user.first_name + " " + @user.last_name%></h3>
@@ -8,7 +7,7 @@
             </div>
 <div class = "span9 associated_voucher ">
   <ul class="nav nav-tabs">
-    <li class="active new"><%= link_to "New" ,new_vouchers_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <li class="active drafted"><%= link_to "Drafted" ,drafted_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
     <li class="pending"><%= link_to "Pending" ,pending_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
     <li class="approved"><%= link_to "Approved" ,approved_vouchers_path(user_id: @user.id),:remote=>true%></li>
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path(user_id: @user.id),:remote=>true%></li>

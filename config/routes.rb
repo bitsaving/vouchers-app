@@ -3,7 +3,7 @@ VoucherApp::Application.routes.draw do
   get "notifications/seen"
   # resources :admins
   get 'tags' ,to: 'tags#index'
-  get 'tags/:tag', to: 'vouchers#index', as: :tag
+  # get 'tags/:tag', to: 'vouchers#index', as: :tag
   resources :comments
 
   resources :uploads
@@ -15,7 +15,7 @@ VoucherApp::Application.routes.draw do
     resources :vouchers do
       get 'all_vouchers' , on: :collection
       get 'approved' ,on: :collection
-      get 'new_vouchers', on: :collection
+      get 'drafted', on: :collection
       get 'pending',on: :collection
       get 'accepted',on: :collection
       get 'rejected',on: :collection

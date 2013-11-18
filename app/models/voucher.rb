@@ -77,7 +77,15 @@ class Voucher < ActiveRecord::Base
   def assignee?(user_id)
     assignee_id == user_id
   end
+
+  def creator?(user_id)
+    creator_id == user_id
+  end
   
+  def can_be_edited?
+    current_state == :new || current_state == :rejected
+  end
+
   def can_be_commented?
     current_state >= :pending && current_state < :accepted
   end

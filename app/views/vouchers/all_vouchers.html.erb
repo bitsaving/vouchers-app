@@ -6,7 +6,7 @@
 
 <div class = "span9  associated_voucher all_vouchers">
   <ul class="nav nav-tabs">
-  	<li class="active new"><%= link_to "My Draft" ,new_vouchers_vouchers_path(user_id: current_user.id) ,:remote=>true%></li>
+  	<li class="active drafted"><%= link_to "My Draft" ,drafted_vouchers_path(user_id: current_user.id) ,:remote=>true%></li>
     <li class="pending"><%= link_to "Pending" ,pending_vouchers_path ,:remote=>true%></li>
     <li class="approved"><%= link_to "Approved" ,approved_vouchers_path,:remote=>true%></li>
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path,:remote=>true%></li>

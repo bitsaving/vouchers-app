@@ -19,8 +19,5 @@
 <%end%>
 <div class ="voucher_reports">
   <%= render partial: 'voucher_status', locals: { start_date: Date.today.beginning_of_month(), end_date: Date.today.end_of_month() } %>
+  
 </div>
-<div class="voucher_status">
-  <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> get_new_by_date(Date.today.beginning_of_month(),Date.today.end_of_month())}  %>
-</div>
-

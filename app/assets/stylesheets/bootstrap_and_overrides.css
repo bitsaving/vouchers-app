@@ -16,14 +16,14 @@
   left:300px;
   top:-140px;
 }
-.nav-tags li.active {
-  background-color:#f9f9f9;
+li.active {
+  z-index:1000;
 }
 input,select,textarea{
   width:270px;
 }
 .voucher_display .page-header {
-  border: none !important;
+  /*border: none !important;*/
 }
 .table-striped th {
   font-size: 18px;
@@ -34,7 +34,7 @@ input,select,textarea{
 .form-horizontal .control-label {
   width:200px;
   margin-left:-80px;
-}
+} 
 .link a {
   position: relative;
   left:300px;
@@ -92,14 +92,29 @@ td{
 .page-header{
  margin-top: -2px !important;
 }
-.navbar .nav > li > a:hover {
+.navbar > li > a:hover {
   border-bottom: none;
+
 }
-.nav-tabs {
-  border: 1px solid transparent;
+
+.row-fluid .span9 {
+width:100% !important;
+}
+.nav-tabs>li.active {
+  border: none;
+}
+.nav.nav-tabs {
+  position: relative;
+ margin-top:-1px !important;
+ border: solid 1px transparent;
+
 }
 .page-header {
-border-bottom: none;}
+  border-top: none !important;
+  position: relative;
+  top:29px;
+  z-index: -1;
+}
 .sidebar-nav {
   margin-top:80px;
 }

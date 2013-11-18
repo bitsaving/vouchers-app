@@ -1,0 +1,5 @@
+$('.voucher_status').html("<%= escape_javascript render 'vouchers' %>");
+$('.associated_voucher li.drafted').addClass('active').siblings().removeClass('active');
+<%if !params[:_]%>
+  $('#account').val('debit')
+<%end%>
