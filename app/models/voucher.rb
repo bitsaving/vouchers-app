@@ -47,7 +47,7 @@ class Voucher < ActiveRecord::Base
   belongs_to :accepted , :class_name => 'User', :foreign_key => "accepted_by"
   has_many :uploads , dependent: :destroy
   #FIXME_AB: why avatar, its not avatar
-  accepts_nested_attributes_for :uploads , update_only: true , reject_if: proc { |attributes| attributes['avatar'].blank? } , allow_destroy: true
+  accepts_nested_attributes_for :uploads , update_only: true , reject_if: proc { |attributes| attributes['bill_attachment'].blank? } , allow_destroy: true
   accepts_nested_attributes_for :comments , allow_destroy: true , update_only: true , reject_if: proc { |attributes| attributes['description'].blank? }
   before_destroy :check_voucher_state
   #FIXME_AB: Why this method named as add_comment. What it looks like is that it is recording the state change as comment so we can name it as record state change
@@ -67,11 +67,15 @@ class Voucher < ActiveRecord::Base
   end
 
   def accept(user_id)
-    update_attributes(accepted_by: user_id)
+    update_attributes({accepted_by: user_id , accepted_at: Time.now})
   end
   
   def reject(user_id)
     update_attributes({accepted_by: nil ,approved_by: nil})
+  end
+
+  def approve
+    update_attributes({approved_at: Time.now })
   end
 
   def assignee?(user_id)

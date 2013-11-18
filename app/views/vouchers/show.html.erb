@@ -71,7 +71,7 @@
         <div class="labels">Bill attachments
         </div>
         <% @voucher.uploads.each do |upload|  %> 
-          <div><%= (counter += 1).to_s+". "%><%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%></div>     
+          <div><%= (counter += 1).to_s+". "%><%= link_to (upload.bill_attachment_file_name) ,upload.bill_attachment.url(:original)%></div>     
       
         <%end%>
       </div> 

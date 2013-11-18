@@ -17,3 +17,4 @@
     var regexp = new RegExp("new_" + association, "g")
     $(link).before(content.replace(regexp, new_id));
   }
+  

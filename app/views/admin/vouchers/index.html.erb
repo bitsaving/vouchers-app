@@ -7,11 +7,7 @@
             </div>
 <div class = "span9 associated_voucher ">
   <ul class="nav nav-tabs">
-    <li class="active drafted"><%= link_to "Drafted" ,drafted_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
-    <li class="pending"><%= link_to "Pending" ,pending_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
-    <li class="approved"><%= link_to "Approved" ,approved_vouchers_path(user_id: @user.id),:remote=>true%></li>
-    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path(user_id: @user.id),:remote=>true%></li>
-    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_path(user_id: @user.id) ,:remote=>true%></li>
+    <%= render "shared/voucher_status_tabs", :params => {user_id: @user.id} %>   
     <div class ="voucher_status">
         <%= render :template => 'vouchers/_vouchers' , locals: {:@vouchers=> @user.vouchers.New.order('updated_at desc').page(params[:page]).per(10) }%>
     </div>

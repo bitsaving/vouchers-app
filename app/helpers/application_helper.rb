@@ -17,11 +17,13 @@ module ApplicationHelper
   end
   
   def user_options
-    User.where.not(id:  current_user.id).pluck( 'first_name ', 'id' )
+    User.where.not(id: current_user.id).pluck( 'first_name ', 'id' )
   end
 
   #FIXME_AB: I am not sure why we need this. A better way could be to extend time formats. We had a session by Pramod once
   #fixed
+  
+
   def get_new_by_date(to,from)
     @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
   end

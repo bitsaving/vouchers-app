@@ -13,13 +13,7 @@
 </div>
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
-    <li class="active drafted"><%= link_to "Drafted" ,drafted_vouchers_path({account_id: @account.id,account_type: 'debit'}) ,:remote=>true%></li>
-    <li class="pending"><%= link_to "Pending" ,pending_vouchers_path({account_id: @account.id,account_type: 'debit'}) ,:remote=>true%></li>
-     <li class="approved"><%= link_to "Approved" ,approved_vouchers_path({account_id: @account.id,account_type: 'debit'}),:remote=>true%></li>
-    <% #FIXME_AB: pending_voouchers_vouchers_path, did it looks ok to you. To me it clearly looks like something is wrong. Should be pending_vouchers_path. For this you should name you action to pending not pending_vouchers. Voucher is itself communicated by controller's name -%> 
-    <%#fixed%>
-    <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path({account_id: @account.id,account_type: 'debit'}),:remote=>true%></li>
-    <li class="rejected"><%= link_to "Rejected" ,rejected_vouchers_path({ account_id: @account.id,account_type: 'debit' }) ,:remote=>true%></li>
+    <%= render "shared/voucher_status_tabs", :params => {account_id: @account.id,account_type: 'debit'} %>   
     <div class ="voucher_status">
       <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @account.vouchers_debited.New.page(params[:page]).per(10)}  %>
      </div>

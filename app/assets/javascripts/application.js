@@ -28,11 +28,20 @@ var ApplicationHandler = function() {
 ApplicationHandler.prototype = {
   init: function() {
     this.dateFieldHandler();
+    this.ajaxRequestHandler();
     document.addEventListener("page:load", this.dateFieldHandler);
+    document.addEventListener("page:load", this.ajaxRequestHandler);
   },
   dateFieldHandler : function(){
     $(".date-field").datepicker({
       dateFormat: "dd/mm/yy"
     });
+  },
+  ajaxRequestHandler: function(){
+    $(document).on('ajax:success','a[data-remote="true"]', function(evt, response, status,xhr){
+      $('.voucher_status').html(unescape(response));
+      $('#account').val('debit')
+      $('.associated_voucher li.' + $(evt.target).attr('class')).addClass('active').siblings().removeClass('active');
+    })
   }
 }
