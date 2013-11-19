@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20131114052321) do
     t.boolean  "active",     default: true
   end
 
-
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type"
@@ -69,7 +68,6 @@ ActiveRecord::Schema.define(version: 20131114052321) do
   end
 
   create_table "uploads", force: true do |t|
-    #FIXME_AB: Add indexes
     t.integer  "voucher_id"
     t.datetime "created_at"
     t.datetime "updated_at"

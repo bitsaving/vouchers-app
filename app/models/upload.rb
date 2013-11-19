@@ -5,10 +5,8 @@ class Upload < ActiveRecord::Base
   # validates_attachment_content_type :avatar,:content_type =>'application/pdf' 
   #FIXME_AB: why avatar
   before_save :rename_avatar
-  #FIXME_AB: You have code formatting issue. YOu should install beautifyRuby sublime package and use them.
 
-  #FIXME_AB: I am not sure why this method is needed, please explain
-  #this is required to replace the filename with the caption added.
+  #FIXME_AB: You should not replace the original filename with the caption. Instead save caption in DB and display caption. which will be linked to the original file name.
   def rename_avatar
 	  if avatar_file_name
       extension = File.extname(avatar_file_name).downcase
