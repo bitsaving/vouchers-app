@@ -2,9 +2,8 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
 
   def create
-    #FIXME_AB: I think a better way to do is find voucher first and then do voucher.comments.build
-    #fixed
     @voucher = Voucher.find(params[:voucher_id])
+    #FIXME_AB: Whenever you find something like you are doing above. Always consider a case to handle, if the record is not found
     @comment = @voucher.comments.build(comment_params)
     if(@comment.save)
       respond_to do |format|

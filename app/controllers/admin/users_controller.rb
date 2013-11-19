@@ -1,9 +1,13 @@
+#FIXME_AB: One good approach for admin controllers is you define a AdminBaseController which is inherited from ApplicationController like you have done below. And inherited all you admin controllers form this AdminBaseController. This way if we have to do some common thing for all admin controllers, we can do it by doing in AdminBaseController. We can discuss F2F if it is not clear. 
+
 class Admin::UsersController < ApplicationController
   before_action :set_user, :only => [:edit,:destroy, :update,:show]
+  #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
   before_action :check_admin
   # GET /users
   # GET /users.json
   def index
+    #FIXME_AB: Lets make per page = 50
     @users = User.all.page(params[:page]).per(10)
      respond_to do |format|
       format.js {}
@@ -15,11 +19,9 @@ class Admin::UsersController < ApplicationController
     @user =User.new
   end
 
-
   def edit
-    # #FIXME_AB: What is before_action :set_user is doing. If you have to find out user again. You are doing the same thing again
-    # @user = User.find(params[:id])
   end
+
   # POST /accounts
   # POST /accounts.json
   def create
@@ -49,8 +51,7 @@ class Admin::UsersController < ApplicationController
 
   def show
     if !params[:id]
-      #FIXME_AB: Can't you use set_user before action for finding the user. 
-      #fixed
+      #FIXME_AB: This redirection should be done from the before filter itself
       redirect_to waiting_for_approval_vouchers_path
     end
      respond_to do |format|
@@ -59,8 +60,6 @@ class Admin::UsersController < ApplicationController
     end
   end
 
-  #FIXME_AB: We are not sure about handling user's destroy. What to do with vouchers assigned to them or created by them etc. So Lets not allow them to be destroyed. Comment this action. Also ensure that user should not be deletable from rails console too. even when I am  doing user.destroy, 
-  #fixed
   # def destroy
   #   begin
   #     @user.destroy
@@ -81,13 +80,10 @@ class Admin::UsersController < ApplicationController
   end
 
   def set_user
-    #FIXME_AB: What if user is not found with this ID
-    #fixed
     @user = User.find(params[:id])
+    #FIXME_AB: Instead of handling this exception you should check for user.nil?
     rescue ActiveRecord::RecordNotFound
       redirect_to :back
   end
   
-  #FIXME_AB: This method should be defined in application controller so that it can be used in any controller as needed.. Like we would be calling it in all admin controllers
-   #fixed
 end

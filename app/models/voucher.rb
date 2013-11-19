@@ -1,7 +1,4 @@
-#FIXME_AB: code formatting issue. Please put some spaces between methods
-#Fixed
-#FIXME_AB: Voucher should also have approved_at and accepted_at datetime column which should be updated on their respective actions[Just in db, not to display on frontend for now]
-#fixed
+#FIXME_AB: Make sure approved_at and accepted_at are saved with vouchers, I think right now only one is being saved. Cross check
 class Voucher < ActiveRecord::Base 
   include PublicActivity::Common
   include Workflow
@@ -56,8 +53,6 @@ class Voucher < ActiveRecord::Base
     comments.create!(description: workflow_state, user_id: user_id)
   end
 
-  #FIXME_AB: this is just setting approver's id, not doing anything with state. so we should name it as set_approver. same for accept and reject
-  #cant change because these methods are the methods provided with the same name as that of state when we implement state machine  and gets called themselves when state changes.
   def approve(user_id)
      update_attributes(approved_by: user_id)
   end
@@ -67,15 +62,18 @@ class Voucher < ActiveRecord::Base
     current_state < :approved
   end
 
+  #FIXME_AB: Please add comments for these callback methods. We discussed it
   def accept(user_id)
     update_attributes({accepted_by: user_id , accepted_at: Time.now})
   end
   
   def reject(user_id)
+    #FIXME_AB: Space after comma
     update_attributes({accepted_by: nil ,approved_by: nil})
   end
 
   def approve
+    #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
     update_attributes({approved_at: Time.now })
   end
 
@@ -88,6 +86,7 @@ class Voucher < ActiveRecord::Base
   end
   
   def can_be_edited?
+    #FIXME_AB: Instead of comparing the state we can use "new? || rejected?"
     current_state == :new || current_state == :rejected
   end
 

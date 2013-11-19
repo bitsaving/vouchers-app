@@ -3,12 +3,8 @@
 <h3> Accounts </h3>
 </div>
 <div class="new_button">
-  <% #FIXME_AB: Lets not use translations as we are not using other places. Make this change through out the app -%>
-  <%#fixed%>
 <%= link_to "New",new_account_path,:class => 'btn new_button btn-primary' %>
 </div>
-<% #FIXME_AB: @accounts.count > 0 can be written as @accounts.present? for better code readability  -%>
-<%#fixed%>
 <% if @accounts.present? %>
   <table class="table table-striped accountss">
     <thead>

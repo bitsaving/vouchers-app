@@ -1,7 +1,6 @@
 class NotificationsController < ApplicationController
   def index
-    #FIXME_AB: we should get notification via associations. like current_user.notifications
-  	#fixed
+    #FIXME_AB: Instead of defining order again and again you can make a scope or a default scope
     @notifications = current_user.notifications.order('created_at desc')
     respond_to do |format|
       format.html {}
@@ -9,8 +8,6 @@ class NotificationsController < ApplicationController
     end
   end
 
-  #FIXME_AB: You should just name the following action as seen. or mark_read
-  #fixed
   def seen
   	if params[:activity_id]
   		@seen_notification = PublicActivity::Activity.where('id=?',params[:activity_id]).first

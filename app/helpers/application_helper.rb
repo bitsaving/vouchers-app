@@ -20,16 +20,9 @@ module ApplicationHelper
     User.where.not(id: current_user.id).pluck( 'first_name ', 'id' )
   end
 
-  #FIXME_AB: I am not sure why we need this. A better way could be to extend time formats. We had a session by Pramod once
-  #fixed
-  
-
   def get_new_by_date(to,from)
     @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
   end
-  #FIXME_AB: I think we don't need this method. if we add a scope called pending in voucher which return pending vouchers then we can get same thing by account.vouchers.pending. No?
-  #fixed
-
   
   #FIXME_AB: Why you are using two types of method naming conventions. One with underscore other with camelCase
   def getAccount(id)

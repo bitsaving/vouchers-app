@@ -53,8 +53,6 @@ class VouchersController < ApplicationController
 
   # GET /vouchers/1/edit
   def edit
-    #FIXME_AB: Redirect to back instead of home page
-    #fixed 
   end
 
   # POST /vouchers

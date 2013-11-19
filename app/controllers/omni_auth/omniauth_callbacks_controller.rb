@@ -7,7 +7,6 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     # else
        user = User.from_omniauth(request.env["omniauth.auth"])
     # end
-    #FIXME_AB: Better logic can be written for this like if user && user.persisted?
     if user && user.persisted?
         flash.notice = "Signed in Through Vinsol!"
         sign_in_and_redirect user

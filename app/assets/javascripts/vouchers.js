@@ -2,6 +2,7 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
+// #FIXME_AB: Add some spacing between functions 
 $(document).ready(function(){
   var voucherEventsHandler = new VoucherEventsHandler();
 })
@@ -24,10 +25,9 @@ VoucherEventsHandler.prototype = {
     console.log(":fddfg")
     console.log($('.tag'))
   // #FIXME_AB: Follow OOPs 
-  // #FIXME_AB: What if routes for tags.json or accounts.json changes. You would need to update the js file. What you you can do is pass these urls from application view through rails app. 
-  //fixed
     $.ajax({
       type: 'get',
+      // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 
       url: $('.tag').data('path'), 
       dataType: "json", 
       success: function(data){

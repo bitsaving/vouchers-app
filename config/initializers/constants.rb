@@ -1,3 +1,4 @@
+#FIXME_AB: Name thse custom formats a better name. I can help if you need
 Date::DATE_FORMATS[:normal_format] = "%d/%m/%Y"
 Date::DATE_FORMATS[:string_format] = "%d %b %Y"
 # Date::DATE_FORMATS[:string_month] = '%B'
