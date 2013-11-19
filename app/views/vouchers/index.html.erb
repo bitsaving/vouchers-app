@@ -42,7 +42,7 @@
           <%end%>
          <td><%= voucher.workflow_state%></td>
          <td>
-          <% if voucher.creator_id == current_user.id && (voucher.current_state == :new || voucher.current_state == :rejected) %>
+          <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
           <%= link_to "Edit",edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
           <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure?'},:class => 'btn btn-mini btn-danger' %>
           <%end%>
@@ -56,7 +56,5 @@
 <%else%>
   <% if controller.action_name == "waiting_for_approval" %>
  <h3> No vouchers assigned </h3>
- <%else%>
- <h3> No <%= controller.action_name.titleize %></h3>
  <%end%>
 <%end%>

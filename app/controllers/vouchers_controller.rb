@@ -98,8 +98,7 @@ class VouchersController < ApplicationController
   def pending
     get_vouchers('pending')
     respond_to do |format|
-      format.html { render action: 'index' }
-      format.js {}
+      format.html { render partial: 'vouchers' }
     end  
   end
 
@@ -111,18 +110,19 @@ class VouchersController < ApplicationController
   end
 
   def approved 
-     get_vouchers('approved')
+    get_vouchers('approved')
     respond_to do |format|
-      format.html { render action: 'index' }
-      format.js {}
+      format.html { render partial: 'vouchers' }
     end  
   end
 
-  def new_vouchers
+  def drafted
+    # if params[:user_id] == current_user.id
+
+    #   @vouchers =  @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     get_vouchers('new')
     respond_to do |format|
-      format.html { render action: 'index' }
-      format.js {}
+      format.html { render partial: 'vouchers'}
     end  
   end
 
@@ -136,15 +136,13 @@ class VouchersController < ApplicationController
   def accepted
     get_vouchers('accepted')
      respond_to do |format|
-      format.html { render action: 'index' }
-      format.js {}
+      format.html { render partial: 'vouchers' }
     end  
   end
   def rejected
     get_vouchers('rejected')
     respond_to do |format|
-      format.html { render action: 'index' }
-      format.js {}
+      format.html { render partial: 'vouchers' }
     end
   end
   # DELETE /vouchers/1
@@ -196,7 +194,7 @@ class VouchersController < ApplicationController
 
   def check_voucher_state
     if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
-      redirect_to :back , notice: " You are not authorized to edit"
+      redirect_if_no_referer 
     end
   end
 
@@ -224,7 +222,6 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:avatar] )
+      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:bill_attachment] )
     end
-
 end

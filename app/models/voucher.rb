@@ -47,7 +47,7 @@ class Voucher < ActiveRecord::Base
   belongs_to :accepted , :class_name => 'User', :foreign_key => "accepted_by"
   has_many :uploads , dependent: :destroy
   #FIXME_AB: why avatar, its not avatar
-  accepts_nested_attributes_for :uploads , update_only: true , reject_if: proc { |attributes| attributes['avatar'].blank? } , allow_destroy: true
+  accepts_nested_attributes_for :uploads , update_only: true , reject_if: proc { |attributes| attributes['bill_attachment'].blank? } , allow_destroy: true
   accepts_nested_attributes_for :comments , allow_destroy: true , update_only: true , reject_if: proc { |attributes| attributes['description'].blank? }
   #FIXME_AB: This method should be called check_if_destroyable
   before_destroy :check_voucher_state
@@ -68,17 +68,29 @@ class Voucher < ActiveRecord::Base
   end
 
   def accept(user_id)
-    update_attributes(accepted_by: user_id)
+    update_attributes({accepted_by: user_id , accepted_at: Time.now})
   end
   
   def reject(user_id)
     update_attributes({accepted_by: nil ,approved_by: nil})
   end
 
+  def approve
+    update_attributes({approved_at: Time.now })
+  end
+
   def assignee?(user_id)
     assignee_id == user_id
   end
+
+  def creator?(user_id)
+    creator_id == user_id
+  end
   
+  def can_be_edited?
+    current_state == :new || current_state == :rejected
+  end
+
   def can_be_commented?
     current_state >= :pending && current_state < :accepted
   end

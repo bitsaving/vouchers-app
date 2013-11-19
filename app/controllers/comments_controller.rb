@@ -16,6 +16,7 @@ class CommentsController < ApplicationController
         format.html do
           redirect_to :back
           #FIXME_AB: It would be good if you can also display specific error, why comment was not saved
+          
           flash[:notice] = "Comment could not be added"
         end
         format.js do

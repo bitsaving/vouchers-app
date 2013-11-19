@@ -1,9 +1,7 @@
 // Place all the styles related to the accounts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.voucher_status {
-  width:1300px;
-}
+
 .account_vouchers th {
   font-size:14px !important;
 }
@@ -21,7 +19,5 @@ font-size:20px;
 margin-bottom:30px;
 }
 #account{
-position:relative;
-top:-10px;
-right:-60px;
+float:right;
 }

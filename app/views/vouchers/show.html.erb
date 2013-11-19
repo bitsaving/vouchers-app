@@ -25,11 +25,11 @@
     <div class = "debitCredit">
       <div class="labels">Debit
       </div>
-      <%= @voucher.debit_from.name %>
+      <%= link_to @voucher.debit_from.name , account_path(Account.find(@voucher.debit_from))%>
     </div>
     <div class="debitCredit">
       <div class ="labels">Credit</div> 
-      <%= @voucher.credit_to.name %>
+      <%= link_to @voucher.credit_to.name  , account_path(Account.find(@voucher.credit_to)) %>
     </div>
     <% if @voucher.from_date %>
     <div class="date_period" >
@@ -71,14 +71,14 @@
         <div class="labels">Bill attachments
         </div>
         <% @voucher.uploads.each do |upload|  %> 
-          <div><%= (counter += 1).to_s+". "%><%= link_to (upload.avatar_file_name) ,upload.avatar.url(:original)%></div>     
+          <div><%= (counter += 1).to_s+". "%><%= link_to (upload.bill_attachment_file_name) ,upload.bill_attachment.url(:original)%></div>     
       
         <%end%>
       </div> 
     <%end%>
     <%if @voucher.tag_list.length >0 %>
      <div class="tags">
-      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, tag_path(t),:class=>"taglist"}.join(',') %>
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, vouchers_path(tag: t),:class=>"taglist"}.join(',') %>
     </div>
     <%end%>
     <%if !@voucher.approved_by.nil?%>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131114052321) do
+ActiveRecord::Schema.define(version: 20131118173617) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -71,10 +71,10 @@ ActiveRecord::Schema.define(version: 20131114052321) do
     t.integer  "voucher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar_file_name"
-    t.string   "avatar_content_type"
-    t.integer  "avatar_file_size"
-    t.datetime "avatar_updated_at"
+    t.string   "bill_attachment_file_name"
+    t.string   "bill_attachment_content_type"
+    t.integer  "bill_attachment_file_size"
+    t.datetime "bill_attachment_updated_at"
     t.string   "tagname"
   end
 
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20131114052321) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "payment_reference"
+    t.datetime "accepted_at"
+    t.datetime "approved_at"
   end
 
   add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree

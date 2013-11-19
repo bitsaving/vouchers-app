@@ -23,4 +23,9 @@ class ApplicationController < ActionController::Base
         redirect_to "/", flash: { error: "You are not an admin" }
       end
     end
+
+    def redirect_if_no_referer
+      redirect_to '/' ,notice: "You are not authorized" unless request.referer
+    end
+
 end
