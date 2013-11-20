@@ -9,7 +9,7 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     # end
     #FIXME_AB: Better logic can be written for this like if user && user.persisted?
     if user && user.persisted?
-        flash.notice = "Signed in Through Vinsol!"
+        flash.notice = user.name + " signed in successfully"
         sign_in_and_redirect user
       # else
         #   session["devise.user_attributes"] = user.attributes

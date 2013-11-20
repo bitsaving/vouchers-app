@@ -72,13 +72,12 @@
         </div>
         <% @voucher.uploads.each do |upload|  %> 
           <div><%= (counter += 1).to_s+". "%><%= link_to (upload.bill_attachment_file_name) ,upload.bill_attachment.url(:original)%></div>     
-      
-        <%end%>
+             <%end%>
       </div> 
     <%end%>
     <%if @voucher.tag_list.length >0 %>
      <div class="tags">
-      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, vouchers_path(tag: t),:class=>"taglist"}.join(',') %>
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, vouchers_path(tag: t),:class=>"taglist"}.join(' ') %>
     </div>
     <%end%>
     <%if !@voucher.approved_by.nil?%>

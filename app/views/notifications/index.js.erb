@@ -1,14 +1,19 @@
 // #FIXME_AB: Please update this as per other comments in the project
-$('#notifications_icon').one('click',function(e) {
-  e.preventDefault();
-  $('#result').show();
+$('#notification-icon').on('click',function(e) {
+  $(this).parent('a').removeAttr("href");
+  $('#result').toggleClass('hidden')
 });
-$('body').bind('click keyup', function(event){
-  $('#result').hide(); 
+
+$("body").on('click keyup', function(event){
+  var $target = $(event.target); 
+    if(!$target.is('#notification-icon')) { 
+      if(!$('#result').hasClass('hidden'))
+        $('#result').addClass('hidden') 
+     }
 });
-//.notifications_link,.notifications_link img
+
 function notifications_view() {
-  $('.notifications').bind('click keyup', function(event) {
+  $('.notifications').on('click keyup', function(event) {
     var activity_id = $(this).find('a.activity').text();
     var url = $(this).find('a.voucher').text();
     $.ajax({

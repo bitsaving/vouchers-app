@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
       #FIXME_AB: admin check should be done by something like current_user.admin?. Got it? define a method in user model
       #fixed
       if ! current_user.admin?
-        redirect_to "/", flash: { error: "You are not an admin" }
+        redirect_to "/", flash: { error: "You are not authorized" }
       end
     end
 

@@ -21,8 +21,6 @@ VoucherEventsHandler.prototype = {
   },
   getTags: function(){
     var that = this
-    console.log(":fddfg")
-    console.log($('.tag'))
   // #FIXME_AB: Follow OOPs 
   // #FIXME_AB: What if routes for tags.json or accounts.json changes. You would need to update the js file. What you you can do is pass these urls from application view through rails app. 
   //fixed
@@ -85,7 +83,10 @@ VoucherEventsHandler.prototype = {
   },
   hiddenFieldHandler: function(){
     $(document).on('change', '#voucher_payment_type', function() {
+
       $('.select').removeClass("hidden");
+      if($(this).val() == "Cash")
+        $('.select').addClass("hidden");
     });
   }
 }

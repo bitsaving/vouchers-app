@@ -1,6 +1,6 @@
 <div class="align">
   <%= render "shared/error_messages", :target => @user %>   
-  <%= form_for [:admin, @user], :html => { :class => 'form-horizontal' } do |f| %>
+  <%= form_for [:admin, @user], :html => { :class => 'form-horizontal one_click' } do |f| %>
     <div class="control-group">
       <%= f.label :email, "Email", :class => 'control-label compulsory-field' %>
       <div class="controls">
@@ -32,7 +32,8 @@
       <%=f.hidden_field :user_type ,:class=>"user_type"%>
     </div>
     <div class="form-actions">
-      <%= f.submit nil, :class => 'btn btn-primary'%>
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+       <%= link_to "Cancel", admin_users_path ,:class => 'btn btn-primary '%>
     </div>
   <%end%>
 </div>

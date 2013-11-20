@@ -59,7 +59,7 @@ class Voucher < ActiveRecord::Base
   #FIXME_AB: this is just setting approver's id, not doing anything with state. so we should name it as set_approver. same for accept and reject
   #cant change because these methods are the methoda provided with the same name as that of state when we implement state machine  and gets called themselves when state changes.
   def approve(user_id)
-     update_attributes(approved_by: user_id)
+     update_attributes({approved_by: user_id ,approved_at: Time.now })
   end
 
   def check_voucher_state
@@ -74,9 +74,9 @@ class Voucher < ActiveRecord::Base
     update_attributes({accepted_by: nil ,approved_by: nil})
   end
 
-  def approve
-    update_attributes({approved_at: Time.now })
-  end
+  # def approve
+  #   update_attributes({approved_at: Time.now })
+  # end
 
   def assignee?(user_id)
     assignee_id == user_id

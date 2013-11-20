@@ -13,8 +13,19 @@ class User < ActiveRecord::Base
   #FIXME_AB: Uniqueness is not case sensetive. upper case and lower case emails are treated different. Shouldn't be doing that.
   #Fixed
   validates :email, uniqueness: true , :case_sensitive => false
+  #/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})$/
+  validates_format_of :email, :with => /\A([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})\Z/i
   before_destroy :ensure_atleast_one_user_remains
-
+  before_validation :strip_blanks
+  # def to_param
+  #   "#{id}-#{first_name.parameterize}"
+  # end
+  
+  def strip_blanks
+    self.first_name = self.first_name.squish
+    self.last_name = self.last_name.squish
+  end
+  
   def self.from_omniauth(access_token , signed_in_resource = nil)
     data = access_token.info
     #FIXME_AB: Ensure that users table has index on email column
@@ -26,6 +37,10 @@ class User < ActiveRecord::Base
 
   def admin?
     user_type == "admin"
+  end
+
+  def name
+    first_name + " " + last_name
   end
 
   # def notifications

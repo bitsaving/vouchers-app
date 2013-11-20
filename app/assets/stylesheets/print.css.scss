@@ -6,4 +6,7 @@
   .alert, .fade, .in,.alert-success {
   display:none;
   }
-}
+  a[href]:after {
+   display:none;
+  }
+} 

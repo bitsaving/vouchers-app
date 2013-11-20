@@ -1,7 +1,7 @@
 class VouchersController < ApplicationController
-  before_action :set_voucher, only: [:show, :edit, :update, :destroy,:check_voucher_state,:check_user_type]
-  before_action :check_voucher_state ,only: [:edit]
-  before_action :check_user_type ,only: [:edit]
+  before_action :set_voucher, only: [:show, :edit, :update, :destroy,:check_voucher_state,:check_user_type ,:increment_state ,:decrement_state]
+  before_action :check_user_and_voucher_state ,only: [:edit]
+  #before_action :check_user_type ,only: [:edit]
   # GET /vouchers
   # GET /vouchers.json
   def index
@@ -150,13 +150,12 @@ class VouchersController < ApplicationController
   def destroy
     @voucher.destroy
     respond_to do |format|
-      format.html { redirect_to vouchers_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end
  
   def increment_state
-    @voucher = Voucher.find(params[:id])
     case "#{@voucher.current_state}"
       when "rejected" then @voucher.send_for_approval!
       when "new" then @voucher.send_for_approval!
@@ -177,7 +176,6 @@ class VouchersController < ApplicationController
   end
  
   def decrement_state
-    @voucher = Voucher.find(params[:id])
     case "#{@voucher.current_state}"
       when "pending" then @voucher.reject!(current_user.id)
       when "approved" then @voucher.reject!(current_user.id)
@@ -192,14 +190,20 @@ class VouchersController < ApplicationController
   
   protected
 
-  def check_voucher_state
-    if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
-      redirect_if_no_referer 
-    end
-  end
+  # def check_voucher_state
+  #   if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
+  #     redirect_if_no_referer 
+  #   end
+  # end
 
-  def check_user_type
-    current_user.admin? || current_user.id == @voucher.creator_id
+  def check_user_and_voucher_state
+    if current_user.admin? || current_user.id == @voucher.creator_id
+      if !(@voucher.workflow_state == 'new' || @voucher.workflow_state == 'rejected')
+        redirect_if_no_referer
+      end
+    else
+      redirect_if_no_referer
+    end
   end
 
   def get_vouchers(state)

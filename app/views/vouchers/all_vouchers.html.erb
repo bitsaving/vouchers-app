@@ -1,8 +1,10 @@
+<div class="page-header">
+</div>
 <div class="all_vouchers">
 <div class="new_button">
 <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
 </div>
-</div>
+
 
 <div class = "span9  associated_voucher all_vouchers">
   <ul class="nav nav-tabs">
@@ -12,7 +14,8 @@
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path,:remote=>true,:class=>"accepted"%></li>
     <li class="rejected"%><%= link_to "Rejected" ,rejected_vouchers_path ,:remote=>true, :class=>"rejected"%></li>
     <div class ="voucher_status">
-      <%= render :template => 'vouchers/_vouchers' , locals: {:@vouchers => current_user.vouchers.New.order('updated_at desc').page(params[:page]).per(10)}  %>
+      <%= render partial: 'vouchers' , locals: {:@vouchers => current_user.vouchers.New.order('updated_at desc').page(params[:page]).per(10)}  %>
      </div>
   </ul>
+</div>
 </div>

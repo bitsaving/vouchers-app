@@ -18,7 +18,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.id, admin_user_path(user) %></td>
-        <td><%= link_to user.first_name + " " + user.last_name , admin_user_path(user.id)%></td>
+        <td><%= link_to user.name , admin_user_path(user)%></td>
         <td><%= user.email %></td>
         <td>
           <% if user.user_type == "normal" %>
@@ -28,8 +28,8 @@
           <%end%>
           </td>
         <td>
-          <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to "Delete",admin_user_path(user),:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
+          <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary'%>
+          <%= link_to "Delete","#",:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
           <%= link_to "vouchers",admin_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>

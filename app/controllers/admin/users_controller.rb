@@ -26,7 +26,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     respond_to do |format|
       if @user.save
-        format.html { redirect_to [:admin, @user], notice: 'user was successfully created.' }
+        format.html { redirect_to [:admin, @user], notice: @user.name + ' was successfully created.' }
         format.json { render action: 'show', status: :created, location: @voucher }
       else
         format.html { render action: 'new' }
@@ -38,7 +38,7 @@ class Admin::UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to [:admin, @user], notice: 'user was successfully updated.' }
+        format.html { redirect_to [:admin, @user], notice: @user.name + ' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

@@ -29,12 +29,23 @@ ApplicationHandler.prototype = {
   init: function() {
     this.dateFieldHandler();
     this.ajaxRequestHandler();
+    this.oneclick();
+    this.addClassToLi();
     document.addEventListener("page:load", this.dateFieldHandler);
     document.addEventListener("page:load", this.ajaxRequestHandler);
+    document.addEventListener("page:load", this.addClassToLi);
   },
   dateFieldHandler : function(){
     $(".date-field").datepicker({
       dateFormat: "dd/mm/yy"
+    });
+  },
+  addClassToLi: function(){
+    $('ul.navigation li').each(function(){
+    if(window.location.href.indexOf($(this).find('a:first').attr('href'))>-1)
+    {
+    $(this).addClass('active').siblings().removeClass('active');
+    }
     });
   },
   ajaxRequestHandler: function(){
@@ -43,5 +54,28 @@ ApplicationHandler.prototype = {
       $('#account').val('debit')
       $('.associated_voucher li.' + $(evt.target).attr('class')).addClass('active').siblings().removeClass('active');
     })
+  },
+  oneclick: function(){
+  //   $('.one_click').click(function(){
+  //      $(this).off('click');
+  //      console.log("haha")
+
+  // });
+// $("form.one_click").submit(function() {
+   
+// });
+$(document).on('submit', 'form.one_click', function (e) {
+  console.log("lol")
+   $(this).submit(function() {
+        return false;
+    });
+    return true;
+//   console.log("fdj")
+// e.preventDefault();
+//   console.log($(this))
+//   console.log($(this).off('click'))
+// $(this).off('click');
+
+});
   }
 }

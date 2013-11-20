@@ -18,10 +18,15 @@
 }
 li.active {
   z-index:1000;
+
+}
+ul.navigation li.active a:hover{
+  border: none !important;
 }
 input,select,textarea{
   width:270px;
 }
+
 .voucher_display .page-header {
   /*border: none !important;*/
 }
