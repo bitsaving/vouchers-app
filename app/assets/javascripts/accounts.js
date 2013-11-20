@@ -1,5 +1,3 @@
-// #FIXME_AB: Where is all the learning gone. YOu should use object oriented concept here for JS  
-//Fixed
 $(document).ready(function(){
   var accountsHandler = new AccountsHandler();
 })
@@ -19,6 +17,7 @@ AccountsHandler.prototype = {
       //   pathname = pathname + "_vouchers"
       info = { account_type: $(this).val(), account_id: $(this).attr('name') }
       $.ajax({
+        // #FIXME_AB: URL should be handle in the same way we are handling tags
         url:'/vouchers/' + pathname.toLowerCase(),
         data: info  ,
         type:'get',

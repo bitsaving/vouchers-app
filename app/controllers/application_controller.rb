@@ -7,18 +7,15 @@ class ApplicationController < ActionController::Base
  
   protected
     def authorize    
-     #FIXME_AB: Instead of checking current_user.nil? make a method logged_in? which returns true/false based on user is logged in or not. In some cases we may also want, This logged_in? method should be a helper method too so that can be used in views
-      #fixed
       redirect_to new_user_session_path, notice: "Please log in" if !logged_in?
     end
 
     def logged_in?
+      #FIXME_AB: Another way to do the same thing is "!!current_user". Ask me if you don't understand
       !current_user.nil?
     end
 
     def check_admin
-      #FIXME_AB: admin check should be done by something like current_user.admin?. Got it? define a method in user model
-      #fixed
       if ! current_user.admin?
         redirect_to "/", flash: { error: "You are not authorized" }
       end

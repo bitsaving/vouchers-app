@@ -1,6 +1,4 @@
 <%= form_for @account, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
-  <% #FIXME_AB: We might be displaying errors at several other places in the app. Like we are showing below. There we must be duplicating the same code. So we can extract it in a helper method where we can pass the object and display errors. So please extract following error code in a helper method -%>
-  <%# fixed %>
 <%= render "shared/error_messages", :target => @account %>   
   <div class="account_align">
     <fieldset>

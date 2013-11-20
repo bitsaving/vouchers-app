@@ -1,3 +1,5 @@
+#FIXME_AB: Remove this file we don't need it
+
 #---
 # Excerpted from "Agile Web Development with Rails",
 # published by The Pragmatic Bookshelf.

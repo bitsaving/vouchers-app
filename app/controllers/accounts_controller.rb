@@ -1,10 +1,10 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update, :destroy] 
-  #FIXME_AB: Why are you just using first 50 records. In auto complete my account will not be displayed if it is the 51th record
-  #Fixed
   #FIXME_AB: Remove unused empty css files
+
   def index
+    #FIXME_AB: Please explain why you have to do that much thing with request. I can suggest a better way.
     request_type = request.env["HTTP_ACCEPT"].split(',')
     if !request_type.index("text/javascript").nil?
       @accounts = Account.all
@@ -13,11 +13,7 @@ class AccountsController < ApplicationController
     end
     respond_to do |format|
       format.html {}
-      #FIXME_AB: formatting issues
-      #Fixed
       format.json { render :json => @accounts.collect { |x| { :label => x.name , :value => x.id } }.compact } 
-      #FIXME_AB: DO we need this format.js?
-      #fixed
     end
   end
 
@@ -33,11 +29,8 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     respond_to do |format|
       if @account.save
-        #FIXME_AB: Modify flash message "Account 'account name' was successfully created."
-        #Fixed
         format.html { redirect_to accounts_url, notice: 'Account ' + @account.name + ' was successfully created.' }
         #FIXME_AB: After account is created I should be redirected on the new account page so that I can add more account. Make sure that the success message is displayed to intimate me that account was created
-        #fixed
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }
@@ -51,8 +44,7 @@ class AccountsController < ApplicationController
   
   def show 
     respond_to do |format|
-      #FIXME_AB: no {} needed
-      #Fixed
+      #FIXME_AB: no {} needed. It is not fixed, it happens at many other places too
       format.js 
       format.html 
     end
@@ -85,11 +77,10 @@ class AccountsController < ApplicationController
       @account = Account.find(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_to :back
-      #FIXME_AB: What if account is not found?
-      #Fixed
+        #FIXME_AB: Instead of handling this exception you should check for account.nil?
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Never trust parameters from the scary INTERNET, only allow the white list through.
     def account_params
       params.require(:account).permit(:name)
     end 

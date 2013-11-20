@@ -1,3 +1,4 @@
+#FIXME_AB: Formatting issues
 class OmniAuth::SessionsController < Devise::SessionsController
    skip_before_action :authorize
    # before_action only: [:create] ,on: [:destroy] do
