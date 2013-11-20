@@ -49,33 +49,18 @@ ApplicationHandler.prototype = {
     });
   },
   ajaxRequestHandler: function(){
-    $(document).on('ajax:success','a[data-remote="true"]', function(evt, response, status,xhr){
+    $(document).on('ajax:success','li a[data-remote="true"]', function(evt, response, status,xhr){
       $('.voucher_status').html(unescape(response));
       $('#account').val('debit')
       $('.associated_voucher li.' + $(evt.target).attr('class')).addClass('active').siblings().removeClass('active');
     })
   },
   oneclick: function(){
-  //   $('.one_click').click(function(){
-  //      $(this).off('click');
-  //      console.log("haha")
-
-  // });
-// $("form.one_click").submit(function() {
-   
-// });
-$(document).on('submit', 'form.one_click', function (e) {
-  console.log("lol")
-   $(this).submit(function() {
+    $(document).on('submit', 'form.one_click', function (e) {
+      $(this).submit(function() {
         return false;
+      });
+      return true;
     });
-    return true;
-//   console.log("fdj")
-// e.preventDefault();
-//   console.log($(this))
-//   console.log($(this).off('click'))
-// $(this).off('click');
-
-});
   }
 }

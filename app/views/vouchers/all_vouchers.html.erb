@@ -4,9 +4,9 @@
 <div class="new_button">
 <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
 </div>
+</div>
 
-
-<div class = "span9  associated_voucher all_vouchers">
+<div class = "span9  associated_voucher">
   <ul class="nav nav-tabs">
   	<li class="active drafted"><%= link_to "My Draft" ,drafted_vouchers_path(user_id: current_user.id) ,:remote=>true,:class=>"drafted"%></li>
     <li class="pending"><%= link_to "Pending" ,pending_vouchers_path ,:remote=>true, :class=>"pending"%></li>
@@ -17,5 +17,4 @@
       <%= render partial: 'vouchers' , locals: {:@vouchers => current_user.vouchers.New.order('updated_at desc').page(params[:page]).per(10)}  %>
      </div>
   </ul>
-</div>
 </div>
