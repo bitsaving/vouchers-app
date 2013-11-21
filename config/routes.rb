@@ -3,12 +3,12 @@ VoucherApp::Application.routes.draw do
   get "notifications/seen"
   # resources :admins
   get 'tags' ,to: 'tags#index'
-  # get 'tags/:tag', to: 'vouchers#index', as: :tag
+  get 'tags/:tag', to: 'vouchers#index', as: :tag
   resources :comments
 
   resources :uploads
   resources :accounts
-  root :to => 'users#show'
+  root :to => 'vouchers#assigned'
   # get 'users', to: 'users#index' , :as => :user
   # get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
   # scope 'users/:id' do
@@ -21,7 +21,7 @@ VoucherApp::Application.routes.draw do
       get 'rejected',on: :collection
       # get "debit_vouchers" ,on: :collection
       # get "credit_vouchers" ,on: :collection
-      get 'waiting_for_approval', on: :collection
+      #get 'waiting_for_approval', on: :collection
       post 'increment_state' ,on: :member
       post 'decrement_state',on: :member
 

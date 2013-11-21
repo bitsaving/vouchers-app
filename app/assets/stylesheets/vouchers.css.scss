@@ -27,6 +27,100 @@ ul.ui-autocomplete {
     }
   }
 } 
+.outer_block{
+/*display: inline-block;*/
+}
+.outer_container{
+margin-top: 100px;
+width:35%;
+height:300px;
+border:solid 1px black;
+float: left;
+}
+div.voucher_heading{
+text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+.voucher_content {
+height:298px; 
+overflow: auto;
+
+}
+.assigned_vouchers {
+  margin-left: 2px;
+  margin-top: 2px;
+  margin-right: 2px;
+border:dotted 1px black;
+}
+
+.assigned_vouchers:hover {
+cursor: pointer;
+
+}
+#tag_cloud {
+  font-weight: bold;
+border: solid 1px black;
+  margin-left: 20px;
+  height:300px;
+  width:35%;
+  display: inline-block;
+  margin-top: 100px;
+    .s { font-size: 1.2em;
+      color:black;
+     }
+  .m { font-size: 1.9em;
+  color:red; }
+  .l { font-size: 2.5em; 
+    color:blue;}
+  .v {font-size:  3.0em;
+  color:brown; }
+  div.voucher_tags{
+    border: dotted 1px black;
+    height:248px;
+    overflow: auto;
+    padding-top: 30px;
+  
+    a{
+      padding-left: 5px;
+      padding-right: 2x;
+      margin-top: 5px !important; }
+
+  }
+}
+#voucher_count{
+  margin-left: 20px;
+font-weight: bold;
+border: solid 1px black;
+width:25%;
+height: 300px;
+display: inline-block;
+margin-top: 100px;  
+
+}
+.voucher_id,.voucher_amount,.voucher_state ,.voucher_debit,.voucher_credit {
+  word-wrap:break-word;
+  background-color: #e6e6fa;
+ 
+  
+}
+div.voucher_label{
+    padding-left: 20px;
+    font-weight: normal;
+  font-size: 14px;
+font-weight: bold;
+width:70px !important;
+padding-right: 10px;
+  display: inline-block !important;
+  padding-bottom: 1px;
+  }
+  div.voucher_contents{
+    
+    width:200px;
+    font-size: 14px;
+    display: inline-block !important;
+  }
 .hint{
   position: relative;
   left:310px;

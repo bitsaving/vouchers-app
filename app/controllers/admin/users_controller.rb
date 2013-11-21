@@ -52,7 +52,7 @@ class Admin::UsersController < ApplicationController
   def show
     if !params[:id]
       #FIXME_AB: This redirection should be done from the before filter itself
-      redirect_to waiting_for_approval_vouchers_path
+      redirect_to assigned_vouchers_path
     end
      respond_to do |format|
      format.js {}

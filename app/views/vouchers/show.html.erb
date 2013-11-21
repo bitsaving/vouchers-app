@@ -77,7 +77,7 @@
     <%end%>
     <%if @voucher.tag_list.length >0 %>
      <div class="tags">
-      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t, vouchers_path(tag: t),:class=>"taglist"}.join(' ') %>
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(t),:class=>"taglist"}.join(' ') %>
     </div>
     <%end%>
     <%if !@voucher.approved_by.nil?%>

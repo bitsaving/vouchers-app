@@ -51,7 +51,7 @@
           <div class="container-fluid nav-collapse ">
             <% if current_user %>  
               <ul class="nav nav-tabs navigation  ">
-                <li><%= link_to "Home" , waiting_for_approval_vouchers_path%></li>
+                <li><%= link_to "Home" , root_path%></li> 
                 <li><%= link_to "Vouchers" , all_vouchers_vouchers_path%>
                 </li>
                 <% if current_user.user_type == 'admin'%>

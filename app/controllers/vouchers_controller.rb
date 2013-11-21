@@ -124,10 +124,10 @@ class VouchersController < ApplicationController
     end  
   end
 
-  def waiting_for_approval
-    @vouchers =  Voucher.where("workflow_state not in ('accepted','rejected')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(50)
+  def assigned
+    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(50)
     respond_to do |format|
-      format.html { render action: 'index' }
+      format.html {}
     end
   end
 

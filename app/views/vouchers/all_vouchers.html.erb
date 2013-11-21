@@ -14,7 +14,13 @@
     <li class="accepted"><%= link_to "Accepted" ,accepted_vouchers_path,:remote=>true,:class=>"accepted"%></li>
     <li class="rejected"%><%= link_to "Rejected" ,rejected_vouchers_path ,:remote=>true, :class=>"rejected"%></li>
     <div class ="voucher_status">
-      <%= render partial: 'vouchers' , locals: {:@vouchers => current_user.vouchers.New.order('updated_at desc').page(params[:page]).per(10)}  %>
+      <%if params[:state] %>
+          <% locals = current_user.vouchers.accepted.order('updated_at desc').page(params[:page]).per(10)%>
+      <%else%>
+      <% locals = current_user.vouchers.New.order('updated_at desc').page(params[:page]).per(10)%>
+      <%end%>
+
+      <%= render partial: 'vouchers' , locals: {:@vouchers =>locals}  %>
      </div>
   </ul>
 </div>

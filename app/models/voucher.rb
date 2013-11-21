@@ -30,6 +30,10 @@ class Voucher < ActiveRecord::Base
   validates :account_credited , :account_debited , :presence => {:message =>" by this name does not exist"}
   #FIXME_AB: Why :New not :new
   scope :New , -> { where(workflow_state: 'new').order('updated_at desc') }
+  scope :pending , -> { where(workflow_state: 'pending').order('updated_at desc') }
+  scope :approved , -> { where(workflow_state: 'approved').order('updated_at desc') }
+  scope :accepted , -> { where(workflow_state: 'accepted').order('updated_at desc') }
+  scope :rejected , -> { where(workflow_state: 'rejected').order('updated_at desc') }
   validates :to_date , :date => { :after_or_equal_to => :from_date ,
     :message => 'must be after start date of project'} , :allow_blank=> true
 
@@ -73,9 +77,9 @@ class Voucher < ActiveRecord::Base
   end
 
 
-  def approve
+  def approve(user_id)
     #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
-    update_attributes({approved_at: Time.now })
+    update_attributes({approved_by: user_id , approved_at: Time.now })
   end
 
 

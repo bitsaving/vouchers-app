@@ -1,12 +1,9 @@
 <div class="page-header">
    <%if @vouchers.present? %>
-    <% if controller.action_name == "waiting_for_approval" %>
-   
-  <h3>Here are the vouchers assigned to you </h3>
-  <%else%>
-  <h3><%=controller.action_name.titleize%></h3>
-  <%end%>
-</div>
+   <%if params[:tags]%>
+    <%="ene"%>
+    <%end%>
+   </div>
 <table class="table table-striped voucherss">
   <thead>
     <tr>
