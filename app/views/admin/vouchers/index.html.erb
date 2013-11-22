@@ -1,9 +1,0 @@
-<%= render :template => 'users/_layout' %>
-<div class = "span9 associated_voucher">
-  <ul class="nav nav-tabs">
-    <div class ="voucher_status">
-      <%= render :template => 'vouchers/index' , locals: { :params => {user_id: @user.id}, :@vouchers=> @user.vouchers.New.page(params[:page]).per(10)}  %>
-     </div>
-  </ul>
-</div>
-

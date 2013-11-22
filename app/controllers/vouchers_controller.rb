@@ -7,8 +7,10 @@ class VouchersController < ApplicationController
   def index
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(50)
+    elsif params[:user_id]
+      @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(10)
     else
-    @vouchers = Voucher.all.page(params[:page]).per(10)
+      @vouchers = Voucher.all.page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html  
@@ -247,7 +249,7 @@ class VouchersController < ApplicationController
        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
         filter_by_name_and_type(@vouchers, params[:account_name] ,params[:account_type])
     elsif state == 'new'
-      @vouchers = Voucher.where(workflow_state: state).where(creator_id: current_user.id).order('updated_at desc').page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).order('updated_at desc').page(params[:page]).per(10)
     else
       @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
     end
