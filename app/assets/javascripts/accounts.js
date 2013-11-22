@@ -21,15 +21,6 @@ AccountsHandler.prototype = {
         data: info  ,
         type:'get',
         dataType: 'script',
-        error: function(a,b,c){
-          console.log(a + b +c);
-        },
-        success: function(responseData) {
-          // $('.voucher_status').html(responseData);
-          //console.log($(this).attr('data'))
-          console.log(responseData)
-          console.log("lol")
-        }
       });      
     });
   }
