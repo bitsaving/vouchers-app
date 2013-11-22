@@ -1,49 +1,44 @@
 VoucherApp::Application.routes.draw do
   get "notifications/index"
   get "notifications/seen"
-  # resources :admins
   get 'tags' ,to: 'tags#index'
   get 'tags/:tag', to: 'vouchers#index', as: :tag
   resources :comments
-
   resources :uploads
-  resources :accounts
   root :to => 'vouchers#assigned'
-  # get 'users', to: 'users#index' , :as => :user
-  # get 'pending', to: 'vouchers#pending_vouchers' ,:as=> :pending
-  # scope 'users/:id' do
-    resources :vouchers do
-      get 'all_vouchers' , on: :collection
-      get 'approved' ,on: :collection
-      get 'drafted', on: :collection
-      get 'pending',on: :collection
-      get 'accepted',on: :collection
-      get 'rejected',on: :collection
-      # get "debit_vouchers" ,on: :collection
-      # get "credit_vouchers" ,on: :collection
-      #get 'waiting_for_approval', on: :collection
-      post 'increment_state' ,on: :member
-      post 'decrement_state',on: :member
+  resources :vouchers do
+    get 'all' , on: :collection
+    get 'approved' ,on: :collection
+    get 'drafted', on: :collection
+    get 'pending', on: :collection
+    get 'accepted',on: :collection
+    get 'rejected',on: :collection
+    post 'increment_state' ,on: :member
+    post 'decrement_state',on: :member   
+  end
+  concern :voucher_states do
+    get 'vouchers', to: 'vouchers#index'
+    get 'vouchers/approved' ,to: 'vouchers#approved'
+    get 'vouchers/drafted',   to: 'vouchers#drafted'
+    get 'vouchers/pending',to: 'vouchers#pending'
+    get 'vouchers/accepted',to: 'vouchers#accepted'
+    get 'vouchers/rejected',to: 'vouchers#rejected'
+  end
+  get 'voucher_report' ,to: 'vouchers#report' ,as: :report
+  get 'generate_report' ,to: 'vouchers#generate_report'
+  namespace 'admin' do
+    resources :users, only: [:show ,:edit,:index,:new]
+  end
+  resources :users ,concerns: :voucher_states
+  resources :accounts ,concerns: :voucher_states
+  get 'users/:id' ,to: 'users#show'
 
-    end
-    get 'voucher_report' ,to: 'vouchers#report' ,as: :report
-    get 'generate_report' ,to: 'vouchers#generate_report'
-    namespace 'admin' do
-        # get 'users/new' ,to: 'users#new'
-        # get 'users',to: 'users#index'
-        resources :users
-      scope 'users/:id' do
-          get 'vouchers', to: 'vouchers#index'
-          # post 'edit',to:'users#edit'
-      end
-    end
- get 'users/:id' ,to: 'users#show'
   devise_for :user, controllers: {
     omniauth_callbacks: "omni_auth/omniauth_callbacks", 
     sessions: "omni_auth/sessions"
   }
 
-
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -5,12 +5,8 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(creator_id: current_user.id).page(params[:page]).per(50)
-    else
-      @vouchers = Voucher.where(creator_id: current_user.id).page(params[:page]).per(50)
-    end
-     respond_to do |format|
+    @vouchers = Voucher.all.page(params[:page]).per(10)
+    respond_to do |format|
       format.html  
       format.js {}
     end
@@ -43,9 +39,13 @@ class VouchersController < ApplicationController
     if params[:from].nil? or params[:from].to_date > params[:to].to_date
       redirect_to report_path , notice: "Please enter valid values"
     end
+     @voucher_startDate = params[:from].to_date
+     @voucher_endDate = params[:to].to_date
+     @voucher_accountName = params[:account]
+     @voucher_accountType = params[:account_type]
     respond_to do |format|
       format.html  {}
-      format.js {}
+      format.js { }
     end
   end
 
@@ -96,13 +96,26 @@ class VouchersController < ApplicationController
   def pending
     get_vouchers('pending')
     respond_to do |format|
-      format.html { render partial: 'vouchers' }
+      format.html { render action: 'index'}
+      format.js {}
+      #format.js { render partial: 'vouchers' }
+
+    end  
+  end
+  def accepted
+    get_vouchers('accepted')
+    respond_to do |format|
+      format.html { render action: 'index'}
+      format.js { }
+      #format.js { render partial: 'vouchers' }
+
     end  
   end
 
-  def all_vouchers 
+  def all
+    @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
     respond_to do |format|
-      format.html {}
+      format.html { render action: 'index'}
       format.js {}
     end
   end
@@ -110,18 +123,20 @@ class VouchersController < ApplicationController
   def approved 
     get_vouchers('approved')
     respond_to do |format|
-      format.html { render partial: 'vouchers' }
+      format.html { render action: 'index' }
+      format.js {}
     end  
   end
 
   def drafted
-    # if params[:user_id] == current_user.id
+  # if params[:user_id] == current_user.id
 
     #   @vouchers =  @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     get_vouchers('new')
     respond_to do |format|
-      format.html { render partial: 'vouchers'}
-    end  
+      format.html { render action: 'index'}
+      format.js {}
+     end  
   end
 
   def assigned
@@ -131,16 +146,29 @@ class VouchersController < ApplicationController
     end
   end
 
-  def accepted
-    get_vouchers('accepted')
-     respond_to do |format|
-      format.html { render partial: 'vouchers' }
-    end  
-  end
+  # def get_by_state
+  #   if params[:state]
+  #     if params[:state] != 'new'
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).page(params[:page]).per(10)
+  #     else
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).where('creator_id in (?)' ,current_user.id).page(params[:page]).per(10)
+  #     end
+  #   elsif(params[:to] && params[:from])
+  #      @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
+  #   else
+  #      @vouchers = Voucher.where('workflow_state in (?)', 'PENDING').page(params[:page]).per(10) 
+  #     end
+  #    Rails.logger.debug "$$$$ #{@vouchers}"
+  #    respond_to do |format|
+  #     format.html { render action: 'index' }
+  #     format.js { render partial: 'vouchers' }
+  #   end  
+  # end
   def rejected
     get_vouchers('rejected')
     respond_to do |format|
-      format.html { render partial: 'vouchers' }
+      format.html { render action: 'index' }
+      format.js { }
     end
   end
   # DELETE /vouchers/1
@@ -206,17 +234,27 @@ class VouchersController < ApplicationController
 
   def get_vouchers(state)
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: state).where(["account_#{params[:account_type]}ed IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: state).where(["account_#{params[:account_type].presence || 'debit'}ed IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
+    elsif params[:tag]
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(50)
     elsif(params[:to] && params[:from])
        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
-     else
+        filter_by_name_and_type(@vouchers, params[:account_name] ,params[:account_type])
+    elsif state == 'new'
+      @vouchers = Voucher.where(workflow_state: state).where(creator_id: current_user.id).order('updated_at desc').page(params[:page]).per(10)
+    else
       @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
     end
-    
   end
 
+  def filter_by_name_and_type(vouchers ,name, type)
+    if !name.nil?
+      @vouchers = vouchers.where('account_debited in (?) OR account_credited in (?)',name,name)
+      @vouchers = @vouchers.where('account_'+ type +'ed in (?)', name) if !type.blank?
+    end
+  end
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
       @voucher = Voucher.find(params[:id])

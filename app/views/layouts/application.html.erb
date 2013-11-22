@@ -51,13 +51,13 @@
           <div class="container-fluid nav-collapse ">
             <% if current_user %>  
               <ul class="nav nav-tabs navigation  ">
-                <li><%= link_to "Home" , root_path%></li> 
-                <li><%= link_to "Vouchers" , all_vouchers_vouchers_path%>
+                <li><%= nav_link 'Home', root_path%></li> 
+                <li><%= nav_link "Vouchers" , all_vouchers_path %>
                 </li>
                 <% if current_user.user_type == 'admin'%>
-                  <li><%= link_to "Users" , admin_users_path%></li>
+                  <li><%= nav_link "Users" , admin_users_path%></li>
                 <%end%>
-                <li><%= link_to "Accounts" , accounts_path%></li>
+                <li><%= nav_link "Accounts" , accounts_path%></li>
                 <li>
                  <div class="dropdown">
                     <a id="reportUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
@@ -65,9 +65,9 @@
                       <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" id="voucherList">
-                      <li role="presentation" > <%= link_to "Vouchers" , report_path %></li>
+                      <li role="presentation" > <%= nav_link "Vouchers" , report_path %></li>
                       <li role="presentation" class="divider"></li>
-                      <li role="presentation" ><%= link_to "Accounts" ,"#"%></li>
+                      <li role="presentation" ><%= nav_link "Accounts" ,"#"%></li>
                     </ul>
                   </div>
           

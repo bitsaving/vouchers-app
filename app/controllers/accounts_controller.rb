@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
 
-  before_action :set_account, only: [:show, :edit, :update, :destroy] 
+  before_action :set_account, only: [:show, :edit, :update, :destroy ] 
   #FIXME_AB: Remove unused empty css files
 
   def index
@@ -29,7 +29,7 @@ class AccountsController < ApplicationController
     @account = Account.new(account_params)
     respond_to do |format|
       if @account.save
-        format.html { redirect_to accounts_url, notice: 'Account ' + @account.name + ' was successfully created.' }
+        format.html { redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.' }
         #FIXME_AB: After account is created I should be redirected on the new account page so that I can add more account. Make sure that the success message is displayed to intimate me that account was created
         format.json { render action: 'show', status: :created, location: @voucher }
       else

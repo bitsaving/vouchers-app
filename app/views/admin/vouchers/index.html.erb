@@ -1,15 +1,9 @@
-<div class="page-header">
-  <h3> Vouchers </h3>
-<h3><%= @user.first_name + " " + @user.last_name%></h3>
-</div>
-<div class="alignment">
-<%= link_to "Back",admin_users_path, :class => 'btn btn-primary'  %>
-            </div>
-<div class = "span9 associated_voucher ">
+<%= render :template => 'users/_layout' %>
+<div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
-    <%= render "shared/voucher_status_tabs", :params => {user_id: @user.id} %>   
     <div class ="voucher_status">
-        <%= render :template => 'vouchers/_vouchers' , locals: {:@vouchers=> @user.vouchers.New.order('updated_at desc').page(params[:page]).per(10) }%>
-    </div>
+      <%= render :template => 'vouchers/index' , locals: { :params => {user_id: @user.id}, :@vouchers=> @user.vouchers.New.page(params[:page]).per(10)}  %>
+     </div>
   </ul>
 </div>
+

@@ -91,6 +91,10 @@ td{
   position: relative;
   top:12px;
 }
+.navbar-inner,.upperContainer {
+padding-bottom: 10px !important;
+
+}
 .navbar .nav > li > a{
   width:30px !important;
 }
@@ -112,6 +116,7 @@ width:100% !important;
   position: relative;
  margin-top:-1px !important;
  border: solid 1px transparent;
+ margin-bottom:-42px; 
 
 }
 .page-header {

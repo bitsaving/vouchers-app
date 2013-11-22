@@ -72,7 +72,6 @@ class Admin::UsersController < ApplicationController
   #     format.json { head :no_content }
   #   end
   # end
-
   protected
   
   def user_params

@@ -27,6 +27,11 @@ ul.ui-autocomplete {
     }
   }
 } 
+
+.reports {
+
+margin-bottom:195px;
+}
 .outer_block{
 /*display: inline-block;*/
 }
@@ -39,9 +44,10 @@ float: left;
 }
 div.voucher_heading{
 text-align: center;
+padding-top: 5px;
   font-size: 20px;
   font-weight: bold;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 .voucher_content {
 height:298px; 
@@ -68,35 +74,39 @@ border: solid 1px black;
   display: inline-block;
   margin-top: 100px;
     .s { font-size: 1.2em;
-      color:black;
+      color:#c299ad;
      }
   .m { font-size: 1.9em;
-  color:red; }
+  color:#944d70; }
   .l { font-size: 2.5em; 
-    color:blue;}
+    color:#944d70;}
   .v {font-size:  3.0em;
-  color:brown; }
+  color:#660033; }
   div.voucher_tags{
     border: dotted 1px black;
-    height:248px;
+    height:238px;
     overflow: auto;
     padding-top: 30px;
   
     a{
-      padding-left: 5px;
-      padding-right: 2x;
-      margin-top: 5px !important; }
-
-  }
+      padding-left: 2px;
+      padding-right: 2px;
+      padding-bottom:5px !important; }
+    }
 }
 #voucher_count{
   margin-left: 20px;
 font-weight: bold;
 border: solid 1px black;
+margin-top: -12px !important;
 width:25%;
 height: 300px;
 display: inline-block;
-margin-top: 100px;  
+margin-top: 90px;  
+
+}
+.voucher_count {
+  padding-top: 6px;
 
 }
 .voucher_id,.voucher_amount,.voucher_state ,.voucher_debit,.voucher_credit {
@@ -128,7 +138,7 @@ padding-right: 10px;
   font-weight: bold;
 }
 .voucher_reports{
-  margin-top:80px;
+  margin-top:237px;
 }
 .add_on {
   margin-left: -4px;
@@ -500,12 +510,24 @@ top:100px;
   .display_vouchers{
     position: relative;
     bottom: 5px;
-    padding-left: 40px;
+    padding-left: 180px;
     display: inline-block;
     padding-top: 18px;
   }
   input {
     width:200px  !important;
+  }
+  .account_dropdown{
+    position: relative;
+    top:10px;
+    left:50px;
+    display: block;
+
+    label{
+      position: relative;
+      bottom: 10px;
+      padding-right: 30px;
+    }
   } 
 }
 .voucher_report{

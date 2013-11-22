@@ -1,21 +1,10 @@
-<div class="page-header">
-  <div class="account_name">
-  <strong><%= @account.name %></strong>
-</div>
-</div>
-<dl class="dl-horizontal">
-  <dd></dd>
-</dl>
-<%= select_tag :account, options_for_select(Account::TYPES),:name=>@account.id  %>
-<div class="alignment ">
-  <%= link_to "Back",accounts_path, :class => 'btn btn-primary'  %>
-  <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
-</div>
+<%= render partial: 'layout' %>
 <div class = "span9 associated_voucher">
-  <ul class="nav nav-tabs">
-    <%= render "shared/voucher_status_tabs", :params => {account_id: @account.id,account_type: 'debit'} %>   
+  <ul class="nav nav-tabs"> 
     <div class ="voucher_status">
-      <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @account.vouchers_debited.New.page(params[:page]).per(10)}  %>
+      <%= render :template => 'vouchers/index' , locals: { :params => { account_id:@account.id}, :@vouchers=> @account.vouchers_debited.New.page(params[:page]).per(10)}  %>
      </div>
   </ul>
 </div>
+
+

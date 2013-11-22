@@ -42,23 +42,23 @@
 	<div class = "voucher_heading"> Voucher count </div>
 	<div class="voucher_count">
 		<div class="vouchers">
-			<div class="voucher_label"> New </div>
+			<div class="voucher_label"><%= link_to "New" ,drafted_vouchers_path , "data-no-turbolink" => true%></div>
 			<div class="voucher_contents"> <%= Voucher.New.count %></div>
 		</div>
 		<div class="vouchers">
-			<div class="voucher_label"> Pending </div>
+			<div class="voucher_label"><%= link_to "Pending" , pending_vouchers_path, "data-no-turbolink" => true%></div>
 			<div class="voucher_contents"> <%= Voucher.pending.count %></div>
 		</div>
 		<div class="vouchers">
-			<div class="voucher_label"> Approved </div>
+			<div class="voucher_label"><%= link_to "Approved" ,approved_vouchers_path, "data-no-turbolink" => true%></div>
 			<div class="voucher_contents"> <%= Voucher.approved.count %></div>
 		</div>
 		<div class="vouchers">
-			<div class="voucher_label"> <%= link_to "Accepted" ,all_vouchers_vouchers_path(state: 'accepted'),:remote=>true,"data-type" => :html %> </div>
+			<div class="voucher_label"><%= link_to "Accepted" ,accepted_vouchers_path, "data-no-turbolink" => true%></div>
 			<div class="voucher_contents"> <%= Voucher.accepted.count %></div>
 		</div>
 		<div class="vouchers">
-			<div class="voucher_label"> Rejected </div>
+			<div class="voucher_label"><%= link_to "Rejected" , rejected_vouchers_path, "data-no-turbolink" => true%></div>
 			<div class="voucher_contents"> <%= Voucher.rejected.count %></div>
 		</div>
 	</div>

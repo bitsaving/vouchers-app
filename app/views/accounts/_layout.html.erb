@@ -1,0 +1,13 @@
+<div class="page-header">
+  <div class="account_name">
+  <strong><%= @account.name %></strong>
+</div>
+</div>
+<dl class="dl-horizontal">
+  <dd></dd>
+</dl>
+<%= select_tag :account, options_for_select(Account::TYPES),:name=>@account.id  %>
+<div class="alignment ">
+  <%= link_to "Back",accounts_path, :class => 'btn btn-primary'  %>
+  <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
+</div>

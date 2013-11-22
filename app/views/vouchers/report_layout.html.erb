@@ -1,15 +1,16 @@
-<%= form_tag generate_report_path,:method=>'get' do %>
+<div class="reports">
+<%= form_tag generate_report_path ,:method=>'get' do %>
   <div class = "report">
     <div class="control-group"> 
       <%=label_tag  :from ,"From", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :from , params[:from], :class => 'date-field' ,:value=> Date.today.beginning_of_month().to_s(:normal_format) %>
+        <%= text_field_tag :from , params[:from], :class => 'date-field'  %>
       </div>
     </div>
     <div class="control-group">
       <%=label_tag  :to ,"To", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :to  , params[:to] ,:class => 'date-field',:value=> Date.today.end_of_month().to_s(:normal_format) %>
+        <%= text_field_tag :to  ,params[:to] ,:class => 'date-field' %>
       </div>
     </div>
     <div class="control-group account_dropdown">
@@ -22,27 +23,12 @@
     <div class="control-group account_dropdown">
       <%=label_tag  :account_type ,"Type", :class => 'control-label' %>
       <div class="controls">
-        <%= select_tag :account_type  ,options_for_select(Account::TYPES),:prompt => "Select"%>
+        <%= select_tag :account_type  ,options_for_select(Account::TYPES),:prompt=>"Select"%>
       </div>
     </div>
-    
     <div class="display_vouchers">
       <%=submit_tag "Generate Report",:class => 'btn btn-primary' ,:id=> "generate_vouchers"%>
     </div>
   </div>
 <%end%>
-<div class ="voucher_reports">
-<div class = "span9 associated_voucher">
-  <ul class="nav nav-tabs">
-  
-    <div class ="voucher_status">
-      <%= render :template => 'vouchers/index' ,locals:{ :params => {from: Date.today.beginning_of_month() ,to: Date.today.end_of_month()} ,:@vouchers =>  get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").order('updated_at desc').page(params[:page]).per(10) }  %>
-     </div>
-  </ul>
-</div>
-
-
-
-  
- 
 </div>

@@ -1,57 +1,32 @@
-<div class="page-header">
-   <%if @vouchers.present? %>
-   <%if params[:tags]%>
-    <%="ene"%>
-    <%end%>
-   </div>
-<table class="table table-striped voucherss">
-  <thead>
-    <tr>
-      <th width = "5%"><%= "Id" %></th>
-      <th width= "20%"><%= "Debit" %></th>
-      <th width= "20%"><%= "Credit" %></th>
-      <th width= "10%"><%= "Date" %></th>
-      <th width= "10%"><%= "Amount" %></th>
-      <th width= "10%"><%= "Assigned" %></th>
-      <th width= "10%"><%= "State" %></th>
-      <th width = "15%"><%= "Actions" %></th>
-    </tr>
-  </thead>
-  <tbody>
-
-
-
-    <% @vouchers.each do |voucher| %>
-      <tr>
-        <td><%= link_to voucher.id, voucher_path(voucher) %></td>
-        <td class="account_name"><%= link_to voucher.debit_from.name,account_path(getAccount(voucher.account_debited)),:class=>'debit_credit' %></td>
-        <td class="account_name">
-          <% if voucher.credit_to != nil %>
-            <%= link_to voucher.credit_to.name, account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %>
-           <%end%>
-        </td>
-        <td><%= voucher.date.to_s(:string_format)%></td>
-        <td><%= number_to_currency(voucher.amount,:unit=> "₹ ")%></td>
-        <% if voucher.assigned_to.nil? %>
-        <td> <%=" "%>
-        <%else%>
-        <td><%= voucher.assigned_to.first_name%></td>
-          <%end%>
-         <td><%= voucher.workflow_state%></td>
-         <td>
-          <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
-          <%= link_to "Edit",edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure?'},:class => 'btn btn-mini btn-danger' %>
-          <%end%>
-          <%= link_to "Details",voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%=paginate @vouchers%>
-<%else%>
-  <% if controller.action_name == "waiting_for_approval" %>
- <h3> No vouchers assigned </h3>
- <%end%>
+<% if((controller.action_name == 'index' || controller.action_name == 'all') && params[:controller] == 'vouchers' && params[:user_id].nil?) %>
+  <div class="all_vouchers">
+    <div class="new_button">
+      <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
+    </div>
+  </div>
 <%end%>
+<%if params[:to] && params[:from] && (controller.action_name != 'report') %>
+  <%= render :template => 'vouchers/report_layout', locals: {:to => params[:to] , :from => params[:from]}%>
+<%end%>
+<%if params[:user_id]%>
+  <%= render :template => 'users/_layout', locals: {:@user => User.find(params[:user_id])}%>
+<%end%>
+<% if params[:account_id] && controller.action_name != 'show'%>
+  <%= render :template => 'accounts/_layout', locals: {:@account=>Account.find(params[:account_id])}%>    
+<%end%>
+<div class = "span9 associated_voucher">
+  <ul class="nav nav-tabs">
+    <li class="active drafted"><%= link_to "Drafted" , url_for(params.merge({controller: 'vouchers', action: 'drafted'})),:class=>"drafted" %></li>
+    <li class="pending"><%= link_to "Pending" , url_for(params.merge({controller: 'vouchers', action: 'pending'})),:class=>"pending" %></li>
+    <li class="approved"><%= link_to "Approved" , url_for(params.merge({controller: 'vouchers', action: 'approved'})),:class=>"approved" %></li>
+    <li class="accepted"><%= link_to "Accepted" , url_for(params.merge({controller: 'vouchers', action: 'accepted'})),:class=>"accepted" %></li>
+    <li class="rejected"><%= link_to "Rejected" , url_for(params.merge({controller: 'vouchers', action: 'rejected'})),:class=>"rejected" %></li>
+    <div class="voucher_status">
+      <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @vouchers } %>
+    </div>
+  </ul>
+</div>
+
+
+
+

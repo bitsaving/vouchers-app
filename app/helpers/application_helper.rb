@@ -19,9 +19,21 @@ module ApplicationHelper
   def user_options
     User.where.not(id: current_user.id).pluck( 'first_name ', 'id' )
   end
+  def nav_link(link_text, link_path)
+    class_name = current_page?(link_path) ? 'active' : ''
 
-  def get_new_by_date(to,from)
-    @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from).order('updated_at desc').page(params[:page]).per(10)
+    content_tag(:li, :class => class_name) do
+      link_to link_text, link_path
+    end
+  end
+
+
+  def get_new_by_date(to,from,name,type)
+    @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from)
+    @vouchers  = @vouchers.where('account_debited in (?) OR account_credited in (?)',name,name) if !name.blank?
+    @vouchers = @vouchers.where("account_" + type + "ed in (?)",name) if !type.blank?
+    Rails.logger.debug "#{@vouchers.count}"
+    @vouchers
   end
   
   #FIXME_AB: Why you are using two types of method naming conventions. One with underscore other with camelCase
