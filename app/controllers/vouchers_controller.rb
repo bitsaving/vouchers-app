@@ -72,10 +72,13 @@ class VouchersController < ApplicationController
    # @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
     respond_to do |format|
       if @voucher.save
-        format.html { redirect_to @voucher, notice: 'Voucher was successfully created.' }
+        flash[:notice] = "Voucher was successfully created."
+        format.html {}
         format.json { render action: 'show', status: :created, location: @voucher }
+        format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
          format.html { render action: 'new' }
+         format.js {}
          format.json { render json: @voucher.errors, status: :unprocessable_entity }
       end
     end
@@ -91,9 +94,11 @@ class VouchersController < ApplicationController
       if @voucher.update(voucher_params)
         format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
         format.json { head :no_content }
+         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
         format.html { render action: 'edit' }
         format.json { render json: @voucher.errors, status: :unprocessable_entity }
+        format.js { render 'vouchers/create.js.erb'}
       end
     end
 

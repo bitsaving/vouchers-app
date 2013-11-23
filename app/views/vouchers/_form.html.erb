@@ -1,8 +1,9 @@
+<div class ="error_messages">
+</div>
 
-<%= render "shared/error_messages", :target => @voucher %>   
 <div class="voucher_div">
   <div class ="voucher_form">
-    <%= form_for @voucher, :html => { :class => 'form-horizontal', :html => { :multipart => true } } do |f| %>
+    <%= form_for @voucher , :html => { :class => 'abcd form-horizontal', :html => { :multipart => true  } } ,:authenticity_token => true,:remote =>  true  do |f| %>
       <legend><%=controller.action_name.capitalize%> voucher</legend>
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
@@ -88,7 +89,7 @@
       <div class="control-group">
         <%= f.label :comments ,"Comment",:class=>'control-label' %>
         <%= f.fields_for :comments do |builder| %>
-          <% if(builder.object.user_id == current_user.id  || @voucher.new_record?) %> 
+          <% if(builder.object.user_id == current_user.id ) || @voucher.new_record? %> 
             <%=render 'comment_fields' ,:f=>builder %>
           <%end%>
         <% end %>

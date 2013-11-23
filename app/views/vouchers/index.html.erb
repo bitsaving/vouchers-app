@@ -1,18 +1,22 @@
+<%if params[:tag].present? %>
+  <h3> Results for tag <%= params[:tag] %> </h3>
+  <%end%>
+
 <% actions = ['index' ,'all','show', 'pending','accepted','rejected','drafted','approved']%>
-<% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? %>
+<% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil?%>
   <div class="all_vouchers">
     <div class="new_button">
       <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
     </div>
   </div>
 <%end%>
-<%if params[:to] && params[:from] && (controller.action_name != 'report') %>
+<%if params[:to].present? && params[:from].present? && (controller.action_name != 'report') %>
   <%= render :template => 'vouchers/report_layout', locals: {:to => params[:to] , :from => params[:from]}%>
 <%end%>
-<%if params[:user_id]%>
+<%if params[:user_id].present?%>
   <%= render :template => 'users/_layout', locals: {:@user => User.find(params[:user_id])}%>
 <%end%>
-<% if params[:account_id] && controller.action_name != 'show'%>
+<% if params[:account_id].present? && controller.action_name != 'show'%>
   <%= render :template => 'accounts/_layout', locals: {:@account=>Account.find(params[:account_id])}%>    
 <%end%>
 <div class = "span9 associated_voucher">

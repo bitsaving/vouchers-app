@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
   include PublicActivity::Common
+  default_scope { order('first_name') }
   has_many :notifications , :class_name => "PublicActivity::Activity", :foreign_key => "owner_id"
   has_many :vouchers , :foreign_key => "creator_id" , :dependent => :destroy
   has_many :comments , :dependent => :destroy

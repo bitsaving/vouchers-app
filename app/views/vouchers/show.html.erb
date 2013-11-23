@@ -42,8 +42,10 @@
     <div class = "payment_mode">
       <div class="payment_label">Payment Mode :</div>
       <%= @voucher.payment_type %>
+      <% if @voucher.payment_reference.present? %>
       <div class="payment_label">Reference Number :</div>
       <%= @voucher.payment_reference %> 
+      <%end%>
     </div> 
 
       <div class = "edit_voucher onprint">

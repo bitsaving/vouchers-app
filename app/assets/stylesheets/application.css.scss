@@ -102,10 +102,22 @@ form {
 
 }
 #result{
-
+  height: 160px;
+  overflow:auto;
   border:solid 1px black;
   border-top:none;
   border-radius: 2px;
+  .notifications:hover {
+    background-color:#e9f6fc;
+    cursor: pointer;
+
+  }
+
+}
+.notifications_output {
+width:400px;
+height:160px;
+
 
 }
 .associated_voucher{
@@ -118,7 +130,7 @@ margin-left: 3px !important;
   padding-right: 15px;
   padding-left: 15px;
   border-top: dotted 1px black;
-  background-color:#f5F5F5;
+  background-color:#d4eef9;
   a {
     color:blue;
   }

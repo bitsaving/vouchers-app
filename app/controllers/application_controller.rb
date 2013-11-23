@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_if_no_referer
-      redirect_to '/' ,notice: "You are not authorized" unless request.referer
+      redirect_to '/' ,notice: "You are not authorized to view the requested page" unless request.referer
     end
 
 end
