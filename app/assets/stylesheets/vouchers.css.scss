@@ -30,7 +30,7 @@ ul.ui-autocomplete {
 
 .reports {
 
-margin-bottom:225px;
+margin-bottom:255px;
 }
 .outer_block{
 /*display: inline-block;*/
@@ -108,7 +108,7 @@ height: 300px;
 display: inline-block;
 margin-top: 10px;  
 position: relative;
-top:-175px;
+top:-157px;
 
 } 
 .error_messages{
@@ -123,7 +123,12 @@ left :-30px;
 
 }
 .voucher_count {
-  padding-top: 6px;
+border: dotted 1px black;
+padding-top:20px;
+height:250px;
+overflow: auto;
+font-size: 20px !important;
+text-align: center;
 
 }
 .voucher_id,.voucher_amount,.voucher_state ,.voucher_debit,.voucher_credit {
@@ -510,18 +515,24 @@ height: 40px;
   font-weight: bold;
 }
 .report {
+  border: dotted 1px black;
+  background-color: #f6fbff;
+  padding-right: 20px;
+  padding-top: 20px;
 display: inline-block;
 position: absolute;
 margin-left:18%;
-top:100px;
+margin-right: 2%;
+top:80px;
+
 .control-label{
    display:inline-block;
    padding-left: 10px;
    font-size: 20px;
    font-weight: bold;
     }
-  .control-group{
-    display: inline-block;
+ .from_date,.to_date{
+    display: inline-block !important;
   }
   .controls{
     display: inline-block;
@@ -529,17 +540,15 @@ top:100px;
   .display_vouchers{
     position: relative;
     bottom: 5px;
-    padding-left: 180px;
+    padding-left: 105px;
     display: inline-block;
     padding-top: 18px;
   }
-  input {
-    width:200px  !important;
-  }
+
+ 
   .account_dropdown{
     position: relative;
-    top:10px;
-    left:50px;
+   
     display: block;
 
     label{

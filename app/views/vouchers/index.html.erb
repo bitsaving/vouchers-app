@@ -1,6 +1,6 @@
 <%if params[:tag].present? %>
-  <h3> Results for tag <%= params[:tag] %> </h3>
-  <%end%>
+  <h3> Results for tag: <%= params[:tag] %> </h3>
+<%end%>
 
 <% actions = ['index' ,'all','show', 'pending','accepted','rejected','drafted','approved']%>
 <% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil?%>

@@ -47,7 +47,7 @@ class VouchersController < ApplicationController
     end
      @voucher_startDate = params[:from].to_date
      @voucher_endDate = params[:to].to_date
-     @voucher_accountName = params[:account]
+     @voucher_accountName = params[:account_name]
      @voucher_accountType = params[:account_type]
     respond_to do |format|
       format.html  {}
@@ -92,7 +92,8 @@ class VouchersController < ApplicationController
     end 
     respond_to do |format|
       if @voucher.update(voucher_params)
-        format.html { redirect_to @voucher, notice: 'Voucher was successfully updated.' }
+        flash[:notice] = "Voucher was successfully updated"
+        format.html {}
         format.json { head :no_content }
          format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else

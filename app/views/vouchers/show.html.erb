@@ -31,12 +31,12 @@
       <div class ="labels">Credit</div> 
       <%= link_to @voucher.credit_to.name  , account_path(Account.find(@voucher.credit_to)) %>
     </div>
-    <% if @voucher.from_date %>
+    <% if @voucher.to_date %>
     <div class="date_period" >
       <div class ="date_field">From :</div>
-      <%= @voucher.from_date.to_s(:string_format) %> 
+        <%= @voucher.from_date.to_s(:string_format) %> 
       <div class="date_field" >To :</div>
-      <%= @voucher.to_date.to_s(:string_format) %> 
+        <%= @voucher.to_date.to_s(:string_format) %> 
     </div>
     <%end%>
     <div class = "payment_mode">
@@ -49,8 +49,8 @@
     </div> 
 
       <div class = "edit_voucher onprint">
-      <% if((@voucher.current_state < :pending || @voucher.current_state == :rejected) && @voucher.creator_id == current_user.id )%>
-        <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary'%> 
+      <% if @voucher.can_be_edited? && @voucher.creator?(current_user.id)%>
+        <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary',"data-no-turbolink" => true%> 
       <%end%>
     </div>
     <div class ="print_voucher">

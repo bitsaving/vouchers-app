@@ -8,6 +8,6 @@
 </dl>
 <%= select_tag :account, options_for_select(Account::TYPES),:name=>@account.id  %>
 <div class="alignment ">
-  <%= link_to "Back",accounts_path, :class => 'btn btn-primary'  %>
+  <%= link_to "Back",:back, :class => 'btn btn-primary'  %>
   <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
 </div>

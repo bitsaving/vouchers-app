@@ -1,29 +1,29 @@
 <div class="reports">
-<%= form_tag generate_report_path ,:method=>'get' do %>
+<%= form_tag generate_report_path do %>
   <div class = "report">
-    <div class="control-group"> 
+    <div class="control-group from_date"> 
       <%=label_tag  :from ,"From", :class => 'control-label' %>
       <div class="controls">
         <%= text_field_tag :from , params[:from], :class => 'date-field'  %>
       </div>
     </div>
-    <div class="control-group">
+    <div class="control-group to_date">
       <%=label_tag  :to ,"To", :class => 'control-label' %>
       <div class="controls">
         <%= text_field_tag :to  ,params[:to] ,:class => 'date-field' %>
       </div>
     </div>
     <div class="control-group account_dropdown">
-      <%=label_tag  :account ,"Account", :class => 'control-label' %>
+      <%=label_tag  :account_name ,"Account", :class => 'control-label' %>
       <div class="controls">
-        <%= select_tag :account  ,options_for_select(account_options),:prompt=>"Select"%>
+        <%= select_tag :account_name  ,options_for_select(account_options, :selected => params[:account_name]),:prompt=>"Select"%>
       </div>
     </div>
     
     <div class="control-group account_dropdown">
       <%=label_tag  :account_type ,"Type", :class => 'control-label' %>
       <div class="controls">
-        <%= select_tag :account_type  ,options_for_select(Account::TYPES),:prompt=>"Select"%>
+        <%= select_tag :account_type  ,options_for_select(Account::TYPES,:selected => params[:account_type]),:prompt=>"Select"%>
       </div>
     </div>
     <div class="display_vouchers">
