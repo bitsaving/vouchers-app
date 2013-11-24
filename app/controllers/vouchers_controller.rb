@@ -1,7 +1,6 @@
 class VouchersController < ApplicationController
   before_action :set_voucher, only: [:show, :edit, :update, :destroy,:check_voucher_state,:check_user_type ,:increment_state ,:decrement_state]
   before_action :check_user_and_voucher_state ,only: [:edit]
-  #before_action :check_user_type ,only: [:edit]
   # GET /vouchers
   # GET /vouchers.json
   def index
@@ -17,11 +16,13 @@ class VouchersController < ApplicationController
       format.js {}
     end
   end
+
+
 # GET /vouchers/new
   def new
     
     @voucher = Voucher.new
-    uploads = @voucher.uploads.build
+    uploads = @voucher.attachments.build
     comments =@voucher.comments.build
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
@@ -64,12 +65,10 @@ class VouchersController < ApplicationController
   # POST /vouchers
   # POST /vouchers.json
   def create
-
    @voucher = current_user.vouchers.build(voucher_params)
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
     end
-   # @voucher.comments[0].user_id = current_user.id if !@voucher.comments[0].nil?
     respond_to do |format|
       if @voucher.save
         flash[:notice] = "Voucher was successfully created."
@@ -105,6 +104,7 @@ class VouchersController < ApplicationController
 
   end
 
+
   def pending
     get_vouchers('pending')
     respond_to do |format|
@@ -114,6 +114,7 @@ class VouchersController < ApplicationController
 
     end  
   end
+
   def accepted
     get_vouchers('accepted')
     respond_to do |format|
@@ -141,9 +142,6 @@ class VouchersController < ApplicationController
   end
 
   def drafted
-  # if params[:user_id] == current_user.id
-
-    #   @vouchers =  @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     get_vouchers('new')
     respond_to do |format|
       format.html { render action: 'index'}
@@ -176,6 +174,7 @@ class VouchersController < ApplicationController
   #     format.js { render partial: 'vouchers' }
   #   end  
   # end
+
   def rejected
     get_vouchers('rejected')
     respond_to do |format|
@@ -276,4 +275,5 @@ class VouchersController < ApplicationController
     def voucher_params
       params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],uploads_attributes:[:tagname,:id, :_destroy,:bill_attachment] )
     end
+
 end

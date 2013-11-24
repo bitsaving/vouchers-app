@@ -1,70 +1,68 @@
 <div class = " outer_block">
-<div class="outer_container">
-	<div class="voucher_content">
-		<div  class ="voucher_heading">My Assigned Vouchers</div>
-	  <% @vouchers.each do |voucher| %>
-	  	<div class="assigned_vouchers">
-		  	<div class = "voucher_id"> 
-		  		<div class="voucher_label">Id </div>
-		  	  <div class="voucher_contents"><%= voucher.id %></div>
-		  	</div>
-		  	<div class = "voucher_debit"> 
-		  		<div class="voucher_label">Debit</div>
-		  	  <div class="voucher_contents"><%= voucher.debit_from.name %></div>
+	<div class="outer_container">
+		<div class="voucher_content">
+			<div  class ="voucher_heading">My Assigned Vouchers</div>
+		  <% @vouchers.each do |voucher| %>
+		  	<div class="assigned_vouchers">
+			  	<div class = "voucher_id"> 
+			  		<div class="voucher_label">Id </div>
+			  	  <div class="voucher_contents"><%= voucher.id %></div>
+			  	</div>
+			  	<div class = "voucher_debit"> 
+			  		<div class="voucher_label">Debit</div>
+			  	  <div class="voucher_contents"><%= voucher.debit_from.name %></div>
+			    </div>
+			    <div class = "voucher_credit"> 
+			    	<div class="voucher_label">Credit</div>
+			  	  <div class="voucher_contents"><%= voucher.credit_to.name %></div>
+			    </div>
+			    <div class = "voucher_amount">
+			    	<div class="voucher_label">Amount</div>
+			    	<div class="voucher_contents"><%= " ₹ " + voucher.amount.to_s %></div>
+			    </div>
+			    <div class="voucher_state">
+			    	<div class="voucher_label">State</div>
+			    	<div class="voucher_contents"><%= voucher.workflow_state%> </div>
+			    </div>
 		    </div>
-		    <div class = "voucher_credit"> 
-		    	<div class="voucher_label">Credit</div>
-		  	  <div class="voucher_contents"><%= voucher.credit_to.name %></div>
-		    </div>
-		    <div class = "voucher_amount">
-		    	<div class="voucher_label">Amount</div>
-		    	<div class="voucher_contents"><%= " ₹ " + voucher.amount.to_s %></div>
-		    </div>
-		    <div class="voucher_state">
-		    	<div class="voucher_label">State</div>
-		    	<div class="voucher_contents"><%= voucher.workflow_state%> </div>
-		    </div>
-	    </div>
-	  <%end%>
-	</div>
-</div>	
-
-<div id="tag_cloud">
-	<div class = "voucher_heading"> Tags </div>
+		  <%end%>
+		</div>
+	</div>	
+	<div id="tag_cloud">
+		<div class = "voucher_heading"> Tags </div>
 		<div class="voucher_tags">
 			<div id="myCanvasContainer">
-	 <canvas width="440" height="240" id="myCanvas">
-  <% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
-    <%= link_to tag.name, tag_path(tag.name), class: css_class %>
-  <% end %>
- </canvas>
-</div>
- 
-</div>
-</div>
-
-<div id= "voucher_count">
-	<div class = "voucher_heading"> Voucher Status </div>
-	<div class="voucher_count">
-		<div class="vouchers">
-			<div class="voucher_label"><%= link_to "New" ,drafted_vouchers_path , "data-no-turbolink" => true%></div>
-			<div class="voucher_contents"> <%= Voucher.New.count %></div>
-		</div>
-		<div class="vouchers">
-			<div class="voucher_label"><%= link_to "Pending" , pending_vouchers_path, "data-no-turbolink" => true%></div>
-			<div class="voucher_contents"> <%= Voucher.pending.count %></div>
-		</div>
-		<div class="vouchers">
-			<div class="voucher_label"><%= link_to "Approved" ,approved_vouchers_path, "data-no-turbolink" => true%></div>
-			<div class="voucher_contents"> <%= Voucher.approved.count %></div>
-		</div>
-		<div class="vouchers">
-			<div class="voucher_label"><%= link_to "Accepted" ,accepted_vouchers_path, "data-no-turbolink" => true%></div>
-			<div class="voucher_contents"> <%= Voucher.accepted.count %></div>
-		</div>
-		<div class="vouchers">
-			<div class="voucher_label"><%= link_to "Rejected" , rejected_vouchers_path, "data-no-turbolink" => true%></div>
-			<div class="voucher_contents"> <%= Voucher.rejected.count %></div>
+	 			<canvas width="440" height="240" id="myCanvas">
+  				<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
+    				<%= link_to tag.name, tag_path(tag.name), class: css_class %>
+  				<% end %>
+ 				</canvas>
+			</div>
+ 		</div>
+	</div>
+	<div id= "voucher_count">
+		<div class = "voucher_heading"> Voucher Status </div>
+		<div class="voucher_count">
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "New" ,drafted_vouchers_path , "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.New.count %></div>
+			</div>
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "Pending" , pending_vouchers_path, "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.pending.count %></div>
+			</div>
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "Approved" ,approved_vouchers_path, "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.approved.count %></div>
+			</div>
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "Accepted" ,accepted_vouchers_path, "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.accepted.count %></div>
+			</div>
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "Rejected" , rejected_vouchers_path, "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.rejected.count %></div>
+			</div>
 		</div>
 	</div>
 </div>

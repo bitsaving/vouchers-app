@@ -7,7 +7,7 @@
     </div>
     <div class="actions approval_button">
       <div class="actions">
-        <%if @voucher.current_state == :new || @voucher.current_state == :rejected%>
+        <%if @voucher.can_be_edited? %>
           <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign '%>
         <%else%>
         <div >

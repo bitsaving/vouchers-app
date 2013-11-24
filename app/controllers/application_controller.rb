@@ -17,12 +17,12 @@ class ApplicationController < ActionController::Base
 
     def check_admin
       if ! current_user.admin?
-        redirect_to "/", flash: { error: "You are not authorized" }
+        redirect_to "/", flash: { error: "You are not authorized to view the requested page" }
       end
     end
 
     def redirect_if_no_referer
-      redirect_to '/' ,notice: "You are not authorized to view the requested page" unless request.referer
+      redirect_to '/' ,flash: { error: "You are not authorized to view the requested page" } unless request.referer
     end
 
 end

@@ -4,11 +4,12 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, :only => [:edit,:destroy, :update,:show]
   #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
   before_action :check_admin
+  before_action :redirect_if_logged_in_first_time ,:only => [:show]
   # GET /users
   # GET /users.json
   def index
     #FIXME_AB: Lets make per page = 50
-    @users = User.all.page(params[:page]).per(10)
+    @users = User.all.order('first_name').page(params[:page]).per(50)
      respond_to do |format|
       format.js {}
       format.html{}
@@ -50,10 +51,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def show
-    if !params[:id]
-      #FIXME_AB: This redirection should be done from the before filter itself
-      redirect_to assigned_vouchers_path
-    end
+    
      respond_to do |format|
      format.js {}
      format.html {}
@@ -85,4 +83,13 @@ class Admin::UsersController < ApplicationController
       redirect_to :back
   end
   
+
+  def redirect_if_logged_in_first_time 
+    if !params[:id]
+      #FIXME_AB: This redirection should be done from the before filter itself
+      redirect_to assigned_vouchers_path
+    end
+  end
+
+
 end

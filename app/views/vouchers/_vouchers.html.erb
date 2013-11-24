@@ -21,19 +21,17 @@
     <tr>
       <td><%= link_to voucher.id, voucher_path(voucher) %></td>
       <td><%= link_to voucher.debit_from.name,account_path(getAccount(voucher.account_debited)),:class=>'debit_credit'%></td>
-      <td><% if(!(voucher.credit_to.nil?)) %>
-    <%= link_to voucher.credit_to.name,account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %></td>
-      <%end%>
+      <td><%= link_to voucher.credit_to.name,account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %></td>
       <td><%= voucher.date.to_s(:string_format)%></td>
       <td><%= number_to_currency(voucher.amount,:unit=>"₹ ")%></td>
-      <% if voucher.assigned_to.nil? %>
+      <% if voucher.assignee.nil? %>
       <td> <%=" "%>
       <%else%>
-      <td><%= voucher.assigned_to.first_name%></td>
+      <td><%= voucher.assignee.first_name%></td>
         <%end%>
        <td><%= voucher.workflow_state%></td> 
       <td>
-        <% if voucher.creator?(current_user.id) && voucher.can_be_edited? %>
+        <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
           <%= link_to "Edit",
                     edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
           <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure?'},:class => 'btn btn-mini btn-danger' %>

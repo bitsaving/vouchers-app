@@ -57,7 +57,7 @@
     </div>
       <div class="control-group radioBox addFields">
         <% counter = 0 %>
-        <%= f.fields_for :uploads do |builder| %>
+        <%= f.fields_for :attachments do |builder| %>
         <p class ="link radioBox controls">
     
           <%if @voucher.new_record? %>
@@ -67,7 +67,7 @@
               <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
             </p>
           <%else%>
-             <%= link_to @voucher.uploads[counter].bill_attachment_file_name ,@voucher.uploads[counter].bill_attachment.url(:original)%>
+             <%= link_to @voucher.attachments[counter].bill_attachment_file_name ,@voucher.attachments[counter].bill_attachment.url(:original)%>
 
              <%=builder.text_field :tagname,:class=>"filename hidden"  %>
              <%= link_to_remove_fields "  Remove" , builder %>     
@@ -77,7 +77,7 @@
       </p>
     </div>
     <div  class =" add_more_uploads radioBox addFields">
-      <%= link_to_add_fields "Add Another File", f, :uploads %>
+      <%= link_to_add_fields "Add Another File", f, :attachments %>
     </div>  
     <div class="control-group">
       <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>

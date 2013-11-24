@@ -16,13 +16,11 @@ VoucherEventsHandler.prototype = {
     this.getTags();
     document.addEventListener("page:load", this.hiddenFieldHandler());
     document.addEventListener("page:load", this.autoCompleteFieldHandler());
-    // window.addEventListener("page:fetch", this.autoCompleteFieldHandler());
-    //  window.addEventListener("page:fetch", this.getTags());
     document.addEventListener("page:load", this.getTags());
   },
+
   getTags: function(){
     var that = this
-  // #FIXME_AB: Follow OOPs 
     $.ajax({
       type: 'get',
       // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 
@@ -49,12 +47,15 @@ VoucherEventsHandler.prototype = {
       }
     });
   },
+
   split: function( val ) {
     return val.split( /,\s*/ );
   },
+
   extractLast:function( term ) {
     return this.split( term ).pop();
   },
+
   autoCompleteFieldHandler: function() {
     console.log($('.autocomplete').data('path'))
     $('.date-field').css('cursor', 'pointer');
@@ -81,9 +82,9 @@ VoucherEventsHandler.prototype = {
       }
     });
   },
+
   hiddenFieldHandler: function(){
     $(document).on('change', '#voucher_payment_type', function() {
-
       $('.select').removeClass("hidden");
       if($(this).val() == "Cash")
         $('.select').addClass("hidden");

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131118173617) do
+ActiveRecord::Schema.define(version: 20131124180817) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 20131118173617) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
+  create_table "attachments", force: true do |t|
+    t.integer  "voucher_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "bill_attachment_file_name"
+    t.string   "bill_attachment_content_type"
+    t.integer  "bill_attachment_file_size"
+    t.datetime "bill_attachment_updated_at"
+    t.string   "tagname"
+  end
+
   create_table "comments", force: true do |t|
     t.text     "description"
     t.integer  "user_id"
@@ -65,17 +76,6 @@ ActiveRecord::Schema.define(version: 20131118173617) do
 
   create_table "tags", force: true do |t|
     t.string "name"
-  end
-
-  create_table "uploads", force: true do |t|
-    t.integer  "voucher_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "bill_attachment_file_name"
-    t.string   "bill_attachment_content_type"
-    t.integer  "bill_attachment_file_size"
-    t.datetime "bill_attachment_updated_at"
-    t.string   "tagname"
   end
 
   create_table "users", force: true do |t|

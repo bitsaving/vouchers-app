@@ -1,4 +1,2 @@
-// #FIXME_AB: Ideally this ajax call should just return the HTML. And we should have a ajax request callback(on success) which will display this html and to the other things like clearing text area.
- 
  $(".comment_panel").html("<%= escape_javascript render(:partial => 'comments',locals:{ voucher: @voucher}) %>")
  $('#description').text("")

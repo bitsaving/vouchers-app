@@ -1,7 +1,8 @@
 class NotificationsController < ApplicationController
   def index
     #FIXME_AB: Instead of defining order again and again you can make a scope or a default scope
-    @notifications = current_user.notifications.order('created_at desc')
+    #fixed
+    @notifications = current_user.notifications
     respond_to do |format|
       format.html {}
       format.js {}

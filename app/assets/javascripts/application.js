@@ -20,7 +20,7 @@
 //= require jquery.tagcanvas.js
 
 // #FIXME_AB: Object oriented architecture please 
-
+//fixed
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
  
@@ -47,24 +47,11 @@ ApplicationHandler.prototype = {
     this.oneclick();
     this.tagcanvas();
     $('div.error_messages').addClass('hidden')
-    //this.addClassToLi();
-    //this.abcdj();
     this.redirectToVouchers();
-    this.getVouchersByStatus();
     document.addEventListener("page:load", this.dateFieldHandler);
     document.addEventListener("page:load", this.tagcanvas);
-    //document.addEventListener("page:load", this.abcdj);
     document.addEventListener("page:load", this.VoucherStateHandler);
-    // document.addEventListener("page:load", this.addClassToLi);
-    document.addEventListener("page:load", this.getVouchersByStatus);
   },
- //  abcdj:function(){
-
- // $('.abcd').bind('ajax:success', function(evt, data, status, xhr){
- //    alert(evt)
- //    alert(data)
- //  });
- //  },
   dateFieldHandler : function(){
     $(".date-field").datepicker({
       dateFormat: "dd/mm/yy"
@@ -73,55 +60,47 @@ ApplicationHandler.prototype = {
   redirectToVouchers: function(){
     $(document).on('click','.assigned_vouchers',function(e){
       var voucherId = $(this).find('.voucher_id .voucher_contents').text();
-        window.location.href = '/vouchers/'+ voucherId;
-      })
-
+      window.location.href = '/vouchers/'+ voucherId;
+    })
   },
   tagcanvas: function() {
-  var options = {
-     textColour : 'red',
-     outlineColour : '#ff9999',
- 
-     outlineThickness : 1,
-     minSpped : 0.07,
-     maxSpeed : 0.07,
-     weight : true,
-     weightMode: 'both',
-     shape : 'cylinder',
-     minBrightness: 2.9,
-     weightGradient: {0:'#660033', 0.33:'#ff0',0.66:'#944d70', 1:'#c299ad'},
-     depth : 0.75
- };
- window.onload = function() {
-    try {
-      TagCanvas.Start('myCanvas',"",options);
-    } catch(e) {
+    var options = {
+      textColour : 'red',
+      outlineColour : '#ff9999',
+      outlineThickness : 1,
+      minSpped : 0.07,
+      maxSpeed : 0.07,
+      weight : true,
+      weightMode: 'both',
+      shape : 'cylinder',
+      minBrightness: 2.9,
+      weightGradient: {0:'#660033', 0.33:'#ff0',0.66:'#944d70', 1:'#c299ad'},
+      depth : 0.75
+    };
+    window.onload = function() {
+      try {
+        TagCanvas.Start('myCanvas',"",options);
+      } catch(e) {
       // something went wrong, hide the canvas container
      // document.getElementById('myCanvasContainer').style.display = 'none';
-    }
-  };
-
-     
-
-   // 
-},
-  getVouchersByStatus:function(){
-    $(document).on('click','.vouchers' ,function(e) {
-      console.log("df")
-      var voucherStatus = $(this).find('.voucher_label').text();
-      console.log(voucherStatus.toLowerCase())
-      $.ajax({
-        type: 'get',
-        url: '/vouchers/' + voucherStatus.toLowerCase(),
-        //data: {state : voucherStatus.toLowerCase()},
-        dataType: "html", 
-        success: function(data){
-          $('.assigned_vouchers').html('').html(data);
-          $('.associated_voucher ul li.' + voucherStatus.toLowerCase()).addClass('active').siblings().removeClass('active');
-        }
-      })
-    });
+      }
+    };  
   },
+  // getVouchersByStatus:function(){
+  //   $(document).on('click','.vouchers' ,function(e) {
+  //     var voucherStatus = $(this).find('.voucher_label').text();
+  //     console.log(voucherStatus.toLowerCase())
+  //     $.ajax({
+  //       type: 'get',
+  //       url: '/vouchers/' + voucherStatus.toLowerCase(),
+  //       dataType: "html", 
+  //       success: function(data){
+  //         $('.assigned_vouchers').html('').html(data);
+  //         $('.associated_voucher ul li.' + voucherStatus.toLowerCase()).addClass('active').siblings().removeClass('active');
+  //       }
+  //     })
+  //   });
+  // },
    // addClassToLi: function(){
    // $('ul.navigation li').each(function(){
    //  if(this)

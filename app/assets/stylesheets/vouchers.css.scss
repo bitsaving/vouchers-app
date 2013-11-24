@@ -236,7 +236,8 @@ margin-right: -250px;
   margin-left: 10px;
 }
 .approval_button {
-  margin-top: -20px;
+  margin-top: -12px;
+  margin-left: -12px;
 }
 .accounts{
   position:absolute;
@@ -515,52 +516,41 @@ height: 40px;
   font-weight: bold;
 }
 .report {
-  border: dotted 1px black;
-  background-color: #f6fbff;
   padding-right: 20px;
   padding-top: 20px;
 display: inline-block;
 position: absolute;
 margin-left:18%;
 margin-right: 2%;
-top:80px;
+top:180px;
 
 .control-label{
    display:inline-block;
    padding-left: 10px;
    font-size: 20px;
    font-weight: bold;
+   width:150px;
     }
- .from_date,.to_date{
+ .control-group{
     display: inline-block !important;
   }
   .controls{
     display: inline-block;
+    width:300px;
   }
   .display_vouchers{
     position: relative;
     bottom: 5px;
-    padding-left: 105px;
+    padding-left: 326px;
     display: inline-block;
     padding-top: 18px;
   }
 
  
-  .account_dropdown{
-    position: relative;
-   
-    display: block;
-
-    label{
-      position: relative;
-      bottom: 10px;
-      padding-right: 30px;
-    }
-  } 
 }
 .voucher_report{
-position: absolute;
-top: 400px;
+  position: absolute;
+  top: 400px;
 }
 .voucher_form{
 

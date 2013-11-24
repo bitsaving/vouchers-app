@@ -31,6 +31,7 @@ class AccountsController < ApplicationController
       if @account.save
         format.html { redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.' }
         #FIXME_AB: After account is created I should be redirected on the new account page so that I can add more account. Make sure that the success message is displayed to intimate me that account was created
+        #fixed
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }
@@ -75,9 +76,13 @@ class AccountsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_account
       @account = Account.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
+      if(@account.nil?)  
+        flash[:notice] = "Account not found"
         redirect_to :back
+        return false
+      end
         #FIXME_AB: Instead of handling this exception you should check for account.nil?
+        #fixed
     end
 
     # Never trust parameters from the scary INTERNET, only allow the white list through.

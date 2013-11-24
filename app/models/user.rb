@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
   include PublicActivity::Common
-  default_scope { order('first_name') }
-  has_many :notifications , :class_name => "PublicActivity::Activity", :foreign_key => "owner_id"
+  default_scope { order('updated_at desc') }
+
+  has_many :notifications , :class_name => "PublicActivity::Activity", :foreign_key => "owner_id" ,:order => 'created_at desc'
   has_many :vouchers , :foreign_key => "creator_id" , :dependent => :destroy
   has_many :comments , :dependent => :destroy
   devise :database_authenticatable , :omniauthable ,
