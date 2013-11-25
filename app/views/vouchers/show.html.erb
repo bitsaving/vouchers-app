@@ -73,7 +73,7 @@
         <div class="labels">Bill attachments
         </div>
         <% @voucher.attachments.each do |attachment|  %> 
-          <div><%= (counter += 1).to_s+". "%><%= link_to (attachment.bill_attachment_file_name) ,attachment.bill_attachment.url(:original)%></div>     
+          <div><%= (counter += 1).to_s+". "%><%= link_to (attachment.bill_attachment_file_name) ,attachment.bill_attachment.url(:original, false),:target => "_blank"%></div>     
              <%end%>
       </div> 
     <%end%>

@@ -12,6 +12,15 @@ class Attachment < ActiveRecord::Base
 
   #FIXME_AB: I am not sure why this method is needed, please explain
   #this is required to replace the filename with the caption added.
+  before_post_process :set_content_disposition
+
+    def set_content_disposition
+    filename = self.bill_attachment.instance.bill_attachment_file_name
+    #self.bill_attachment.instance_write(:content_disposition, "attachment; filename="+filename) 
+    self.bill_attachment.options.merge({:s3_headers => {"Content-Disposition" => "attachment; filename="+filename}})
+    end
+
+
   def rename_file
 	  if bill_attachment_file_name
       extension = File.extname(bill_attachment_file_name).downcase
@@ -21,4 +30,8 @@ class Attachment < ActiveRecord::Base
       end  
     end
   end
+
+
+
+
 end

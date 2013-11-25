@@ -77,7 +77,7 @@ class Voucher < ActiveRecord::Base
   #FIXME_AB: Please add comments for these callback methods. We discussed it
   #It is a callback for event "accept" which gets called once we invoke the event.
   def accept(user_id)
-    update_attributes({accepted_by: user_id , accepted_at: Time.now})
+    update_attributes({accepted_by: user_id , accepted_at: Time.zone.now})
   end
   
   def reject(user_id)
@@ -89,7 +89,7 @@ class Voucher < ActiveRecord::Base
 
   def approve(user_id)
     #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
-    update_attributes({approved_by: user_id , approved_at: Time.now })
+    update_attributes({approved_by: user_id , approved_at: Time.zone.now })
   end
 
 

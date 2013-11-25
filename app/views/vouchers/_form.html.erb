@@ -3,7 +3,7 @@
 
 <div class="voucher_div">
   <div class ="voucher_form">
-    <%= form_for @voucher , :html => { :class => 'abcd form-horizontal', :html => { :multipart => true  } } ,:authenticity_token => true,:remote =>  true  do |f| %>
+    <%= form_for @voucher , :html => { :class => 'abcd form-horizontal', :html => { :multipart => true  } } ,:remote =>  true  do |f| %>
       <legend><%=controller.action_name.capitalize%> voucher</legend>
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>

@@ -95,8 +95,12 @@ form {
   width: 30px;
   float: right;
   display: inline-block;
-}
 
+}
+#notification-icon:hover {
+  cursor: pointer;
+
+}
 #notifications {
   height:30px;
 

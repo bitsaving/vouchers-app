@@ -31,13 +31,9 @@
 	<div id="tag_cloud">
 		<div class = "voucher_heading"> Tags </div>
 		<div class="voucher_tags">
-			<div id="myCanvasContainer">
-	 			<canvas width="440" height="240" id="myCanvas">
-  				<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
-    				<%= link_to tag.name, tag_path(tag.name), class: css_class %>
+			<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
+    		<%= link_to tag.name, tag_path(tag.name), class: css_class %>
   				<% end %>
- 				</canvas>
-			</div>
  		</div>
 	</div>
 	<div id= "voucher_count">

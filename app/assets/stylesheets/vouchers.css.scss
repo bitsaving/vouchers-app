@@ -72,7 +72,7 @@ cursor: pointer;
 #tag_cloud {
   font-weight: bold;
 border: solid 1px black;
-  margin-left: 20px;
+  margin-left: 1%;
   height:300px;
   width:35%;
   display: inline-block;
@@ -99,17 +99,13 @@ border: solid 1px black;
     }
 }
 #voucher_count{
-  margin-left: 20px;
-font-weight: bold;
-border: solid 1px black;
-margin-top: -12px !important;
-width:25%;
-height: 300px;
-display: inline-block;
-margin-top: 10px;  
-position: relative;
-top:-157px;
-
+  font-weight: bold;
+  border: solid 1px black;
+  float: right;
+  height:300px;
+  width:27%;
+  display: inline-block;
+  margin-top: 100px;
 } 
 .error_messages{
 height: auto;

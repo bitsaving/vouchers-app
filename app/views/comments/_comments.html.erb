@@ -1,5 +1,5 @@
 <div class ="comment_panel">
-  <% if voucher.comments.exists? %>
+  
     <div class ="comments">
       <h6> Comments </h6>
       <% voucher.comments.each do |comment| %>
@@ -9,15 +9,14 @@
             <div>
               <%= comment.user.first_name %>
             </div>
-              <%= comment.updated_at.localtime.to_s(:short_ordinal)%>
+              <%= comment.updated_at.getlocal.to_s(:short_ordinal)%>
 
           </div>
         </div>
       <% end %>
       <% #FIXME_AB: You should pass user object to assignee? method below #fixed-%>
-      <% if voucher.assignee?(current_user) && voucher.can_be_commented? %>
+      <% if voucher.assignee?(current_user)%>
         <%= render :partial => 'comments/form' %>
       <%end%>
     </div>
-  <%end%>
 </div>
