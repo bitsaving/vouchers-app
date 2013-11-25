@@ -195,6 +195,7 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
+
     case "#{@voucher.current_state}"
       when "rejected" then @voucher.send_for_approval!
       when "new" then @voucher.send_for_approval!
@@ -271,6 +272,11 @@ class VouchersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
       @voucher = Voucher.find(params[:id])
+      if(@voucher.nil?)  
+        flash[:error] = "Voucher not found."
+        redirect_to :back
+        return false
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
