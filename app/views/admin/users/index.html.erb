@@ -4,36 +4,7 @@
 <div class="new_button">
   <%= link_to "New",new_admin_user_path,:class => 'btn new_button btn-primary' %>
 </div>
-<table class="table table-striped userss">
-  <thead>
-    <tr>
-      <th width= "10%"><%= "Id" %></th>
-      <th width= "30%"><%= "Name" %></th>
-      <th width= "30%"><%= "Email" %></th>
-      <th width= "10%"><%= "Privilege" %> </th>
-      <th width= "20%"><%= "Actions" %></th>
-    </tr>
-  </thead>
-  <tbody> 
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to user.id, admin_user_path(user) %></td>
-        <td><%= link_to user.name , admin_user_path(user)%></td>
-        <td><%= user.email %></td>
-        <td>
-          <% if user.user_type == "normal" %>
-            <%= "User" %>
-          <%else%>
-            <%= user.user_type%>     
-          <%end%>
-          </td>
-        <td>
-          <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary'%>
-          <%= link_to "Delete","#",:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
-          <%= link_to "vouchers",user_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%=paginate @users ,:remote=>true%>
+
+<div class ="users">
+  <%= render :partial => 'user' ,locals: { :@users => @users} %>
+</div>

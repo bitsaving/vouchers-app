@@ -1,7 +1,18 @@
- <% @users.each do |user| %>
+<table class="table table-striped userss">
+  <thead>
+    <tr>
+      <th width= "10%"><%= "Id" %></th>
+      <th width= "30%"><%= "Name" %></th>
+      <th width= "30%"><%= "Email" %></th>
+      <th width= "10%"><%= "Privilege" %> </th>
+      <th width= "20%"><%= "Actions" %></th>
+    </tr>
+  </thead>
+  <tbody> 
+    <% @users.each do |user| %>
       <tr>
         <td><%= link_to user.id, admin_user_path(user) %></td>
-        <td><%= user.first_name + " " + user.last_name %></td>
+        <td><%= link_to user.name , admin_user_path(user)%></td>
         <td><%= user.email %></td>
         <td>
           <% if user.user_type == "normal" %>
@@ -9,11 +20,14 @@
           <%else%>
             <%= user.user_type%>     
           <%end%>
-        </td>
+          </td>
         <td>
-          <%= link_to "Edit", edit_admin_user_path(user), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to "Destroy", admin_user_path(user),:method => :delete,:data => { :confirm => "Are u Sure" },:class => 'btn btn-mini btn-danger' %>
+          <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary'%>
+          <%= link_to "Delete","#",:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
           <%= link_to "vouchers",user_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>
     <% end %>
+  </tbody>
+</table>
+<%=paginate @users ,:remote=>true%>
