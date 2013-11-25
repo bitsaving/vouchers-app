@@ -8,7 +8,7 @@
             <div>
               <%= comment.user.first_name %>
             </div>
-              <%= comment.updated_at.getlocal.to_s(:short_ordinal)%>
+              <%= comment.updated_at.in_time_zone("New Delhi").to_s(:short_ordinal)%>
 
           </div>
         </div>
