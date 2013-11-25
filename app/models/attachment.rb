@@ -18,7 +18,7 @@ class Attachment < ActiveRecord::Base
 
     filename = self.bill_attachment.instance.bill_attachment_file_name
     #self.bill_attachment.instance_write(:content_disposition, "attachment; filename="+filename) 
-    self.bill_attachment.options.merge({:s3_headers => {"Content-Disposition" => "attachment; filename="+filename}}
+    self.bill_attachment.options.merge({:s3_headers => {"Content-Disposition" => "attachment; filename="+filename}})
     end
 
 
