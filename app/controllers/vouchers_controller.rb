@@ -86,8 +86,10 @@ class VouchersController < ApplicationController
   # PATCH/PUT /vouchers/1
   # PATCH/PUT /vouchers/1.json
   def update
+    if @voucher.comments.exists?
     params[:voucher][:comments_attributes].each do |comment_id ,content|
       content[:user_id] =current_user.id if content[:user_id].blank?
+    end
     end 
     respond_to do |format|
       if @voucher.update(voucher_params)
@@ -249,7 +251,7 @@ class VouchersController < ApplicationController
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(50)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]).per(50)
     elsif(params[:to] && params[:from])
        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
         filter_by_name_and_type(@vouchers, params[:account_name] ,params[:account_type])

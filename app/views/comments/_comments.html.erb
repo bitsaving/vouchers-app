@@ -1,6 +1,8 @@
 <div class ="comment_panel">
     <div class ="comments">
+      <%if voucher.workflow_state == 'new' || voucher.comments.exists? %>
       <h6> Comments </h6>  
+      <%end%>
       <% voucher.comments.each do |comment| %>
         <div class = "commentator">
           <%= simple_format(comment.description) %>
