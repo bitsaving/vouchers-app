@@ -9,7 +9,7 @@ class Admin::UsersController < ApplicationController
   # GET /users.json
   def index
     #FIXME_AB: Lets make per page = 50
-    @users = User.all.order('first_name').page(params[:page]).per(50)
+    @users = User.all.order('first_name').page(params[:page]).per(5)
      respond_to do |format|
       format.js {}
       format.html{}

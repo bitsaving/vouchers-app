@@ -27,7 +27,7 @@ VoucherApp::Application.routes.draw do
   get 'voucher_report' ,to: 'vouchers#report' ,as: :report
   post 'generate_report' ,to: 'vouchers#generate_report'
   namespace 'admin' do
-    resources :users, only: [:show ,:edit,:index,:new]
+    resources :users, only: [:show ,:edit,:index,:new,:update,:create]
   end
   resources :users ,concerns: :voucher_states
   resources :accounts ,concerns: :voucher_states
