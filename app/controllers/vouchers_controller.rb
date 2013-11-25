@@ -272,11 +272,8 @@ class VouchersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_voucher
       @voucher = Voucher.find(params[:id])
-      if(@voucher.nil?)  
-        flash[:error] = "Voucher not found."
-        redirect_to :back
-        return false
-      end
+      rescue ActiveRecord::RecordNotFound 
+        redirect_to vouchers_path ,notice: "Voucher you are looking for does not exist."
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
