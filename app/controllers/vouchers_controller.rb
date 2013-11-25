@@ -206,8 +206,8 @@ class VouchersController < ApplicationController
         @voucher.assignee_id = params[:voucher][:assignee_id]
       end
       @voucher.save!
-      @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assigned_to,recipient: current_user
-      notice = "Voucher "  + @voucher.id.to_s + " has been assigned to " + @voucher.assigned_to.first_name  if(@voucher.workflow_state != "accepted")
+      @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assignee,recipient: current_user
+      notice = "Voucher "  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(@voucher.workflow_state != "accepted")
       # @voucher.create_activity key: 'voucher.change_state', owner: @voucher.creator
       redirect_to :back , notice: notice
   end

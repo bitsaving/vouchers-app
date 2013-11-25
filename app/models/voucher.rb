@@ -48,10 +48,8 @@ class Voucher < ActiveRecord::Base
   #fixed
   belongs_to :assignee , :class_name =>'User', :foreign_key=>"assignee_id"
   belongs_to :creator , :class_name => "User"
-  #FIXME_AB: Since :approved and :accepted returns user who did the action. Shouldn't we name them as approved_by and accepted_by
-  #fixed
-  belongs_to :approved_by , :class_name => 'User', :foreign_key => "approved_by"
-  belongs_to :accepted_by , :class_name => 'User', :foreign_key => "accepted_by"
+  belongs_to :approved_by_user , :class_name => 'User', :foreign_key => "approved_by"
+  belongs_to :accepted_by_user , :class_name => 'User', :foreign_key => "accepted_by"
   has_many :comments,:dependent => :destroy
   has_many :attachments , dependent: :destroy
   accepts_nested_attributes_for :attachments , update_only: true , reject_if: proc { |attributes| attributes['bill_attachment'].blank? } , allow_destroy: true
@@ -64,10 +62,6 @@ class Voucher < ActiveRecord::Base
     comments.create!(description: workflow_state, user_id: user_id)
   end
 
-  def approve(user_id)
-     update_attributes({approved_by: user_id ,approved_at: Time.now })
-  end
-
   #FIXME_AB: Rejected vouchers should also be deletable. Does following condition handle this too?
   #fixed
   def check_if_destroyable
@@ -76,8 +70,8 @@ class Voucher < ActiveRecord::Base
 
   #FIXME_AB: Please add comments for these callback methods. We discussed it
   #It is a callback for event "accept" which gets called once we invoke the event.
-  def accept(user_id)
-    update_attributes({accepted_by: user_id , accepted_at: Time.zone.now})
+  def accept(user)
+    update_attributes({accepted_by: user , accepted_at: Time.zone.now})
   end
   
   def reject(user_id)
@@ -87,9 +81,9 @@ class Voucher < ActiveRecord::Base
   end
 
 
-  def approve(user_id)
+  def approve(user)
     #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
-    update_attributes({approved_by: user_id , approved_at: Time.zone.now })
+    update_attributes({approved_by: user , approved_at: Time.zone.now })
   end
 
 

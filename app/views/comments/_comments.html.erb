@@ -1,7 +1,6 @@
 <div class ="comment_panel">
-  
     <div class ="comments">
-      <h6> Comments </h6>
+      <h6> Comments </h6>  
       <% voucher.comments.each do |comment| %>
         <div class = "commentator">
           <%= simple_format(comment.description) %>
@@ -15,7 +14,7 @@
         </div>
       <% end %>
       <% #FIXME_AB: You should pass user object to assignee? method below #fixed-%>
-      <% if voucher.assignee?(current_user)%>
+      <% if voucher.assignee?(current_user) %>
         <%= render :partial => 'comments/form' %>
       <%end%>
     </div>

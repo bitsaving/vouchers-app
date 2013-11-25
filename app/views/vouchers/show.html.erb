@@ -86,7 +86,7 @@
       <div class="status_label">
         <div class ="approved_by">
           <div>
-            <%= @voucher.approved_by.name %>
+            <%= @voucher.approved_by_user.name %>
           </div>
           <div class="approved_label">
             <%= "Approved By" %>
@@ -96,7 +96,7 @@
       <%if !@voucher.accepted_by.nil?%>
         <div class ="accepted_by">
           <div>
-            <%= @voucher.accepted_by.name%>   
+            <%= @voucher.accepted_by_user.name%>   
           </div>
           <div class="accepted_label">
             <%= "Accepted By" %>
@@ -107,7 +107,7 @@
 
   
     
-    <% if @voucher.assignee?(current_user) && @voucher.can_be_commented?  ||  @voucher.workflow_state == "new"%>
+    <% if  @voucher.workflow_state != 'approved' && @voucher.assignee?(current_user) ||  @voucher.workflow_state == "new"%>
       <%=  render 'assign' %>
     <%end%>
 
