@@ -17,7 +17,7 @@ AccountsHandler.prototype = {
       $.ajax({
         // #FIXME_AB: URL should be handle in the same way we are handling tags
         //fixed
-        url: $(this).data('path') + "/" + pathname.toLowerCase(),
+        url: $(this).data('path') ,
         data: info  ,
         type:'get',
         dataType: 'script',
