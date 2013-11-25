@@ -1,6 +1,6 @@
 <%local_params = {from: @voucher_startDate, to: @voucher_endDate } %>
 <%if @voucher_accountName.present? %>
-  <%local_params = local_params.merge({account_name: @voucher_accountName})%>
+  <%local_params = local_params.merge({report_account: @voucher_accountName})%>
 <%end%>
 <%if @voucher_accountType.present? %>
   <%local_params = local_params.merge({account_type: @voucher_accountType})%>

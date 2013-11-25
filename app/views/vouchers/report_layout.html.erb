@@ -13,13 +13,15 @@
         <%= text_field_tag :to  ,params[:to] ,:class => 'date-field' %>
       </div>
     </div>
-    <div class="control-group account_dropdown">
-      <%=label_tag  :account_name ,"Account", :class => 'control-label' %>
-      <div class="controls">
-        <%= select_tag :account_name  ,options_for_select(account_options, :selected => params[:account_name]),:prompt=>"Select"%>
+    <div class="control-group">
+     <%=label_tag  :account_name ,"Account", :class => 'control-label' %>
+    <div class="controls">
+        <%= text_area_tag :account_name ,getAccount(params[:report_account]),data: { hidden_field_id: 'report_account',  textbox_id:'account_name',path: accounts_path } , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
       </div>
     </div>
-    
+ 
+        <%= hidden_field_tag :report_account ,params[:report_account]%>
+   
     <div class="control-group account_dropdown">
       <%=label_tag  :account_type ,"Type", :class => 'control-label' %>
       <div class="controls">

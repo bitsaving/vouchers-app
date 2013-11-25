@@ -108,8 +108,9 @@
       </div>
       <%end%>
     </div>
-      <div class="form-actions ">
-        <%= f.submit nil, :class => 'btn btn-primary'%>
-      </div>
+      <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+       <%= link_to "Cancel", :back ,:class => 'btn btn-primary cancel '%>
+    </div>
       <%end%>
 </div>

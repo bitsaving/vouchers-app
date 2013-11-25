@@ -9,7 +9,7 @@ class VouchersController < ApplicationController
     elsif params[:user_id]
       @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(10)
     else
-      @vouchers = Voucher.all.page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
     end
     respond_to do |format|
       format.html  
@@ -48,7 +48,7 @@ class VouchersController < ApplicationController
     end
      @voucher_startDate = params[:from].to_date
      @voucher_endDate = params[:to].to_date
-     @voucher_accountName = params[:account_name]
+     @voucher_accountName = params[:report_account]
      @voucher_accountType = params[:account_type]
     respond_to do |format|
       format.html  {}
@@ -189,7 +189,7 @@ class VouchersController < ApplicationController
   def destroy
     @voucher.destroy
     respond_to do |format|
-      format.html { redirect_to :back }
+      format.html { redirect_to vouchers_path}
       format.json { head :no_content }
     end
   end
@@ -251,7 +251,7 @@ class VouchersController < ApplicationController
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
     elsif params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]).per(50)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(50)
     elsif(params[:to] && params[:from])
        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
         filter_by_name_and_type(@vouchers, params[:account_name] ,params[:account_type])
