@@ -25,7 +25,7 @@
     <div class="control-group account_dropdown to_date">
       <%=label_tag  :account_type ,"Type", :class => 'control-label' %>
       <div class="controls">
-        <%= select_tag :account_type  ,options_for_select(ACCOUNT_FILTER_OPTIONS,:selected => params[:account_type]),:prompt=>"Select"%>
+        <%= select_tag :account_type, "<option>debit</option><option>credit</option>".html_safe ,:selected => params[:account_type],prompt: "Select"%>
       </div>
     </div>
     <div class="display_vouchers">

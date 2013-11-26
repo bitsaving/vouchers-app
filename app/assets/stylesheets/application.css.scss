@@ -114,7 +114,8 @@ form {
 
   border-radius: 2px;
   .notifications{
-    border: dotted 1px black;
+    border: solid 1px black;
+    border-collapse:collapse;
     }
   .notifications:hover {
     background-color:#e9f6fc;
