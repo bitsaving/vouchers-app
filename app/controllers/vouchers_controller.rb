@@ -46,6 +46,7 @@ class VouchersController < ApplicationController
     if params[:from].nil? or params[:from].to_date > params[:to].to_date
       redirect_to report_path , notice: "Please enter valid values"
     end
+    Rails.logger.debug "#{params[:from].to_date} %%%% #{params[:to].to_date}"
      @voucher_startDate = params[:from].to_date
      @voucher_endDate = params[:to].to_date
      @voucher_accountName = params[:report_account]

@@ -25,7 +25,9 @@ VoucherApp::Application.routes.draw do
     get 'vouchers/rejected',to: 'vouchers#rejected'
   end
   get 'voucher_report' ,to: 'vouchers#report' ,as: :report
-  match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:get,:post]
+  get 'generate_report' ,to: 'vouchers#report'
+  match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:post]
+
   namespace 'admin' do
     resources :users, only: [:show ,:edit,:index,:new,:update,:create ,:destroy]
   end
