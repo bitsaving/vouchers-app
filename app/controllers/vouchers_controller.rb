@@ -264,7 +264,7 @@ class VouchersController < ApplicationController
     elsif state == 'new'
       @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
     else
-      @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: state).order('date desc').page(params[:page]).per(3)
     end
   end
 
