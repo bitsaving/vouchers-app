@@ -1,10 +1,10 @@
-<%= render :template => 'vouchers/report_layout' ,locals: { :params => {from: Date.today.beginning_of_month() , to: Date.today.end_of_month()}}%>
+<%= render :template => 'vouchers/report_layout' ,locals: { :params => {from: Date.today.beginning_of_month().to_s(:normal_format) , to: Date.today.end_of_month().to_s(:normal_format)}}%>
 <div class ="voucher_reports">
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
   
     <div class ="voucher_status">
-      <%= render :template => 'vouchers/index' ,locals:{ :params => {from: Date.today.beginning_of_month() ,to: Date.today.end_of_month()} ,:@vouchers =>  get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").order('updated_at desc').page(params[:page]).per(3) }  %>
+      <%= render :template => 'vouchers/index' ,locals:{ :params => {from: Date.today.beginning_of_month().to_s(:normal_format) ,to: Date.today.end_of_month().to_s(:normal_format)} ,:@vouchers =>  get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").order('updated_at desc').page(params[:page]).per(3) }  %>
      </div>
   </ul>
 </div>

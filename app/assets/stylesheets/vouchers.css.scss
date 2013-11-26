@@ -74,7 +74,7 @@ cursor: pointer;
 border: solid 1px black;
   margin-left: 1%;
   height:300px;
-  width:35%;
+  width:38%;
   display: inline-block;
   margin-top: 100px;
     .s { font-size: 1.2em;
@@ -93,18 +93,19 @@ border: solid 1px black;
     padding-top: 30px;
   
     a{
-      padding-left: 4px;
-      padding-right: 6px;
+      padding-left: 10px;
+      padding-right: 10px;
 
-      padding-bottom:5px !important; }
+      padding-bottom:10px !important; }
     }
 }
 #voucher_count{
   font-weight: bold;
   border: solid 1px black;
   float: right;
+
   height:300px;
-  width:27%;
+  width:24%;
   display: inline-block;
   margin-top: 100px;
 } 
@@ -120,6 +121,12 @@ left :-30px;
 
 }
 .voucher_count {
+  .voucher_label{
+    text-align: left !important;
+    padding-right: 0px !important;
+    margin-right: -48px;
+
+  }
 border: dotted 1px black;
 padding-top:20px;
 height:250px;

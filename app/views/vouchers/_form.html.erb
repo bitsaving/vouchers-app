@@ -8,7 +8,7 @@
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
         <div class="controls">
-          <%= f.text_field :date, :class => 'date-field ',:value => Date.today  %>
+          <%= f.text_field :date, :class => 'date-field ',:value => Date.today.to_s(:normal_format)  %>
         </div>
       </div>
       <div class="control-group">

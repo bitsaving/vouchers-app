@@ -9,7 +9,7 @@ class AccountsController < ApplicationController
     if !request_type.index("text/javascript").nil?
       @accounts = Account.all
     else
-      @accounts = Account.all.page(params[:page]).per(50)
+      @accounts = Account.all.page(params[:page]).per(3)
     end
     respond_to do |format|
       format.html {}
