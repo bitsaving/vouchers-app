@@ -20,7 +20,8 @@ module ApplicationHelper
     User.where.not(id: current_user.id).pluck( 'first_name ', 'id' )
   end
   def nav_link(link_text, link_path)
-    class_name = current_page?(link_path) ? 'active' : ''
+    controller_name  = request.path.split('/')
+    class_name = controller_name[1] == link_text.downcase ? 'active' : ""
 
     content_tag(:li, :class => class_name) do
       link_to link_text, link_path , 'data-no-turbolink'=> true

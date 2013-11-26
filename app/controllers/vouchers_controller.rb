@@ -5,7 +5,7 @@ class VouchersController < ApplicationController
   # GET /vouchers.json
   def index
     if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(50)
+      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').page(params[:page]).per(50)
     elsif params[:user_id]
       @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(10)
     else
