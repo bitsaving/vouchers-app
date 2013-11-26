@@ -1,1 +1,1 @@
-$('.voucher_status').html('<%= escape_javascript(render partial: 'vouchers', locals: {:@vouchers => get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").page(params[:page]).per(10) }) %>')
+$('.voucher_status').html('<%= escape_javascript(render partial: 'vouchers', locals: {:@vouchers => get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").page(params[:page]).per(3) }) %>')
