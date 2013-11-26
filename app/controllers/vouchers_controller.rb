@@ -4,8 +4,8 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    if CGI::escape params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').page(params[:page]).per(3)
+    if params[:tag]
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: 'new').page(params[:page]).per(3)
     elsif params[:user_id]
       @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(3)
     else
@@ -257,7 +257,7 @@ class VouchersController < ApplicationController
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]).per(3)
     elsif params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(3)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]).per(3)
     elsif(params[:to] && params[:from])
        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]).per(3)
         filter_by_name_and_type(@vouchers, params[:report_account] ,params[:account_type])
