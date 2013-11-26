@@ -4,7 +4,7 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    if params[:tag]
+    if CGI::escape params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').page(params[:page]).per(3)
     elsif params[:user_id]
       @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(3)
