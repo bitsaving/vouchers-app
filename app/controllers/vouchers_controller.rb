@@ -5,11 +5,11 @@ class VouchersController < ApplicationController
   # GET /vouchers.json
   def index
     if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').page(params[:page]).per(50)
+      @vouchers = Voucher.tagged_with(params[:tag].html_safe).where(workflow_state: 'new').page(params[:page]).per(3)
     elsif params[:user_id]
-      @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(10)
+      @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(3)
     else
-      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
     end
     respond_to do |format|
       format.html  
@@ -128,7 +128,7 @@ class VouchersController < ApplicationController
   end
 
   def all
-    @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
+    @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
     respond_to do |format|
       format.html { render action: 'index'}
       format.js {}
@@ -152,7 +152,7 @@ class VouchersController < ApplicationController
   end
 
   def assigned
-    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(50)
+    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").page(params[:page]).per(3)
     respond_to do |format|
       format.html {}
     end
@@ -161,14 +161,14 @@ class VouchersController < ApplicationController
   # def get_by_state
   #   if params[:state]
   #     if params[:state] != 'new'
-  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).page(params[:page]).per(10)
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).page(params[:page]).per(3)
   #     else
-  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).where('creator_id in (?)' ,current_user.id).page(params[:page]).per(10)
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).where('creator_id in (?)' ,current_user.id).page(params[:page]).per(3)
   #     end
   #   elsif(params[:to] && params[:from])
-  #      @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
+  #      @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(3)
   #   else
-  #      @vouchers = Voucher.where('workflow_state in (?)', 'PENDING').page(params[:page]).per(10) 
+  #      @vouchers = Voucher.where('workflow_state in (?)', 'PENDING').page(params[:page]).per(3) 
   #     end
   #    Rails.logger.debug "$$$$ #{@vouchers}"
   #    respond_to do |format|
@@ -249,21 +249,21 @@ class VouchersController < ApplicationController
   def get_vouchers(state)
     if params[:account_id]
       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]).per(10)
+        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]).per(3)
       else
-      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]).per(3)
       end
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]).per(3)
     elsif params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(50)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(3)
     elsif(params[:to] && params[:from])
-       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]).per(10)
+       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]).per(3)
         filter_by_name_and_type(@vouchers, params[:report_account] ,params[:account_type])
     elsif state == 'new'
-      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
     else
-      @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(3)
     end
   end
 
