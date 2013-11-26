@@ -13,6 +13,7 @@ class AccountsController < ApplicationController
     end
     respond_to do |format|
       format.html {}
+      format.js
       format.json { render :json => @accounts.collect { |x| { :label => x.name , :value => x.id } }.compact } 
     end
   end

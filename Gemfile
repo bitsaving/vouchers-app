@@ -28,7 +28,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'remotipart'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+#gem 'turbolinks'
 gem 'rspec' ,'~> 2.0.0'
 gem 'acts-as-taggable-on'
 #gem 'rails3-jquery-autocomplete'

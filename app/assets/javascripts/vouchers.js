@@ -21,6 +21,7 @@ VoucherEventsHandler.prototype = {
 
   getTags: function(){
     var that = this
+    
     $.ajax({
       type: 'get',
       // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 

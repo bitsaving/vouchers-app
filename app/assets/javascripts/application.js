@@ -15,7 +15,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require twitter/bootstrap
-//= require turbolinks
+
 //= require_tree .
 //= require jquery.tagcanvas.js
 
@@ -23,7 +23,7 @@
 //fixed
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
- 
+ $.ajaxSetup({ cache: false });
 
   // $('#myCanvas').tagcanvas({
   //     textColour : '#ffffff',
@@ -39,12 +39,15 @@ $(document).ready(function(){
 })
 var ApplicationHandler = function() {
   this.init();
+
 }
 ApplicationHandler.prototype = {
   init: function() {
     this.dateFieldHandler();
     this.VoucherStateHandler();
     this.oneclick();
+    
+
     //this.PreventUserDelete();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();

@@ -5,8 +5,7 @@
 <div class="new_button">
   <%= link_to "New",new_account_path,:class => 'btn new_button btn-primary' %>
 </div>
-<% if @accounts.present? %>
+
 <div class ="accounts">
   <%= render :partial => 'account' ,locals: { :@accounts => @accounts} %>
 </div>
-<%end%>

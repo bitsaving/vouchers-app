@@ -122,7 +122,7 @@ width:100% !important;
 .page-header {
   border-top: none !important;
   position: relative;
-  top:29px;
+  top: 29px;
   z-index: -2;
 }
 .sidebar-nav {

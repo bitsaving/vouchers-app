@@ -152,7 +152,7 @@ class VouchersController < ApplicationController
   end
 
   def assigned
-    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").page(params[:page]).per(3)
+    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(3)
     respond_to do |format|
       format.html {}
     end
