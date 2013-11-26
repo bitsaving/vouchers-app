@@ -13,7 +13,10 @@ AccountsHandler.prototype = {
   getVouchersByState: function(){
     $(document).on('change', '#account', function() {
       pathname = $(this).siblings('.associated_voucher').find('ul').children('li.active').text();
-      info = { account_type: $(this).val(), account_id: $(this).data('name') };
+      if($(this).val() == 'Both')
+        info  = { account_id: $(this).data('name') }
+      else
+        info = { account_type: $(this).val().toLowerCase(), account_id: $(this).data('name') };
       $.ajax({
         // #FIXME_AB: URL should be handle in the same way we are handling tags
         //fixed

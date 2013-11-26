@@ -32,7 +32,7 @@
 		<div class = "voucher_heading"> Tags </div>
 		<div class="voucher_tags">
 			<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
-    		<%= link_to tag.name, tag_path(tag.name), class: css_class %>
+    		<%= link_to tag.name, tag_path(ERB::Util.url_encode tag.name), class: css_class %>
   		<% end %>
  		</div>
 	</div>

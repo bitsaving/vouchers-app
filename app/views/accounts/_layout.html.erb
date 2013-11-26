@@ -1,13 +1,11 @@
 <div class="page-header">
   <div class="account_name">
-  <strong><%= @account.name %></strong>
+  <strong>Voucher of account: <%= @account.name %></strong>
 </div>
 </div>
-<dl class="dl-horizontal">
-  <dd></dd>
-</dl>
+
 <%= select_tag :account, options_for_select(ACCOUNT_FILTER_OPTIONS), data:{ path: account_vouchers_path(@account.id), name: @account.id }  %>
 <div class="alignment ">
-  <%= link_to "Back",:back, :class => 'btn btn-primary'  %>
+  <%= link_to "Back", "", :class => 'btn btn-primary',:onclick =>' history.go(-1); return false' %>
   <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
 </div>

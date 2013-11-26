@@ -23,7 +23,7 @@
           </td>
         <td>
           <%= link_to "Edit",edit_admin_user_path(user), :class => 'btn btn-mini btn-primary'%>
-          <%= link_to "Delete","#",:method => :delete,:data => { :confirm => 'Are u sure?'},:class => 'btn btn-mini btn-danger' %>
+          <span class='btn btn-mini btn-danger user_delete'>Delete</span>
           <%= link_to "vouchers",user_vouchers_path(user), :class => 'btn btn-mini btn-primary' %>
         </td>
       </tr>

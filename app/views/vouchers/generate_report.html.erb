@@ -5,4 +5,4 @@
 <%if @voucher_accountType.present? %>
   <%local_params = local_params.merge({account_type: @voucher_accountType})%>
 <%end%>
-<%= render :template => 'vouchers/index' ,locals: {params: local_params ,:@vouchers =>  get_new_by_date(@voucher_startDate,@voucher_endDate,@voucher_accountName,@voucher_accountType).order('updated_at desc').page(params[:page]).per(10)}%>
+<%= render :template => 'vouchers/index' ,locals: {params: local_params ,:@vouchers =>  get_new_by_date(@voucher_startDate,@voucher_endDate,@voucher_accountName,@voucher_accountType).order('updated_at desc').page(params[:page]).per(3)}%>

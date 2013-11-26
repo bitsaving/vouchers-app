@@ -2,6 +2,10 @@
 $('#notification-icon').on('click',function(e) {
   $(this).parent('a').attr("href" ,"#");
   $('#result').toggleClass('hidden')
+  if($('#result').hasClass('hidden'))
+    $('.notifications_output').css("display", "none");
+  else
+    $('.notifications_output').css('display','block')
 });
 
 $("body").on('click keyup', function(event){

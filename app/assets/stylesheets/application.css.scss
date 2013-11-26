@@ -41,7 +41,7 @@ padding-bottom: 40px !important;
    float:right;
    position:absolute;
    right:10px;
-   top:120px;
+   top:90px;
   
 }
 .note{
@@ -81,7 +81,7 @@ form {
   position: absolute;
   right:325px;
   top:18px;
-  z-index: 100;
+ 
 }
 #notifications-box {
   display: inline-block;
@@ -108,10 +108,13 @@ form {
 
 }
 #result{
-  height: 160px;
+  height: 171px;
   overflow:auto;
-   border-top:none;
+
   border-radius: 2px;
+  .notifications{
+    border: dotted 1px black;
+    }
   .notifications:hover {
     background-color:#e9f6fc;
     cursor: pointer;
@@ -119,8 +122,7 @@ form {
   }
 }
 .notifications_output {
-width:400px;
-height:160px;
+  width:400px;
 
 
 }

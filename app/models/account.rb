@@ -1,6 +1,9 @@
 class Account < ActiveRecord::Base
   has_many :vouchers_debited , :class_name=>'Voucher' , :foreign_key => 'account_debited' 
   has_many :vouchers_credited , :class_name=>"Voucher" , :foreign_key => 'account_credited' 
+ # has_many  :total ,:class_name=>'Voucher' , :foreign_key => 'account_debited '
+ # has_many :total ,:class_name => 'Voucher', :foreign_key => 'account_credited' 
+  #->(id){ where('account_credited in (?) OR account_debited in (?)',id,id)}
   validates :name , presence: true 
   validates :name , uniqueness: true , :case_sensitive => false
 
@@ -14,7 +17,8 @@ class Account < ActiveRecord::Base
   	errors.add :base , "We are not allowing destroy or delete for Account" 
   	return false 
   end
-  
+
+
   #FIXME_AB: Since this is needed for dropdown and not belongs to Account. Move it to constant.rb in initializers. And name it ACCOUNT_FILTER_OPTIONS or something similar
   #fixed
 end

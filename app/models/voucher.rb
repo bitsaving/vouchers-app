@@ -27,7 +27,7 @@ class Voucher < ActiveRecord::Base
 
   #FIXME_AB: Validations and association are mixed together. For better maintainability and readability you should group them together. Like all validations first then associations.
   #fixed
-  default_scope { order('updated_at desc') }
+  default_scope { order('date desc') }
   scope :New , -> { where(workflow_state: 'new') }
   scope :pending , -> { where(workflow_state: 'pending')}
   scope :approved , -> { where(workflow_state: 'approved')}
@@ -57,9 +57,18 @@ class Voucher < ActiveRecord::Base
   #FIXME_AB: This method should be called check_if_destroyable
   #fixed
   before_destroy :check_if_destroyable
+  before_destroy :remove_associated_tags
+
+  def remove_associated_tags
+    taglist = Voucher.tagged_with(tag_list)
+    if taglist.blank?
+      tags.delete_all
+    end
+  end
+
 
   def record_state_change(user_id)
-    comments.create!(description: workflow_state, user_id: user_id)
+    comments.create!(description: workflow_state.capitalize, user_id: user_id)
   end
 
   #FIXME_AB: Rejected vouchers should also be deletable. Does following condition handle this too?

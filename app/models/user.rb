@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include PublicActivity::Common
   default_scope { order('updated_at desc') }
 
-  has_many :notifications , :class_name => "PublicActivity::Activity", :foreign_key => "owner_id" ,:order => 'created_at desc'
+  has_many :notifications , -> { order 'created_at desc' }, :class_name => "PublicActivity::Activity", :foreign_key => "owner_id" 
   has_many :vouchers , :foreign_key => "creator_id" , :dependent => :destroy
   has_many :comments , :dependent => :destroy
   devise :database_authenticatable , :omniauthable ,

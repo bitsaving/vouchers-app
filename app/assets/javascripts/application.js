@@ -45,11 +45,11 @@ ApplicationHandler.prototype = {
     this.dateFieldHandler();
     this.VoucherStateHandler();
     this.oneclick();
-    this.tagcanvas();
+    //this.PreventUserDelete();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
-    document.addEventListener("page:load", this.tagcanvas);
+    //document.addEventListener("page:load", this.PreventUserDelete);
     document.addEventListener("page:load", this.VoucherStateHandler);
   },
   dateFieldHandler : function(){
@@ -63,29 +63,29 @@ ApplicationHandler.prototype = {
       window.location.href = '/vouchers/'+ voucherId;
     })
   },
-  tagcanvas: function() {
-    var options = {
-      textColour : 'red',
-      outlineColour : '#ff9999',
-      outlineThickness : 1,
-      minSpped : 0.07,
-      maxSpeed : 0.07,
-      weight : true,
-      weightMode: 'both',
-      shape : 'cylinder',
-      minBrightness: 2.9,
-      weightGradient: {0:'#660033', 0.33:'#ff0',0.66:'#944d70', 1:'#c299ad'},
-      depth : 0.75
-    };
-    window.onload = function() {
-      try {
-        TagCanvas.Start('myCanvas',"",options);
-      } catch(e) {
-      // something went wrong, hide the canvas container
-     // document.getElementById('myCanvasContainer').style.display = 'none';
-      }
-    };  
-  },
+  // tagcanvas: function() {
+  //   var options = {
+  //     textColour : 'red',
+  //     outlineColour : '#ff9999',
+  //     outlineThickness : 1,
+  //     minSpped : 0.07,
+  //     maxSpeed : 0.07,
+  //     weight : true,
+  //     weightMode: 'both',
+  //     shape : 'cylinder',
+  //     minBrightness: 2.9,
+  //     weightGradient: {0:'#660033', 0.33:'#ff0',0.66:'#944d70', 1:'#c299ad'},
+  //     depth : 0.75
+  //   };
+  //   window.onload = function() {
+  //     try {
+  //       TagCanvas.Start('myCanvas',"",options);
+  //     } catch(e) {
+  //     // something went wrong, hide the canvas container
+  //    // document.getElementById('myCanvasContainer').style.display = 'none';
+  //     }
+  //   };  
+  // },
   // getVouchersByStatus:function(){
   //   $(document).on('click','.vouchers' ,function(e) {
   //     var voucherStatus = $(this).find('.voucher_label').text();

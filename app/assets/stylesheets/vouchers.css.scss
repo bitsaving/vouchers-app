@@ -31,12 +31,7 @@ ul.ui-autocomplete {
 position:relative;
 left:300px;
 }
-.reports {
-margin: 0 auto;
-width: 100%;
-margin: 0 auto;
 
-}
 .outer_block{
 /*display: inline-block;*/
 }
@@ -239,8 +234,10 @@ margin-right: -250px;
 }
 .accounts{
   position:absolute;
-  top:90px;
+  top:175px;
   right:10px;
+  left:20px;
+
 }
 .heading{
   float:right !important; 
@@ -482,15 +479,22 @@ padding-bottom: 30px;
 padding-bottom: 30px;
 }
 .all_vouchers{
-margin-bottom: 20px;
-height:40px;
 
+height:14px;
+
+}
+h3{
+line-height: 4px;
 }
 .add_more_uploads{
   font-size: 14px !important;
   position: relative;
   left: 500px;
   margin-bottom: 10px;
+}
+.associated_voucher{
+position: relative;
+top:15px;
 }
 .add_more_uploads .controls {
   position: relative;
@@ -513,34 +517,36 @@ height: 40px;
   font-size: 20px;
   font-weight: bold;
 }
+.reports {
+  width:750px;
+  margin:0 auto;
+}
 .report {
+  width:754px;
   margin: 0 auto;
-  padding-right: 20px;
-  padding-top: 20px;
-  display: inline-block;
-  position: relative;
-  margin-left:18%;
-  width:100%;
     .control-label{
       display:inline-block;
-      padding-left: 10px;
       font-size: 20px;
       font-weight: bold;
-      width:150px;
+
     }
  .control-group{
-    display: inline-block !important;
-  }
+width:375px;
+  display: inline-table !important;
+}
   .controls{
     display: inline-block;
-    width:300px;
+    
   }
   .display_vouchers{
-    position: relative;
-    left:170px;
+float: left;
+margin-left: 49%;
   }
 
- 
+ .control-label{
+width:78px;
+text-align: right;
+ }
 }
 .voucher_report{
   position: absolute;

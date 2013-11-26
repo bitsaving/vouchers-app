@@ -189,7 +189,7 @@ class VouchersController < ApplicationController
   def destroy
     @voucher.destroy
     respond_to do |format|
-      format.html { redirect_to vouchers_path}
+      format.html { redirect_to :back}
       format.json { head :no_content }
     end
   end
@@ -248,16 +248,20 @@ class VouchersController < ApplicationController
 
   def get_vouchers(state)
     if params[:account_id]
-      @vouchers = Voucher.where(workflow_state: state).where(["account_#{params[:account_type].presence || 'debit'}ed IN (?)", params[:account_id]]).order('updated_at desc').page(params[:page]).per(10)
+      if params[:account_type]
+        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]).per(10)
+      else
+      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]).per(10)
+      end
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).order('updated_at desc').page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]).per(10)
     elsif params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).where(creator_id: current_user.id).page(params[:page]).per(50)
     elsif(params[:to] && params[:from])
-       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(10)
-        filter_by_name_and_type(@vouchers, params[:account_name] ,params[:account_type])
+       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]).per(10)
+        filter_by_name_and_type(@vouchers, params[:report_account] ,params[:account_type])
     elsif state == 'new'
-      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).order('updated_at desc').page(params[:page]).per(10)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(10)
     else
       @vouchers = Voucher.where(workflow_state: state).order('updated_at desc').page(params[:page]).per(10)
     end

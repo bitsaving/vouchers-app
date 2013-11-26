@@ -58,6 +58,9 @@ class Admin::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    redirect_to admin_users_path ,notice: "Sorry it cannot be deleted"
+end
   # def destroy
   #   begin
   #     @user.destroy

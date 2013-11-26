@@ -79,7 +79,7 @@
     <%end%>
     <%if @voucher.tag_list.length >0 %>
      <div class="tags">
-      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(t),:class=>"taglist"}.join(' ') %>
+      Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(ERB::Util.url_encode t),:class=>"taglist"}.join(' ') %>
     </div>
     <%end%>
     <%if !@voucher.approved_by.nil?%>
@@ -107,7 +107,7 @@
 
   
     
-    <% if  @voucher.workflow_state != 'approved' && @voucher.assignee?(current_user) ||  @voucher.workflow_state == "new"%>
+    <% if  (@voucher.workflow_state != 'approved' ||  @voucher.workflow_state == "new") && @voucher.assignee?(current_user) %>
       <%=  render 'assign' %>
     <%end%>
 

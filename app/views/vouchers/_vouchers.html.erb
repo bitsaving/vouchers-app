@@ -20,8 +20,8 @@
   <% @vouchers.each do |voucher| %>
     <tr>
       <td><%= link_to voucher.id, voucher_path(voucher) %></td>
-      <td><%= link_to voucher.debit_from.name,account_path(getAccount(voucher.account_debited)),:class=>'debit_credit'%></td>
-      <td><%= link_to voucher.credit_to.name,account_path(getAccount(voucher.account_credited)),:class=>'debit_credit' %></td>
+      <td><%= link_to voucher.debit_from.name,account_path(getaccount(voucher.account_debited)),:class=>'debit_credit'%></td>
+      <td><%= link_to voucher.credit_to.name,account_path(getaccount(voucher.account_credited)),:class=>'debit_credit' %></td>
       <td><%= voucher.date.to_s(:string_format)%></td>
       <td><%= number_to_currency(voucher.amount,:unit=>"₹ ")%></td>
       <% if voucher.assignee.nil? %>

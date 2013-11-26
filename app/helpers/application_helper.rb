@@ -17,12 +17,11 @@ module ApplicationHelper
   end
   
   def user_options
-    User.where.not(id: current_user.id).pluck( 'first_name ', 'id' )
+    User.where.not(id: current_user.id).order('first_name').pluck( 'first_name ', 'id' )
   end
   def nav_link(link_text, link_path)
     controller_name  = request.path.split('/')
     class_name = controller_name[1] == link_text.downcase ? 'active' : ""
-
     content_tag(:li, :class => class_name) do
       link_to link_text, link_path , 'data-no-turbolink'=> true
     end
@@ -36,9 +35,12 @@ module ApplicationHelper
     Rails.logger.debug "#{@vouchers.count}"
     @vouchers
   end
+  def get_all_vouchers(id)
+    Voucher.where('account_debited in (?) OR account_credited in (?)' ,id,id)
+  end
   
   #FIXME_AB: Why you are using two types of method naming conventions. One with underscore other with camelCase
-  def getAccount(id)
+  def getaccount(id)
     @account = Account.find(id)
   end
   
