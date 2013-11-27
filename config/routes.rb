@@ -23,7 +23,7 @@ VoucherApp::Application.routes.draw do
     get 'vouchers/pending',to: 'vouchers#pending'
     get 'vouchers/accepted',to: 'vouchers#accepted'
     get 'vouchers/rejected',to: 'vouchers#rejected'
-  end
+    end
   get 'voucher_report' ,to: 'vouchers#report' ,as: :report
   get 'generate_report' ,to: 'vouchers#report' 
   match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:post]

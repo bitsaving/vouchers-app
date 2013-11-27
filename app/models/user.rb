@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   #FIXME_AB: You may need other associations like assigned_vouchers, owned_vouchers etc..
   #FIXME_AB: Please ensure proper code formatting. space after comma. Space after comma not before comma.
   validates :first_name , :last_name , :email , presence: true
-  validates :email, uniqueness: true , :case_sensitive => false
+  validates_uniqueness_of :email, :case_sensitive => false
   #/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})$/
   validates_format_of :email, :with => /\A([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})\Z/i
   before_destroy :ensure_atleast_one_user_remains

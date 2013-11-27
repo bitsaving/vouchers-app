@@ -3,9 +3,8 @@
   <strong>Voucher of account: <%= @account.name %></strong>
 </div>
 </div>
-
-<%= select_tag :account, options_for_select(ACCOUNT_FILTER_OPTIONS), data:{ path: account_vouchers_path(@account.id), name: @account.id }  %>
-<div class="alignment ">
+<%= select_tag :account, options_for_select(ACCOUNT_FILTER_OPTIONS,:selected => params[:account_type]), data:{ path: account_vouchers_path(@account.id), name: @account.id }  %>
+ <div class="alignment ">
   <%= link_to "Back", "", :class => 'btn btn-primary',:onclick =>' history.go(-1); return false' %>
   <%= link_to "Edit",edit_account_path(@account), :class => 'btn btn-primary' %>
 </div>

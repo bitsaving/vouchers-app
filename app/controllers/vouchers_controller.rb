@@ -4,7 +4,7 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    params[:page] = 1
+
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: 'new').page(params[:page])
     elsif params[:user_id]
@@ -55,7 +55,18 @@ class VouchersController < ApplicationController
     end
   end
 
- 
+#  def get_vouchers_by_type
+#   if params[:account_type] != 'Both'
+#    @account_type = params[:account_type]
+#    end
+#    @account = params[:account]
+#    get_vouchers(params[:state])
+#    respond_to do |format|
+#     format.html { render :template => 'vouchers/index' ,locals: {params: {account_id: @account ,account_type: @account_type} ,:@vouchers => @vouchers}}
+#   end
+# end
+
+
 
   # GET /vouchers/1/edit
   def edit
@@ -112,7 +123,7 @@ class VouchersController < ApplicationController
     respond_to do |format|
       format.html { render action: 'index'}
       #format.js { render partial: 'vouchers' }
-      format.js
+      #format.js
     end  
   end
 
@@ -120,8 +131,6 @@ class VouchersController < ApplicationController
     get_vouchers('accepted')
     respond_to do |format|
       format.html { render action: 'index'}
-      #format.js { render partial: 'vouchers' }
-      format.js
     end  
   end
 
@@ -137,7 +146,6 @@ class VouchersController < ApplicationController
     get_vouchers('approved')
     respond_to do |format|
       format.html { render action: 'index' }
-      format.js {}
     end  
   end
 
@@ -145,7 +153,7 @@ class VouchersController < ApplicationController
     get_vouchers('new')
     respond_to do |format|
       format.html { render action: 'index'}
-      format.js {}
+      #format.js {}
      end  
   end
 
@@ -179,15 +187,16 @@ class VouchersController < ApplicationController
     get_vouchers('rejected')
     respond_to do |format|
       format.html { render action: 'index' }
-      format.js { }
+      #format.js { }
     end
   end
   # DELETE /vouchers/1
   # DELETE /vouchers/1.json
   def destroy
-    @voucher.destroy
+    notice = "Voucher " + @voucher.id.to_s + " was deleted successfully"
+    @voucher.destroy 
     respond_to do |format|
-      format.html { redirect_to :back}
+      format.html { redirect_to :back ,notice: notice}
       format.json { head :no_content }
     end
   end
