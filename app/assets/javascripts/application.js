@@ -65,7 +65,6 @@ ApplicationHandler.prototype = {
     })
   },
   resetautocomplete: function(){
-    alert("hah")
      $('.voucher_autocomplete').submit(function() {
         if($('.autocomplete').val() == ""){
           $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
@@ -74,7 +73,6 @@ ApplicationHandler.prototype = {
     });
 
      $(document).on('click' , '.submit' , function(){
-      alert("lol")
          if($('.autocomplete').val() == "")
           $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
      })
