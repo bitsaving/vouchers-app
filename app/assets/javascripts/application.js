@@ -68,11 +68,9 @@ ApplicationHandler.prototype = {
   },
   abc: function(){
      $('.voucher_autocomplete').submit(function() {
-      alert("lol")
         if($('.autocomplete').val() == ""){
-     $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
-console.log($('.autocomplete').text())
-      }
+          $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
+        }
         return true; // return false to cancel form action
     });
   },
