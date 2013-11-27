@@ -42,6 +42,7 @@ class Voucher < ActiveRecord::Base
   validates :date,:payment_type , :amount , presence: true
   validates :account_credited , :account_debited , :presence => {:message =>" by this name does not exist"}
   validates :amount , numericality: { greater_than: 0.00}
+  validates :payment_reference ,:presence  => {:message =>" cannot be blank"} , :unless => Proc.new { |a| a['payment_type'] == "Cash" }
   #FIXME_AB: Why :New not :new
   #new is a reserved word
 

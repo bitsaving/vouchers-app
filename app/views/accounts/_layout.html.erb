@@ -1,7 +1,6 @@
-<div class="page-header">
+
   <div class="account_name">
-  <strong>Voucher of account: <%= @account.name %></strong>
-</div>
+  <strong>Vouchers of account : <%= @account.name %></strong>
 </div>
 <%= select_tag :account, options_for_select(ACCOUNT_FILTER_OPTIONS,:selected => params[:account_type]), data:{ path: account_vouchers_path(@account.id), name: @account.id }  %>
  <div class="alignment ">

@@ -1,2 +1,2 @@
-<%= render :template => 'vouchers/report_layout' ,locals: { :params => {from: Date.today.beginning_of_month(), to: Date.today.end_of_month()}}%>
+<%= render :template => 'vouchers/report_layout' ,locals: { :params => {from: Date.today.beginning_of_month().to_s(:normal_format), to: Date.today.end_of_month().to_s(:normal_format)}}%>
  <%= render :template => 'vouchers/index' ,locals:{ :params => {from: Date.today.beginning_of_month() ,to: Date.today.end_of_month()} ,:@vouchers =>  get_new_by_date(Date.today.beginning_of_month(), Date.today.end_of_month(),"","").page(params[:page]).per(3) }  %>

@@ -1,5 +1,5 @@
 <div class = "account_vouchers" >
-<div class="page-header ">
+<div class="abc ">
 
 </div>
 <% if @vouchers.count > 0 %>
@@ -33,8 +33,8 @@
       <td>
         <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
           <%= link_to "Edit",
-                    edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
-          <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure  you want to delete voucher ' + voucher.id.to_s},:class => 'btn btn-mini btn-danger' %>
+                    edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary','data-no-turbolinks' => true %>
+          <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s},:class => 'btn btn-mini btn-danger' %>
         <%end%>
         <%= link_to "Details",voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
       </td>

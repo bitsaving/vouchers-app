@@ -23,7 +23,7 @@
 //fixed
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
- $.ajaxSetup({ cache: false });
+ // $.ajaxSetup({ cache: false });
 
   // $('#myCanvas').tagcanvas({
   //     textColour : '#ffffff',
@@ -65,12 +65,19 @@ ApplicationHandler.prototype = {
     })
   },
   resetautocomplete: function(){
+    alert("hah")
      $('.voucher_autocomplete').submit(function() {
         if($('.autocomplete').val() == ""){
           $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
         }
         return true; // return false to cancel form action
     });
+
+     $(document).on('click' , '.submit' , function(){
+      alert("lol")
+         if($('.autocomplete').val() == "")
+          $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
+     })
   },
   // tagcanvas: function() {
   //   var options = {

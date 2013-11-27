@@ -89,10 +89,12 @@ console.log("hi")
   },
 
   hiddenFieldHandler: function(){
+    if($('#voucher_payment_type').val() != "Cash")
+       $('.select').removeClass("hidden");
     $(document).on('change', '#voucher_payment_type', function() {
       $('.select').removeClass("hidden");
       if($(this).val() == "Cash")
         $('.select').addClass("hidden");
     });
   }
-}
+} 

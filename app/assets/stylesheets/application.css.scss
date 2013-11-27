@@ -19,9 +19,20 @@
   width :30px;
   background-color:none; 
 }
+.associated_voucher{
+  position:relative;
+  top:15px;
+}
+.abc {
+border-top:1px solid #eeeeee;
+position:relative;
+top:37px;
+z-index: -2;
+
+}
 
 .navigation{
-padding-bottom: 40px !important;
+  padding-bottom: 40px !important;
 }
 #pending li{
   list-style:none;
@@ -44,6 +55,12 @@ padding-bottom: 40px !important;
    top:90px;
   
 }
+.highlight{
+a{
+font-size:20px !important;
+font-weight:bold;
+}
+}
 .note{
   position: relative;
   top:23px;
@@ -53,7 +70,8 @@ padding-bottom: 40px !important;
 }
 .align {
 position:relative;
-top:33px;
+top:16px;
+padding-top:10px;
   background-color:#f5f9f9;
   margin:0 auto;
   width:500px;

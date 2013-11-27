@@ -99,7 +99,8 @@ padding-bottom: 10px !important;
   width:30px !important;
 }
 .page-header{
- margin-top: -2px !important;
+ margin-top: -24px !important;
+padding-bottom: 45px;
 }
 .navbar > li > a:hover {
   border-bottom: none;
@@ -122,16 +123,16 @@ width:100% !important;
 
 span.current{
   background-color: #dcdcdc;
-  padding-left:5px;
-  padding-right: 3px;
+  padding-left:15px;
+  padding-right: 9px;
 }
 
-.page-header {
+/*.page-header {
   border-top: none !important;
   position: relative;
   top: 29px;
   z-index: -2;
-}
+}*/
 .sidebar-nav {
   margin-top:80px;
 }
@@ -189,4 +190,14 @@ text-align: center !important;
 
   .account_vouchers td{
 text-align: center !important;
+}
+#error_explanation h4{
+text-align: left;
+font-weight: bold;
+padding: 5px 5px 5px 15px;
+font-size: 12px;
+margin: -7px;
+margin-bottom: 0px;
+background-color: #c00;
+color: #fff;
 }

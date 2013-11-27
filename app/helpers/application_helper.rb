@@ -26,7 +26,7 @@ module ApplicationHelper
     elsif controller_name[1] == "admin"
       controller_name[1] = "users"
     end
-    class_name = controller_name[1] == link_text.downcase ? 'active' : ""
+    class_name = controller_name[1] == link_text.downcase ? 'highlight' : ""
     content_tag(:li, :class => class_name) do
       link_to link_text, link_path , 'data-no-turbolink'=> true
     end
