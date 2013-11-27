@@ -86,7 +86,7 @@ class VouchersController < ApplicationController
   # PATCH/PUT /vouchers/1
   # PATCH/PUT /vouchers/1.json
   def update
-    if @voucher.comments.exists?
+    if params[:voucher][:comments_attributes].present?
     params[:voucher][:comments_attributes].each do |comment_id ,content|
       content[:user_id] =current_user.id if content[:user_id].blank?
     end
