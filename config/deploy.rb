@@ -47,7 +47,13 @@ namespace :deploy do
   task :after_deploy do
     cleanup
   end
+
   
+end
+
+desc "Display log tail -f"
+task :tail_log, roles: :app do 
+  run "tail -f #{shared_path}/log/#{rails_env}.log"
 end
 
 require './config/boot'

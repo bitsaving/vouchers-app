@@ -13,7 +13,6 @@ class VouchersController < ApplicationController
     end
     respond_to do |format|
       format.html  
-      format.js {}
     end
   end
 
@@ -35,7 +34,7 @@ class VouchersController < ApplicationController
   def show
     respond_to do |format|
       format.html  
-      format.js {}
+     
     end
   end
 
@@ -53,7 +52,7 @@ class VouchersController < ApplicationController
      @voucher_accountType = params[:account_type]
     respond_to do |format|
       format.html  {}
-      format.js { }
+     
     end
   end
 
@@ -112,9 +111,8 @@ class VouchersController < ApplicationController
     get_vouchers('pending')
     respond_to do |format|
       format.html { render action: 'index'}
-      format.js {}
       #format.js { render partial: 'vouchers' }
-
+      format.js
     end  
   end
 
@@ -122,9 +120,8 @@ class VouchersController < ApplicationController
     get_vouchers('accepted')
     respond_to do |format|
       format.html { render action: 'index'}
-      format.js { }
       #format.js { render partial: 'vouchers' }
-
+      format.js
     end  
   end
 
@@ -132,7 +129,7 @@ class VouchersController < ApplicationController
     @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
     respond_to do |format|
       format.html { render action: 'index'}
-      format.js {}
+     
     end
   end
 
