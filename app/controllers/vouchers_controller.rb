@@ -81,7 +81,7 @@ class VouchersController < ApplicationController
     end
     respond_to do |format|
       if @voucher.save
-        flash[:notice] = "Voucher " + @voucher.id.to_s + " was successfully created."
+        flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
         format.html {}
         format.json { render action: 'show', status: :created, location: @voucher }
         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
@@ -103,7 +103,7 @@ class VouchersController < ApplicationController
     end 
     respond_to do |format|
       if @voucher.update(voucher_params)
-        flash[:notice] = "Voucher " + @voucher.id.to_s + " was successfully updated"
+        flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
         format.html {}
         format.json { head :no_content }
          format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
@@ -193,7 +193,7 @@ class VouchersController < ApplicationController
   # DELETE /vouchers/1
   # DELETE /vouchers/1.json
   def destroy
-    notice = "Voucher " + @voucher.id.to_s + " was deleted successfully"
+    notice = "Voucher #" + @voucher.id.to_s + " was deleted successfully"
     @voucher.destroy 
     respond_to do |format|
       format.html { redirect_to :back ,notice: notice}

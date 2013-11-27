@@ -46,13 +46,11 @@ ApplicationHandler.prototype = {
     this.dateFieldHandler();
     this.VoucherStateHandler();
     this.oneclick();
-    this.abc();
-
-    //this.PreventUserDelete();
+    this.resetautocomplete();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
-    document.addEventListener("page:load", this.abc);
+    document.addEventListener("page:load", this.resetautocomplete);
     document.addEventListener("page:load", this.VoucherStateHandler);
   },
   dateFieldHandler : function(){
@@ -66,7 +64,7 @@ ApplicationHandler.prototype = {
       window.location.href = '/vouchers/'+ voucherId;
     })
   },
-  abc: function(){
+  resetautocomplete: function(){
      $('.voucher_autocomplete').submit(function() {
         if($('.autocomplete').val() == ""){
           $("#"+ $('.autocomplete').data('hidden-field-id')).val("")

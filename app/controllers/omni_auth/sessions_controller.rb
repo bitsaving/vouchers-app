@@ -4,9 +4,7 @@ class OmniAuth::SessionsController < Devise::SessionsController
    # before_action only: [:create] ,on: [:destroy] do
    # 	flash[:notice]="lol"
    # end
-   before_action only: [:new] do
-   	flash[:notice]= nil
-   end
+
 
   # before_action only: [:new] do
 	 # flash[:notice] = nil

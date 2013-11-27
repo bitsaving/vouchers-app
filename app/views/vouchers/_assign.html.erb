@@ -8,7 +8,7 @@
     <div class="actions approval_button">
       <div class="actions">
         <%if @voucher.can_be_edited? %>
-          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign ',data: {confirm: "Voucher #{@voucher.id} will be assigned to #{ "" ||  params[:voucher][:assignee_id].presence}" } %>
+          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign' %>
         <%else%>
         <div >
             <%= submit_tag "Approve" ,:class=>'btn btn-primary assign submit_accepted'%>

@@ -12,7 +12,8 @@ class ApplicationController < ActionController::Base
 
     def logged_in?
       #FIXME_AB: Another way to do the same thing is "!!current_user". Ask me if you don't understand
-      !current_user.nil?
+      #fixed
+      !!current_user
     end
 
     def check_admin
