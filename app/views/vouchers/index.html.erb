@@ -5,7 +5,9 @@
 <% actions = ['index' ,'all','show', 'pending','accepted','rejected','drafted','approved']%>
 <% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil? && params[:to].nil?%>
   <div class="all_vouchers">
+    <%if params[:tag].nil? %>
     <h2>Vouchers </h2>
+    <%end%>
     <div class="new_button">
       <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
     </div>
