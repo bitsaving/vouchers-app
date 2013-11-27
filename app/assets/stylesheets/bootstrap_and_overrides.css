@@ -41,8 +41,10 @@ input,select,textarea{
   margin-left:-80px;
 } 
 .link a {
-  position: relative;
-  left:300px;
+
+float: left;
+margin-left:800px;
+
 }
 
 .brand {
