@@ -119,6 +119,13 @@ width:100% !important;
  margin-bottom:-42px; 
 
 }
+
+span.current{
+  background-color: #dcdcdc;
+  padding-left:5px;
+  padding-right: 3px;
+}
+
 .page-header {
   border-top: none !important;
   position: relative;

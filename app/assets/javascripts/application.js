@@ -46,13 +46,13 @@ ApplicationHandler.prototype = {
     this.dateFieldHandler();
     this.VoucherStateHandler();
     this.oneclick();
-    
+    this.abc();
 
     //this.PreventUserDelete();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
-    //document.addEventListener("page:load", this.PreventUserDelete);
+    document.addEventListener("page:load", this.abc);
     document.addEventListener("page:load", this.VoucherStateHandler);
   },
   dateFieldHandler : function(){
@@ -65,6 +65,16 @@ ApplicationHandler.prototype = {
       var voucherId = $(this).find('.voucher_id .voucher_contents').text();
       window.location.href = '/vouchers/'+ voucherId;
     })
+  },
+  abc: function(){
+     $('.voucher_autocomplete').submit(function() {
+      alert("lol")
+        if($('.autocomplete').val() == ""){
+     $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
+console.log($('.autocomplete').text())
+      }
+        return true; // return false to cancel form action
+    });
   },
   // tagcanvas: function() {
   //   var options = {

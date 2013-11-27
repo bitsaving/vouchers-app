@@ -59,6 +59,10 @@ VoucherEventsHandler.prototype = {
 
   autoCompleteFieldHandler: function() {
     console.log($('.autocomplete').data('path'))
+    if($('.autocomplete').val() == ""){
+     $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
+console.log("hi")
+}
     $('.date-field').css('cursor', 'pointer');
     $.ajax({
       type: 'get',

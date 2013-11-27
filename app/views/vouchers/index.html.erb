@@ -1,7 +1,7 @@
 <%if params[:tag].present? %>
   <h3> Vouchers with tag: <%= params[:tag] %> </h3>
 <%end%>
-
+    <% params[:page] = 1 %>
 <% actions = ['index' ,'all','show', 'pending','accepted','rejected','drafted','approved']%>
 <% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil? && params[:to].nil?%>
   <div class="all_vouchers">

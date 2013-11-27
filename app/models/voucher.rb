@@ -2,9 +2,12 @@
 #fixed
 class Voucher < ActiveRecord::Base 
   include PublicActivity::Common
+
   include Workflow
+  
   acts_as_taggable
   workflow_column :workflow_state
+  paginates_per 3
   workflow do
     state :new do
       event :send_for_approval , :transitions_to => :pending

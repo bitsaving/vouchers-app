@@ -6,10 +6,10 @@ class AccountsController < ApplicationController
   def index
     #FIXME_AB: Please explain why you have to do that much thing with request. I can suggest a better way.
     request_type = request.env["HTTP_ACCEPT"].split(',')
-    if !request_type.index("text/javascript").nil?
+    if !request_type.index("application/json").nil?
       @accounts = Account.all
     else
-      @accounts = Account.all.page(params[:page]).per(3)
+      @accounts = Account.all.page(params[:page]) 
     end
     respond_to do |format|
       format.html {}

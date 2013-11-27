@@ -4,12 +4,13 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
+    params[:page] = 1
     if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: 'new').page(params[:page]).per(3)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: 'new').page(params[:page])
     elsif params[:user_id]
-      @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page]).per(3)
+      @vouchers = Voucher.where(creator_id: params[:user_id]).where(workflow_state: 'new').page(params[:page])
     else
-      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page])
     end
     respond_to do |format|
       format.html  
@@ -45,14 +46,12 @@ class VouchersController < ApplicationController
     if params[:from].nil? or params[:from].to_date > params[:to].to_date
       redirect_to report_path , notice: "Please enter valid values"
     end
-    Rails.logger.debug "#{params[:from].to_date} %%%% #{params[:to].to_date}"
      @voucher_startDate = params[:from].to_date
      @voucher_endDate = params[:to].to_date
      @voucher_accountName = params[:report_account]
      @voucher_accountType = params[:account_type]
     respond_to do |format|
       format.html  {}
-     
     end
   end
 
@@ -108,6 +107,7 @@ class VouchersController < ApplicationController
 
 
   def pending
+
     get_vouchers('pending')
     respond_to do |format|
       format.html { render action: 'index'}
@@ -126,7 +126,7 @@ class VouchersController < ApplicationController
   end
 
   def all
-    @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
+    @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]) 
     respond_to do |format|
       format.html { render action: 'index'}
      
@@ -150,7 +150,7 @@ class VouchersController < ApplicationController
   end
 
   def assigned
-    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]).per(3)
+    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc').page(params[:page]) 
     respond_to do |format|
       format.html {}
     end
@@ -159,14 +159,14 @@ class VouchersController < ApplicationController
   # def get_by_state
   #   if params[:state]
   #     if params[:state] != 'new'
-  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).page(params[:page]).per(3)
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).page(params[:page]) 
   #     else
-  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).where('creator_id in (?)' ,current_user.id).page(params[:page]).per(3)
+  #       @vouchers = Voucher.where('workflow_state in (?)', params[:state]).where('creator_id in (?)' ,current_user.id).page(params[:page]) 
   #     end
   #   elsif(params[:to] && params[:from])
-  #      @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]).per(3)
+  #      @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).order('updated_at desc').page(params[:page]) 
   #   else
-  #      @vouchers = Voucher.where('workflow_state in (?)', 'PENDING').page(params[:page]).per(3) 
+  #      @vouchers = Voucher.where('workflow_state in (?)', 'PENDING').page(params[:page])  
   #     end
   #    Rails.logger.debug "$$$$ #{@vouchers}"
   #    respond_to do |format|
@@ -247,21 +247,21 @@ class VouchersController < ApplicationController
   def get_vouchers(state)
     if params[:account_id]
       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]).per(3)
+        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]) 
       else
-      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]) 
       end
     elsif params[:user_id]
-      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]) 
     elsif params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]).per(3)
+      @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]) 
     elsif(params[:to] && params[:from])
-       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]).per(3)
+       @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)',params[:from],params[:to]).page(params[:page]) 
         filter_by_name_and_type(@vouchers, params[:report_account] ,params[:account_type])
     elsif state == 'new'
-      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: 'new').where(creator_id: current_user.id).page(params[:page]) 
     else
-      @vouchers = Voucher.where(workflow_state: state).order('date desc').page(params[:page]).per(3)
+      @vouchers = Voucher.where(workflow_state: state).order('date desc').page(params[:page]) 
     end
   end
 

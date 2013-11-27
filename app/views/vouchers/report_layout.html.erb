@@ -1,5 +1,5 @@
 <div class="reports">
-<%= form_tag generate_report_path do %>
+<%= form_tag generate_report_path, :class => "voucher_autocomplete" do %>
   <div class = "report">
     <div class="control-group from_date"> 
       <%=label_tag  :from ,"From", :class => 'control-label' %>

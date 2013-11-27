@@ -37,7 +37,7 @@ left:300px;
 }
 .outer_container{
 margin-top: 100px;
-width:35%;
+width:38%;
 height:300px;
 border:solid 1px black;
 float: left;
@@ -106,7 +106,7 @@ border: solid 1px black;
   float: right;
 
   height:300px;
-  width:24%;
+  width:21%;
   display: inline-block;
   margin-top: 100px;
 } 
@@ -125,8 +125,7 @@ left :-30px;
   .voucher_label{
     text-align: left !important;
     padding-right: 0px !important;
-    margin-right: -48px;
-
+    margin-right: -79px;
   }
 border: dotted 1px black;
 padding-top:20px;
@@ -136,7 +135,8 @@ font-size: 20px !important;
 text-align: center;
 
 .voucher_contents{
-margin-left: 40px !important;
+margin-left: 76px !important;
+width:100px;
 }
 }
 .voucher_id,.voucher_amount,.voucher_state ,.voucher_debit,.voucher_credit {
