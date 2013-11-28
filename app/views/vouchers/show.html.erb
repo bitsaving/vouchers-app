@@ -86,20 +86,16 @@
       <div class="status_label">
         <div class ="approved_by">
           <div>
+            <%= "Approved By :   " %>
             <%= @voucher.approved_by_user.name %>
-          </div>
-          <div class="approved_label">
-            <%= "Approved By" %>
           </div>
         </div>
       <%end%>
       <%if !@voucher.accepted_by.nil?%>
         <div class ="accepted_by">
           <div>
+            <%= "Accepted By : " %>
             <%= @voucher.accepted_by_user.name%>   
-          </div>
-          <div class="accepted_label">
-            <%= "Accepted By" %>
           </div>
         </div>
       </div>

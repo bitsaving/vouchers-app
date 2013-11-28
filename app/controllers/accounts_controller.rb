@@ -46,7 +46,6 @@ class AccountsController < ApplicationController
   def show 
     respond_to do |format|
       #FIXME_AB: no {} needed. It is not fixed, it happens at many other places too
-      format.js 
       format.html 
     end
   end

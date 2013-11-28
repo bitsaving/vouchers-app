@@ -8,7 +8,7 @@
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
         <div class="controls">
-          <%= f.text_field :date, :class => 'date-field ',:value => Date.today.to_s(:normal_format)  %>
+          <%= f.text_field :date, :class => 'date-field ',:value=> setDate()  %>
         </div>
       </div>
       <div class="control-group">
@@ -67,7 +67,7 @@
               <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
             </p>
           <%else%>
-             <%= link_to @voucher.attachments[counter].bill_attachment_file_name ,@voucher.attachments[counter].bill_attachment.url(:original)%>
+             <%= link_to @voucher.attachments[counter].bill_attachment_file_name ,@voucher.attachments[counter].bill_attachment.url(:original),:target => "_blank"%>
 
              <%=builder.text_field :tagname,:class=>"filename hidden"  %>
              <%= link_to_remove_fields "  Remove" , builder %>     

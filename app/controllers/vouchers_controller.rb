@@ -217,7 +217,7 @@ class VouchersController < ApplicationController
       end
       @voucher.save!
       @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assignee,recipient: current_user
-      notice = "Voucher "  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(@voucher.workflow_state != "accepted")
+      notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(@voucher.workflow_state != "accepted")
       # @voucher.create_activity key: 'voucher.change_state', owner: @voucher.creator
       redirect_to :back , notice: notice
   end
@@ -230,8 +230,9 @@ class VouchersController < ApplicationController
     @voucher.record_state_change(current_user.id)
     @voucher.assignee_id = @voucher.creator_id
     @voucher.save!
+    notice = "Voucher #"  + @voucher.id.to_s + " has been rejected"
     @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
-    redirect_to :back
+    redirect_to :back ,notice: notice
   end
 
   

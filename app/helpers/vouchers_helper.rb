@@ -10,4 +10,12 @@ module VouchersHelper
 	  end
 	end
   end
+
+  def setDate()
+    if @voucher.new_record?
+      Date.today.to_s(:normal_format)
+    else
+      @voucher.date
+    end
+  end
 end

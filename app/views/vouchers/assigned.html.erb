@@ -33,7 +33,7 @@
 		<div class="voucher_tags">
 			<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
 			<div class ="tagname">
-    		<%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class %></div>
+    		<%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class , :target => "_blank"%></div>
   		<% end %>
  		</div>
 	</div>
