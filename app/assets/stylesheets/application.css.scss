@@ -61,10 +61,33 @@ font-size:15px !important;
 font-weight:bold;
 }
 }
+
+.user_delete{
+padding-top: 2px;
+padding-bottom: 4px;
+padding-right: 2px;
+padding-left: 2px;
+color: white;
+border-radius: 5px;
+background-color: grey;
+}
+.user_delete:hover{
+  cursor:default;
+}
+.disable
+{
+padding-top: 5px;
+padding-bottom: 9px;
+padding-right: 2px;
+padding-left: 2px;
+color: white;
+border-radius: 5px;
+background-color: grey;
+}
 .note{
   position: relative;
   top:23px;
-  left:50px;
+  left:35px;
   font-size: 13px;
   font-weight: bold;
 }
