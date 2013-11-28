@@ -40,8 +40,12 @@ input,select,textarea{
   width:200px;
   margin-left:-80px;
 } 
-.link a {
+.link  a {
 margin-left:630px;
+
+}
+.radioBox > .link > a {
+margin-left: 345px;
 
 }
 .link a[target ="_blank"]{
@@ -49,9 +53,14 @@ margin-left: 320px;
 }
 .link a[target ="_blank"] ~ a {
   position: relative;
-  bottom:26px;
+  bottom:23px;
+/*  left:-300px;*/
 }
 
+.voucher_placing ~ a {
+position: relative;
+left:-73px;
+top:2px;}
 
 .brand {
   color:black !important;
