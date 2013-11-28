@@ -13,6 +13,10 @@ After creation of admin u can log in via any valid google account which is verif
 
 Once u are logged in u can create vouchers.
 
+To send email notification to all users regarding the number f vouchers pening for their reviewal
+run rake task
+rake user:mail
+this will send email to all the users whom vouchers are assigned.
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
