@@ -56,6 +56,10 @@ margin-left: 320px;
   bottom:23px;
 /*  left:-300px;*/
 }
+.pagination .page
+{
+ margin-left: 4px; 
+}
 .voucher_placing {
   display: inline-block;
   width: 151px;
@@ -143,8 +147,8 @@ width:100% !important;
 
 span.current{
   background-color: #dcdcdc;
-  padding-left:15px;
-  padding-right: 9px;
+  padding-left:5px;
+  padding-right: 1px;
 }
 
 /*.page-header {
