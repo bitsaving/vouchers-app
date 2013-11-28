@@ -9,10 +9,7 @@ VoucherApp::Application.configure do
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
-  config.action_mailer.perform_deliveries = true
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.raise_delivery_errors = true 
-  config.action_mailer.default_url_options = { :host => 'http://vouchers.domain4now.com' }
+  
  # Full error reports are disabled and caching is turned on.
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
@@ -72,7 +69,22 @@ VoucherApp::Application.configure do
   # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
 
+  config.action_mailer.perform_deliveries = true
+
+  config.action_mailer.raise_delivery_errors = true 
+  config.action_mailer.default_url_options = { :host => 'http://vouchers.domain4now.com' }
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+address: "smtp.mandrillapp.com",
+port: 587,
+domain: 'vouchers.domain4now.com',
+user_name: 'voucherapp@vinsol.com',
+password: '7UI4KLloVC54fB_JArurow',
+authentication: 'plain',
+enable_starttls_auto: true
+}
   # Send deprecation notices to registered listeners.
+  
   config.active_support.deprecation = :notify
 
   # Disable automatic flushing of the log to improve performance.
