@@ -8,8 +8,10 @@ config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
 address: "smtp.mandrillapp.com",
 port: 587,
-username: 'voucherapp@vinsol.com',
+domain: 'vouchers.domain4now.com',
+user_name: 'voucherapp@vinsol.com',
 password: '7UI4KLloVC54fB_JArurow',
+authentication: 'plain',
 enable_starttls_auto: true
 }
 end
