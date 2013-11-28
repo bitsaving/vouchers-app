@@ -56,7 +56,10 @@ margin-left: 320px;
   bottom:23px;
 /*  left:-300px;*/
 }
-
+.voucher_placing {
+  display: inline-block;
+  width: 151px;
+}
 .voucher_placing ~ a {
 position: relative;
 left:-193px;
