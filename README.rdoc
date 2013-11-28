@@ -15,7 +15,7 @@ Once u are logged in u can create vouchers.
 
 To send email notification to all users regarding the number f vouchers pening for their reviewal
 run rake task
-rake user:mail
+rake notification:digest
 this will send email to all the users whom vouchers are assigned.
 
 Please feel free to use a different markup language if you do not plan to run
