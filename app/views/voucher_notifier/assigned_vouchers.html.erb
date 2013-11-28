@@ -1,24 +1,26 @@
 <div style="font-size:16px;"> Hi  <%= @user.name %> </div>
 <h4>Following is the list of vouchers assigned to you</h5>
+	<div style="font-weight:normal;">
 <%if @user.assigned_vouchers.New.count > 0 %>
   <h3> Drafted </h3>
   <% @user.assigned_vouchers.New.each do |voucher| %>
-	 	<div class="voucher_fields">
+	 	<div>
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:3px;">Debit : </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:3px;">Credit : </span> <%= voucher.credit_to.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:3px;">Amount :</span> <%= voucher.amount %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
 <%end%>	
+
 <%if @user.assigned_vouchers.pending.count > 0 %>
 	<h3> Pending </h3>
 	<% @user.assigned_vouchers.pending.each do |voucher| %>
-		<div class="voucher_fields">
-			<span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;">Debit: </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Credit: </span><%= voucher.credit_to.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Amount:</span> <%= voucher.amount %></span>
+		<div>
+		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
 <%end%>
@@ -26,10 +28,10 @@
 	<h3> Approved </h3>
 	<% @user.assigned_vouchers.approved.each do |voucher| %>
 		<div>
-			<span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;">Debit: </span> <%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Credit: </span><%= voucher.credit_to.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Amount: </span><%= voucher.amount %></span>
+		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
 <%end%>
@@ -37,13 +39,14 @@
 	<h3> Rejected </h3>
 	<% @user.assigned_vouchers.rejected.each do |voucher| %>
 		<div>
-			<span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;">Debit: </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Credit: </span><%= voucher.credit_to.name %></span>
-			<span><span style="font-weight:bold; font-size:12px;">Amount: </span><%= voucher.amount %></span>
+		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
 <%end%>
 <div style = "padding-top:34px; font-size:14px;">
 	This is an auto generated mail.please do not reply.
+</div>
 </div>
