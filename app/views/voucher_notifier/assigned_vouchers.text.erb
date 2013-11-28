@@ -1,4 +1,31 @@
-<!-- Hiii <%= @user.name %>
+Hiii <%= @user.name %>
 Following is the list of vouchers assigned to you
-<%= render @order.line_items %>
-We'll send you a separate e-mail when your order ships. -->
+<%if @user.assigned_vouchers.pending.count > 0 %>
+	<h5> Pending </h5>
+	<% @user.assigned_vouchers.pending.each do |voucher| %>
+	ID: <%= voucher.id %>
+	Debit: <%= voucher.debit_from.name %>
+	Credit: <%= voucher.credit_to.name %>
+	Amount: <%= voucher.amount %>
+	<%end%>
+	<%end%>
+	<%if @user.assigned_vouchers.approved.count > 0 %>
+	<h5> Approved </h5>
+	<% @user.assigned_vouchers.approved.each do |voucher| %>
+	ID: <%= voucher.id %>
+	Debit: <%= voucher.debit_from.name %>
+	Credit: <%= voucher.credit_to.name %>
+	Amount: <%= voucher.amount %>
+	<%end%>
+	<%end%>
+
+<%if @user.assigned_vouchers.rejected.count > 0 %>
+	<h5> Rejected </h5>
+	<% @user.assigned_vouchers.rejected.each do |voucher| %>
+	ID: <%= voucher.id %>
+	Debit: <%= voucher.debit_from.name %>
+	Credit: <%= voucher.credit_to.name %>
+	Amount: <%= voucher.amount %>
+	<%end%>
+	<%end%>
+This is an auto generated mail.please do not reply.

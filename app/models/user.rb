@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   paginates_per 3
   has_many :notifications , -> { order 'created_at desc' }, :class_name => "PublicActivity::Activity", :foreign_key => "owner_id" 
   has_many :vouchers , :foreign_key => "creator_id" , :dependent => :destroy
-  #has_many :vouchers_pending ,:foreign_key => "assignee_id" , -> {where workflow_state: 'pending'}
+  has_many :assigned_vouchers ,:foreign_key => "assignee_id" ,:class_name=>"Voucher"
   has_many :comments , :dependent => :destroy
   devise :database_authenticatable , :omniauthable ,
     :recoverable , :rememberable , :trackable , :omniauth_providers => [:google_oauth2]

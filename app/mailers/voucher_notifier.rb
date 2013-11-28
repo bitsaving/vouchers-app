@@ -6,6 +6,8 @@ class VoucherNotifier < ActionMailer::Base
   #
   #   en.voucher_notifier.assigned_vouchers.subject
   #
-  def assigned_vouchers
+  def assigned_vouchers(user)
+        @user = user
             mail(:from => "Testmail@demo.com",:to => user.email,:subject => "Vouchers Assigned")
   end
+end
