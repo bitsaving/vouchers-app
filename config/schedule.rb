@@ -19,5 +19,5 @@
 
 # Learn more: http://github.com/javan/whenever
 every :day, :at => '7:40am' do
-  custom_rake "notification:digest"
+  rake "notification:digest"
 end
