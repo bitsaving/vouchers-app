@@ -2,7 +2,7 @@ require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
 
 set :application, "vouchers.domain4now.com"
-set :repository,  "git@github.com:divyatalwar/rails-project.git"
+set :repository,  "git@github.com:vinsol/vouchers-app.git"
 set :scm, :git
 set :deploy_via, :remote_cache
 set :git_enable_submodules, 1
