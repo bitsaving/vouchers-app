@@ -58,11 +58,21 @@ VoucherEventsHandler.prototype = {
   },
 
   autoCompleteFieldHandler: function() {
-    console.log($('.autocomplete').data('path'))
+    //console.log($('.autocomplete').data('path'))
     if($('.autocomplete').val() == ""){
      $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
-console.log("hi")
+//console.log("hi")
 }
+
+$.ui.autocomplete.prototype._renderItem = function( ul, item){
+  var term = this.term.split(' ').join('|');
+  var re = new RegExp("(" + term + ")", "gi") ;
+  var t = item.label.replace(re,"<b>$1</b>");
+  return $( "<li></li>" )
+     .data( "item.autocomplete", item )
+     .append( "<a>" + t + "</a>" )
+     .appendTo( ul );
+};
     $('.date-field').css('cursor', 'pointer');
     $.ajax({
       type: 'get',
@@ -72,7 +82,8 @@ console.log("hi")
         $('.autocomplete').autocomplete({
           source: data,
           select: function(event, ui) { 
-            console.log(ui.item.value);
+
+  //          console.log(ui.item.value);
             event.preventDefault();
             this.value = ui.item.label;
             $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
