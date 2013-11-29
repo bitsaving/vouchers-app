@@ -1,5 +1,4 @@
 class VoucherNotifier < ActionMailer::Base
-  default from: "notifications@example.com"
   def assigned_vouchers(user)
     @user = user
     if @user.assigned_vouchers.present?

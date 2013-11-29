@@ -14,6 +14,8 @@ set :keep_releases, 5
 
 default_run_options[:pty] = true
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
 namespace :deploy do
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"

@@ -55,3 +55,4 @@ gem 'capistrano', '2.15.5', group: :development
 gem "workflow", "1.0.0"
 gem 'paranoia', '~> 2.0'
 gem 'public_activity'
+gem 'whenever', :require => false
