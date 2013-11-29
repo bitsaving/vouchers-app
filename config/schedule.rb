@@ -20,6 +20,6 @@
 # Learn more: http://github.com/javan/whenever
 
 
-every :day, :at => '11:50am' do
+every :day, :at => '12:25pm' do
   rake "notification:digest"
 end

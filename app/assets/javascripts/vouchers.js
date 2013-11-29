@@ -74,13 +74,13 @@ $.ui.autocomplete.prototype._renderItem = function( ul, item){
      .appendTo( ul );
 };
     $('.date-field').css('cursor', 'pointer');
-    $.ajax({
-      type: 'get',
-      url: $('.autocomplete').data('path'), 
-      dataType: "json", 
-      success: function(data){
+    // $.ajax({
+    //   type: 'get',
+    //   url: $('.autocomplete').data('path'), 
+    //   dataType: "json", 
+    //   success: function(data){
         $('.autocomplete').autocomplete({
-          source: data,
+          source: $('.autocomplete').data('path'),
           select: function(event, ui) { 
 
   //          console.log(ui.item.value);
@@ -95,8 +95,8 @@ $.ui.autocomplete.prototype._renderItem = function( ul, item){
             $('#'+ $(this).data('textbox-id')).val(ui.item.label);
           }
         });
-      }
-    });
+      
+    //});
   },
 
   hiddenFieldHandler: function(){

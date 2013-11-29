@@ -5,11 +5,14 @@ class AccountsController < ApplicationController
 
   def index
     #FIXME_AB: Please explain why you have to do that much thing with request. I can suggest a better way.
-    request_type = request.env["HTTP_ACCEPT"].split(',')
-    if !request_type.index("application/json").nil?
-      @accounts = Account.all
+    #fixed
+    # request_type = request.env["HTTP_ACCEPT"].split(',')
+    # if !request_type.index("application/json").nil?
+    if params[:term]
+      like= "%".concat(params[:term].concat("%"))
+      @accounts = Account.where('name LIKE (?)' ,like)
     else
-      @accounts = Account.all.page(params[:page]) 
+      @accounts = Account.page(params[:page])
     end
     respond_to do |format|
       format.html {}
