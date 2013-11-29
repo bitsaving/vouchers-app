@@ -18,8 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
-
+ job_type :custom_rake, "cd :path && RAILS_ENV=:environment #{ @environment == 'development' ? 'bundle' : '/usr/local/bin/bundle' } exec #{ @environment == 'development' ? 'rake' : '/usr/local/bin/rake' } :task --silent :output"
+set :output, {:error => 'log/cron_error.log', :standard => 'log/cron_standard.log'}
 every :day, :at => '12:25pm' do
-  rake "notification:digest"
+  custom_rake "notification:digest"
 end
