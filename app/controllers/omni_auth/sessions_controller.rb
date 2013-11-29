@@ -6,10 +6,10 @@ class OmniAuth::SessionsController < Devise::SessionsController
    # end
 
 
-  # before_action only: [:new] do
-	 # flash[:notice] = nil
-	 # #flash[:notice] = nil
-  #  end
+  before_action only: [:new] do
+	 flash[:notice] = nil
+	 #flash[:notice] = nil
+   end
 
 
 
