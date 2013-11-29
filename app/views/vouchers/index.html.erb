@@ -1,5 +1,5 @@
 <%if params[:tag].present? %>
-  <h3> Vouchers with tag: <%= params[:tag] %> </h3>
+  <h3> Vouchers tagged with: <%= params[:tag] %> </h3>
 <%end%>
     <% params[:page] = 1 %>
 <% actions = ['index' ,'all','show', 'pending','accepted','rejected','drafted','approved']%>

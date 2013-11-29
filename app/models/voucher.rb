@@ -7,7 +7,7 @@ class Voucher < ActiveRecord::Base
   
   acts_as_taggable
   workflow_column :workflow_state
-  paginates_per 3
+  paginates_per 50
   workflow do
     state :new do
       event :send_for_approval , :transitions_to => :pending
