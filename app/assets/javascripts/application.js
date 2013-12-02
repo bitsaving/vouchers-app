@@ -23,23 +23,9 @@
 //fixed
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
- // $.ajaxSetup({ cache: false });
-
-  // $('#myCanvas').tagcanvas({
-  //     textColour : '#ffffff',
-  //    outlineColour : '#ff9999',
- 
-  //    outlineThickness : 15,
-  //    maxSpeed : 0.02,
-  //    weight : true,
-  //    textHeight :10,
-  //    weightSize : 10,
-  //    depth : 1.75
-  //  })
 })
 var ApplicationHandler = function() {
   this.init();
-
 }
 ApplicationHandler.prototype = {
   init: function() {
@@ -69,63 +55,13 @@ ApplicationHandler.prototype = {
         if($('.autocomplete').val() == ""){
           $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
         }
-        return true; // return false to cancel form action
+        return true;
     });
-
-     $(document).on('click' , '.submit' , function(){
-         if($('.autocomplete').val() == "")
-          $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
-     })
+     // $(document).on('click' , '.submit' , function(){
+     //     if($('.autocomplete').val() == "")
+     //      $("#"+ $('.autocomplete').data('hidden-field-id')).val("")
+     // })
   },
-  // tagcanvas: function() {
-  //   var options = {
-  //     textColour : 'red',
-  //     outlineColour : '#ff9999',
-  //     outlineThickness : 1,
-  //     minSpped : 0.07,
-  //     maxSpeed : 0.07,
-  //     weight : true,
-  //     weightMode: 'both',
-  //     shape : 'cylinder',
-  //     minBrightness: 2.9,
-  //     weightGradient: {0:'#660033', 0.33:'#ff0',0.66:'#944d70', 1:'#c299ad'},
-  //     depth : 0.75
-  //   };
-  //   window.onload = function() {
-  //     try {
-  //       TagCanvas.Start('myCanvas',"",options);
-  //     } catch(e) {
-  //     // something went wrong, hide the canvas container
-  //    // document.getElementById('myCanvasContainer').style.display = 'none';
-  //     }
-  //   };  
-  // },
-  // getVouchersByStatus:function(){
-  //   $(document).on('click','.vouchers' ,function(e) {
-  //     var voucherStatus = $(this).find('.voucher_label').text();
-  //     console.log(voucherStatus.toLowerCase())
-  //     $.ajax({
-  //       type: 'get',
-  //       url: '/vouchers/' + voucherStatus.toLowerCase(),
-  //       dataType: "html", 
-  //       success: function(data){
-  //         $('.assigned_vouchers').html('').html(data);
-  //         $('.associated_voucher ul li.' + voucherStatus.toLowerCase()).addClass('active').siblings().removeClass('active');
-  //       }
-  //     })
-  //   });
-  // },
-   // addClassToLi: function(){
-   // $('ul.navigation li').each(function(){
-   //  if(this)
-  //   // {
-  //   // $(this).addClass('active').siblings().removeClass('active');
-  //   // }
-  //   // });
-  //   $(document).on('click' ,'data[method="post"]' ,function(e){
-  //       window.location.href.replace(/\?.*/,'');
-  //   })
-  // },
   VoucherStateHandler: function(){
     var pathname = window.location.pathname.split('vouchers/')[1];
     $('.associated_voucher li.' + pathname).addClass('active').siblings().removeClass('active');

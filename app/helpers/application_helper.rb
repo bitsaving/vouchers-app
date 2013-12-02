@@ -19,6 +19,7 @@ module ApplicationHelper
   def user_options
     User.where.not(id: current_user.id).order('first_name').pluck( 'first_name ', 'id' )
   end
+  
   def nav_link(link_text, link_path)
     controller_name  = request.path.split('/')
     if controller_name[1].blank?
@@ -33,11 +34,10 @@ module ApplicationHelper
   end
 
 
-  def get_new_by_date(to,from,name,type)
-    @vouchers = Voucher.where(workflow_state:'new').where('date between (?) and (?)',to,from)
+  def get_by_date(state,to,from,name,type)
+    @vouchers = Voucher.where(workflow_state:state).where('date between (?) and (?)',to,from)
     @vouchers  = @vouchers.where('account_debited in (?) OR account_credited in (?)',name,name) if !name.blank?
     @vouchers = @vouchers.where("account_" + type + "ed in (?)",name) if !type.blank?
-    Rails.logger.debug "#{@vouchers.count}"
     @vouchers
   end
   def get_all_vouchers(id)
@@ -50,13 +50,6 @@ module ApplicationHelper
   end
   
   #FIXME_AB: Better suites to User model
-  def getUserNotifications
-    notifications = PublicActivity::Activity.where('owner_id = ? and visited = false', current_user.id).order('id desc').count
-    if notifications > 0
-      notifications
-    else
-     ""
-    end 
-  end
+  
   
 end

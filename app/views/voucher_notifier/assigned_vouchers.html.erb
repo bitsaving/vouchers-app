@@ -1,13 +1,13 @@
 <div style="font-size:16px;"> Hi  <%= @user.name %> </div>
 <h4>Following is the list of vouchers assigned to you</h5>
 	<div style="font-weight:normal;">
-<%if @user.assigned_vouchers.New.count > 0 %>
+<%if @user.assigned_vouchers.drafted.count > 0 %>
   <h3> Drafted </h3>
-  <% @user.assigned_vouchers.New.each do |voucher| %>
-	 	<div>
+  <% @user.assigned_vouchers.drafted.each do |voucher| %>
+	 	<div >
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= link_to voucher.debit_from.name ,voucher_url(voucher.id) %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= link_to voucher.credit_to.name ,voucher_url(voucher.id) %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
@@ -18,8 +18,8 @@
 	<% @user.assigned_vouchers.pending.each do |voucher| %>
 		<div>
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name,voucher_url(voucher.id) %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= link_to voucher.credit_to.name ,voucher_url(voucher.id)  %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
@@ -29,8 +29,8 @@
 	<% @user.assigned_vouchers.approved.each do |voucher| %>
 		<div>
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%=link_to voucher.debit_from.name ,voucher_url(voucher.id) %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%=link_to voucher.credit_to.name ,voucher_url(voucher.id) %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>
@@ -40,8 +40,8 @@
 	<% @user.assigned_vouchers.rejected.each do |voucher| %>
 		<div>
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name %></span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= voucher.credit_to.name %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= link_to voucher.debit_from.name ,voucher_url(voucher.id)  %></span>
+			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= link_to voucher.credit_to.name ,voucher_url(voucher.id) %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>
 	<%end%>

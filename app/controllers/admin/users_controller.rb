@@ -59,7 +59,7 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     redirect_to admin_users_path ,notice: "Sorry it cannot be deleted"
-end
+  end
   # def destroy
   #   begin
   #     @user.destroy
@@ -79,10 +79,12 @@ end
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
     #FIXME_AB: Instead of handling this exception you should check for user.nil?
-    rescue ActiveRecord::RecordNotFound
-      redirect_to :back
+    #fixed
+    if @user.nil?
+      redirect_to_back_or_default_url
+    end  
   end
   
 

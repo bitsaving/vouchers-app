@@ -1,3 +1,5 @@
+
+
 <%if params[:tag].present? %>
   <h3> Vouchers tagged with: <%= params[:tag] %> </h3>
 <%end%>
@@ -6,7 +8,7 @@
 <% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil? && params[:to].nil?%>
   <div class="all_vouchers">
     <%if params[:tag].nil? %>
-    <h2>Vouchers </h2>
+    <h2> Vouchers </h2>
     <%end%>
     <div class="new_button">
       <%= link_to "New",new_voucher_path,:class => 'btn new_button btn-primary' ,"data-no-turbolink" => true%>
@@ -22,13 +24,14 @@
 <% if params[:account_id].present? && controller.action_name != 'show'%>
   <%= render :template => 'accounts/_layout', locals: {:@account=>Account.find(params[:account_id])}%>    
 <%end%>
+
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
-    <li class="active drafted"><%= link_to "Drafted" , url_for(params.merge({controller: 'vouchers', action: 'drafted'})),:class=>"drafted",'data-no-turbolink'=> true %></li>
-    <li class="pending"><%= link_to "Pending" , url_for(params.merge({controller: 'vouchers', action: 'pending'})),:class=>"pending",'data-no-turbolink'=> true %></li>
-    <li class="approved"><%= link_to "Approved" , url_for(params.merge({controller: 'vouchers', action: 'approved'})),:class=>"approved",'data-no-turbolink'=> true %></li>
-    <li class="accepted"><%= link_to "Accepted" , url_for(params.merge({controller: 'vouchers', action: 'accepted'})),:class=>"accepted",'data-no-turbolink'=> true %></li>
-    <li class="rejected"><%= link_to "Rejected" , url_for(params.merge({controller: 'vouchers', action: 'rejected'})),:class=>"rejected",'data-no-turbolink'=> true %></li>
+    <li class="active drafted"><%= link_to "Drafted ("+ get_vouchers('drafted').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'drafted'})),:class=>"drafted",'data-no-turbolink'=> true %></li>
+    <li class="pending"><%= link_to "Pending ("+ get_vouchers('pending').total_count.to_s + ")" , url_for(params.merge({controller: 'vouchers', action: 'pending'})),:class=>"pending",'data-no-turbolink'=> true %></li>
+    <li class="approved"><%= link_to "Approved ("+ get_vouchers('approved').total_count.to_s + ")" , url_for(params.merge({controller: 'vouchers', action: 'approved'})),:class=>"approved",'data-no-turbolink'=> true %></li>
+    <li class="accepted"><%= link_to "Accepted ("+ get_vouchers('accepted').total_count.to_s + ")" , url_for(params.merge({controller: 'vouchers', action: 'accepted'})),:class=>"accepted",'data-no-turbolink'=> true %></li>
+    <li class="rejected"><%= link_to "Rejected (" + get_vouchers('rejected').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'rejected'})),:class=>"rejected",'data-no-turbolink'=> true %></li>
     <div class="voucher_status">
       <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @vouchers } %>
     </div>
@@ -36,4 +39,6 @@
 </div>
 
 
-
+<script type= "text/javascript">
+  $('.associated_voucher li.'+ '<%=session[:previous_tab] %>').addClass('active').siblings().removeClass('active')
+</script>

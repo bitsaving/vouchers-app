@@ -25,11 +25,11 @@
     <div class = "debitCredit">
       <div class="labels">Debit
       </div>
-      <%= link_to @voucher.debit_from.name , account_path(Account.find(@voucher.debit_from))%>
+      <%= link_to @voucher.debit_from.name , account_vouchers_path(Account.find(@voucher.debit_from))%>
     </div>
     <div class="debitCredit">
       <div class ="labels">Credit</div> 
-      <%= link_to @voucher.credit_to.name  , account_path(Account.find(@voucher.credit_to)) %>
+      <%= link_to @voucher.credit_to.name  , account_vouchers_path(Account.find(@voucher.credit_to)) %>
     </div>
     <% if @voucher.to_date %>
     <div class="date_period" >
@@ -60,10 +60,10 @@
       <div class="amount"><%= number_to_currency(@voucher.amount,:unit => "₹  ") %>
       </div>
     </div>
-    <%if(@voucher.workflow_state == 'approved' && @voucher.assignee_id == current_user.id)%>
+    <%if(@voucher.approved?  && @voucher.assignee?(current_user))%>
     <div class ="final_state onprint">
       <%= link_to "Accept" , increment_state_voucher_path(id: @voucher),:class=>'btn btn-primary',method: :post%>
-      <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post,data: {confirm: "Voucher ##{@voucher.id} will be rejected.Press OK to continue "}%>
+      <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post,data: {confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to #{@voucher.creator.name}.Press OK to continue "}%>
     </div>
     <%end%>
 
@@ -82,12 +82,21 @@
       Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t),:class=>"taglist"}.join(' ') %>
     </div>
     <%end%>
-    <%if !@voucher.approved_by.nil?%>
+    <%if !@voucher.creator_id.nil?%>
       <div class="status_label">
+        <div class ="created_by">
+          <div>
+            <%= "Created By :   " %>
+            <%= link_to @voucher.creator.name ,user_vouchers_path(@voucher.creator_id)%>
+          </div>
+        </div>
+      <%end%>
+    <%if !@voucher.approved_by.nil?%>
+   
         <div class ="approved_by">
           <div>
             <%= "Approved By :   " %>
-            <%= @voucher.approved_by_user.name %>
+            <%= link_to @voucher.approved_by_user.name ,user_vouchers_path(@voucher.approved_by)%>
           </div>
         </div>
       <%end%>
@@ -95,7 +104,7 @@
         <div class ="accepted_by">
           <div>
             <%= "Accepted By : " %>
-            <%= @voucher.accepted_by_user.name%>   
+            <%= link_to @voucher.accepted_by_user.name,user_vouchers_path(@voucher.accepted_by)%>   
           </div>
         </div>
       </div>
@@ -103,7 +112,7 @@
 
   
     
-    <% if  (@voucher.workflow_state != 'approved' ||  @voucher.workflow_state == "new") && @voucher.assignee?(current_user) %>
+    <% if  (@voucher.workflow_state != 'approved' ||  @voucher.drafted?) && @voucher.assignee?(current_user) %>
       <%=  render 'assign' %>
     <%end%>
 

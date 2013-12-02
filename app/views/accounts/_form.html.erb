@@ -8,14 +8,14 @@
         <legend> Edit Account</legend>
       <%end%>
       <div class="control-group">
-        <%= f.label :name, "Name",:class => 'control-label compulsory-field' %>
+        <%= f.label :name, "Name", :class => 'control-label compulsory-field' %>
         <div class="controls">
-          <%= f.text_area :name, :rows=>4,:columns=>8%>
+          <%= f.text_area :name, :rows=>4, :columns => 8 %>
         </div>
       </div>
       <div class="form-actions ">
-        <%= f.submit nil, :class => 'btn btn-primary' ,:remote=>true%>
-        <%= link_to "Cancel", accounts_path ,:class => 'btn btn-primary '%>
+        <%= f.submit nil, :class => 'btn btn-primary', :remote=>true %>
+        <%= link_to "Cancel", accounts_path, :class => 'btn btn-primary '%>
       </div>
     <% end %>
   </fieldset>

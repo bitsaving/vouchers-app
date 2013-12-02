@@ -4,12 +4,12 @@
     <div class="control-group">
       <div class="controls">
         <% #FIXME_AB: why not using form object. Like f.text_area, any specific reason -%>
-        <%= text_area_tag :description, params[:description], :cols => 80, :rows => 5,placeholder: 'Enter your comment..'%>
+        <%= text_area_tag :description, params[:description], :cols => 80, :rows => 5, placeholder: 'Enter your comment..'%>
       </div>
     </div>
     <div class="actions">
       <% #FIXME_AB: f.submit -%>
-      <%= submit_tag "Save" ,:class => 'btn btn-primary',data: { disable_with: "Please wait..."}%>
+      <%= submit_tag "Save" , :class => 'btn btn-primary', data: { disable_with: "Please wait..."} %>
     </div> 
   <% end %>
 </div>

@@ -16,7 +16,7 @@
         <div class ="Or_label">
           <%=" OR "%>
         </div>
-        <%= link_to "Reject " , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assignn submit_accepted',method: :post,data: {confirm: "Voucher ##{@voucher.id} will be rejected.Press OK to continue "}  %>
+        <%= link_to "Reject ", decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assignn submit_accepted', method: :post, data: { confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to  #{@voucher.creator.name}.Press OK to continue "}  %>
        <%end%>
       </div>
     </div>

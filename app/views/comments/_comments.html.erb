@@ -1,22 +1,20 @@
 <div class ="comment_panel">
-    <div class ="comments">
-      <%if voucher.workflow_state == 'new' || @voucher.comments.exists? %>
+  <div class ="comments">
+    <%if voucher.workflow_state == 'drafted' || @voucher.comments.exists? %>
       <h6> Comments </h6>  
-      <%end%>
-      <% voucher.comments.each do |comment| %>
-        <div class = "commentator">
-          <%= simple_format(comment.description) %>
-          <div class ="commentator_name">
-   
-              <%= comment.user.first_name  + " ,"%>
-              <%= comment.updated_at.in_time_zone("New Delhi").to_s(:short_ordinal)%>
-
-          </div>
+    <%end%>
+    <% voucher.comments.each do |comment| %>
+      <div class = "commentator">
+        <%= simple_format(comment.description) %>
+        <div class ="commentator_name">
+          <%= comment.user.first_name  + " ,"%>
+          <%= comment.updated_at.in_time_zone("New Delhi").to_s(:short_ordinal)%>
         </div>
-      <% end %>
-      <% #FIXME_AB: You should pass user object to assignee? method below #fixed-%>
-      <% if voucher.assignee?(current_user) %>
-        <%= render :partial => 'comments/form' %>
-      <%end%>
-    </div>
+      </div>
+    <% end %>
+    <% #FIXME_AB: You should pass user object to assignee? method below #fixed-%>
+    <% if voucher.assignee?(current_user) %>
+      <%= render :partial => 'comments/form' %>
+    <%end%>
+  </div>
 </div>

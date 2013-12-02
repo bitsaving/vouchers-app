@@ -56,7 +56,7 @@ class AccountsController < ApplicationController
   def update
      respond_to do |format|
       if @account.update(account_params)
-        format.html { redirect_to @account, notice: 'Account ' + @account.name + ' was successfully updated.' }
+        format.html { redirect_to account_vouchers_path(@account), notice: 'Account ' + @account.name + ' was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -77,11 +77,10 @@ class AccountsController < ApplicationController
   protected
     # Use callbacks to share common setup or constraints between actions.
     def set_account
-      @account = Account.find(params[:id])
+      @account = Account.find_by(id: params[:id])
       if(@account.nil?)  
         flash[:notice] = "Account not found"
-        redirect_to :back
-        return false
+        redirect_to_back_or_default_url
       end
         #FIXME_AB: Instead of handling this exception you should check for account.nil?
         #fixed
@@ -91,5 +90,6 @@ class AccountsController < ApplicationController
     def account_params
       params.require(:account).permit(:name)
     end 
+  
  end
 

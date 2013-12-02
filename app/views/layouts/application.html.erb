@@ -59,7 +59,8 @@
                 <%end%>
                 <li><%= nav_link "Accounts" , accounts_path%></li>
                 <li>
-                 <div class="dropdown">
+                  <%= nav_link "Report" , report_path %></li>
+                 <!-- <div class="dropdown">
                     <a id="reportUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
                       <span class="voucher">Reports</span>
                       <span class="caret"></span>
@@ -69,7 +70,7 @@
                       <li role="presentation" class="divider"></li>
                       <li role="presentation" ><%= nav_link "Account" ,"#"%></li>
                     </ul>
-                  </div>
+                  </div> -->
           
             </ul> 
             
@@ -84,7 +85,7 @@
                 <div id="notifications">
                   <%= link_to "<div id='notification-icon'></div>".html_safe, notifications_index_path, remote: true %>
                   <div class ="number_of_notifications notifications_link">
-                    <%= getUserNotifications %>
+                    <%= current_user.getNotifications %>
                   </div>
                   <div id="notifications-box" class="notifications_output">
                   </div>

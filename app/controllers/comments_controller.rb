@@ -32,9 +32,11 @@ class CommentsController < ApplicationController
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
-    @comment = Comment.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to :back
+    @comment = Comment.find_by(id: params[:id])
+    if(@comment.nil?)  
+        flash[:notice] = "Comment not found"
+        redirect_to_back_or_default_url
+      end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

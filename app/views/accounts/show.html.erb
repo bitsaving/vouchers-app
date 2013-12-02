@@ -1,2 +1,1 @@
 <%= render partial: 'accounts/layout' %>
-<%= render :template => 'vouchers/index' , locals: { :params => { account_id:@account.id}, :@vouchers=> get_all_vouchers(@account.id).New.page(params[:page])	}  %>

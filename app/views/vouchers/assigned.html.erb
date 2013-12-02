@@ -1,7 +1,7 @@
 <div class = " outer_block">
 	<div class="outer_container">
 		<div class="voucher_content">
-			<div  class ="voucher_heading">My Assigned Vouchers</div>
+			<div  class ="voucher_heading">Vouchers assigned to Me <%=@vouchers.present? ? "(" + @vouchers.count.to_s + ")" : ""%></div>
 		  	<% @vouchers.each do |voucher| %>
 		  	<div class="assigned_vouchers">
 			  	<div class = "voucher_id"> 
@@ -33,7 +33,7 @@
 		<div class="voucher_tags">
 			<% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
 			<div class ="tagname">
-    		<%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class , :target => "_blank"%></div>
+    		<%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class%></div>
   		<% end %>
  		</div>
 	</div>
@@ -41,8 +41,8 @@
 		<div class = "voucher_heading"> Voucher Status </div>
 		<div class="voucher_count">
 			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "New" ,drafted_vouchers_path , "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.New.count %></div>
+				<div class="voucher_label"><%= link_to "Drafted" ,drafted_vouchers_path , "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.drafted.where(creator_id: current_user.id).count %></div>
 			</div>
 			<div class="vouchers">
 				<div class="voucher_label"><%= link_to "Pending" , pending_vouchers_path, "data-no-turbolink" => true%></div>

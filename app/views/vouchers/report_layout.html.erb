@@ -1,16 +1,16 @@
 <div class="reports">
-<%= form_tag generate_report_path, :class => "voucher_autocomplete" do %>
+<%= form_tag generate_report_path, :class => "voucher_autocomplete" ,:method => 'post' do %>
   <div class = "report">
     <div class="control-group from_date"> 
       <%=label_tag  :from ,"From", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :from , params[:from], :class => 'date-field'  %>
+        <%= text_field_tag :from , params[:from].to_date.to_s(:normal_format), :class => 'date-field'  %>
       </div>
     </div>
     <div class="control-group to_date">
       <%=label_tag  :to ,"To", :class => 'control-label' %>
       <div class="controls">
-        <%= text_field_tag :to  ,params[:to] ,:class => 'date-field' %>
+        <%= text_field_tag :to  ,params[:to].to_date.to_s(:normal_format) ,:class => 'date-field' %>
       </div>
     </div>
     <div class="control-group from_date">

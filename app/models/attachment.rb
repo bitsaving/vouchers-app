@@ -3,7 +3,7 @@
 class Attachment < ActiveRecord::Base
   belongs_to :voucher 
   #FIXME_AB: Attachment could be anything. So name it as attachment not bill_attachment.
-  has_attached_file :bill_attachment , :url =>"/assets/vouchers/:id/:style/:basename.:extension" , :path=>":rails_root/public/assets/vouchers/:id/:style/:basename.:extension"
+  has_attached_file :bill_attachment, :url =>"/assets/vouchers/:id/:style/:basename.:extension" , :path=>":rails_root/public/assets/vouchers/:id/:style/:basename.:extension"
   #validates_attachment_size :bill_attachment , :less_than => 5.megabytes
   # validates_attachment_content_type :avatar,:content_type =>'application/pdf' 
 
@@ -21,8 +21,4 @@ class Attachment < ActiveRecord::Base
       end  
     end
   end
-
-
-
-
 end
