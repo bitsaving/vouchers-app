@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   devise :database_authenticatable, :omniauthable,
     :recoverable, :rememberable, :trackable, :omniauth_providers => [:google_oauth2]
-  #FIXME_AB: You may need other associations like assigned_vouchers, owned_vouchers etc..
-  #fixed
   #FIXME_AB: Please ensure proper code formatting. space after comma. Space after comma not before comma.
   validates :first_name , :last_name , :email , presence: true
   validates_uniqueness_of :email, :case_sensitive => false

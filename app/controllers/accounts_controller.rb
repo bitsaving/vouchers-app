@@ -4,8 +4,6 @@ class AccountsController < ApplicationController
   #FIXME_AB: Remove unused empty css files
 
   def index
-    #FIXME_AB: Please explain why you have to do that much thing with request. I can suggest a better way.
-    #fixed
     # request_type = request.env["HTTP_ACCEPT"].split(',')
     # if !request_type.index("application/json").nil?
     if params[:term]
@@ -33,8 +31,6 @@ class AccountsController < ApplicationController
     respond_to do |format|
       if @account.save
         format.html { redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.' }
-        #FIXME_AB: After account is created I should be redirected on the new account page so that I can add more account. Make sure that the success message is displayed to intimate me that account was created
-        #fixed
         format.json { render action: 'show', status: :created, location: @voucher }
       else
          format.html { render action: 'new' }
@@ -82,8 +78,6 @@ class AccountsController < ApplicationController
         flash[:notice] = "Account not found"
         redirect_to_back_or_default_url
       end
-        #FIXME_AB: Instead of handling this exception you should check for account.nil?
-        #fixed
     end
 
     # Never trust parameters from the scary INTERNET, only allow the white list through.

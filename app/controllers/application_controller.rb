@@ -10,8 +10,6 @@ class ApplicationController < ActionController::Base
     end
 
     def logged_in?
-      #FIXME_AB: Another way to do the same thing is "!!current_user". Ask me if you don't understand
-      #fixed
       !!current_user
     end
 
