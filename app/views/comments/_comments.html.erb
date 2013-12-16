@@ -1,6 +1,6 @@
 <div class ="comment_panel">
   <div class ="comments">
-    <%if voucher.workflow_state == 'drafted' || @voucher.comments.exists? %>
+    <%if voucher.drafted? || @voucher.comments.exists? %>
       <h6> Comments </h6>  
     <%end%>
     <% voucher.comments.each do |comment| %>

@@ -29,12 +29,11 @@ gem 'jquery-ui-rails'
 gem 'remotipart'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 #gem 'turbolinks'
-gem 'rspec' ,'~> 2.0.0'
 gem 'acts-as-taggable-on'
 #gem 'rails3-jquery-autocomplete'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
-
+gem 'delayed_job_active_record'
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
@@ -56,3 +55,14 @@ gem "workflow", "1.0.0"
 gem 'paranoia', '~> 2.0'
 gem 'public_activity'
 gem 'whenever', :require => false
+gem 'backup-task'
+gem 'fog', '~> 1.4.0'
+gem 'thinking-sphinx', '3.0.6'
+group :development, :test do
+	 gem "rspec-rails", "~> 2.14"
+	# gem "webrat", "0.7.2"
+end
+gem 'factory_girl_rails'
+#gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem "rails-observers"

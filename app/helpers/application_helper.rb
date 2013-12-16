@@ -6,11 +6,26 @@ module ApplicationHelper
   
   def link_to_add_fields(name, f, association)
     new_object = f.object.class.reflect_on_association(association).klass.new
-    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder)
+    array = name.split(" ")
+    if(array[2] == "account")
+      params = array[1]
+    else
+      params =""
     end
+    fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+      render(association.to_s.singularize + "_fields", :f => builder ,locals: { :@account_type => params})
+    end
+
     link_to("#{name}","#",:onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\") ;return false")
   end
+
+#   def link_to_add_account(name, association)
+#     #new_object = f.object.class.reflect_on_association(association).klass.new
+#     #fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
+#       render(association.to_s.singularize)
+# #    end
+#     #link_to("#{name}","#",:onclick=> "add_fields(this, \"#{association}\") ;return false")
+#   end
  
   def account_options
     Account.pluck( 'name', 'id' )
@@ -36,12 +51,14 @@ module ApplicationHelper
 
   def get_by_date(state,to,from,name,type)
     @vouchers = Voucher.where(workflow_state:state).where('date between (?) and (?)',to,from)
-    @vouchers  = @vouchers.where('account_debited in (?) OR account_credited in (?)',name,name) if !name.blank?
-    @vouchers = @vouchers.where("account_" + type + "ed in (?)",name) if !type.blank?
+    @vouchers  = @vouchers.where("id in (?) " ,Transaction.where(account_id: name).pluck(:voucher_id)) if !name.blank?
+    @vouchers = @vouchers.where("id in (?) " ,Transaction.where(account_type: type).pluck(:voucher_id)) if !type.blank?
     @vouchers
   end
   def get_all_vouchers(id)
-    Voucher.where('account_debited in (?) OR account_credited in (?)' ,id,id)
+
+    Voucher.where("id in (?) " ,Transaction.where(account_id: id).pluck(:voucher_id))
+      #where('account_debited in (?) OR account_credited in (?)' ,id,id)
   end
   
   #FIXME_AB: Why you are using two types of method naming conventions. One with underscore other with camelCase

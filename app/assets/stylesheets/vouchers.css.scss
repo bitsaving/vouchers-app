@@ -1,4 +1,4 @@
-// Place all the styles related to the vouchers controller here.
+ //Place all the styles related to the vouchers controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .hidden{
@@ -27,6 +27,15 @@ ul.ui-autocomplete {
     }
   }
 } 
+
+.remove_fields {
+position:relative;
+left:300px !important; 
+}
+.autocomplete{
+margin-top:5px !important;
+margin-bottom:5px !important;
+}
 .cancel{
 position:relative;
 left:300px;
@@ -159,13 +168,13 @@ padding-right: 10px;
   padding-bottom: 1px;
   }
   div.voucher_contents{
-    
 
     font-size: 14px;
     display: inline-block !important;
 
 
   }
+
 .hint{
   position: relative;
   left:310px;
@@ -201,12 +210,21 @@ padding-top: 18px;
   font-weight: bold;
 }
 .filename{
-  width:180px;
+  width:120px;
 }
 .symbol {
   position: absolute;
   left:880px;
   display: inline-block;
+}
+.bank_amount{
+  width:300px;
+font-weight:bold;
+position:relative !important;
+left:300px !important;
+input {
+position: relative;
+left:-100px;}
 }
 .caption{
   position: absolute;
@@ -223,6 +241,8 @@ margin-right: -250px;
 
   padding-left: 30px;
   padding-right: 20px;
+  position: relative;
+  top:70px;
 }
 .tags{
   padding-top: 15px;
@@ -367,15 +387,22 @@ border-bottom:1px solid #eeeeee;
 }
 .separator{
   border-top: dotted 1px black;
+  position: relative;
+  top:19px;
 }
 .radioBox a {
   color:blue;
+}
+.debitCredit ,.payment_mode,.status_label,.date_period,.tags {
+position: relative;
+top:-55px;
 }
 .debitCredit {
   margin-left: 20px;
   width:590px;
   padding-left: 10px;
   font-size: 14px;
+
 }
 .column_separator {
   width:830px;
@@ -399,7 +426,7 @@ border-bottom:1px solid #eeeeee;
 .edit_voucher{
   float: left;
  margin-left:900px;
- margin-top: -280px;
+ margin-top: -135px;
 /*  left:890px;
   bottom: 300px;*/
    /*float: right;
@@ -413,7 +440,7 @@ border-bottom:1px solid #eeeeee;
 .print_voucher{
   float: left;
   margin-left:1000px;
-margin-top: -280px;
+margin-top: -135px;
   width:50px;
 
   .btn {
@@ -470,8 +497,8 @@ padding-top: 69px;
   height:30px;
   width:268px;
   border-bottom: dotted 1px black;
-  margin-top: -100px;
-padding-bottom: 30px;
+  margin-top: 25px;
+padding-bottom: 15px;
 }
 .assign{
   margin-left: 60px;
@@ -514,7 +541,7 @@ line-height: 1px;
  /* position: relative;*/
   margin-left: 500px;
   margin-bottom: 10px;
-  width:240px;
+
 }
 /*.associated_voucher{
 position: relative;

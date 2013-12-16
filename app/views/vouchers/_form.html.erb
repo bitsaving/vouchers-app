@@ -8,31 +8,43 @@
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
         <div class="controls">
-          <%= f.text_field :date, :class => 'date-field ',:value=> setDate()  %>
+          <%= f.text_field :date, :class => 'date-field ', :value => Date.today.to_s(:normal_format)  %>
         </div>
       </div>
-      <div class="control-group">
-        <%= f.label :account_debited, "Debit From",:class => 'control-label compulsory-field' %>
-      <div class="controls">
-        <%= text_area_tag :debit , get_entered_data('debit'),  data: { hidden_field_id: 'voucher_account_debited',  textbox_id:'debit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8 ,:autofocus => true%>
+        <div class="control-group">
+            <%= f.label :account_debited, "Debit To",:class => 'control-label compulsory-field' %>
+      <div>
+        <%@counter = 0 %>
+          <%= f.fields_for :transactions do |builder| %>
+              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit", :f=>builder} %>
+            <%end%>
+    
+    </div>
+  </div>
+       <div class =" add_more_uploads radioBox addFields comment_fields  ">
+        <%= link_to_add_fields "Add debit account", f, :transactions %>
       </div>
-    </div>
-    <div class="controls">
-        <%=  f.hidden_field :account_debited %>
-    </div>
+    
     <div class="control-group">
-      <%= f.label :account_credited, "Credit To",:class => 'control-label compulsory-field' %>
-      <div class="controls">
-        <%= text_area_tag :credit,get_entered_data('credit') , data: {hidden_field_id: 'voucher_account_credited', textbox_id: 'credit',path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
+            <%= f.label :account_credited, "Credit  From",:class => 'control-label compulsory-field' %>
+      <div class>
+        <%#@counter = 0 %>
+          <%= f.fields_for :transactions do |builder| %>
+              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit", :f=>builder} %>
+            <%end%>
+       </div>
+  </div>
+    
+       <div class =" add_more_uploads radioBox addFields ">
+        <%= link_to_add_fields "Add credit account", f, :transactions %>
       </div>
-    </div>
-    <div class="controls">
-      <%=f.hidden_field :account_credited %>
-    </div>
+
+
+
     <div class="control-group">
       <%= f.label :from_date,"From Date", :class => 'control-label' %>
       <div class="controls">
-        <%= f.text_field :from_date, :class => 'date-field' %>
+        <%= f.text_field :from_date, :class => 'date-field' ,:value => set_date('from')%>
          <span class="hint">This specifies the range between which billing is done</span>
       </div>
     </div>
@@ -40,7 +52,7 @@
       <%= f.label :to_date, "To Date ", :class => 'control-label' %>
      
       <div class="controls">
-        <%= f.text_field :to_date, :class => 'date-field' %>
+        <%= f.text_field :to_date, :class => 'date-field',:value => set_date('to') %>
       </div>
     </div>
     <div class="control-group">
@@ -79,14 +91,14 @@
     <div  class =" add_more_uploads radioBox addFields">
       <%= link_to_add_fields "Add Another File", f, :attachments %>
     </div>  
-    <div class="control-group">
+    <!-- <div class="control-group">
       <%= f.label :amount, "Amount",:class => 'control-label compulsory-field' %>
       <div class="controls">
          <%= f.text_field :amount, :class => 'text_field' %>
           <span class="add_on">₹</span>
         </div>
       </div> 
-
+ -->
       <div class="control-group">
         <%= f.label :tag_list, "Tags" %><br />
         <div class="controls">

@@ -11,11 +11,15 @@ module VouchersHelper
 	end
   end
 
-  def setDate()
-    if @voucher.new_record?
-      Date.today.to_s(:normal_format)
-    else
-      @voucher.date
+  def set_date(type)
+    if !@voucher.new_record?
+      if @voucher.to_date.present?
+        if type == 'from'
+          @voucher.from_date.to_s(:normal_format)
+        else
+          @voucher.to_date.presence.to_s(:normal_format)
+        end
+      end
     end
   end
 end

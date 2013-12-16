@@ -1,3 +1,4 @@
+
 <div class = " outer_block">
 	<div class="outer_container">
 		<div class="voucher_content">
@@ -59,6 +60,10 @@
 			<div class="vouchers">
 				<div class="voucher_label"><%= link_to "Rejected" , rejected_vouchers_path, "data-no-turbolink" => true%></div>
 				<div class="voucher_contents"> <%= Voucher.rejected.count %></div>
+			</div>
+			<div class="vouchers">
+				<div class="voucher_label"><%= link_to "Archived" , archived_vouchers_path, "data-no-turbolink" => true%></div>
+				<div class="voucher_contents"> <%= Voucher.archived.count %></div>
 			</div>
 		</div>
 	</div>

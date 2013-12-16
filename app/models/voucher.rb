@@ -18,34 +18,37 @@ class Voucher < ActiveRecord::Base
       event :accept, :transitions_to => :accepted
       event :reject, :transitions_to => :rejected
     end
-    state :accepted
+    state :accepted do
+      event :archive, :transitions_to => :archived
+    end
+
     state :rejected do
       event :send_for_approval, :transitions_to => :pending
     end
+    state :archived
   end
 
   PAYMENT_TYPES = [ "Cash" , "Cheque", "Credit card", "Bank transfers" ]
 
   #FIXME_AB: Validations and association are mixed together. For better maintainability and readability you should group them together. Like all validations first then associations.
   #fixed
-  default_scope { order('date desc') }
-  scope :drafted , -> { where(workflow_state: 'drafted') }
-  scope :pending , -> { where(workflow_state: 'pending')}
-  scope :approved , -> { where(workflow_state: 'approved')}
-  scope :accepted , -> { where(workflow_state: 'accepted')}
-  scope :rejected , -> { where(workflow_state: 'rejected')}
- 
   validates :to_date, :date => { :after_or_equal_to => :from_date ,
     :message => 'must be after start date of project'}, :allow_blank=> true
-  validates :date, :payment_type, :amount, presence: true
-  validates :account_credited, :account_debited, :presence => { :message =>" by this name does not exist"}
-  validates :amount, numericality: { greater_than: 0.00 }
+  validates :date, :payment_type, presence: true
+  #validates :account_credited, :account_debited, :presence => { :message =>" by this name does not exist"}
+  #validates :amount, numericality: { greater_than: 0.00 }
   validates :payment_reference, :presence  => { :message =>" cannot be blank" }, :unless => Proc.new { |a| a['payment_type'] == "Cash" }
+  validate :check_debit_credit_equality
   #FIXME_AB: Why :New not :new
   #fixed
 
-  belongs_to :debit_from , :class_name => 'Account', :foreign_key => "account_debited"
-  belongs_to :credit_to , :class_name => 'Account', :foreign_key => "account_credited"
+  #belongs_to :debit_from , :class_name => 'Account', :foreign_key => "account_debited"
+  #belongs_to :credit_to , :class_name => 'Account', :foreign_key => "account_credited"
+  has_many :transactions
+  has_many :debit_from, -> { where(:transactions => { account_type: "debit" }) } ,through: :transactions,source: :account
+  has_many :credit_to  , -> {  where(:transactions => { account_type: "credit"}) },through: :transactions,source: :account
+  
+  #has_many :accounts, through: :transactions
   #FIXME_AB: Better if we name it as assignee
   #fixed
   belongs_to :assignee, :class_name =>'User', :foreign_key=>"assignee_id"
@@ -55,11 +58,23 @@ class Voucher < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
   accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
+  
+  default_scope { order('date desc') }
+  scope :drafted , -> { where(workflow_state: 'drafted') }
+  scope :pending , -> { where(workflow_state: 'pending')}
+  scope :approved , -> { where(workflow_state: 'approved')}
+  scope :accepted , -> { where(workflow_state: 'accepted')}
+  scope :rejected , -> { where(workflow_state: 'rejected')}
+  scope :archived , -> { where(workflow_state: 'archived')}
+
+
   #FIXME_AB: This method should be called check_if_destroyable
   #fixed
   before_destroy :check_if_destroyable
   before_destroy :remove_associated_tags
+  #before_create :check_debit_credit_equality
 
   def remove_associated_tags
     taglist = Voucher.tagged_with(tag_list)
@@ -67,6 +82,16 @@ class Voucher < ActiveRecord::Base
       tags.delete_all
     end
   end
+
+  def check_debit_credit_equality
+    debit_amount = total_amount("debit")
+    credit_amount = total_amount("credit")
+    if credit_amount != debit_amount
+      errors.add :voucher ,"debited and credited amounts does not match.Please make sure that they are equal."
+      return false
+    end
+  end
+
 
 
   def record_state_change(user_id)
@@ -94,6 +119,7 @@ class Voucher < ActiveRecord::Base
 
   def approve(user)
     #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
+    #fixed
     update_attributes({approved_by: user, approved_at: Time.zone.now })
   end
 
@@ -116,4 +142,13 @@ class Voucher < ActiveRecord::Base
     current_state >= :pending && current_state < :accepted
   end
 
+  def total_amount(type)
+    sum = 0
+    self.transactions.each do |transaction|
+      if !transaction.account_id.blank?
+        sum = sum + transaction.amount if transaction.account_type == type 
+      end
+    end
+    sum
+  end
 end

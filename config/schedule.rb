@@ -23,4 +23,16 @@ set :output, {:error => 'log/cron_error.log', :standard => 'log/cron_standard.lo
 
 every :day, :at => '02:30am' do
   custom_rake "notification:digest"
+  custom_rake "jobs:work"
+end
+every 1.day, at: '02:00' do
+  custom_rake 'db:backup'
+  
+end
+every 2.hours do
+  custom_rake "thinking_sphinx:index"
+end
+
+every :reboot do
+  custom_rake "thinking_sphinx:start"
 end

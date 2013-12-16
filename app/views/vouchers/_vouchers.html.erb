@@ -1,47 +1,59 @@
 <div class = "account_vouchers" >
-<div class="header_spacing ">
+  <div class="header_spacing ">
+  </div>
+  <% if @vouchers.count > 0 %>
+    <table class="table table-striped account_vouchers">
+      <thead>
+        <tr>
+          <th width= "5%"><%= "Id" %></th>
+          <th width= "20%"><%= "Debit" %></th>
+          <th width= "20%"><%= "Credit" %></th>
+          <th width= "10%"><%= "Date" %></th>
+          <th width= "10%"><%= "Amount" %></th>
+          <th width= "10%"><%= "Assigned" %></th>
+          <th width= "10%"><%= "State" %></th>
+          <th width= "15%"><%= "Actions" %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%#cache @vouchers do %>
+          <% @vouchers.each do |voucher| %>
+            <% cache voucher do %>
+              <tr>
+                <td><%= link_to voucher.id, voucher_path(voucher) %></td>
+                <td><%= link_to voucher.debit_from.name,account_vouchers_path(getaccount(voucher.account_debited)),:class=>'debit_credit'%></td>
+                <td><%= link_to voucher.credit_to.name,account_vouchers_path(getaccount(voucher.account_credited)),:class=>'debit_credit' %></td>
+                <td><%= voucher.date.to_s(:string_format)%></td>
+                <td><%= number_to_currency(voucher.amount,:unit=>"₹ ")%></td>
+                <% if voucher.assignee.nil? %>
+                <td> <%=" "%>
+                <%else%>
+                <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
+                  <%end%>
+                 <td><%= voucher.workflow_state%></td> 
+                <td>
+                  <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
+                    <%= link_to "Edit",
+                              edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary','data-no-turbolinks' => true %>
+                    <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s},:class => 'btn btn-mini btn-danger' %>
+                  <%end%>
+                  <%= link_to "Details",voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
+                  <% if voucher.accepted? && voucher.assignee?(current_user) %>
+                    <%= link_to "Archive" , increment_state_voucher_path(id: voucher.id, vouchers: {assignee_id: current_user.id}), :class=>'btn btn-mini btn-primary',method: :post %>
+                  <%end%>
+                  <% if voucher.archived? %>
 
-</div>
-<% if @vouchers.count > 0 %>
-<table class="table table-striped account_vouchers">
-  <thead>
-    <tr>
-      <th width= "5%"><%= "Id" %></th>
-      <th width= "20%"><%= "Debit" %></th>
-      <th width= "20%"><%= "Credit" %></th>
-      <th width= "10%"><%= "Date" %></th>
-      <th width= "10%"><%= "Amount" %></th>
-      <th width= "10%"><%= "Assigned" %></th>
-      <th width= "10%"><%= "State" %></th>
-      <th width= "15%"><%= "Actions" %></th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @vouchers.each do |voucher| %>
-    <tr>
-      <td><%= link_to voucher.id, voucher_path(voucher) %></td>
-      <td><%= link_to voucher.debit_from.name,account_vouchers_path(getaccount(voucher.account_debited)),:class=>'debit_credit'%></td>
-      <td><%= link_to voucher.credit_to.name,account_vouchers_path(getaccount(voucher.account_credited)),:class=>'debit_credit' %></td>
-      <td><%= voucher.date.to_s(:string_format)%></td>
-      <td><%= number_to_currency(voucher.amount,:unit=>"₹ ")%></td>
-      <% if voucher.assignee.nil? %>
-      <td> <%=" "%>
-      <%else%>
-      <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
-        <%end%>
-       <td><%= voucher.workflow_state%></td> 
-      <td>
-        <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
-          <%= link_to "Edit",
-                    edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary','data-no-turbolinks' => true %>
-          <%= link_to "Delete",voucher_path(voucher),:method => :delete,:data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s},:class => 'btn btn-mini btn-danger' %>
-        <%end%>
-        <%= link_to "Details",voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
-      </td>
-    </tr>
-  <% end %> 
-  </tbody>
-</table>
-<%= paginate @vouchers%>
-<%end%>
+                  <%= tag("span", data: {name: voucher.id},class: "btn btn-mini btn-primary shows")%>Show
+                  <%=render :partial => 'details' ,locals: {:@voucher => voucher} %>
+                  <%end%>
+                </td>
+              </tr>
+            <%end%>
+           
+          <% end %> 
+        <%#end%>
+      </tbody>
+    </table>
+    <%= paginate @vouchers%>
+  <%end%>
 </div>

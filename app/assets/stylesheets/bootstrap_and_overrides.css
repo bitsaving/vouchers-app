@@ -20,8 +20,19 @@ li.active {
   z-index:1000;
 
 }
+
+  .show_details td:nth-child(odd){
+
+}
+.show_details td:nth-child(even) {
+
+}
 ul.navigation li.active a:hover{
   border: none !important;
+}
+
+.table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th {
+background-color: #e8f0ff;
 }
 input,select,textarea{
   width:270px;
@@ -104,7 +115,7 @@ td{
   top:40px;
 }
 .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th {
-  background-color:#e8f0ff !important;
+  background-color:#e8f0ff ;
 }
 .nav {
   padding-top: 20px !important;
@@ -180,7 +191,7 @@ span.current{
 #userDetails {
   position: absolute;
   top:25px;
-  right:140px;
+  right:156px;
   width:auto;
   font-size: 20px;
 }
@@ -224,4 +235,78 @@ margin: -7px;
 margin-bottom: 0px;
 background-color: #c00;
 color: #fff;
+
 }
+
+.show_details {
+float: left;
+width:1226px;
+position: relative;
+margin: 0 auto;
+clear: both;
+display: inline-block;
+background-color: #f6fbff !important;
+border:dotted 1px black;
+}
+  .show_details  td{
+
+    border: none !important;
+    margin: 0 auto;
+
+position: relative;
+
+font-weight: bold;
+display: inline-block;
+width:245px !important;
+
+}
+.show_details td:nth-child(odd),.show_details td:nth-child(even){
+background-color: #f6fbff !important;
+}
+td.upper, td.paymentmode{
+text-align:  left !important;
+  float: left;
+  padding-left: 20px;
+    font-style: 15px !important;
+    width: 600px !important;
+  line-height: 5px !important;
+  border-bottom: dotted 1px black !important;
+  }
+  td.paymentmode {
+    position: relative;
+    top:-60px;
+    width:700px !important;
+    border-bottom: none !important;
+    line-height:5px !important;
+    display: inline-block;
+  }
+
+  td.date{
+    padding-left: 35px;
+    line-height: 5px !important;
+    float: left;
+    text-align: right !important;
+    font-size: 15px !important;
+    width:550px !important;
+    border-bottom: dotted 1px black !important;
+  }
+  td.lower{
+border-right: dotted 1px black !important;
+    line-height:5px !important;
+    text-align: left !important;
+    padding-left: 20px;
+    float:left;
+    font-size: 12px !important;
+width:900px !important;
+  }
+  td.amount{
+    text-align: center !important;
+    font-size: 18px !important;
+    position: relative;
+    top:-60px;
+    float: left;
+    padding-top: 30px;
+    padding-bottom: 30px;
+  width:275px !important;
+  border-bottom: dotted 1px black !important;
+  }

@@ -18,7 +18,7 @@
 	<% @user.assigned_vouchers.pending.each do |voucher| %>
 		<div>
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%= voucher.debit_from.name,voucher_url(voucher.id) %></span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><%=link_to voucher.debit_from.name,voucher_url(voucher.id) %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <%= link_to voucher.credit_to.name ,voucher_url(voucher.id)  %></span>
 			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span> <%= voucher.amount %></span>
 		</div>

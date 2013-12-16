@@ -9,8 +9,8 @@ class AccountsController < ApplicationController
     # request_type = request.env["HTTP_ACCEPT"].split(',')
     # if !request_type.index("application/json").nil?
     if params[:term]
-      like= "%".concat(params[:term].concat("%"))
-      @accounts = Account.where('name LIKE (?)' ,like)
+      account_name = "%".concat(params[:term].concat("%"))
+      @accounts = Account.where('name LIKE (?)' ,account_name)
     else
       @accounts = Account.page(params[:page])
     end
@@ -49,6 +49,7 @@ class AccountsController < ApplicationController
   def show 
     respond_to do |format|
       #FIXME_AB: no {} needed. It is not fixed, it happens at many other places too
+      #fixed
       format.html 
     end
   end

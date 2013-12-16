@@ -17,6 +17,7 @@ class Attachment < ActiveRecord::Base
       extension = File.extname(bill_attachment_file_name).downcase
       if !tagname.blank?
         #FIXME_AB: Why tagname.extension?
+        #to append the extension after the file name
         self.bill_attachment.instance_write :file_name , "#{tagname}#{extension}"
       end  
     end

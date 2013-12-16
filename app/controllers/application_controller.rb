@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   before_action :authorize
+  before_action :set_i18n_locale_from_params
+
   protected
     def authorize    
       redirect_to new_user_session_path, notice: "Please log in" if !logged_in?
@@ -27,5 +29,20 @@ class ApplicationController < ActionController::Base
       else
         redirect_to url , flash: { error: "You are not authorized to view the requested page" }
       end
+    end
+
+    protected
+    def set_i18n_locale_from_params
+      if params[:locale]
+        if I18n.available_locales.include?(params[:locale].to_sym)
+          I18n.locale = params[:locale]
+        else
+          flash.now[:notice] = "#{params[:locale]} translation not available"
+          logger.error flash.now[:notice]
+        end
+      end
+    end
+    def default_url_options
+      { locale: I18n.locale }
     end
 end

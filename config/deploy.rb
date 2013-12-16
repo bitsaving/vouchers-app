@@ -16,6 +16,10 @@ default_run_options[:pty] = true
 
 set :whenever_command, "bundle exec whenever"
 require "whenever/capistrano"
+
+task :backup do
+  run "cd #{current_path} && bundle exec rake db:backup RAILS_ENV=#{rails_env}"
+end
 namespace :deploy do
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"

@@ -1,15 +1,19 @@
 #FIXME_AB: One good approach for admin controllers is you define a AdminBaseController which is inherited from ApplicationController like you have done below. And inherited all you admin controllers form this AdminBaseController. This way if we have to do some common thing for all admin controllers, we can do it by doing in AdminBaseController. We can discuss F2F if it is not clear. 
 
 class Admin::UsersController < ApplicationController
+  #  cache_sweeper :user_sweeper, only: [:update, :destroy]
   before_action :set_user, :only => [:edit,:destroy, :update,:show]
   #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
   before_action :check_admin
   before_action :redirect_if_logged_in_first_time ,:only => [:show]
+
+  caches_action :show
   # GET /users
   # GET /users.json
   def index
     #FIXME_AB: Lets make per page = 50
-    @users = User.all.order('first_name').page(params[:page]) 
+    #fixed
+    @users = User.order('first_name').page(params[:page])
      respond_to do |format|
       format.html{}
     end

@@ -1,0 +1,29 @@
+<tr></tr>
+<%= tag("tr", data: {id: @voucher.id} ,:class => "show_details hidden" )%>
+<td class ="upper"> #<%= @voucher.id %></td>
+<td class="date">
+<%= @voucher.date.to_s(:string_format) %>
+</td>
+
+<td class="lower">DEBIT </td>
+<td class="lower"> <%= @voucher.debit_from.name %>
+
+</td>
+
+<td class="lower">CREDIT </td>
+	<td class="lower"><%= @voucher.credit_to.name %>
+</td>
+<td class="amount"> Amount : <%= @voucher.amount %></td>
+
+<td class="paymentmode"> Mode : <%= @voucher.payment_type %>	</td>
+
+<%if @voucher.payment_reference.present? %>
+<td class="paymentmode"> Reference : <%= @voucher.payment_reference %>	</td>
+
+<td width="40px"></td>
+<%end%>
+<% if @voucher.to_date %>
+<td  class="paymentmode"> From : <%= @voucher.from_date.to_s(:normal_format) %>  To : <%= @voucher.to_date.to_s(:normal_format) %></td>
+
+<%end%>
+	</tr>

@@ -51,15 +51,23 @@
           <div class="container-fluid nav-collapse ">
             <% if current_user %>  
               <ul class="nav nav-tabs navigation  ">
-                <li><%= nav_link 'Home', root_path%></li> 
-                <li><%= nav_link "Vouchers" , all_vouchers_path %>
+                <li><%= nav_link t('.home'), root_path%></li> 
+                <li><%= nav_link t(".vouchers") , all_vouchers_path %>
                 </li>
-                <% if current_user.user_type == 'admin'%>
-                  <li><%= nav_link "Users" , admin_users_path%></li>
+                <% if current_user.admin?%>
+                  <li><%= nav_link t(".users") , admin_users_path%></li>
                 <%end%>
-                <li><%= nav_link "Accounts" , accounts_path%></li>
+                <li><%= nav_link t(".accounts") , accounts_path%></li>
                 <li>
-                  <%= nav_link "Report" , report_path %></li>
+                  <%= nav_link t(".report") , report_path %></li>
+                <li>
+                  <div class="search_box">
+            <form action="<%= search_path %>" method="get">
+              <%= text_field_tag :query, params[:query], placeholder: 'Search vouchers...' %>
+              <%= submit_tag "Search", name: nil, class: 'btn btn-primary' %>
+            </form>
+            </div>
+          </li>
                  <!-- <div class="dropdown">
                     <a id="reportUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
                       <span class="voucher">Reports</span>
@@ -79,7 +87,7 @@
               <!--  <span class="initials"><%= current_user.last_name %></span> -->
             </div>
             <div class="settings">
-              <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+              <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
             </div>
                 <div id ="notifications_panel">
                 <div id="notifications">

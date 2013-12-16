@@ -3,28 +3,42 @@ class VouchersController < ApplicationController
   before_action :check_user_and_voucher_state ,only: [:edit]
   before_action :convert_date ,only: [:generate_report]
   before_action :set_session ,only: [:index,:all,:report]
+  #before_action :false_return, only: [:create]
+  #before_action :merge_params ,only: [:create,:update]
   # GET /vouchers
   # GET /vouchers.json
   def index
+    Rails.logger.debug "$$#{session[:previous_tab] == "drafted"}"
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).send(session[:previous_tab]).page(params[:page])
     elsif params[:user_id]
       @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: params[:user_id]).page(params[:page])
     elsif params[:account_id]
       @vouchers = Voucher.send(session[:previous_tab]).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page])
-    else
+    elsif session[:previous_tab] == "drafted"
       @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: current_user.id).page(params[:page])
+    else
+       @vouchers = Voucher.send(session[:previous_tab]).page(params[:page])
     end
     respond_to do |format|
       format.html  
     end
   end
 
+# def merge_params
+#   unless params.select{|k,v| k =~ /^account_debited_/}.empty?
+#     params[:voucher][:account_debited] = params.select{|k,v| k =~ /^account_debited_/}.values.reject{|v| v.empty?}
+#     params.reject! {|k,v| k=~ /^account_debited_/}
+# end
+# Rails.logger.debug "@@@@ #{params[:voucher][:account_debited]}"
+# # params[:voucher][:account_debited] = params[:voucher][:account_debited].to_yaml
+# end
   # GET /vouchers/new
   def new
     @voucher = Voucher.new
-    uploads = @voucher.attachments.build
+    uploads = @voucher.attachments.build  
     comments =@voucher.comments.build
+    transactions = @voucher.transactions.build
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
     end
@@ -44,7 +58,9 @@ class VouchersController < ApplicationController
   end
 
   def generate_report
-    if params[:from].nil? or params[:from].to_date > params[:to].to_date
+    if params[:from].nil?
+      redirect_to report_path
+    elsif params[:from].present? && params[:from] > params[:to]
       redirect_to report_path , notice: "Please enter valid values"
     end
     @voucher_startDate = params[:from]
@@ -58,11 +74,16 @@ class VouchersController < ApplicationController
 
   # GET /vouchers/1/edit
   def edit
+   respond_to do |format|
+      format.html     
+    end
   end
 
   # POST /vouchers
   # POST /vouchers.json
   def create
+   Rails.logger.debug "@@@@ #{params[:voucher][:account_debited]}"
+   Rails.logger.debug "#{voucher_params}"
    @voucher = current_user.vouchers.build(voucher_params)
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
@@ -92,7 +113,7 @@ class VouchersController < ApplicationController
     respond_to do |format|
       if @voucher.update(voucher_params)
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
-        format.html {}
+        format.html
         format.json { head :no_content }
         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
@@ -115,6 +136,14 @@ class VouchersController < ApplicationController
   def accepted
     get_vouchers('accepted')
     session[:previous_tab] = 'accepted'
+    respond_to do |format|
+      format.html { render action: 'index'}
+    end  
+  end
+
+  def archived
+    get_vouchers('archived')
+    session[:previous_tab] = 'archived'
     respond_to do |format|
       format.html { render action: 'index'}
     end  
@@ -206,12 +235,18 @@ class VouchersController < ApplicationController
     redirect_to :back ,notice: notice
   end
 
+  def search
+    @vouchers = Voucher.search Riddle.escape(params[:query]), :page => params[:page], :per_page => 5
+    # respond_to do |format|
+    #   format.html
+    # end  
+  end
   
   protected
 
   def check_user_and_voucher_state
-    if (current_user.admin? || current_user.id == @voucher.creator_id)
-      if !(@voucher.workflow_state == 'drafted' || @voucher.workflow_state == 'rejected')
+    if (current_user.admin? || @voucher.creator(current_user))
+      if !(@voucher.drafted? || @voucher.rejected?)
         redirect_to_back_or_default_url
       end
     else
@@ -219,13 +254,16 @@ class VouchersController < ApplicationController
     end
   end
 
+
+
   def get_vouchers(state)
-    Rails.logger.debug "$$$ #{params}"
     if params[:account_id]
       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: state).where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]) 
+        @vouchers = Voucher.where(workflow_state: state).where("id in (?) ", Transaction.where(account_id: params[:account_id]).where(account_type: params[:account_type].pluck(:voucher_id)))
+        #where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]) 
       else
-      @vouchers = Voucher.where(workflow_state: state).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]) 
+      @vouchers = Voucher.where(workflow_state: state).where("id in (?) " ,Transaction.where(account_id: params[:account_id]).pluck(:voucher_id))
+      #where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]) 
       end
     elsif params[:user_id]
       @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]) 
@@ -243,8 +281,10 @@ class VouchersController < ApplicationController
 
   def filter_by_name_and_type(vouchers ,name, type)
     if !name.blank?
-      @vouchers = vouchers.where('account_debited in (?) OR account_credited in (?)',name,name)
-      @vouchers = @vouchers.where('account_'+ type +'ed in (?)', name) if !type.blank?
+      @vouchers = vouchers.where("id in (?) " ,Transaction.where(account_id: name).pluck(:voucher_id))
+        #'account_debited in (?) OR account_credited in (?)',name,name)
+      @vouchers = @vouchers.where(workflow_state: state).where("id in (?) ", Transaction.where(account_type: params[:account_type].pluck(:voucher_id))) if !type.blank?
+      #where('account_'+ type +'ed in (?)', name) if !type.blank?
     end
    @vouchers
   end
@@ -259,7 +299,7 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_debited,:account_credited,:amount,:payment_type, comments_attributes:[:description,:id,:_destroy,:user_id],attachments_attributes:[:tagname,:id, :_destroy,:bill_attachment] ).merge({ assignee_id: current_user.id })
+      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_credited,:amount,:payment_type, transactions_attributes: [:account_id,:voucher_id,:id,:_destroy,:account_type,:amount],comments_attributes:[:description,:id,:_destroy,:user_id],attachments_attributes:[:tagname,:id, :_destroy,:bill_attachment] ).merge({ assignee_id: current_user.id})
     end
 
     def set_session
@@ -267,6 +307,8 @@ class VouchersController < ApplicationController
         session[:previous_tab] = 'drafted'
       end
     end
+
+
 
     def convert_date
       if params[:from]

@@ -73,6 +73,7 @@ VoucherEventsHandler.prototype = {
       .appendTo( ul );
     };
     $('.date-field').css('cursor', 'pointer');
+  $(document).on("focus",".autocomplete", function() {
     $('.autocomplete').autocomplete({
       source: $('.autocomplete').data('path'),
       minLength: 3,
@@ -89,6 +90,7 @@ VoucherEventsHandler.prototype = {
         $('#'+ $(this).data('textbox-id')).val(ui.item.label);
       }
     });
+  });
   },
   hiddenFieldHandler: function(){
     if($('#voucher_payment_type').val() != "Cash")

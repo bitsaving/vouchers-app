@@ -1,0 +1,18 @@
+fr: 
+  hello: "Hello world"
+  layouts: 
+    application: 
+      accounts: comptes
+      home: maison
+      logout: déconnexion
+      report: rapport
+      users: utilisateurs
+      vouchers: "Les bons de réduction"
+  vouchers: 
+    index: 
+      accepted: accepté
+      approved: approuvé
+      archived: archivé
+      drafted: Repêché
+      pending: "en attendant"
+      rejected: rejeté

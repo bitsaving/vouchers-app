@@ -19,5 +19,20 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
-  hello: "Hello world"
+en: 
+  layouts: 
+    application: 
+      accounts: Accounts
+      home: Home
+      logout: logout
+      report: Report
+      users: Users
+      vouchers: Vouchers
+  vouchers: 
+    accepted: Accepted
+    approved: Approved
+    archived: Archived
+    assigned: ~
+    drafted: Drafted
+    pending: Pending
+    rejected: Rejected

@@ -3,6 +3,7 @@ VoucherApp::Application.routes.draw do
   get "notifications/seen"
   get 'tags' ,to: 'tags#index'
   get 'tags/:tag', to: 'vouchers#index', as: :tag, constraints: { tag: /.*/ }
+  get 'search' , to: 'vouchers#search' ,as: :search
   resources :comments
   resources :uploads
   root :to => 'vouchers#assigned'
@@ -13,6 +14,7 @@ VoucherApp::Application.routes.draw do
     get 'pending', on: :collection
     get 'accepted',on: :collection
     get 'rejected',on: :collection
+    get 'archived' , on: :collection
     post 'increment_state' ,on: :member
     post 'decrement_state',on: :member   
   end
@@ -23,10 +25,11 @@ VoucherApp::Application.routes.draw do
     get 'vouchers/pending',to: 'vouchers#pending'
     get 'vouchers/accepted',to: 'vouchers#accepted'
     get 'vouchers/rejected',to: 'vouchers#rejected'
+    get 'vouchers/archived' , to: 'vouchers#archived'
     end
   get 'voucher_report' ,to: 'vouchers#report' ,as: :report
-  get 'generate_report' ,to: 'vouchers#generate_report' 
-  match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:post]
+
+  match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:post,:get]
 
   namespace 'admin' do
     resources :users, only: [:show ,:edit,:index,:new,:update,:create ,:destroy]
@@ -39,6 +42,9 @@ VoucherApp::Application.routes.draw do
     omniauth_callbacks: "omni_auth/omniauth_callbacks", 
     sessions: "omni_auth/sessions"
   }
+   namespace 'api' do
+    resources 'vouchers', only: [:show, :index]
+  end
 
   
   # The priority is based upon order of creation: first created -> highest priority.

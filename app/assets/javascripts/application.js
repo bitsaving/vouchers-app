@@ -33,6 +33,7 @@ ApplicationHandler.prototype = {
     this.VoucherStateHandler();
     this.oneclick();
     this.resetautocomplete();
+    this.showDetails();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
@@ -73,5 +74,14 @@ ApplicationHandler.prototype = {
       });
       return true;
     });
+  },
+  showDetails: function() {
+    
+    $('.shows').click(function(){
+      $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggle('blind', 1000);
+      $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggleClass('hidden').animate(2000);
+
+    });
   }
+
 }

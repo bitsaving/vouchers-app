@@ -17,6 +17,20 @@
 font-size: 14px;
 font-weight:bold;
 }
+.search_box {
+width:auto;
+input {
+  width:120px !important;
+  }
+form {
+}
+input[type="submit"] {
+position:relative;
+bottom:8px !important;
+width:66px !important;
+}
+
+}
 .voucher{
   font-size: 15px;
   width :30px;
@@ -168,7 +182,7 @@ form {
   }
 }
 .notifications_output {
-  width:400px;
+
 
 
 }

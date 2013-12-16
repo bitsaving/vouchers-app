@@ -1,0 +1,17 @@
+<%@counter = @counter +1 %>
+<div class="controls">
+  <%= text_area_tag :account_id , "" ,data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s,path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
+  <div class="bank_amount"> Amount  </span>
+
+  <%#= label_tag :amount ,"Amount",:class => "bank_amount" %>
+  <%= f.text_field :amount , :class => "filename" %>
+ 
+  <span class="remove_fields"><%#= link_to_remove_fields "Remove" , f %></span>
+</div>
+<div class="controls">
+  <%=  f.hidden_field :account_id  ,:id =>"account_debited_#{@counter}"  %>
+</div>
+
+<div class="controls">
+  <%=  f.hidden_field :account_type ,:value => @account_type  %>
+</div>
