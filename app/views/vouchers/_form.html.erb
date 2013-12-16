@@ -55,18 +55,7 @@
         <%= f.text_field :to_date, :class => 'date-field',:value => set_date('to') %>
       </div>
     </div>
-    <div class="control-group">
-      <%= f.label :payment_type,"Payment Mode", :class => 'control-label compulsory-field' %>
-      <div class="controls">
-        <%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %>
-      </div>
-    </div>
-    <div class ="control-group select hidden">
-      <%= f.label :payment_reference, "Cheque/Credit/Bank Reference No", :class => 'control-label compulsory-field' %>
-      <div class="controls">
-        <%= f.text_field :payment_reference, :class => 'text-field'%>
-      </div>
-    </div>
+   
       <div class="control-group radioBox addFields">
         <% counter = 0 %>
         <%= f.fields_for :attachments do |builder| %>

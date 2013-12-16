@@ -51,8 +51,8 @@ module ApplicationHelper
 
   def get_by_date(state,to,from,name,type)
     @vouchers = Voucher.where(workflow_state:state).where('date between (?) and (?)',to,from)
-    @vouchers  = @vouchers.where("id in (?) " ,Transaction.where(account_id: name).pluck(:voucher_id)) if !name.blank?
-    @vouchers = @vouchers.where("id in (?) " ,Transaction.where(account_type: type).pluck(:voucher_id)) if !type.blank?
+    @vouchers  = @vouchers.includes(:transactions).where(:transactions => {:account_id => name}) if !name.blank?
+    @vouchers = @vouchers.includes(:transactions).where(:transactions => {:account_type => type }) if !type.blank?
     @vouchers
   end
   def get_all_vouchers(id)

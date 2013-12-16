@@ -1,7 +1,1 @@
-<div class="search_box">
-	<form action="<%= search_path %>" method="get">
-        <%= text_field_tag :query, params[:query], placeholder: 'Search vouchers...' %>
-        <%= submit_tag "Search", name: nil, class: 'btn btn-primary' %>
-	</form>
-</div>
  <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @vouchers } %>

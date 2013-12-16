@@ -93,12 +93,12 @@ VoucherEventsHandler.prototype = {
   });
   },
   hiddenFieldHandler: function(){
-    if($('#voucher_payment_type').val() != "Cash")
-      $('.select').removeClass("hidden");
-    $(document).on('change', '#voucher_payment_type', function() {
-      $('.select').removeClass("hidden");
+    // if($('.voucher_payment_type').val() != "Cash")
+    //   $('.select').removeClass("hidden");
+    $(document).on('change', '.voucher_payment_type select', function() {
+      $(this).parents('.bank_amount').siblings('.select').removeClass("hidden");
       if($(this).val() == "Cash")
-        $('.select').addClass("hidden");
+       $(this).parents('.bank_amount').siblings('.select').addClass("hidden");
     });
   }
 } 

@@ -61,6 +61,8 @@
       <div>
         <%= link_to credit.name, account_vouchers_path(Account.find(credit))%>
         <strong><%=" - ₹ " + @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.amount.to_s  %></strong>
+        <span> Payment Mode: <%= @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_type  %></span>
+        <span>Payment Reference: <%= @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_reference  %></span>
        </div>
       <%end%>
     
@@ -73,15 +75,6 @@
         <%= @voucher.to_date.to_s(:string_format) %> 
     </div>
     <%end%>
-    <div class = "payment_mode">
-      <div class="payment_label">Payment Mode :</div>
-      <%= @voucher.payment_type %>
-      <% if @voucher.payment_reference.present? %>
-      <div class="payment_label">Reference Number :</div>
-      <%= @voucher.payment_reference %> 
-      <%end%>
-    </div> 
-
      
   
     <%if(@voucher.approved?  && @voucher.assignee?(current_user))%>

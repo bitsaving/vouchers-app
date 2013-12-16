@@ -8,13 +8,12 @@ class VouchersController < ApplicationController
   # GET /vouchers
   # GET /vouchers.json
   def index
-    Rails.logger.debug "$$#{session[:previous_tab] == "drafted"}"
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).send(session[:previous_tab]).page(params[:page])
     elsif params[:user_id]
       @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: params[:user_id]).page(params[:page])
     elsif params[:account_id]
-      @vouchers = Voucher.send(session[:previous_tab]).where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page])
+      @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id]}).send(session[:previous_tab]).page(params[:page])
     elsif session[:previous_tab] == "drafted"
       @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: current_user.id).page(params[:page])
     else
@@ -82,8 +81,6 @@ class VouchersController < ApplicationController
   # POST /vouchers
   # POST /vouchers.json
   def create
-   Rails.logger.debug "@@@@ #{params[:voucher][:account_debited]}"
-   Rails.logger.debug "#{voucher_params}"
    @voucher = current_user.vouchers.build(voucher_params)
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
@@ -259,10 +256,10 @@ class VouchersController < ApplicationController
   def get_vouchers(state)
     if params[:account_id]
       if params[:account_type]
-        @vouchers = Voucher.where(workflow_state: state).where("id in (?) ", Transaction.where(account_id: params[:account_id]).where(account_type: params[:account_type].pluck(:voucher_id)))
+        @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id],:account_type => params[:account_type]}).where(workflow_state: state).page(params[:page])
         #where("account_#{params[:account_type]}ed in (?)" ,params[:account_id]).page(params[:page]) 
       else
-      @vouchers = Voucher.where(workflow_state: state).where("id in (?) " ,Transaction.where(account_id: params[:account_id]).pluck(:voucher_id))
+      @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id]}).where(workflow_state: state).page(params[:page])
       #where('account_debited in (?) OR account_credited in (?)', params[:account_id],params[:account_id]).page(params[:page]) 
       end
     elsif params[:user_id]
@@ -281,9 +278,9 @@ class VouchersController < ApplicationController
 
   def filter_by_name_and_type(vouchers ,name, type)
     if !name.blank?
-      @vouchers = vouchers.where("id in (?) " ,Transaction.where(account_id: name).pluck(:voucher_id))
+      @vouchers = vouchers.includes(:transactions).where(:transactions => {:account_id => name})
         #'account_debited in (?) OR account_credited in (?)',name,name)
-      @vouchers = @vouchers.where(workflow_state: state).where("id in (?) ", Transaction.where(account_type: params[:account_type].pluck(:voucher_id))) if !type.blank?
+      @vouchers = @vouchers.includes(:transactions).where(:transactions => {:account_type => type}) if !type.blank?
       #where('account_'+ type +'ed in (?)', name) if !type.blank?
     end
    @vouchers
@@ -299,7 +296,7 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:payment_reference,:assignee_id,:account_credited,:amount,:payment_type, transactions_attributes: [:account_id,:voucher_id,:id,:_destroy,:account_type,:amount],comments_attributes:[:description,:id,:_destroy,:user_id],attachments_attributes:[:tagname,:id, :_destroy,:bill_attachment] ).merge({ assignee_id: current_user.id})
+      params.require(:voucher).permit(:date,:tag_list,:from_date,:to_date,:assignee_id,:account_credited, transactions_attributes: [:account_id,:voucher_id,:id,:_destroy,:account_type,:amount,:payment_type,:payment_reference],comments_attributes:[:description,:id,:_destroy,:user_id],attachments_attributes:[:tagname,:id, :_destroy,:bill_attachment] ).merge({ assignee_id: current_user.id})
     end
 
     def set_session

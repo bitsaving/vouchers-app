@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(version: 20131213094929) do
     t.integer "amount"
     t.string  "type"
     t.integer "account_id"
+    t.string "payment_reference"
+    t.string "payment_type"
   end
 
   create_table "users", force: true do |t|

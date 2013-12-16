@@ -30,10 +30,10 @@ class Voucher < ActiveRecord::Base
 
   validates :to_date, :date => { :after_or_equal_to => :from_date ,
     :message => 'must be after start date of project'}, :allow_blank=> true
-  validates :date, :payment_type, presence: true
+  validates :date,  presence: true
   #validates :account_credited, :account_debited, :presence => { :message =>" by this name does not exist"}
   #validates :amount, numericality: { greater_than: 0.00 }
-  validates :payment_reference, :presence  => { :message =>" cannot be blank" }, :unless => Proc.new { |a| a['payment_type'] == "Cash" }
+ 
   validate :check_debit_credit_equality
   #FIXME_AB: Why :New not :new
   #fixed

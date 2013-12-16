@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
         end
       end
     end
-    def default_url_options
-      { locale: I18n.locale }
-    end
+    # def default_url_options
+    #   { locale: I18n.locale }
+    # end
 end

@@ -4,8 +4,8 @@ class CreateTableTransactions < ActiveRecord::Migration
     	t.references :voucher
     	t.integer :amount
     	t.string :account_type
-    	t.string :pay_type
-    	t.string :reference
+    	t.string :payment_type
+    	t.string :payment_reference
     	t.references :account
     end
   end

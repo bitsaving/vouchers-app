@@ -217,14 +217,29 @@ padding-top: 18px;
   left:880px;
   display: inline-block;
 }
+.transaction_label{
+width:50px;
+}
 .bank_amount{
-  width:300px;
+  padding-bottom: 10px;
+  width:415px;
 font-weight:bold;
 position:relative !important;
-left:300px !important;
-input {
+left:170px !important;
+top:3px;
+input ,select{
+position: relative !important;
+left:196px !important;
+width:150px;}
+select {
 position: relative;
-left:-100px;}
+width:150px;
+top:3px;
+left:149px !important;
+}
+.reference_field{
+position: relative;
+left:-171px !important;}
 }
 .caption{
   position: absolute;
@@ -402,6 +417,10 @@ top:-55px;
   width:590px;
   padding-left: 10px;
   font-size: 14px;
+  span{
+padding-left: 5px;
+padding-right: 5px;
+  }
 
 }
 .column_separator {
@@ -540,7 +559,8 @@ line-height: 1px;
   font-size: 14px !important;
  /* position: relative;*/
   margin-left: 500px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
+  top:14px;
 
 }
 /*.associated_voucher{
