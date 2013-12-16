@@ -12,7 +12,6 @@
         </div>
       </div>
     <% end %>
-    <% #FIXME_AB: You should pass user object to assignee? method below #fixed-%>
     <% if voucher.assignee?(current_user) %>
       <%= render :partial => 'comments/form' %>
     <%end%>

@@ -1,5 +1,3 @@
-#FIXME_AB: I think we should name this model as Attachment instead of Upload
-#fixed
 class Attachment < ActiveRecord::Base
   belongs_to :voucher 
   #FIXME_AB: Attachment could be anything. So name it as attachment not bill_attachment.
@@ -8,7 +6,6 @@ class Attachment < ActiveRecord::Base
   # validates_attachment_content_type :avatar,:content_type =>'application/pdf' 
 
   before_save :rename_file
-  #FIXME_AB: You have code formatting issue. YOu should install beautifyRuby sublime package and use them.
 
   #FIXME_AB: I am not sure why this method is needed, please explain
   #this is required to replace the filename with the caption added.

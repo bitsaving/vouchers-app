@@ -19,8 +19,6 @@
 //= require_tree .
 //= require jquery.tagcanvas.js
 
-// #FIXME_AB: Object oriented architecture please 
-//fixed
 $(document).ready(function(){
   var applicationHandler = new ApplicationHandler();
 })

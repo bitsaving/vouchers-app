@@ -8,8 +8,6 @@ class CommentsController < ApplicationController
       redirect_to :back
       return false
     end
-    #FIXME_AB: Whenever you find something like you are doing above. Always consider a case to handle, if the record is not found
-    #fixed
     @comment = @voucher.comments.build(comment_params)
     if(@comment.save)
       respond_to do |format|

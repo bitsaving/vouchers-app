@@ -6,9 +6,9 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name  , :case_sensitive => false
   default_scope { order('name') }
   paginates_per 50
-  #FIXME_AB: Good. But This will return false when I call obj.destroy. Lets do one more thing add error to the object :base. "We are not allowing destroy or delete for Account". Do the same thing for delete. since obj.delete will delete the object. delete don't fire callbacks to you would need to overwite delete method in he model
-  #fixed
   before_validation :strip_blanks
+
+  #FIXME_AB: Why do you have used a block instead of a method for before_destroy. 
   before_destroy do 
   	errors.add :base , "We are not allowing destroy or delete for Account" 
   	return false 
@@ -23,6 +23,4 @@ class Account < ActiveRecord::Base
     self.name = self.name.squish
   end
 
-  #FIXME_AB: Since this is needed for dropdown and not belongs to Account. Move it to constant.rb in initializers. And name it ACCOUNT_FILTER_OPTIONS or something similar
-  #fixed
 end

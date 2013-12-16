@@ -84,8 +84,6 @@ class Admin::UsersController < ApplicationController
 
   def set_user
     @user = User.find_by(id: params[:id])
-    #FIXME_AB: Instead of handling this exception you should check for user.nil?
-    #fixed
     if @user.nil?
       redirect_to_back_or_default_url
     end  
