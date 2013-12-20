@@ -1,12 +1,16 @@
 ThinkingSphinx::Index.define :voucher, :with => :active_record,:delta=> true do
   indexes :date
-  indexes debit_from(:name) ,:as => :debited_account
-  indexes credit_to(:name),:as => :credited_account
-  indexes amount
+  indexes debit_from.name ,:as => :debited_account
+  indexes credit_to.name,:as => :credited_account
+  indexes transactions.amount
+  indexes transactions.payment_type
+  indexes transactions.payment_reference
+  indexes transactions.account_type
+  #indexes amount
   indexes (:id)
-  indexes payment_type
-  indexes payment_reference
-   indexes workflow_state
+  #indexes payment_type
+  #indexes payment_reference
+  indexes workflow_state
   indexes from_date
   indexes to_date
   indexes assignee.email ,:as => :assignee_email
@@ -19,6 +23,6 @@ ThinkingSphinx::Index.define :voucher, :with => :active_record,:delta=> true do
   indexes accepted_by_user.email,:as => :accepted_by_email
   indexes comments.description
   indexes attachments.bill_attachment_file_name
- 
+  indexes tags.name
   has created_at, updated_at
 end

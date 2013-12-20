@@ -47,12 +47,22 @@ class Voucher < ActiveRecord::Base
   #has_many :accounts, through: :transactions
   #FIXME_AB: Better if we name it as assignee
   #fixed
-  belongs_to :assignee, :class_name =>'User', :foreign_key=>"assignee_id"
-  belongs_to :creator, :class_name => "User"
-  belongs_to :approved_by_user, :class_name => 'User', :foreign_key => "approved_by"
-  belongs_to :accepted_by_user, :class_name => 'User', :foreign_key => "accepted_by"
-  has_many :comments, :dependent => :destroy
-  has_many :attachments, dependent: :destroy
+  with_options :class_name =>'User' do |assoc|
+    assoc.belongs_to :assignee
+    assoc.belongs_to :creator
+    assoc.belongs_to :approved_by_user, :foreign_key => "approved_by"
+    assoc.belongs_to :accepted_by_user,:foreign_key => "accepted_by"
+  end
+  # belongs_to :assignee, :class_name =>'User'
+  # belongs_to :creator, :class_name => "User"
+  # belongs_to :approved_by_user, :class_name => 'User', :foreign_key => "approved_by"
+  # belongs_to :accepted_by_user, :class_name => 'User', :foreign_key => "accepted_by"
+   with_options :dependent => :destroy do |assoc|
+    assoc.has_many :comments
+    assoc.has_many :attachments 
+  end
+  # has_many :comments, :dependent => :destroy
+  # has_many :attachments, :dependent => :destroy
   accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
   accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
@@ -69,15 +79,15 @@ class Voucher < ActiveRecord::Base
   #FIXME_AB: This method should be called check_if_destroyable
   #fixed
   before_destroy :check_if_destroyable
-  before_destroy :remove_associated_tags
+ # before_destroy :remove_associated_tags
   #before_create :check_debit_credit_equality
 
-  def remove_associated_tags
-    taglist = Voucher.tagged_with(tag_list)
-    if taglist.blank?
-      tags.delete_all
-    end
-  end
+  # def remove_associated_tags
+  #   taglist = Voucher.tagged_with(tag_list)
+  #   if taglist.blank?
+  #     tags.delete_all
+  #   end
+  # end
 
   def check_debit_credit_equality
     debit_amount = total_amount("debit")
@@ -105,7 +115,7 @@ class Voucher < ActiveRecord::Base
   end
   
   def reject(user_id)
-    update_attributes({accepted_by: nil, approved_by: nil})
+    update_attributes({ accepted_by: nil, approved_by: nil })
   end
 
 
@@ -134,11 +144,11 @@ class Voucher < ActiveRecord::Base
 
   def total_amount(type)
     sum = 0
-    self.transactions.each do |transaction|
-      if !transaction.account_id.blank?
-        sum = sum + transaction.amount if transaction.account_type == type 
+    self.transactions.reject! { |n| n.account_id.blank? }.select {|n| n.account_type == type }.each do |transaction|
+      # if !transaction.account_id.blank?
+       sum = sum + transaction.amount #if transaction.account_type == type 
       end
-    end
+    # end
     sum
   end
 end

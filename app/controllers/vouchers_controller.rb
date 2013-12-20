@@ -24,14 +24,7 @@ class VouchersController < ApplicationController
     end
   end
 
-# def merge_params
-#   unless params.select{|k,v| k =~ /^account_debited_/}.empty?
-#     params[:voucher][:account_debited] = params.select{|k,v| k =~ /^account_debited_/}.values.reject{|v| v.empty?}
-#     params.reject! {|k,v| k=~ /^account_debited_/}
-# end
-# Rails.logger.debug "@@@@ #{params[:voucher][:account_debited]}"
-# # params[:voucher][:account_debited] = params[:voucher][:account_debited].to_yaml
-# end
+
   # GET /vouchers/new
   def new
     @voucher = Voucher.new
@@ -51,26 +44,7 @@ class VouchersController < ApplicationController
     end
   end
 
-  def report 
-    params[:from]  = Date.today.beginning_of_month()
-    params[:to]  = Date.today.end_of_month()
-  end
-
-  def generate_report
-    if params[:from].nil?
-      redirect_to report_path
-    elsif params[:from].present? && params[:from] > params[:to]
-      redirect_to report_path , notice: "Please enter valid values"
-    end
-    @voucher_startDate = params[:from]
-    @voucher_endDate = params[:to]
-    @voucher_accountName = params[:report_account]
-    @voucher_accountType = params[:account_type]
-    respond_to do |format|
-      format.html  {}
-    end
-  end
-
+  
   # GET /vouchers/1/edit
   def edit
    respond_to do |format|
@@ -177,7 +151,7 @@ class VouchersController < ApplicationController
   def assigned
     @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc')
     respond_to do |format|
-      format.html {}
+      format.html
     end
   end
 
@@ -239,10 +213,30 @@ class VouchersController < ApplicationController
     # end  
   end
   
+  def report 
+    params[:from]  = Date.today.beginning_of_month()
+    params[:to]  = Date.today.end_of_month()
+  end
+
+  def generate_report
+    if params[:from].nil?
+      redirect_to report_path
+    elsif params[:from].present? && params[:from] > params[:to]
+      redirect_to report_path , notice: "Please enter valid values"
+    end
+    @voucher_startDate = params[:from]
+    @voucher_endDate = params[:to]
+    @voucher_accountName = params[:report_account]
+    @voucher_accountType = params[:account_type]
+    respond_to do |format|
+      format.html  {}
+    end
+  end
+
   protected
 
   def check_user_and_voucher_state
-    if (current_user.admin? || @voucher.creator(current_user))
+    if (current_user.admin? || @voucher.creator?(current_user))
       if !(@voucher.drafted? || @voucher.rejected?)
         redirect_to_back_or_default_url
       end

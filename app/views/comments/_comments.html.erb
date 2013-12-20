@@ -8,7 +8,7 @@
         <%= simple_format(comment.description) %>
         <div class ="commentator_name">
           <%= comment.user.first_name  + " ,"%>
-          <%= comment.updated_at.in_time_zone("New Delhi").to_s(:short_ordinal)%>
+          <%= comment.updated_at.to_s(:short_ordinal)%>
         </div>
       </div>
     <% end %>

@@ -20,10 +20,7 @@
   <div class ="date">
     <%= @voucher.date.to_s(:string_format) %> 
   </div>
-  <div class = "separator">
-  </div>
-  <div class ="column_separator">
-     <div class = "edit_voucher onprint">
+   <div class = "edit_voucher onprint">
       <% if @voucher.can_be_edited? && @voucher.creator?(current_user)%>
         <%= link_to "Edit" ,edit_voucher_path(@voucher),:class=>'btn btn-primary',"data-no-turbolink" => true%> 
       <%end%>
@@ -31,6 +28,10 @@
     <div class ="print_voucher">
       <%= link_to "Print" ,"javascript:print()",:class=>'btn btn-primary onprint'%> 
     </div>
+  <div class = "separator">
+  </div>
+  <div class ="column_separator">
+    
       <div class ="payment">
       <div class="amount">
         <% @sum = 0 %>
@@ -51,6 +52,11 @@
       <div>
         <%= link_to debit.name, account_vouchers_path(Account.find(debit))%>
         <strong><%=" - ₹ " + @voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.amount.to_s  %></strong>
+         <span> Payment Mode: <%= @voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.payment_type  %></span>
+        <% if  @voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.payment_reference.present? %>
+        <span>Payment Reference: <%= @voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.payment_reference  %>
+<%end%>
+        </span>
        </div>
       <%end%>
    
@@ -62,7 +68,10 @@
         <%= link_to credit.name, account_vouchers_path(Account.find(credit))%>
         <strong><%=" - ₹ " + @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.amount.to_s  %></strong>
         <span> Payment Mode: <%= @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_type  %></span>
-        <span>Payment Reference: <%= @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_reference  %></span>
+        <% if  @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_reference.present? %>
+        <span>Payment Reference: <%= @voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.payment_reference  %>
+<%end%>
+        </span>
        </div>
       <%end%>
     
@@ -90,7 +99,7 @@
         <div class="labels">Bill attachments
         </div>
         <% @voucher.attachments.each do |attachment|  %> 
-          <div><%= (counter += 1).to_s+". "%><%= link_to (attachment.bill_attachment_file_name) ,attachment.bill_attachment.url(:original, false),:target => "_blank"%></div>     
+          <div><%= (counter += 1).to_s+". "%><%= link_to attachment.tagname ,attachment.bill_attachment.url(:original, false) , :target => "_blank" %></div>     
              <%end%>
       </div> 
     <%end%>

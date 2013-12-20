@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20131213094929) do
   create_table "transactions", force: true do |t|
     t.integer "voucher_id"
     t.integer "amount"
-    t.string  "type"
+    t.string  "account_type"
     t.integer "account_id"
     t.string "payment_reference"
     t.string "payment_type"

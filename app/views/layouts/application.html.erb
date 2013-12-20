@@ -11,7 +11,7 @@
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
     <![endif]-->
-<%= stylesheet_link_tag 'print', :media => :print %>
+    <%= stylesheet_link_tag 'print', :media => :print %>
     <%= stylesheet_link_tag "application",:media=> :all%>
 
 
@@ -89,7 +89,7 @@
             <div class="settings">
               <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
             </div>
-                <div id ="notifications_panel">
+                <!-- <div id ="notifications_panel">
                 <div id="notifications">
                   <%= link_to "<div id='notification-icon'></div>".html_safe, notifications_index_path, remote: true %>
                   <div class ="number_of_notifications notifications_link">
@@ -98,7 +98,7 @@
                   <div id="notifications-box" class="notifications_output">
                   </div>
                 </div>
-              </div>
+              </div> -->
               <% end %>
         </div>
       </div>

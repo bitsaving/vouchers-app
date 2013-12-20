@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
   include PublicActivity::Common
+  include DisplayConcern
   default_scope { order('updated_at desc') }
   paginates_per 50
   has_many :notifications, -> { order 'created_at desc' }, :class_name => "PublicActivity::Activity", :foreign_key => "owner_id" 
@@ -13,15 +14,16 @@ class User < ActiveRecord::Base
   validates :first_name , :last_name , :email , presence: true
   validates_uniqueness_of :email, :case_sensitive => false
   #/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})$/
-  validates_format_of :email, :with => /\A([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})\Z/i
-  before_destroy :ensure_atleast_one_user_remains
+  validates_format_of :email, :with => EMAIL_FORMAT
+  #before_destroy :ensure_atleast_one_user_remains
   before_validation :strip_blanks
  
 
-  def strip_blanks
-    self.first_name = self.first_name.squish
-    self.last_name = self.last_name.squish
-  end
+  # def strip_blanks
+  #   # self.first_name = self.first_name.squish
+  #   # self.last_name = self.last_name.squish
+  #   self.name = self.name.squish
+  # end
   
   def self.from_omniauth(access_token , signed_in_resource = nil)
     data = access_token.info

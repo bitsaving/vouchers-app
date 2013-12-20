@@ -1,15 +1,13 @@
 <%@counter = @counter +1 %>
 <div class="controls">
-  <%= text_area_tag :account_id , "" ,data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s,path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
+  <%= text_area_tag :account_id , get_entered_data(@account_type,@position) ,data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s,path: accounts_path} , :class => 'text-field autocomplete',:rows=>3,:columns=>8%>
   <div class="bank_amount"> 
   	<span class="transaction_label">Amount </span>
-
-  <%#= label_tag :amount ,"Amount",:class => "bank_amount" %>
-  <%= f.text_field :amount , :class => "filename" %>
+    <%= f.text_field :amount , :class => "filename" %>
   </div>
  <!--  <div class="control-group"> -->
  <div class = "bank_amount"> <span class="transaction_label">Payment Mode</span> 
-        <span class = "voucher_payment_type"><%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %></span>
+<span class = "voucher_payment_type"><%= f.select :payment_type, Voucher::PAYMENT_TYPES  ,:class => 'text_field' %></span>
   </div>
     <div class ="select bank_amount abcd hidden">
     	<span class="transaction_label">Cheque/Credit/Bank Reference No </span>

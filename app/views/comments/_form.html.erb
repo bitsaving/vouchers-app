@@ -1,15 +1,15 @@
 <% #FIXME_AB: Spaces after comma.  -%>
- <%= form_tag comments_path(voucher_id: @voucher) , :remote=>true , :class=>"assign_form" do %>
+ <%= form_for Comment.new , :url => comments_path(voucher_id: @voucher) ,:remote=>true , :class=>"assign_form" do |f| %>
   <div class="add_comments onprint">
     <div class="control-group">
       <div class="controls">
-        <% #FIXME_AB: why not using form object. Like f.text_area, any specific reason -%>
-        <%= text_area_tag :description, params[:description], :cols => 80, :rows => 5, placeholder: 'Enter your comment..'%>
+        <% #FIXME_AB: why not using form object. Like f.text_area, any specific reason #fixed-%>
+        <%= f.text_area :description, :cols => 80, :rows => 5, placeholder: 'Enter your comment..'%>
       </div>
     </div>
     <div class="actions">
-      <% #FIXME_AB: f.submit -%>
-      <%= submit_tag "Save" , :class => 'btn btn-primary', data: { disable_with: "Please wait..."} %>
+      <% #FIXME_AB: f.submit #fixed -%>
+      <%= f.submit "Save" , :class => 'btn btn-primary', data: { disable_with: "Please wait..."} %>
     </div> 
   <% end %>
 </div>

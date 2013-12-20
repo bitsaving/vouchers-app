@@ -5,18 +5,18 @@ class Attachment < ActiveRecord::Base
   #validates_attachment_size :bill_attachment , :less_than => 5.megabytes
   # validates_attachment_content_type :avatar,:content_type =>'application/pdf' 
 
-  before_save :rename_file
+  #before_save :rename_file
 
   #FIXME_AB: I am not sure why this method is needed, please explain
   #this is required to replace the filename with the caption added.
-  def rename_file
-	  if bill_attachment_file_name
-      extension = File.extname(bill_attachment_file_name).downcase
-      if !tagname.blank?
-        #FIXME_AB: Why tagname.extension?
-        #to append the extension after the file name
-        self.bill_attachment.instance_write :file_name , "#{tagname}#{extension}"
-      end  
-    end
-  end
+  # def rename_file
+	 #  if bill_attachment_file_name
+  #     extension = File.extname(bill_attachment_file_name).downcase
+  #     if !tagname.blank?
+  #       #FIXME_AB: Why tagname.extension?
+  #       #to append the extension after the file name
+  #       self.bill_attachment.instance_write :file_name , "#{tagname}#{extension}"
+  #     end  
+  #   end
+  # end
 end

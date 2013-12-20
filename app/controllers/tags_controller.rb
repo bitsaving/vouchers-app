@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
   def index
-  	@tags = Tag.pluck( 'name')
+  	@tags = Tag.pluck('name')
     render :json => @tags
   end
 end

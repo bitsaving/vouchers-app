@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
 
+
   def create
     @voucher = Voucher.find(params[:voucher_id])
     if(@voucher.nil?)  
@@ -20,7 +21,7 @@ class CommentsController < ApplicationController
           redirect_to :back
           #FIXME_AB: It would be good if you can also display specific error, why comment was not saved
           #fixed
-          flash[:notice] = "Comment could not be added becoz it cannot be left blank"
+          flash[:notice] = "Comment could not be added becoz there was no content in it"
         end
         format.js do
         end
@@ -39,6 +40,6 @@ class CommentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def comment_params
-    params.permit(:description,:accepted,:voucher_id).merge({ user_id: current_user.id })
+    params.require(:comment).permit(:description).merge({ user_id: current_user.id,voucher_id: params[:voucher_id] })
   end
 end

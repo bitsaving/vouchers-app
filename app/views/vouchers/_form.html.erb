@@ -15,23 +15,43 @@
             <%= f.label :account_debited, "Debit To",:class => 'control-label compulsory-field' %>
       <div>
         <%@counter = 0 %>
+             <%position=0%>
           <%= f.fields_for :transactions do |builder| %>
-              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit", :f=>builder} %>
+
+          <% if @voucher.new_record? %>
+           <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit", :f=>builder} %>
+           <%elsif builder.object.account_type == "debit" %>
+       
+              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit",:@position => position, :f=>builder} %>
+               <% position = position +1 %>
+              <%end%>
             <%end%>
     
     </div>
   </div>
+  <div class="avc">
        <div class =" add_more_uploads radioBox addFields comment_fields  ">
         <%= link_to_add_fields "Add debit account", f, :transactions %>
       </div>
-    
+    </div>
     <div class="control-group">
             <%= f.label :account_credited, "Credit  From",:class => 'control-label compulsory-field' %>
       <div class>
         <%#@counter = 0 %>
+          <% position = 0 %>
           <%= f.fields_for :transactions do |builder| %>
-              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit", :f=>builder} %>
+        
+
+            <% if @voucher.new_record? %>
+           <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit",:f=>builder} %>
+           <%elsif builder.object.account_type == "credit" %>
+           
+              <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit", :@position => position,  :f=>builder} %>
+              <%position = position + 1 %>
+              <%#@position = @position +1 %>
+              <%end%>
             <%end%>
+    
        </div>
   </div>
     
