@@ -1,10 +1,10 @@
 #FIXME_AB: Remove the code which is not required
 class UsersController < ApplicationController
-     before_action :check_admin
+  before_action :check_admin
 
-   def show
+  def show
     if(current_user)
-      redirect_to root_path ,notice: "You are not authorised" 
+      redirect_to root_path , notice: "You are not authorised" 
     else
       respond_to do |format|
         format.html { redirect_to new_user_session_path }

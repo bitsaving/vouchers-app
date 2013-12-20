@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   #before_action :set_i18n_locale_from_params
 
   protected
+    
     def authorize    
       redirect_to new_user_session_path, notice: "Please log in" if !logged_in?
     end
@@ -25,11 +26,11 @@ class ApplicationController < ActionController::Base
       if request.referer
         redirect_to :back, flash: { error: "You are not authorized to view the requested page" }
       else
-        redirect_to url , flash: { error: "You are not authorized to view the requested page" }
+        redirect_to url, flash: { error: "You are not authorized to view the requested page" }
       end
     end
 
-    protected
+    # protected
     # def set_i18n_locale_from_params
     #   if params[:locale]
     #     if I18n.available_locales.include?(params[:locale].to_sym)

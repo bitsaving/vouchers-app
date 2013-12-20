@@ -1,15 +1,12 @@
 module VouchersHelper
-  #FIXME_AB: Why we need this method
-  # it is neede for view portion
   def get_entered_data(field,position1)
-    Rails.logger.debug "$$$$ #{field} ++  #{position1}"
     if !@voucher.new_record?
    	  if field == "debit"
-	    @voucher.debit_from[position1].name
-	  else
-	    @voucher.credit_to[position1].name
+	      @voucher.debit_from[position1].name
+	    else
+	      @voucher.credit_to[position1].name
+	    end
 	  end
-	end
   end
 
   def set_date(type)

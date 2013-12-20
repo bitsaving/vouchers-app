@@ -98,9 +98,9 @@ ActiveRecord::Schema.define(version: 20131213094929) do
     t.integer "voucher_id"
     t.integer "amount"
     t.string  "account_type"
+    t.string  "payment_type"
+    t.string  "payment_reference"
     t.integer "account_id"
-    t.string "payment_reference"
-    t.string "payment_type"
   end
 
   create_table "users", force: true do |t|
@@ -110,6 +110,8 @@ ActiveRecord::Schema.define(version: 20131213094929) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",          default: 0,        null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
@@ -118,8 +120,6 @@ ActiveRecord::Schema.define(version: 20131213094929) do
     t.string   "last_name"
     t.string   "user_type",              default: "normal"
     t.time     "deleted_at"
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

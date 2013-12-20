@@ -1,11 +1,7 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
-  #FIXME_AB: Remove unused empty css files
-
   def index
-    # request_type = request.env["HTTP_ACCEPT"].split(',')
-    # if !request_type.index("application/json").nil?
     if params[:term]
       account_name = "%".concat(params[:term].concat("%"))
       @accounts = Account.where('name LIKE (?)' ,account_name)
@@ -13,7 +9,7 @@ class AccountsController < ApplicationController
       @accounts = Account.page(params[:page])
     end
     respond_to do |format|
-      format.html {}
+      format.html
       format.json { render :json => @accounts.collect { |x| { :label => x.name , :value => x.id } }.compact } 
     end
   end
@@ -44,9 +40,7 @@ class AccountsController < ApplicationController
   
   def show 
     #FIXME_AB: Do we actually need this respond_to block
-    respond_to do |format|
-      format.html 
-    end
+    #fixed
   end
   
   def update
@@ -61,15 +55,7 @@ class AccountsController < ApplicationController
     end
   end
   
-  # def destroy
-  #   #FIXME_AB: We don't need to destroy the account so remove thsi action. also make sure account should not be deletable if I do account.destroy
-  #   @account.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to accounts_url }
-  #     format.json { head :no_content }
-  #   end
-  # end
-
+ 
   protected
     # Use callbacks to share common setup or constraints between actions.
     def set_account
