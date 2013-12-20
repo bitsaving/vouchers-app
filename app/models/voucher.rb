@@ -69,10 +69,6 @@ class Voucher < ActiveRecord::Base
     end
   end
 
-  # def record_state_change(user_id)
-  #   comments.create!(description: workflow_state.capitalize, user_id: user_id)
-  # end
-
   def check_if_destroyable
     current_state == :drafted || current_state == :rejected
   end
