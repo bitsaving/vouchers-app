@@ -4,7 +4,7 @@ class AccountsController < ApplicationController
   def index
     if params[:term]
       account_name = "%".concat(params[:term].concat("%"))
-      @accounts = Account.where('name LIKE (?)' ,account_name)
+      @accounts = Account.where('name LIKE (?)', account_name)
     else
       @accounts = Account.page(params[:page])
     end
