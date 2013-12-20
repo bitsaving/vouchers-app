@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131213094929) do
+ActiveRecord::Schema.define(version: 20131220102435) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -127,32 +127,21 @@ ActiveRecord::Schema.define(version: 20131213094929) do
 
   create_table "vouchers", force: true do |t|
     t.date     "date"
-    t.string   "payment_type"
-    t.integer  "account_debited"
-    t.integer  "account_credited"
     t.integer  "creator_id"
     t.date     "from_date"
     t.date     "to_date"
-    t.decimal  "amount",            precision: 8, scale: 2
-    t.integer  "transfer_from_id"
-    t.integer  "transfer_to_id"
     t.integer  "assignee_id"
     t.integer  "accepted_by"
     t.integer  "approved_by"
     t.string   "workflow_state"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "payment_reference"
     t.datetime "accepted_at"
     t.datetime "approved_at"
-    t.boolean  "delta",                                     default: true, null: false
+    t.boolean  "delta",          default: true, null: false
   end
 
-  add_index "vouchers", ["account_credited"], name: "index_vouchers_on_account_credited", using: :btree
-  add_index "vouchers", ["account_debited"], name: "index_vouchers_on_account_debited", using: :btree
   add_index "vouchers", ["assignee_id"], name: "index_vouchers_on_assignee_id", using: :btree
   add_index "vouchers", ["creator_id"], name: "index_vouchers_on_creator_id", using: :btree
-  add_index "vouchers", ["transfer_from_id"], name: "index_vouchers_on_transfer_from_id", using: :btree
-  add_index "vouchers", ["transfer_to_id"], name: "index_vouchers_on_transfer_to_id", using: :btree
 
 end

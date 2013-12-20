@@ -12,7 +12,7 @@
         </div>
       </div>
     <% end %>
-    <% if voucher.assignee?(current_user) %>
+    <% if voucher.assignee?(current_user) && !voucher.accepted? %>
       <%= render :partial => 'comments/form' %>
     <%end%>
   </div>

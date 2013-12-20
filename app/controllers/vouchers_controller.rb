@@ -170,30 +170,33 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
+
     case "#{@voucher.current_state}"
       when "rejected" then @voucher.send_for_approval!
       when "drafted" then @voucher.send_for_approval!
-      when "pending" then @voucher.approve!(current_user.id)
-      when "approved" then @voucher.accept!(current_user.id)
-    end    
-    @voucher.record_state_change(current_user.id) if !(@voucher.current_state == :pending)
-    if @voucher.current_state == :accepted
+      when "pending" then @voucher.approve!(current_user)
+      when "approved" then @voucher.accept!(current_user)
+      when "accepted" then @voucher.archive!
+    end 
+    if @voucher.current_state == :archived
       @voucher.assignee_id = nil
-    else    
+    elsif @voucher.current_state == :accepted
+      @voucher.assignee_id = current_user.id
+    else
       @voucher.assignee_id = params[:voucher][:assignee_id]
-    end
+    end   
+    
     @voucher.save!
     @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assignee, recipient: current_user
-    notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(@voucher.workflow_state != "accepted")
+    notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
     redirect_to :back, notice: notice
   end
  
   def decrement_state
     case "#{@voucher.current_state}"
-      when "pending" then @voucher.reject!(current_user.id)
-      when "approved" then @voucher.reject!(current_user.id)
+      when "pending" then @voucher.reject!(current_user)
+      when "approved" then @voucher.reject!(current_user)
     end
-    @voucher.record_state_change(current_user.id)
     @voucher.assignee_id = @voucher.creator_id
     @voucher.save!
     notice = "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name

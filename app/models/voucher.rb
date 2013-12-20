@@ -80,20 +80,20 @@ class Voucher < ActiveRecord::Base
   #FIXME_AB: Please add comments for these callback methods. We discussed it
   #It is a callback for event "accept" which gets called once we invoke the event.
   def accept(user)
-    update_attributes({accepted_by: user, accepted_at: Time.zone.now})
-    comments.create(description: "Accepted", user_id: user_id)
+    update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
+    comments.create(description: "Accepted", user_id: user.id)
   end
   
-  def reject(user_id)
+  def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil })
-    comments.create(description: "Rejected", user_id: user_id)
+    comments.create(description: "Rejected", user_id: user.id)
   end
 
 
   def approve(user)
     #FIXME_AB: I would prefer Time.current
     #fixed
-    update_attributes({approved_by: user, approved_at: Time.current })
+    update_attributes({ approved_by: user.id, approved_at: Time.current })
   end
 
 
@@ -115,7 +115,7 @@ class Voucher < ActiveRecord::Base
 
   def total_amount(type)
     sum = 0
-    self.transactions.reject! { |n| n.account_id.blank? }.select {|n| n.account_type == type }.each do |transaction|
+    self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.account_type == type }.each do |transaction|
        sum = sum + transaction.amount
       end
     sum

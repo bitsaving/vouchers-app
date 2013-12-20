@@ -42,7 +42,7 @@
       </div>
     </div>
       
-    <% if  (@voucher.workflow_state != 'approved' ||  @voucher.drafted?) && @voucher.assignee?(current_user) %>
+    <% if  (@voucher.drafted? || @voucher.pending?) && @voucher.assignee?(current_user) %>
       <%=  render 'assign' %>
     <%end%>
     <div class = "debitCredit">
@@ -133,10 +133,8 @@
             <%= link_to @voucher.accepted_by_user.name,user_vouchers_path(@voucher.accepted_by)%>   
           </div>
         </div>
-      </div>
-    <%end%>
-
-  
+      <%end%>
+    </div>
   
 
     
