@@ -43,9 +43,8 @@ class AccountsController < ApplicationController
   end
   
   def show 
+    #FIXME_AB: Do we actually need this respond_to block
     respond_to do |format|
-      #FIXME_AB: no {} needed. It is not fixed, it happens at many other places too
-      #fixed
       format.html 
     end
   end

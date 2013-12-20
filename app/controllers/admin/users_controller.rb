@@ -11,8 +11,6 @@ class Admin::UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    #FIXME_AB: Lets make per page = 50
-    #fixed
     @users = User.order('first_name').page(params[:page])
      respond_to do |format|
       format.html{}

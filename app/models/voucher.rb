@@ -35,8 +35,6 @@ class Voucher < ActiveRecord::Base
   #validates :amount, numericality: { greater_than: 0.00 }
  
   validate :check_debit_credit_equality
-  #FIXME_AB: Why :New not :new
-  #fixed
 
   #belongs_to :debit_from , :class_name => 'Account', :foreign_key => "account_debited"
   #belongs_to :credit_to , :class_name => 'Account', :foreign_key => "account_credited"
@@ -45,8 +43,6 @@ class Voucher < ActiveRecord::Base
   has_many :credit_to  , -> {  where(:transactions => { account_type: "credit"}) },through: :transactions,source: :account
   
   #has_many :accounts, through: :transactions
-  #FIXME_AB: Better if we name it as assignee
-  #fixed
   with_options :class_name =>'User' do |assoc|
     assoc.belongs_to :assignee
     assoc.belongs_to :creator
@@ -76,8 +72,6 @@ class Voucher < ActiveRecord::Base
   scope :archived , -> { where(workflow_state: 'archived')}
 
 
-  #FIXME_AB: This method should be called check_if_destroyable
-  #fixed
   before_destroy :check_if_destroyable
  # before_destroy :remove_associated_tags
   #before_create :check_debit_credit_equality
@@ -120,8 +114,7 @@ class Voucher < ActiveRecord::Base
 
 
   def approve(user)
-    #FIXME_AB: Instead of Time.now you should use Time.zone.now or Time.current. Read the difference
-    #fixed
+    #FIXME_AB: I would prefer Time.current
     update_attributes({approved_by: user, approved_at: Time.zone.now })
   end
 

@@ -19,10 +19,10 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.html do
           redirect_to :back
-          #FIXME_AB: It would be good if you can also display specific error, why comment was not saved
-          #fixed
+          #FIXME_AB: becoz => because
           flash[:notice] = "Comment could not be added becoz there was no content in it"
         end
+        #FIXME_AB: Please remove empty blocks 
         format.js do
         end
       end

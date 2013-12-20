@@ -8,8 +8,6 @@ class CommentsController < ApplicationController
       redirect_to :back
       return false
     end
-    #FIXME_AB: Whenever you find something like you are doing above. Always consider a case to handle, if the record is not found
-    #fixed
     @transaction = @voucher.transactions.build(transaction_params)
     if(@transaction.save)
       respond_to do |format|
@@ -20,9 +18,6 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.html do
           redirect_to :back
-          #FIXME_AB: It would be good if you can also display specific error, why comment was not saved
-          #fixed
-          #flash[:notice] = "Comment could not be added becoz it cannot be left blank"
         end
         format.js do
         end

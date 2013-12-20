@@ -7,8 +7,6 @@ class Attachment < ActiveRecord::Base
 
   #before_save :rename_file
 
-  #FIXME_AB: I am not sure why this method is needed, please explain
-  #this is required to replace the filename with the caption added.
   # def rename_file
 	 #  if bill_attachment_file_name
   #     extension = File.extname(bill_attachment_file_name).downcase
