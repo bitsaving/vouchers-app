@@ -1,6 +1,6 @@
-<%= form_for @account, :html => { :class => 'form-horizontal', :html => { :multipart => true }} do |f| %>
+<%= form_for @account, :html => { :class => 'form-horizontal'} do |f| %>
 <%= render "shared/error_messages", :target => @account %>   
-  <div class="account_align">
+  <div class = "account_align">
     <fieldset>
       <% if @account.new_record? %>
         <legend>New Account</legend>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="form-actions ">
-        <%= f.submit nil, :class => 'btn btn-primary', :remote=>true %>
+        <%= f.submit nil, :class => 'btn btn-primary'%>
         <%= link_to "Cancel", accounts_path, :class => 'btn btn-primary '%>
       </div>
     <% end %>

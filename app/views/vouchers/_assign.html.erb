@@ -8,15 +8,15 @@
     <div class="actions approval_button">
       <div class="actions">
         <%if @voucher.can_be_edited? %>
-          <%= submit_tag "Send For Approval" ,:class=>'btn btn-primary assign' %>
+          <%= submit_tag "Send For Approval", :class=>'btn btn-primary assign' %>
         <%else%>
         <div >
-            <%= submit_tag "Approve" ,:class=>'btn btn-primary assign submit_accepted'%>
+            <%= submit_tag "Approve", :class=>'btn btn-primary assign submit_accepted'%>
         </div>
         <div class ="Or_label">
           <%=" OR "%>
         </div>
-        <%= link_to "Reject ", decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assignn submit_accepted', method: :post, data: { confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to  #{@voucher.creator.name}.Press OK to continue "}  %>
+        <%= link_to "Reject ", decrement_state_voucher_path(id: @voucher), :class=>'btn btn-primary btn-danger assignn submit_accepted', method: :post, data: { confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to  #{@voucher.creator.name}.Press OK to continue " }  %>
        <%end%>
       </div>
     </div>

@@ -30,7 +30,7 @@
   <%@voucher.transactions.where(account_type: "debit").each do |voucherr| %>
     <% @sum += voucherr.amount %>
   <%end%> 
-  <%= number_to_currency(@sum,:unit => "₹  ") %>
+  <%= number_to_currency(@sum, :unit => "₹  ") %>
 </td>
 <td width="40px"></td>
 <%#end%>

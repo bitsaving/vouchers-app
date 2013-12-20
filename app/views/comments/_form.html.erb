@@ -1,13 +1,13 @@
 <% #FIXME_AB: Spaces after comma. Space should be after comma -%>
- <%= form_for Comment.new , :url => comments_path(voucher_id: @voucher) ,:remote=>true , :class=>"assign_form" do |f| %>
+ <%= form_for Comment.new, :url => comments_path(voucher_id: @voucher), :remote=>true, :class => "assign_form" do |f| %>
   <div class="add_comments onprint">
     <div class="control-group">
       <div class="controls">
-        <%= f.text_area :description, :cols => 80, :rows => 5, placeholder: 'Enter your comment..'%>
+        <%= f.text_area :description, :cols => 80, :rows => 5, placeholder: 'Enter your comment..' %>
       </div>
     </div>
     <div class="actions">
-      <%= f.submit "Save" , :class => 'btn btn-primary', data: { disable_with: "Please wait..."} %>
+      <%= f.submit "Save", :class => 'btn btn-primary', data: { disable_with: "Please wait..." } %>
     </div> 
   <% end %>
 </div>
