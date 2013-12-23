@@ -6,6 +6,7 @@ class VouchersController < ApplicationController
 
   # GET /vouchers
   # GET /vouchers.json
+  #FIXME_AB: Can we make more use of associations and scopes?
   def index
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).send(session[:previous_tab]).page(params[:page])
@@ -26,6 +27,7 @@ class VouchersController < ApplicationController
 
   # GET /vouchers/new
   def new
+    #FIXME_AB: where are we using these local variables. Also comment.user_id can be set at the time of building the object. no?
     @voucher = Voucher.new
     uploads = @voucher.attachments.build  
     comments =@voucher.comments.build
@@ -43,6 +45,7 @@ class VouchersController < ApplicationController
   
   # GET /vouchers/1/edit
   def edit
+    #FIXME_AB: Do we actually need following lines?
    respond_to do |format|
       format.html     
     end
@@ -52,6 +55,7 @@ class VouchersController < ApplicationController
   # POST /vouchers.json
   def create
    @voucher = current_user.vouchers.build(voucher_params)
+   #FIXME_AB: can this be done using a callback
     @voucher.comments.each do |comment| 
       comment.user_id = current_user.id
     end
@@ -74,6 +78,7 @@ class VouchersController < ApplicationController
   def update
     if params[:voucher][:comments_attributes].present?
       params[:voucher][:comments_attributes].each do |comment_id ,content|
+        #FIXME_AB: Why relying on the user_id coming from the params
         content[:user_id] =current_user.id if content[:user_id].blank?
       end
     end 
@@ -116,11 +121,14 @@ class VouchersController < ApplicationController
   end
 
   def all
+    #FIXME_AB: default_tab == 'drafted'
     if session[:previous_tab] == "drafted"
+      #FIXME_AB: current_user.vouchers.drafted
       @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: current_user.id).page(params[:page])
     else
       @vouchers = Voucher.send(session[:previous_tab]).page(params[:page]) 
     end
+    #FIXME_AB: Since you are not using any other format, you can avoid following lines
     respond_to do |format|
       format.html { render action: 'index'}   
     end
@@ -129,6 +137,7 @@ class VouchersController < ApplicationController
 
   def approved 
     get_vouchers('approved')
+    #FIXME_AB: set_default_tab('approved')
     session[:previous_tab] = 'approved'
     respond_to do |format|
       format.html { render action: 'index' }
@@ -143,7 +152,9 @@ class VouchersController < ApplicationController
      end  
   end
 
+  #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
   def assigned
+    #FIXME_AB: Why can't we create scopes. Voucher.not_accepted.assignee(current_user)
     @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc')
     respond_to do |format|
       format.html
@@ -170,7 +181,8 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
-
+    #FIXME_AB: Do we have a check on model level that states can not be jumped.
+    #FIXME_AB: Also much of this can be moved to model itself. Please identify and move them
     case "#{@voucher.current_state}"
       when "rejected" then @voucher.send_for_approval!
       when "drafted" then @voucher.send_for_approval!
@@ -193,6 +205,7 @@ class VouchersController < ApplicationController
   end
  
   def decrement_state
+    #FIXME_AB: much of this can be moved to model itself. Please identify and move them
     case "#{@voucher.current_state}"
       when "pending" then @voucher.reject!(current_user)
       when "approved" then @voucher.reject!(current_user)
@@ -208,15 +221,19 @@ class VouchersController < ApplicationController
     @vouchers = Voucher.search Riddle.escape(params[:query]), :page => params[:page], :per_page => 5
   end
   
+  #FIXME_AB: I think we should have separate controller for reporting.
   def report 
     params[:from]  = Date.today.beginning_of_month()
     params[:to]  = Date.today.end_of_month()
   end
 
+  #FIXME_AB: I think we should have separate controller for reporting.
   def generate_report
+    #FIXME_AB: What about params[:to]
     if params[:from].nil?
       redirect_to report_path
     elsif params[:from].present? && params[:from] > params[:to]
+      #FIXME_AB: What are valid values, can we be more precise 
       redirect_to report_path , notice: "Please enter valid values"
     end
     @voucher_startDate = params[:from]
@@ -228,6 +245,7 @@ class VouchersController < ApplicationController
   protected
 
     def check_user_and_voucher_state
+      #FIXME_AB: This logic can be written little better
       if (current_user.admin? || @voucher.creator?(current_user))
         if !(@voucher.drafted? || @voucher.rejected?)
           redirect_to_back_or_default_url
@@ -277,9 +295,11 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
+      #FIXME_AB: Can we break this into a multiline array. This is too long to understand
       params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :account_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
     end
 
+    #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
     def set_session
       if session[:previous_tab].nil?
         session[:previous_tab] = 'drafted'
@@ -291,9 +311,11 @@ class VouchersController < ApplicationController
     def convert_date
       if params[:from]
         params[:from] = params[:from].to_date
+        #FIXME_AB: what if param[:to] is nil?
         params[:to] = params[:to].to_date
       end
     end
  
+  #FIXME_AB: Better to have this line at the top. Just a good practice
   helper_method :get_vouchers
 end

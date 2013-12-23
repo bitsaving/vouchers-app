@@ -1,4 +1,3 @@
-#FIXME_AB: Remove the code which is not required
 class UsersController < ApplicationController
   before_action :check_admin
 

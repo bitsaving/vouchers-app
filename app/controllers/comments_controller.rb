@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
 
   def create
+    #FIXME_AB: can we use before action here
     @voucher = Voucher.find(params[:voucher_id])
     if(@voucher.nil?)  
       flash[:notice] = "Voucher not found"
@@ -18,11 +19,8 @@ class CommentsController < ApplicationController
       respond_to do |format|
         format.html do
           redirect_to :back
-          #FIXME_AB: becoz => because
-          #fixed
           flash[:notice] = "Comment could not be added because there was no content in it"
         end
-        #FIXME_AB: Please remove empty blocks 
         format.js
       end
     end

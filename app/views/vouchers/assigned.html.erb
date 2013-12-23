@@ -2,6 +2,7 @@
 <div class = " outer_block">
 	<div class="outer_container">
 		<div class="voucher_content">
+			<% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries -%>
 			<div  class ="voucher_heading">Vouchers assigned to Me <%=@vouchers.present? ? "(" + @vouchers.count.to_s + ")" : ""%></div>
 		  	<% @vouchers.each do |voucher| %>
 		  	<div class="assigned_vouchers">
@@ -12,8 +13,10 @@
 			  	<div class = "voucher_debit"> 
 			  	  <div class="voucher_label">Debit</div>
 			  	  <div class="voucher_contents"> 
+			  	  	<% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries -%>
 			  	    <% voucher.debit_from.each do |debit| %>
                 <%=debit.name%>
+                <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
                 <strong><%=" - ₹ " + voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.amount.to_s  %><br></strong>
               <%end%>
             </div>
@@ -30,6 +33,7 @@
 			    <div class = "voucher_amount">
 			    	<div class="voucher_label">Amount</div>
 			    	<div class="voucher_contents">
+			    		<% #FIXME_AB: Do we have a better way. Also can we save some queries -%>
 			    	  <% @sum = 0 %>
               <%voucher.transactions.where(account_type: "debit").each do |voucher| %>
                 <% @sum += voucher.amount %>
@@ -59,6 +63,7 @@
 		<div class="voucher_count">
 			<div class="vouchers">
 				<div class="voucher_label"><%= link_to "Drafted", drafted_vouchers_path, "data-no-turbolink" => true %></div>
+				<% #FIXME_AB: current_user.vouchers.drafted -%>
 				<div class="voucher_contents"> <%= Voucher.drafted.where(creator_id: current_user.id).count %></div>
 			</div>
 			<div class="vouchers">

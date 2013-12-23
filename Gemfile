@@ -66,3 +66,5 @@ gem 'factory_girl_rails'
 #gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem "rails-observers"
+gem 'quiet_assets', :group => :development
+gem 'thin'
