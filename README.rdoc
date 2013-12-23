@@ -11,12 +11,11 @@ To run this application kindly run the rake task to create an admin by running r
 Once the admin is created you can log in and now have the ability to create users , accounts and corresponding vouchers.
 After creation of admin u can log in via any valid google account which is verified via omniauth.
 
-Once u are logged in u can create vouchers.
+Once you are logged in you can create vouchers  and if authorised as admin you can view any other user's vouchers and create or delete users.
 
-To send email notification to all users regarding the number f vouchers pening for their reviewal
+To send email notification to all users regarding the number of vouchers pending for their reviewal
 run rake task
 rake notification:digest
 this will send email to all the users whom vouchers are assigned.
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+ALso if running the app on localhost kindly run rake ts:start to start your sphinx server for performing search.
