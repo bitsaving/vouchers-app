@@ -21,33 +21,34 @@ VoucherEventsHandler.prototype = {
 
   getTags: function(){
     var that = this
-    
-    $.ajax({
-      type: 'get',
-      // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 
-      url: $('.tag').data('path'), 
-      dataType: "json", 
-      success: function(data){
-        $('.tag').autocomplete({ 
-        source: function( request, response ) {
-          response( $.ui.autocomplete.filter(
-            data, that.extractLast( request.term ) ) );
-          },
-          minLength: 3,
-          delay:500,
-          focus: function() {
-            return false;
-          },
-          select: function( event, ui ) {
-            var terms = that.split( this.value );
-            terms.pop();
-            terms.push( ui.item.label );
-            terms.push( "" );
-            this.value = terms.join( ", " );
-            return false;
-          }
-        });
-      }
+    $(document).on("focus",".tag", function() {
+      $.ajax({
+        type: 'get',
+        // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 
+        url: $('.tag').data('path'), 
+        dataType: "json", 
+        success: function(data){
+          $('.tag').autocomplete({ 
+          source: function( request, response ) {
+            response( $.ui.autocomplete.filter(
+              data, that.extractLast( request.term ) ) );
+            },
+            minLength: 3,
+            delay:500,
+            focus: function() {
+              return false;
+            },
+            select: function( event, ui ) {
+              var terms = that.split( this.value );
+              terms.pop();
+              terms.push( ui.item.label );
+              terms.push( "" );
+              this.value = terms.join( ", " );
+              return false;
+            }
+          });
+        }
+      });
     });
   },
 

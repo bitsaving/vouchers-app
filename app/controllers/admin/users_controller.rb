@@ -12,6 +12,7 @@ class Admin::UsersController < ApplicationController
     @users = User.order('first_name').page(params[:page])
      respond_to do |format|
       format.html
+     # format.json { render json: @users.to_json(:only => [:first_name])}
     end
   end
 
