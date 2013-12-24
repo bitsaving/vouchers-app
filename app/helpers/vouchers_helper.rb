@@ -20,4 +20,9 @@ module VouchersHelper
       end
     end
   end
+
+  def get_vouchers_count
+    Voucher.all.group_by(&:workflow_state)
+  end
+
 end

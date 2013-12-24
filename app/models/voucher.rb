@@ -33,8 +33,11 @@ class Voucher < ActiveRecord::Base
   validates :date,  presence: true
   validate :check_debit_credit_equality
   has_many :transactions
+  has_many :debited_transactions ,-> { where(:transactions => { account_type: "debit" })} ,:class_name => 'Transaction'
+  has_many :credited_transactions, -> { where(:transactions => { account_type: "credit" }) } ,:class_name => 'Transaction'
   has_many :debit_from, -> { where(:transactions => { account_type: "debit" }) }, through: :transactions, source: :account
   has_many :credit_to, -> {  where(:transactions => { account_type: "credit"}) }, through: :transactions, source: :account
+  
   with_options :class_name =>'User' do |assoc|
     assoc.belongs_to :assignee
     assoc.belongs_to :creator
@@ -58,6 +61,7 @@ class Voucher < ActiveRecord::Base
   scope :archived, -> { where(workflow_state: 'archived')}
   scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
   scope :assignee, ->(id) { where(assignee_id: id)}
+  scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions, :transactions)}
   #scope :creator, ->(id) { where(creator_id: id)}
 
   before_destroy :check_if_destroyable

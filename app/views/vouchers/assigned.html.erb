@@ -17,7 +17,7 @@
 			  	    <% voucher.debit_from.each do |debit| %>
                 <%=debit.name%>
                 <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
-                <strong><%#=" - ₹ " + debit.vouchers_debited[0].transactions[0].amount.to_s  %><br></strong>
+                <strong><%=" - ₹ " + voucher.debited_transactions[0].amount.to_s  %><br></strong>
               <%end%>
             </div>
 			    </div>
@@ -26,7 +26,7 @@
 			  	  <div class="voucher_contents">
 			  	  	<% voucher.credit_to.each do |credit| %>
                 <%=credit.name%>
-                <strong><%#=" - ₹ " + credit.vouchers_credited[0].transactions[0].amount.to_s  %><br></strong>
+                <strong><%=" - ₹ " + voucher.credited_transactions[0].amount.to_s %><br></strong>
               <%end%>
             </div>
 			    </div>
@@ -59,34 +59,28 @@
   		<% end %>
  		</div>
 	</div>
+	<%vouchers_hash = get_vouchers_count %>
 	<div id= "voucher_count">
 		<div class = "voucher_heading"> Voucher Status </div>
 		<div class="voucher_count">
 			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Drafted", drafted_vouchers_path, "data-no-turbolink" => true %></div>
-				<% #FIXME_AB: current_user.vouchers.drafted #fixed -%>
-				<div class="voucher_contents"> <%= current_user.vouchers.drafted.count %></div>
+				<div class = "voucher_label">
+					<%= link_to "Drafted", drafted_vouchers_path %>
+				</div> 
+				<div class="voucher_contents"> 
+					<%= current_user.vouchers.drafted.count %>
+				</div>
 			</div>
-			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Pending", pending_vouchers_path, "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.pending.count %></div>
-			</div>
-			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Approved", approved_vouchers_path, "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.approved.count %></div>
-			</div>
-			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Accepted", accepted_vouchers_path, "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.accepted.count %></div>
-			</div>
-			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Rejected", rejected_vouchers_path, "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.rejected.count %></div>
-			</div>
-			<div class="vouchers">
-				<div class="voucher_label"><%= link_to "Archived", archived_vouchers_path, "data-no-turbolink" => true%></div>
-				<div class="voucher_contents"> <%= Voucher.archived.count %></div>
-			</div>
+			<%VOUCHER_STATES.each do |state| %>
+				<div class="vouchers">
+					<div class="voucher_label">
+						<%= link_to state, url_for({ controller: 'vouchers', action: state}) %>
+					</div>
+					<div class ="voucher_contents">
+					 <%= vouchers_hash[state].nil? ? "0" : vouchers_hash[state].count.to_s %>
+					</div>
+				</div>
+			<%end%>
 		</div>
 	</div>
 </div>

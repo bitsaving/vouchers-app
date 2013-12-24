@@ -19,7 +19,7 @@ class VouchersController < ApplicationController
     else
       @vouchers = Voucher.send(default_tab)
     end
-    @vouchers = @vouchers.page(params[:page])
+    @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
   end
 
 
@@ -122,7 +122,7 @@ class VouchersController < ApplicationController
 
   #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
   def assigned
-    @vouchers =  Voucher.not_accepted.assignee(current_user.id).order('updated_at desc') 
+    @vouchers =  Voucher.not_accepted.assignee(current_user.id).including_accounts_and_transactions.order('updated_at desc') 
   end
 
   def rejected
@@ -187,7 +187,7 @@ class VouchersController < ApplicationController
           @vouchers = Account.find(params[:account_id]).vouchers.send(state)
         end
       elsif params[:user_id]
-        @vouchers = User.find_by_id(params[:user_id]).vouchers.send(state)
+        @vouchers = User.find(params[:user_id]).vouchers.send(state)
       elsif params[:tag]
         @vouchers = Voucher.tagged_with(params[:tag]).send(state)
       elsif(params[:to] && params[:from])
@@ -198,8 +198,10 @@ class VouchersController < ApplicationController
       else
         @vouchers = Voucher.send(state)
       end
-      @vouchers = @vouchers.page(params[:page])
+      @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
     end
+
+
 
     def filter_by_name_and_type(vouchers ,name, type)
       if name.present?
@@ -240,7 +242,10 @@ class VouchersController < ApplicationController
       end
     end
   end
- 
+
+  # def eager_load_associations
+  #   @vouchers = @vouchers.includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
+  # end
   #FIXME_AB: Better to have this line at the top. Just a good practice
   
 end
