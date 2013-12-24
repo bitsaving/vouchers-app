@@ -28,6 +28,6 @@ class ReportsController < ApplicationController
         params[:from] = params[:from].presence.to_date
         #FIXME_AB: what if param[:to] is nil?
         params[:to] = params[:to].presence.to_date
-      end
+      # end
     end
 end

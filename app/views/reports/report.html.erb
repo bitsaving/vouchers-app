@@ -1,2 +1,2 @@
-<%= render :template => 'vouchers/report_layout'%>
+<%#= render :template => 'reports/report_layout'%>
  <%= render :template => 'vouchers/index' ,locals:{ :@vouchers =>  get_by_date(session[:previous_tab], Date.today.beginning_of_month(), Date.today.end_of_month(), "", "").page(params[:page]) }  %>

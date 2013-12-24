@@ -3,7 +3,7 @@ class VouchersController < ApplicationController
   before_action :check_user_and_voucher_state ,only: [:edit]
   before_action :default_tab, only: [:index, :all, :report]
   before_action :set_comment_owner, only: [:create, :update]
-  helper_method :get_vouchers
+  #helper_method :get_vouchers
   # GET /vouchers
   # GET /vouchers.json
   #FIXME_AB: Can we make more use of associations and scopes?
@@ -167,7 +167,7 @@ class VouchersController < ApplicationController
 
     def check_user_and_voucher_state
       #FIXME_AB: This logic can be written little better
-      if !(@voucher.creator?(current_user) || @voucher.can_be_edited?)
+      if !(@voucher.creator?(current_user) && @voucher.can_be_edited?)
         redirect_to_back_or_default_url
       end
       # if (current_user.admin? || @voucher.creator?(current_user))
@@ -214,7 +214,7 @@ class VouchersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
    
     def set_voucher
-      @voucher = Voucher.find_by(id: params[:id])
+      @voucher = Voucher.including_accounts_and_transactions.find_by(id: params[:id])
       if @voucher.nil?
         redirect_to vouchers_path, notice: "Voucher you are looking for does not exist."
       end  

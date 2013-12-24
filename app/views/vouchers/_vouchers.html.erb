@@ -26,13 +26,13 @@
                 <td>
                   <% voucher.debit_from.each do |debit| %>
                      <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
-                      <strong><%#=" - ₹ " + voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.amount.to_s  %><br></strong>
+                      <strong><%=" - ₹ " + voucher.debited_transactions[0].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
                 <td>
                   <% voucher.credit_to.each do |credit| %>
                      <%= link_to credit.name, account_vouchers_path(getaccount(credit)),:class=>'debit_credit'%>
-                      <strong><%#=" - ₹ " + voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.amount.to_s  %><br></strong>
+                      <strong><%=" - ₹ " + voucher.credited_transactions[0].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
                 <td>
@@ -58,7 +58,7 @@
                   <%end%>
                   <% if voucher.archived? %>
                     <%= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>Show
-                    <%=render :partial => 'details', locals: {:@voucher => voucher} %>
+                    <%=render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
                   <%end%>
                 </td>
               </tr>

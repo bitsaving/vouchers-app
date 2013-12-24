@@ -46,8 +46,12 @@ module ApplicationHelper
     Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id]})
   end
   
-   def getaccount(id)
+  def getaccount(id)
     @account = Account.find_by(id: id)
+  end
+
+  def get_drafted_vouchers
+    current_user.vouchers.drafted
   end
   
   

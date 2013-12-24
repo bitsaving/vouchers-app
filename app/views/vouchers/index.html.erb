@@ -4,7 +4,7 @@
   <%= render :template => 'reports/report_layout', locals: { :to => params[:to], :from => params[:from] } %>
 <% elsif params[:user_id].present? %>
   <%= render :template => 'users/_layout', locals: { :@user => get_user(params[:user_id]) }%>
-<% elsif params[:account_id].present? && controller.action_name != 'show' %>
+<% elsif params[:account_id].present?%>
   <%= render :template => 'accounts/_layout', locals: { :@account=> getaccount(params[:account_id]) } %>  
 <% else %>
   <h3>Vouchers </h3>
@@ -16,11 +16,11 @@
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
     <li class = "drafted">
-      <%= link_to "drafted" + " (" + get_vouchers('drafted').total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: 'drafted', :page => 1 })), 'data-no-turbolink'=> true %>
+      <%= link_to "drafted" + " (" + get_drafted_vouchers.size.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: 'drafted', :page => 1 })), 'data-no-turbolink'=> true %>
     </li>
     <%VOUCHER_STATES.each do |state| %>
       <li class=<%= state %>>
-        <%= link_to state + " (" + (vouchers_hash[state].nil? ? "0" : vouchers_hash[state].count.to_s)  + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
+        <%= link_to state + " (" + (vouchers_hash[state].nil? ? "0" : vouchers_hash[state].size.to_s)  + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
       </li>
     <%end%>
     <div class="voucher_status">
