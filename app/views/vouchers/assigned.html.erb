@@ -2,8 +2,8 @@
 <div class = " outer_block">
 	<div class="outer_container">
 		<div class="voucher_content">
-			<% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries -%>
-			<div  class ="voucher_heading"><%=@vouchers.present? ? "Vouchers assigned to Me(" + @vouchers.count.to_s + ")" : "No Vouchers Assigned" %></div>
+			<% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries #fixed-%>
+			<div  class ="voucher_heading"><%=(@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "No Vouchers Assigned" %></div>
 		  	<% @vouchers.each do |voucher| %>
 		  	<div class="assigned_vouchers">
 			  	<div class = "voucher_id"> 
@@ -13,11 +13,11 @@
 			  	<div class = "voucher_debit"> 
 			  	  <div class="voucher_label">Debit</div>
 			  	  <div class="voucher_contents"> 
-			  	  	<% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries -%>
+			  	  	<% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries #fixed-%>
 			  	    <% voucher.debit_from.each do |debit| %>
                 <%=debit.name%>
                 <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
-                <strong><%=" - ₹ " + voucher.transactions.where(account_id: debit.id).where(account_type: "debit").first.amount.to_s  %><br></strong>
+                <strong><%#=" - ₹ " + debit.vouchers_debited[0].transactions[0].amount.to_s  %><br></strong>
               <%end%>
             </div>
 			    </div>
@@ -26,19 +26,20 @@
 			  	  <div class="voucher_contents">
 			  	  	<% voucher.credit_to.each do |credit| %>
                 <%=credit.name%>
-                <strong><%=" - ₹ " + voucher.transactions.where(account_id: credit.id).where(account_type: "credit").first.amount.to_s  %><br></strong>
+                <strong><%#=" - ₹ " + credit.vouchers_credited[0].transactions[0].amount.to_s  %><br></strong>
               <%end%>
             </div>
 			    </div>
 			    <div class = "voucher_amount">
 			    	<div class="voucher_label">Amount</div>
 			    	<div class="voucher_contents">
-			    		<% #FIXME_AB: Do we have a better way. Also can we save some queries -%>
-			    	  <% @sum = 0 %>
-              <%voucher.transactions.where(account_type: "debit").each do |voucher| %>
-                <% @sum += voucher.amount %>
-              <%end%> 
-        			<%= number_to_currency(@sum, :unit => "₹  ") %>
+			    		<% #FIXME_AB: Do we have a better way. Also can we save some queries #fixed-%>
+			    	  <%# @sum = 0 %>
+              <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
+                <%# @sum += voucher.amount %>
+              <%#end%> 
+              <%#=voucher.total_amount('debit') %>
+        			<%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %>
         		</div>
 			    </div>
 			    <div class="voucher_state">
@@ -63,8 +64,8 @@
 		<div class="voucher_count">
 			<div class="vouchers">
 				<div class="voucher_label"><%= link_to "Drafted", drafted_vouchers_path, "data-no-turbolink" => true %></div>
-				<% #FIXME_AB: current_user.vouchers.drafted -%>
-				<div class="voucher_contents"> <%= Voucher.drafted.where(creator_id: current_user.id).count %></div>
+				<% #FIXME_AB: current_user.vouchers.drafted #fixed -%>
+				<div class="voucher_contents"> <%= current_user.vouchers.drafted.count %></div>
 			</div>
 			<div class="vouchers">
 				<div class="voucher_label"><%= link_to "Pending", pending_vouchers_path, "data-no-turbolink" => true%></div>

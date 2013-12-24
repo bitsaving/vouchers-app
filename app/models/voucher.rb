@@ -56,7 +56,9 @@ class Voucher < ActiveRecord::Base
   scope :accepted, -> { where(workflow_state: 'accepted')}
   scope :rejected, -> { where(workflow_state: 'rejected')}
   scope :archived, -> { where(workflow_state: 'archived')}
-
+  scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
+  scope :assignee, ->(id) { where(assignee_id: id)}
+  #scope :creator, ->(id) { where(creator_id: id)}
 
   before_destroy :check_if_destroyable
 
@@ -79,10 +81,31 @@ class Voucher < ActiveRecord::Base
     update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
     comments.create(description: "Accepted", user_id: user.id)
   end
+
+  def archive
+    update_attributes({assignee_id: nil})
+  end
   
   def reject(user)
-    update_attributes({ accepted_by: nil, approved_by: nil })
+    update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
     comments.create(description: "Rejected", user_id: user.id)
+  end
+
+  def increment_state(user)
+    case "#{current_state}"
+      when "rejected" then send_for_approval!
+      when "drafted" then send_for_approval!
+      when "pending" then approve!(user)
+      when "approved" then accept!(user)
+      when "accepted" then archive!
+    end 
+  end
+
+  def decrement_state(user)
+    case "#{current_state}"
+      when "pending" then reject!(user)
+      when "approved" then reject!(user)
+    end
   end
 
 

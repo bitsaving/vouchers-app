@@ -8,7 +8,6 @@ VoucherApp::Application.routes.draw do
   resources :uploads
   root :to => 'vouchers#assigned'
   resources :vouchers do
-    get 'all' , on: :collection
     get 'approved' ,on: :collection
     get 'drafted', on: :collection
     get 'pending', on: :collection
@@ -27,9 +26,9 @@ VoucherApp::Application.routes.draw do
     get 'vouchers/rejected',to: 'vouchers#rejected'
     get 'vouchers/archived' , to: 'vouchers#archived'
     end
-  get 'voucher_report' ,to: 'vouchers#report' ,as: :report
+  get 'voucher_report' ,to: 'reports#report' ,as: :report
 
-  match 'generate_report' ,to: 'vouchers#generate_report' ,via: [:post,:get]
+  match 'generate_report' ,to: 'reports#generate_report' ,via: [:post,:get]
 
   namespace 'admin' do
     resources :users, only: [:show ,:edit,:index,:new,:update,:create ,:destroy]

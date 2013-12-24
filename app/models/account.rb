@@ -7,6 +7,7 @@ class Account < ActiveRecord::Base
   has_many :transactions
   has_many :vouchers_debited , -> { where(:transactions => { account_type: "debit" }) }, through: :transactions, source: :voucher
   has_many :vouchers_credited, -> { where(:transactions => { account_type: "credit" }) }, through: :transactions, source: :voucher 
+  has_many :vouchers, through: :transactions, source: :voucher
   default_scope { order('name') }  
   
   def prevent_destroy

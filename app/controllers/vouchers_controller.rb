@@ -1,27 +1,25 @@
 class VouchersController < ApplicationController
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_voucher_state, :check_user_type, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state ,only: [:edit]
-  before_action :convert_date, only: [:generate_report]
-  before_action :set_session, only: [:index, :all, :report]
-
+  before_action :default_tab, only: [:index, :all, :report]
+  before_action :set_comment_owner, only: [:create, :update]
+  helper_method :get_vouchers
   # GET /vouchers
   # GET /vouchers.json
   #FIXME_AB: Can we make more use of associations and scopes?
   def index
     if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).send(session[:previous_tab]).page(params[:page])
+      @vouchers = Voucher.tagged_with(params[:tag]).send(default_tab)
     elsif params[:user_id]
-      @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: params[:user_id]).page(params[:page])
+      @vouchers = User.find(params[:user_id]).vouchers.send(default_tab)
     elsif params[:account_id]
-      @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id]}).send(session[:previous_tab]).page(params[:page])
-    elsif session[:previous_tab] == "drafted"
-      @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: current_user.id).page(params[:page])
+      @vouchers = Account.find(params[:account_id]).vouchers.send(default_tab)
+    elsif default_tab == "drafted"
+      @vouchers = current_user.vouchers.send(default_tab)
     else
-      @vouchers = Voucher.send(session[:previous_tab]).page(params[:page])
+      @vouchers = Voucher.send(default_tab)
     end
-    respond_to do |format|
-      format.html  
-    end
+    @vouchers = @vouchers.page(params[:page])
   end
 
 
@@ -29,12 +27,9 @@ class VouchersController < ApplicationController
   def new
     #FIXME_AB: where are we using these local variables. Also comment.user_id can be set at the time of building the object. no?
     @voucher = Voucher.new
-    uploads = @voucher.attachments.build  
-    comments =@voucher.comments.build
-    transactions = @voucher.transactions.build
-    @voucher.comments.each do |comment| 
-      comment.user_id = current_user.id
-    end
+    @uploads = @voucher.attachments.build  
+    @comments =@voucher.comments.build
+    @transactions = @voucher.transactions.build
   end
 
   # GET /vouchers/1
@@ -45,20 +40,12 @@ class VouchersController < ApplicationController
   
   # GET /vouchers/1/edit
   def edit
-    #FIXME_AB: Do we actually need following lines?
-   respond_to do |format|
-      format.html     
-    end
   end
 
   # POST /vouchers
   # POST /vouchers.json
   def create
    @voucher = current_user.vouchers.build(voucher_params)
-   #FIXME_AB: can this be done using a callback
-    @voucher.comments.each do |comment| 
-      comment.user_id = current_user.id
-    end
     respond_to do |format|
       if @voucher.save
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
@@ -73,15 +60,11 @@ class VouchersController < ApplicationController
     end
   end
 
+
+
   # PATCH/PUT /vouchers/1
   # PATCH/PUT /vouchers/1.json
   def update
-    if params[:voucher][:comments_attributes].present?
-      params[:voucher][:comments_attributes].each do |comment_id ,content|
-        #FIXME_AB: Why relying on the user_id coming from the params
-        content[:user_id] =current_user.id if content[:user_id].blank?
-      end
-    end 
     respond_to do |format|
       if @voucher.update(voucher_params)
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
@@ -98,7 +81,7 @@ class VouchersController < ApplicationController
 
   def pending
     get_vouchers('pending')
-    session[:previous_tab] = 'pending'
+    set_default_tab('pending')
     respond_to do |format|
       format.html { render action: 'index'}
     end  
@@ -106,7 +89,7 @@ class VouchersController < ApplicationController
 
   def accepted
     get_vouchers('accepted')
-    session[:previous_tab] = 'accepted'
+    set_default_tab('accepted')
     respond_to do |format|
       format.html { render action: 'index'}
     end  
@@ -114,31 +97,16 @@ class VouchersController < ApplicationController
 
   def archived
     get_vouchers('archived')
-    session[:previous_tab] = 'archived'
+    set_default_tab('archived')
     respond_to do |format|
       format.html { render action: 'index'}
     end  
   end
 
-  def all
-    #FIXME_AB: default_tab == 'drafted'
-    if session[:previous_tab] == "drafted"
-      #FIXME_AB: current_user.vouchers.drafted
-      @vouchers = Voucher.send(session[:previous_tab]).where(creator_id: current_user.id).page(params[:page])
-    else
-      @vouchers = Voucher.send(session[:previous_tab]).page(params[:page]) 
-    end
-    #FIXME_AB: Since you are not using any other format, you can avoid following lines
-    respond_to do |format|
-      format.html { render action: 'index'}   
-    end
-  end
-
 
   def approved 
     get_vouchers('approved')
-    #FIXME_AB: set_default_tab('approved')
-    session[:previous_tab] = 'approved'
+    set_default_tab('approved')  
     respond_to do |format|
       format.html { render action: 'index' }
     end  
@@ -146,7 +114,7 @@ class VouchersController < ApplicationController
 
   def drafted
     get_vouchers('drafted')
-    session[:previous_tab] = 'drafted'
+    set_default_tab('drafted')
     respond_to do |format|
       format.html { render action: 'index'}
      end  
@@ -154,16 +122,12 @@ class VouchersController < ApplicationController
 
   #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
   def assigned
-    #FIXME_AB: Why can't we create scopes. Voucher.not_accepted.assignee(current_user)
-    @vouchers =  Voucher.where("workflow_state not in ('accepted')  and assignee_id = #{current_user.id}").order('updated_at desc')
-    respond_to do |format|
-      format.html
-    end
+    @vouchers =  Voucher.not_accepted.assignee(current_user.id).order('updated_at desc') 
   end
 
   def rejected
     get_vouchers('rejected')
-    session[:previous_tab] = 'rejected'
+    set_default_tab('rejected')
     respond_to do |format|
       format.html { render action: 'index' }
     end
@@ -181,39 +145,14 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
-    #FIXME_AB: Do we have a check on model level that states can not be jumped.
-    #FIXME_AB: Also much of this can be moved to model itself. Please identify and move them
-    case "#{@voucher.current_state}"
-      when "rejected" then @voucher.send_for_approval!
-      when "drafted" then @voucher.send_for_approval!
-      when "pending" then @voucher.approve!(current_user)
-      when "approved" then @voucher.accept!(current_user)
-      when "accepted" then @voucher.archive!
-    end 
-    if @voucher.current_state == :archived
-      @voucher.assignee_id = nil
-    elsif @voucher.current_state == :accepted
-      @voucher.assignee_id = current_user.id
-    else
-      @voucher.assignee_id = params[:voucher][:assignee_id]
-    end   
-    
-    @voucher.save!
-    @voucher.create_activity key: 'voucher.change_assigned_to', owner: @voucher.assignee, recipient: current_user
+    @voucher.increment_state(current_user)
     notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
     redirect_to :back, notice: notice
   end
  
   def decrement_state
-    #FIXME_AB: much of this can be moved to model itself. Please identify and move them
-    case "#{@voucher.current_state}"
-      when "pending" then @voucher.reject!(current_user)
-      when "approved" then @voucher.reject!(current_user)
-    end
-    @voucher.assignee_id = @voucher.creator_id
-    @voucher.save!
+    @voucher.decrement_state(current_user)
     notice = "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
-    @voucher.create_activity key: 'voucher.rejected', owner: @voucher.creator
     redirect_to :back, notice: notice
   end
 
@@ -222,64 +161,50 @@ class VouchersController < ApplicationController
   end
   
   #FIXME_AB: I think we should have separate controller for reporting.
-  def report 
-    params[:from]  = Date.today.beginning_of_month()
-    params[:to]  = Date.today.end_of_month()
-  end
-
-  #FIXME_AB: I think we should have separate controller for reporting.
-  def generate_report
-    #FIXME_AB: What about params[:to]
-    if params[:from].nil?
-      redirect_to report_path
-    elsif params[:from].present? && params[:from] > params[:to]
-      #FIXME_AB: What are valid values, can we be more precise 
-      redirect_to report_path , notice: "Please enter valid values"
-    end
-    @voucher_startDate = params[:from]
-    @voucher_endDate = params[:to]
-    @voucher_accountName = params[:report_account]
-    @voucher_accountType = params[:account_type]
-  end
+  
 
   protected
 
     def check_user_and_voucher_state
       #FIXME_AB: This logic can be written little better
-      if (current_user.admin? || @voucher.creator?(current_user))
-        if !(@voucher.drafted? || @voucher.rejected?)
-          redirect_to_back_or_default_url
-        end
-      else
+      if !(@voucher.creator?(current_user) || @voucher.can_be_edited?)
         redirect_to_back_or_default_url
       end
+      # if (current_user.admin? || @voucher.creator?(current_user))
+      #   if !(@voucher.drafted? || @voucher.rejected?)
+      #     redirect_to_back_or_default_url
+      #   end
+      # else
+      #   redirect_to_back_or_default_url
+      # end
     end
 
     def get_vouchers(state)
       if params[:account_id]
         if params[:account_type]
-          @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id], :account_type => params[:account_type]}).where(workflow_state: state).page(params[:page])
+          @vouchers = Account.find(params[:account_id]).send("vouchers_" + params[:account_type] + "ed").send(state)
         else
-          @vouchers = Voucher.includes(:transactions).where(:transactions => {:account_id => params[:account_id]}).where(workflow_state: state).page(params[:page])     
+          @vouchers = Account.find(params[:account_id]).vouchers.send(state)
         end
       elsif params[:user_id]
-        @vouchers = Voucher.where(workflow_state: state).where(creator_id: params[:user_id]).page(params[:page]) 
+        @vouchers = User.find_by_id(params[:user_id]).vouchers.send(state)
       elsif params[:tag]
-        @vouchers = Voucher.tagged_with(params[:tag]).where(workflow_state: state).page(params[:page]) 
+        @vouchers = Voucher.tagged_with(params[:tag]).send(state)
       elsif(params[:to] && params[:from])
-        @vouchers = Voucher.where(workflow_state: state).where('date between (?) and (?)', params[:from], params[:to]).page(params[:page]) 
+        @vouchers = Voucher.where('date between (?) and (?)', params[:from], params[:to]).send(state)
         filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
-      elsif state == 'drafted'
-        @vouchers = Voucher.where(workflow_state: 'drafted').where(creator_id: current_user.id).page(params[:page]) 
+      elsif state.inquiry.drafted?
+        @vouchers = current_user.vouchers.drafted
       else
-        @vouchers = Voucher.where(workflow_state: state).order('date desc').page(params[:page]) 
+        @vouchers = Voucher.send(state)
       end
+      @vouchers = @vouchers.page(params[:page])
     end
 
     def filter_by_name_and_type(vouchers ,name, type)
-      if !name.blank?
+      if name.present?
         @vouchers = vouchers.includes(:transactions).where(:transactions => {:account_id => name})
-        @vouchers = @vouchers.includes(:transactions).where(:transactions => {:account_type => type}) if !type.blank?
+        @vouchers = @vouchers.where(:transactions => {:account_type => type}) if type.present?
       end
      @vouchers
     end
@@ -300,22 +225,22 @@ class VouchersController < ApplicationController
     end
 
     #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
-    def set_session
-      if session[:previous_tab].nil?
-        session[:previous_tab] = 'drafted'
-      end
+    def set_default_tab(type)
+      session[:previous_tab] =  type
     end
 
-
-
-    def convert_date
-      if params[:from]
-        params[:from] = params[:from].to_date
-        #FIXME_AB: what if param[:to] is nil?
-        params[:to] = params[:to].to_date
+    def default_tab
+      session[:previous_tab] || 'drafted'
+    end
+  
+   def set_comment_owner
+    if params[:voucher][:comments_attributes].present?
+      params[:voucher][:comments_attributes].each do |comment_id, content|
+        content[:user_id] = current_user.id
       end
     end
+  end
  
   #FIXME_AB: Better to have this line at the top. Just a good practice
-  helper_method :get_vouchers
+  
 end

@@ -1,37 +1,24 @@
-<%if params[:tag].present? %>
+<% if params[:tag].present? %>
   <h3> Vouchers tagged with: <%= params[:tag] %> </h3>
-<%end%>
-<% #FIXME_AB: Why do we need following assignment -%>
-    <% params[:page] = 1 %>
-<% actions = ['index', 'all', 'show', 'pending', 'accepted', 'rejected', 'drafted', 'approved']%>
-<% if actions.include?(controller.action_name) && params[:controller] == 'vouchers' && params[:user_id].nil? && params[:account_id].nil? && params[:to].nil?%>
-  <div class="all_vouchers">
-    <%if params[:tag].nil? %>
-    <h2> Vouchers </h2>
-    <%end%>
-    <div class="new_button">
-      <%= link_to "New", new_voucher_path, :class => 'btn new_button btn-primary', "data-no-turbolink" => true%>
-    </div>
+<% elsif params[:to].present? %>
+  <%= render :template => 'reports/report_layout', locals: { :to => params[:to], :from => params[:from] } %>
+<% elsif params[:user_id].present? %>
+  <%= render :template => 'users/_layout', locals: { :@user => get_user(params[:user_id]) }%>
+<% elsif params[:account_id].present? && controller.action_name != 'show' %>
+  <%= render :template => 'accounts/_layout', locals: { :@account=> getaccount(params[:account_id]) } %>  
+<% else %>
+  <div class="new_button">
+    <%= link_to "New", new_voucher_path, :class => 'btn new_button btn-primary', "data-no-turbolink" => true %>
   </div>
-<%end%>
-<%if params[:to].present? && params[:from].present? && (controller.action_name != 'report') %>
-  <%= render :template => 'vouchers/report_layout', locals: {:to => params[:to], :from => params[:from]}%>
-<%end%>
-<%if params[:user_id].present?%>
-  <%= render :template => 'users/_layout', locals: {:@user => User.find(params[:user_id])}%>
-<%end%>
-<% if params[:account_id].present? && controller.action_name != 'show'%>
-  <%= render :template => 'accounts/_layout', locals: {:@account=>Account.find(params[:account_id])}%>    
-<%end%>
+<% end %>
 
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
-    <li class="active drafted"><%= link_to t(".drafted") + " ("+ get_vouchers('drafted').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'drafted'})), :class=>"drafted", 'data-no-turbolink'=> true %></li>
-    <li class="pending"><%= link_to t(".pending") + " ("+ get_vouchers('pending').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'pending'})), :class=>"pending", 'data-no-turbolink'=> true %></li>
-    <li class="approved"><%= link_to t(".approved") +" ("+ get_vouchers('approved').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'approved'})), :class=>"approved", 'data-no-turbolink'=> true %></li>
-    <li class="accepted"><%= link_to t(".accepted")+" ("+ get_vouchers('accepted').total_count.to_s + ")" , url_for(params.merge({controller: 'vouchers', action: 'accepted'})), :class=>"accepted", 'data-no-turbolink'=> true %></li>
-    <li class="rejected"><%= link_to t(".rejected")+" (" + get_vouchers('rejected').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'rejected'})), :class=>"rejected", 'data-no-turbolink'=> true %></li>
-    <li class="archived"><%= link_to t(".archived")+" (" + get_vouchers('archived').total_count.to_s + ")", url_for(params.merge({controller: 'vouchers', action: 'archived'})), :class=>"archived", 'data-no-turbolink'=> true %></li>
+    <%VOUCHER_STATES.each do |state| %>
+      <li class=<%= state %>>
+        <%= link_to t('.'+ state) + " (" + get_vouchers(state).total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
+      </li>
+    <%end%>
     <div class="voucher_status">
       <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers=> @vouchers } %>
     </div>

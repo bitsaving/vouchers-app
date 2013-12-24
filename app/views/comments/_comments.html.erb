@@ -1,3 +1,4 @@
+<div class ="comment_tab">
 <div class ="comment_panel">
   <div class ="comments">
     <%if voucher.drafted? || @voucher.comments.exists? %>
@@ -16,4 +17,5 @@
       <%= render :partial => 'comments/form' %>
     <%end%>
   </div>
+</div>
 </div>

@@ -2,6 +2,7 @@ class Admin::UsersController < ApplicationController
   #  cache_sweeper :user_sweeper, only: [:update, :destroy]
   before_action :set_user, :only => [:edit,:destroy, :update, :show]
   #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
+  
   before_action :check_admin
   before_action :redirect_if_logged_in_first_time, :only => [:show]
 
@@ -72,11 +73,10 @@ class Admin::UsersController < ApplicationController
     
 
   def redirect_if_logged_in_first_time 
-    if !params[:id]
+    if params[:id].nil?
       #FIXME_AB: This redirection should be done from the before filter itself
+      #fixed
       redirect_to assigned_vouchers_path
     end
   end
-
-
 end

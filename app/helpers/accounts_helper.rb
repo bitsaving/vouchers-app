@@ -1,5 +1,5 @@
 module AccountsHelper
-  def getAccount(id)
-  	Account.find(id).name if !id.blank?
+  def getaccount(id)
+    @account = Account.find_by(id: id)
   end
 end

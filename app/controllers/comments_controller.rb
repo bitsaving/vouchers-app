@@ -1,14 +1,9 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
-
+  before_action :set_voucher, only: [:create]
   def create
     #FIXME_AB: can we use before action here
-    @voucher = Voucher.find(params[:voucher_id])
-    if(@voucher.nil?)  
-      flash[:notice] = "Voucher not found"
-      redirect_to :back
-      return false
-    end
+    #fixed 
     @comment = @voucher.comments.build(comment_params)
     if(@comment.save)
       respond_to do |format|
@@ -35,6 +30,14 @@ class CommentsController < ApplicationController
       redirect_to_back_or_default_url
     end
   end
+
+  def set_voucher
+    @voucher = Voucher.find(params[:voucher_id])
+    if(@voucher.nil?)  
+      flash[:notice] = "Voucher not found"
+      redirect_to_back_or_default_url
+    end 
+  end   
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def comment_params
