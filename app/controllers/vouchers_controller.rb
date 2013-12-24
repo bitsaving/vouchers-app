@@ -82,42 +82,32 @@ class VouchersController < ApplicationController
   def pending
     get_vouchers('pending')
     set_default_tab('pending')
-    respond_to do |format|
-      format.html { render action: 'index'}
-    end  
+    render action: 'index'
   end
 
   def accepted
     get_vouchers('accepted')
     set_default_tab('accepted')
-    respond_to do |format|
-      format.html { render action: 'index'}
-    end  
+    render action: 'index' 
   end
 
   def archived
     get_vouchers('archived')
     set_default_tab('archived')
-    respond_to do |format|
-      format.html { render action: 'index'}
-    end  
+    render action: 'index'
   end
 
 
   def approved 
     get_vouchers('approved')
     set_default_tab('approved')  
-    respond_to do |format|
-      format.html { render action: 'index' }
-    end  
+    render action: 'index' 
   end
 
   def drafted
     get_vouchers('drafted')
     set_default_tab('drafted')
-    respond_to do |format|
-      format.html { render action: 'index'}
-     end  
+    render action: 'index'
   end
 
   #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
@@ -128,9 +118,7 @@ class VouchersController < ApplicationController
   def rejected
     get_vouchers('rejected')
     set_default_tab('rejected')
-    respond_to do |format|
-      format.html { render action: 'index' }
-    end
+    render action: 'index'
   end
 
   # DELETE /vouchers/1
@@ -156,10 +144,7 @@ class VouchersController < ApplicationController
     redirect_to :back, notice: notice
   end
 
-  def search
-    @vouchers = Voucher.search Riddle.escape(params[:query]), :page => params[:page], :per_page => 5
-  end
-  
+ 
   #FIXME_AB: I think we should have separate controller for reporting.
   
 
