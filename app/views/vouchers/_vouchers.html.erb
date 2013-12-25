@@ -25,13 +25,13 @@
                 </td>
                 <td>
                   <% voucher.debit_from.each_with_index do |debit, index| %>
-                    <%= link_to debit.name, account_vouchers_path(getaccount(debit))%>
+                    <%= link_to debit.name, account_vouchers_path(debit)%>
                     <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
                 <td>
                   <% voucher.credit_to.each_with_index do |credit, index| %>
-                     <%= link_to credit.name, account_vouchers_path(getaccount(credit))%>
+                     <%= link_to credit.name, account_vouchers_path(credit)%>
                       <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
@@ -39,7 +39,7 @@
                   <%= voucher.date.to_s(:string_format)%>
                 </td>
                 <td>
-                  <%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %>
+                  <%= number_to_currency(voucher.debited_transactions.pluck(:amount).inject(:+), :unit => "₹  ") %>
                 </td>
                 <% if voucher.assignee.nil? %>
                 <td> <%=" "%>

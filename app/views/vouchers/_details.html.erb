@@ -20,12 +20,12 @@
 </td>
 <td class="lower">
   <% @voucher.credit_to.each_with_index do |credit, index| %>
-    <%= link_to credit.name, account_vouchers_path(getaccount(credit)), :class=>'debit_credit'%>
+    <%= link_to credit.name, account_vouchers_path(credit), :class=>'debit_credit'%>
     <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %><br></strong>
   <%end%>
 </td>
 <td class="amount">
-  Amount :  <%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %>
+  Amount :  <%= number_to_currency(voucher.debited_transactions.pluck(:amount).inject(:+), :unit => "₹  ") %>
 </td>
 <td width="40px"></td>
 <%#end%>

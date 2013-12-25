@@ -4,7 +4,7 @@ class VouchersController < ApplicationController
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
   #before_action :eager_load_associations, only: [:index, :show, :pending, :drafted, :accepted, :rejected, :approved, :archived]
-  #helper_method :get_vouchers
+  helper_method :get_vouchers
   # GET /vouchers
   # GET /vouchers.json
   #FIXME_AB: Can we make more use of associations and scopes?

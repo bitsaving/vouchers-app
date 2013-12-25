@@ -39,7 +39,7 @@
                 <%# @sum += voucher.amount %>
               <%#end%> 
               <%#=voucher.total_amount('debit') %>
-        			<%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %>
+        			<%= number_to_currency(voucher.debited_transactions.pluck(:amount).inject(:+), :unit => "₹  ") %>
         		</div>
 			    </div>
 			    <div class="voucher_state">
@@ -63,14 +63,6 @@
 	<div id= "voucher_count">
 		<div class = "voucher_heading"> Voucher Status </div>
 		<div class="voucher_count">
-			<div class="vouchers">
-				<div class = "voucher_label">
-					<%= link_to "Drafted", drafted_vouchers_path %>
-				</div> 
-				<div class="voucher_contents"> 
-					<%= current_user.vouchers.drafted.count %>
-				</div>
-			</div>
 			<%VOUCHER_STATES.each do |state| %>
 				<div class="vouchers">
 					<div class="voucher_label">

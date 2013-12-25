@@ -61,7 +61,7 @@ class Voucher < ActiveRecord::Base
   scope :archived, -> { where(workflow_state: 'archived')}
   scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
   scope :assignee, ->(id) { where(assignee_id: id)}
-  scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)}
+  scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions,:credited_transactions)}
   scope :creator, ->(id) { where(creator_id: id)}
   scope :transaction_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
   scope :transaction_type, ->(type) { joins(:transactions).where(:transactions => {:account_type => type })}

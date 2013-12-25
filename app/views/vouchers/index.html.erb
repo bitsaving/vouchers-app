@@ -12,15 +12,11 @@
     <%= link_to "New", new_voucher_path, :class => 'btn new_button btn-primary', "data-no-turbolink" => true %>
   </div>
 <% end %>
-<%vouchers_hash = @vouchers.group_by(&:workflow_state) %>
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
-    <li class = "drafted">
-      <%= link_to "drafted" + " (" + get_drafted_vouchers.size.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: 'drafted', :page => 1 })), 'data-no-turbolink'=> true %>
-    </li>
     <% VOUCHER_STATES.each do |state| %>
       <li class=<%= state %>>
-        <%= link_to state + " (" + (vouchers_hash[state].nil? ? "0" : vouchers_hash[state].size.to_s)  + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
+        <%= link_to state + " (" + get_vouchers(state).total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
       </li>
     <%end%>
     <div class="voucher_status">
