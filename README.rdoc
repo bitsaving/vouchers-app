@@ -7,15 +7,25 @@ VoucherApp
 This application is developed in rails that allows you to create vouchers and send it for further approval by the next authority.
 the other person can accept ,reject your vouchers.this is implemented by maintaing states.
 
-To run this application kindly run the rake task to create an admin by running rake admin:create on console.
 Once the admin is created you can log in and now have the ability to create users , accounts and corresponding vouchers.
 After creation of admin u can log in via any valid google account which is verified via omniauth.
 
 Once you are logged in you can create vouchers  and if authorised as admin you can view any other user's vouchers and create or delete users.
 
-To send email notification to all users regarding the number of vouchers pending for their reviewal
-run rake task
-rake notification:digest
-this will send email to all the users whom vouchers are assigned.
-
 ALso if running the app on localhost kindly run rake ts:start to start your sphinx server for performing search.
+
+*******************************************************************************************
+To run the application 
+** run rake task for admin creation by
+rake admin:create
+
+******************************************************************************************
+To send email notification to all users regarding the number of vouchers pending for their reviewal
+** run rake task
+rake notification:digest
+*******************************************************************************************
+
+To perform search start the sphinx server
+run
+rake ts:start
+*******************************************************************************************

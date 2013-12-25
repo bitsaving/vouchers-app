@@ -14,19 +14,19 @@
 			  	  <div class="voucher_label">Debit</div>
 			  	  <div class="voucher_contents"> 
 			  	  	<% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries #fixed-%>
-			  	    <% voucher.debit_from.each do |debit| %>
+			  	    <% voucher.debit_from.each_with_index do |debit, index| %>
                 <%=debit.name%>
                 <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
-                <strong><%=" - ₹ " + voucher.debited_transactions[0].amount.to_s  %><br></strong>
+                <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
               <%end%>
             </div>
 			    </div>
 			    <div class = "voucher_credit"> 
 			      <div class="voucher_label">Credit</div>
 			  	  <div class="voucher_contents">
-			  	  	<% voucher.credit_to.each do |credit| %>
+			  	  	<% voucher.credit_to.each_with_index do |credit, index| %>
                 <%=credit.name%>
-                <strong><%=" - ₹ " + voucher.credited_transactions[0].amount.to_s %><br></strong>
+                <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s %><br></strong>
               <%end%>
             </div>
 			    </div>

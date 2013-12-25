@@ -62,8 +62,9 @@ class Voucher < ActiveRecord::Base
   scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
   scope :assignee, ->(id) { where(assignee_id: id)}
   scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions, :transactions)}
-  #scope :creator, ->(id) { where(creator_id: id)}
-
+  scope :creator, ->(id) { where(creator_id: id)}
+  scope :transactions, ->(id) { includes(:transactions).where(:transactions => {:account_id => id })}
+  scope :transactions_type, ->(type) { includes(:transactions).where(:transactions => {:account_type => type })}
   before_destroy :check_if_destroyable
 
   def check_debit_credit_equality

@@ -3,6 +3,7 @@ class VouchersController < ApplicationController
   before_action :check_user_and_voucher_state ,only: [:edit]
   before_action :default_tab, only: [:index, :all, :report]
   before_action :set_comment_owner, only: [:create, :update]
+  #before_action :eager_load_associations, only: [:index, :show, :pending, :drafted, :accepted, :rejected, :approved, :archived]
   #helper_method :get_vouchers
   # GET /vouchers
   # GET /vouchers.json
@@ -11,9 +12,9 @@ class VouchersController < ApplicationController
     if params[:tag]
       @vouchers = Voucher.tagged_with(params[:tag]).send(default_tab)
     elsif params[:user_id]
-      @vouchers = User.find(params[:user_id]).vouchers.send(default_tab)
+      @vouchers = Voucher.creator(params[:user_id]).send(default_tab)
     elsif params[:account_id]
-      @vouchers = Account.find(params[:account_id]).vouchers.send(default_tab)
+      @vouchers = Voucher.transactions(params[:account_id]).send(default_tab)
     elsif default_tab == "drafted"
       @vouchers = current_user.vouchers.send(default_tab)
     else
@@ -28,7 +29,7 @@ class VouchersController < ApplicationController
     #FIXME_AB: where are we using these local variables. Also comment.user_id can be set at the time of building the object. no?
     @voucher = Voucher.new
     @uploads = @voucher.attachments.build  
-    @comments =@voucher.comments.build
+    @comments = @voucher.comments.build
     @transactions = @voucher.transactions.build
   end
 
@@ -127,7 +128,7 @@ class VouchersController < ApplicationController
     notice = "Voucher #" + @voucher.id.to_s + " was deleted successfully"
     @voucher.destroy 
     respond_to do |format|
-      format.html { redirect_to :back ,notice: notice}
+      format.html { redirect_to :back ,notice: notice }
       format.json { head :no_content }
     end
   end
@@ -167,18 +168,18 @@ class VouchersController < ApplicationController
     def get_vouchers(state)
       if params[:account_id]
         if params[:account_type]
-          @vouchers = Account.find(params[:account_id]).send("vouchers_" + params[:account_type] + "ed").send(state)
+          @vouchers = Voucher.transactions(params[:account_id]).transactions_type(params[:account_type]).send(state)
         else
-          @vouchers = Account.find(params[:account_id]).vouchers.send(state)
+          @vouchers = Voucher.transactions(params[:account_id]).send(state)
         end
       elsif params[:user_id]
-        @vouchers = User.find(params[:user_id]).vouchers.send(state)
+        @vouchers = Voucher.creator(params[:user_id]).send(state)
       elsif params[:tag]
         @vouchers = Voucher.tagged_with(params[:tag]).send(state)
       elsif(params[:to] && params[:from])
         @vouchers = Voucher.where('date between (?) and (?)', params[:from], params[:to]).send(state)
         filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
-      elsif state.inquiry.drafted?
+      elsif state == "drafted"
         @vouchers = current_user.vouchers.drafted
       else
         @vouchers = Voucher.send(state)
