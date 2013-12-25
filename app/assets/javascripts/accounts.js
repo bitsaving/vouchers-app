@@ -17,7 +17,7 @@ AccountsHandler.prototype = {
       if($(this).val() != 'Both')
         window.location.href =  $(this).data('path') + "/" + pathname.trim().split(" (")[0].toLowerCase() + "?account_type=" + $(this).val().toLowerCase()
       else
-        window.location.href = $(this).data('path') + "/" + pathname.split(" (")[0].toLowerCase()
+        window.location.href = $(this).data('path') + "/" + pathname.trim().split(" (")[0].toLowerCase()
     })
   }
 }

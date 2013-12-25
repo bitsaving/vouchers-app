@@ -12,7 +12,7 @@
     <%= link_to "New", new_voucher_path, :class => 'btn new_button btn-primary', "data-no-turbolink" => true %>
   </div>
 <% end %>
-<%vouchers_hash = get_vouchers_count %>
+<%vouchers_hash = @vouchers.group_by(&:workflow_state) %>
 <div class = "span9 associated_voucher">
   <ul class="nav nav-tabs">
     <li class = "drafted">
