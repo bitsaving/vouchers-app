@@ -191,8 +191,8 @@ class VouchersController < ApplicationController
 
     def filter_by_name_and_type(vouchers ,name, type)
       if name.present?
-        @vouchers = vouchers.includes(:transactions).where(:transactions => {:account_id => name})
-        @vouchers = @vouchers.where(:transactions => {:account_type => type}) if type.present?
+        @vouchers = vouchers.transactions(name)
+        @vouchers = @vouchers.transactions_type(type) if type.present?
       end
      @vouchers
     end

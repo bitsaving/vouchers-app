@@ -2,8 +2,8 @@
 </div>
 <div class="voucher_div">
   <div class ="voucher_form">
-    <%= form_for @voucher , :html => { :class => 'voucher_autocomplete form-horizontal', :html => { :multipart => true  } }, :remote =>  true  do |f| %>
-      <legend><%=controller.action_name.capitalize%> voucher</legend>
+    <%= form_for @voucher, :html => { :class => 'voucher_autocomplete form-horizontal', :html => { :multipart => true  } }, :remote =>  true  do |f| %>
+      <legend><%= controller.action_name.capitalize %> voucher</legend>
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
         <div class="controls">
@@ -11,15 +11,15 @@
         </div>
       </div>
       <div class="control-group">
-        <%= f.label :account_debited, "Debit To",:class => 'control-label compulsory-field' %>
+        <%= f.label :account_debited, "Debit To", :class => 'control-label compulsory-field' %>
       <div>
-      <%@counter = 0 %>
-      <%position=0%>
+      <%@counter = 0%>
+      <%position = 0%>
       <%= f.fields_for :transactions do |builder| %>
         <% if @voucher.new_record? %>
-          <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit", :f=>builder} %>
+          <%= render :template => 'vouchers/_transaction_fields', locals: {:@account_type => "debit", :f=>builder } %>
         <%elsif builder.object.account_type == "debit" %> 
-          <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "debit",:@position => position, :f=>builder} %>
+          <%= render :template => 'vouchers/_transaction_fields', locals: {:@account_type => "debit", :@position => position, :f=>builder } %>
           <% position = position +1 %>
         <%end%>
       <%end%>
@@ -27,13 +27,13 @@
         <%= link_to_add_fields "Add debit account", f, :transactions %>
       </div>
       <div class="control-group">
-        <%= f.label :account_credited, "Credit  From",:class => 'control-label compulsory-field' %>
+        <%= f.label :account_credited, "Credit  From", :class => 'control-label compulsory-field' %>
         <% position = 0 %>
         <%= f.fields_for :transactions do |builder| %>
           <% if @voucher.new_record? %>
-            <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit",:f=>builder} %>
+            <%= render  :template => 'vouchers/_transaction_fields', locals: {:@account_type => "credit", :f=>builder } %>
           <%elsif builder.object.account_type == "credit" %>
-            <%= render  :template => 'vouchers/_transaction_fields'  ,locals: {:@account_type => "credit", :@position => position,  :f=>builder} %>
+            <%= render  :template => 'vouchers/_transaction_fields', locals: {:@account_type => "credit", :@position => position,  :f=>builder} %>
             <%position = position + 1 %>
           <%end%>
         <%end%>
@@ -62,11 +62,11 @@
               <%= builder.file_field :bill_attachment %>
               <%= link_to_remove_fields "  Remove" , builder %>
               <p class ="radioBox link controls tagname">
-                <%=builder.text_field :tagname,:class=>"filename" ,placeholder: "caption" %>
+                <%=builder.text_field :tagname, :class=>"filename", placeholder: "caption" %>
               </p>
             <%else%>
-              <%= link_to @voucher.attachments[counter].bill_attachment_file_name ,@voucher.attachments[counter].bill_attachment.url(:original),:target => "_blank" ,:class => 'voucher_placing'%>
-              <%= link_to_remove_fields "Remove" , builder %>     
+              <%= link_to @voucher.attachments[counter].tagname, @voucher.attachments[counter].bill_attachment.url(:original), :target => "_blank", :class => 'voucher_placing'%>
+              <%= link_to_remove_fields "Remove", builder %>     
             <%end%>            
             <% counter += 1 %>
           <% end %>
@@ -78,14 +78,14 @@
       <div class="control-group">
         <%= f.label :tag_list, "Tags" %><br />
         <div class="controls">
-          <%= f.text_field :tag_list ,:class=>"tag", data: {path: tags_path(:json)}%>
+          <%= f.text_field :tag_list, :class=>"tag", data: {path: tags_path(:json)}%>
         <span class="hint">( Tags separated by comma's )</span>
       </div>
       </div> 
       <div class="control-group">
         <%= f.fields_for :comments do |builder| %>
           <% if(builder.object.user_id == current_user.id ) || @voucher.new_record? %> 
-            <%=render 'comment_fields' ,:f=>builder %>
+            <%=render 'comment_fields', :f=>builder %>
           <%end%>
         <% end %>
         <% if !@voucher.new_record? %>

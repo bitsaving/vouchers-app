@@ -1,6 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:destroy]
   before_action :set_voucher, only: [:create]
+  
   def create
     #FIXME_AB: can we use before action here
     #fixed 
