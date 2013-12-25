@@ -10,22 +10,22 @@
   DEBIT 
 </td>
 <td class="lower">
-  <% voucher.debit_from.each_with_index do |debit, index| %>
+  <% @voucher.debit_from.each_with_index do |debit, index| %>
     <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
-    <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+    <strong><%=" - ₹ " + @voucher.debited_transactions[index].amount.to_s  %><br></strong>
   <%end%>
 </td>
 <td class="lower">
   CREDIT 
 </td>
 <td class="lower">
-  <% voucher.credit_to.each_with_index do |credit, index| %>
+  <% @voucher.credit_to.each_with_index do |credit, index| %>
     <%= link_to credit.name, account_vouchers_path(getaccount(credit)), :class=>'debit_credit'%>
-    <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+    <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %><br></strong>
   <%end%>
 </td>
 <td class="amount">
-  Amount :  <%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %>
+  Amount :  <%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %>
 </td>
 <td width="40px"></td>
 <%#end%>

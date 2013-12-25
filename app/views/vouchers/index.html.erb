@@ -31,5 +31,5 @@
 
 
 <script type= "text/javascript">
-  $('.associated_voucher li.'+ '<%=session[:previous_tab] %>').addClass('active').siblings().removeClass('active')
+  $('.associated_voucher li.'+ '<%=session[:previous_tab].presence || "drafted" %>').addClass('active').siblings().removeClass('active')
 </script>

@@ -25,13 +25,13 @@
                 </td>
                 <td>
                   <% voucher.debit_from.each_with_index do |debit, index| %>
-                    <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
+                    <%= link_to debit.name, account_vouchers_path(getaccount(debit))%>
                     <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
                 <td>
                   <% voucher.credit_to.each_with_index do |credit, index| %>
-                     <%= link_to credit.name, account_vouchers_path(getaccount(credit)),:class=>'debit_credit'%>
+                     <%= link_to credit.name, account_vouchers_path(getaccount(credit))%>
                       <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s  %><br></strong>
                   <%end%>
                 </td>
@@ -54,7 +54,7 @@
                   <%end%>
                   <%= link_to "Details", voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
                   <% if voucher.accepted? && voucher.assignee?(current_user) %>
-                    <%= link_to "Archive", increment_state_voucher_path(id: voucher.id, vouchers: {assignee_id: current_user.id}), :class=>'btn btn-mini btn-primary', method: :post %>
+                    <%= link_to "Archive", increment_state_voucher_path(id: voucher.id, voucher: {assignee_id: current_user.id}), :class=>'btn btn-mini btn-primary', method: :post %>
                   <%end%>
                   <% if voucher.archived? %>
                     <%= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>Show

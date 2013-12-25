@@ -61,10 +61,10 @@ class Voucher < ActiveRecord::Base
   scope :archived, -> { where(workflow_state: 'archived')}
   scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
   scope :assignee, ->(id) { where(assignee_id: id)}
-  scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions, :transactions)}
+  scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)}
   scope :creator, ->(id) { where(creator_id: id)}
-  scope :transactions, ->(id) { includes(:transactions).where(:transactions => {:account_id => id })}
-  scope :transactions_type, ->(type) { includes(:transactions).where(:transactions => {:account_type => type })}
+  scope :transaction_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
+  scope :transaction_type, ->(type) { joins(:transactions).where(:transactions => {:account_type => type })}
   before_destroy :check_if_destroyable
 
   def check_debit_credit_equality
@@ -120,6 +120,9 @@ class Voucher < ActiveRecord::Base
     update_attributes({ approved_by: user.id, approved_at: Time.current })
   end
 
+  def send_for_approval
+    update_attributes(updated_at: Time.current)
+  end
 
   def assignee?(user)
     assignee_id == user.id

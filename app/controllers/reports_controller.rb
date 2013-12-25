@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
   before_action :check_validity, only: [:generate_report]
   before_action :convert_date, only: [:generate_report]
-
+  before_action :default_tab, only: [:report]
   
   def report 
     params[:from] = Date.today.beginning_of_month()
@@ -28,5 +28,9 @@ class ReportsController < ApplicationController
       if params[:from].nil? || params[:to].nil? || params[:from] > params[:to]
         redirect_to report_path, notice: "PLease enter valid values!!"
       end
+    end
+
+    def default_tab
+      session[:previous_tab] || 'drafted'
     end
 end

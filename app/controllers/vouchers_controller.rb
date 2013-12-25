@@ -1,7 +1,7 @@
 class VouchersController < ApplicationController
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_voucher_state, :check_user_type, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state ,only: [:edit]
-  before_action :default_tab, only: [:index, :all, :report]
+  before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
   #before_action :eager_load_associations, only: [:index, :show, :pending, :drafted, :accepted, :rejected, :approved, :archived]
   #helper_method :get_vouchers
@@ -14,7 +14,7 @@ class VouchersController < ApplicationController
     elsif params[:user_id]
       @vouchers = Voucher.creator(params[:user_id]).send(default_tab)
     elsif params[:account_id]
-      @vouchers = Voucher.transactions(params[:account_id]).send(default_tab)
+      @vouchers = Voucher.transaction_account(params[:account_id]).send(default_tab)
     elsif default_tab == "drafted"
       @vouchers = current_user.vouchers.send(default_tab)
     else
@@ -134,6 +134,7 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
+    @voucher.assignee_id = params[:voucher][:assignee_id]
     @voucher.increment_state(current_user)
     notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
     redirect_to :back, notice: notice
@@ -168,9 +169,9 @@ class VouchersController < ApplicationController
     def get_vouchers(state)
       if params[:account_id]
         if params[:account_type]
-          @vouchers = Voucher.transactions(params[:account_id]).transactions_type(params[:account_type]).send(state)
+          @vouchers = Voucher.transaction_account(params[:account_id]).transaction_type(params[:account_type]).send(state)
         else
-          @vouchers = Voucher.transactions(params[:account_id]).send(state)
+          @vouchers = Voucher.transaction_account(params[:account_id]).send(state)
         end
       elsif params[:user_id]
         @vouchers = Voucher.creator(params[:user_id]).send(state)
