@@ -1,4 +1,4 @@
-class ReportsController < ApplicationController
+class ReportsController < VouchersController
   before_action :check_validity, only: [:generate_report]
   before_action :convert_date, only: [:generate_report]
   before_action :default_tab, only: [:report]
@@ -12,10 +12,10 @@ class ReportsController < ApplicationController
 
   #FIXME_AB: better if we have this named as generate. So that we can call it by /reports/generate?to=
   def generate
-    @voucher_startDate = params[:from]
-    @voucher_endDate = params[:to]
-    @voucher_accountName = params[:report_account]
-    @voucher_accountType = params[:account_type]
+    @start_date = params[:from]
+    @end_date = params[:to]
+    @account_name = params[:account_id]
+    @transaction_type = params[:transaction_type]
   end
 
 

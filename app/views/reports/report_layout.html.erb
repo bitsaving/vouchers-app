@@ -1,29 +1,29 @@
 <div class="reports">
-  <%= form_tag report_generate_path, :class => "voucher_autocomplete" ,:method => 'post' do %>
+  <%= form_tag report_generate_path, :class => "voucher_autocomplete", :method => 'post' do %>
     <div class = "report">
-      <div class="control-group from_date"> 
-        <%=label_tag  :from ,"From", :class => 'control-label' %>
+      <div class = "control-group from_date"> 
+        <%=label_tag  :from, "From", :class => 'control-label' %>
         <div class="controls">
-          <%= text_field_tag :from , params[:from].to_date.to_s(:normal_format), :class => 'date-field'  %>
+          <%= text_field_tag :from, params[:from].to_date.to_s(:normal_format), :class => 'date-field'  %>
         </div>
       </div>
       <div class="control-group to_date">
-        <%=label_tag  :to , "To", :class => 'control-label' %>
-        <div class="controls">
+        <%=label_tag  :to, "To", :class => 'control-label' %>
+        <div class = "controls">
           <%= text_field_tag :to, params[:to].to_date.to_s(:normal_format), :class => 'date-field' %>
         </div>
       </div>
-      <div class="control-group from_date">
+      <div class = "control-group from_date">
        <%=label_tag  :account_name, "Account", :class => 'control-label' %>
-      <div class="controls">
-          <%= text_area_tag :account_name, get_account_name(params[:report_account]), data: { hidden_field_id: 'report_account',  textbox_id:'account_name', path: accounts_path } , :class => 'text-field autocomplete', :rows=>3, :columns=>8%>
+      <div class = "controls">
+          <%= text_area_tag :account_name, get_account_name(params[:account_id]]), data: { hidden_field_id: 'account_id',  textbox_id:'account_name', path: accounts_path } , :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
         </div>
       </div>
-      <%= hidden_field_tag :report_account, params[:report_account]%>
+      <%= hidden_field_tag :account_id, params[:account_id]%>
       <div class="control-group account_dropdown to_date">
         <%=label_tag  :account_type , "Type", :class => 'control-label' %>
         <div class="controls">
-          <%= select_tag :account_type, options_for_select([['debit'], ['credit']], :selected => params[:account_type]), prompt: "Select"%>
+          <%= select_tag :transaction_type, options_for_select([['debit'], ['credit']], :selected => params[:transaction_type]), prompt: "Select"%>
         </div>
       </div>
       <div class="display_vouchers">

@@ -1,9 +1,8 @@
-<%= @voucher_startDate %>
-<%local_params = {from: @voucher_startDate.to_date, to: @voucher_endDate.to_date } %>
-<%if @voucher_accountName.present? %>
-  <%local_params = local_params.merge({report_account: @voucher_accountName})%>
+<% local_params = { from: @start_date.to_date, to: @end_date.to_date } %>
+<%if @account_name.present? %>
+  <% local_params = local_params.merge({account_id: @account_name})%>
 <%end%>
-<%if @voucher_accountType.present? %>
-  <%local_params = local_params.merge({account_type: @voucher_accountType})%>
+<%if @transaction_type.present? %>
+  <% local_params = local_params.merge({transaction_type: @transaction_type})%>
 <%end%>
-<%= render :template => 'vouchers/index', locals: {params: local_params, :@vouchers =>  get_by_date(session[:previous_tab], @voucher_startDate,@voucher_endDate, @voucher_accountName, @voucher_accountType).page(params[:page])} %>
+<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date(session[:previous_tab], @start_date,@end_date, @account_name, @transaction_type).page(params[:page])} %>
