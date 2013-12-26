@@ -6,10 +6,12 @@ class ReportsController < ApplicationController
   def report 
     params[:from] = Date.today.beginning_of_month()
     params[:to] = Date.today.end_of_month()
+    @vouchers = Voucher.between_dates(params[:from], params[:to]).send(session[:previous_tab]).page(params[:page])
+    render  :template => 'vouchers/index', locals: {:@vouchers => @vouchers}
   end
 
   #FIXME_AB: better if we have this named as generate. So that we can call it by /reports/generate?to=
-  def generate_report
+  def generate
     @voucher_startDate = params[:from]
     @voucher_endDate = params[:to]
     @voucher_accountName = params[:report_account]

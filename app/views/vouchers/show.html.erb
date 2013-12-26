@@ -7,8 +7,8 @@
     </div>
   </div>
   <div class = "status onprint">
-    <%= @voucher.workflow_state.capitalize%>
-    <% if @voucher.assignee_id && @voucher.assignee_id != current_user.id%>
+    <%= @voucher.workflow_state.capitalize %>
+    <% if @voucher.assignee_id && !@voucher.assignee?(current_user) %>
       <%= "(" %>
       <%= @voucher.assignee.name %>
       <%= ")"%>
@@ -19,17 +19,17 @@
   </div>
    <div class = "edit_voucher onprint">
       <% if @voucher.can_be_edited? && @voucher.creator?(current_user)%>
-        <%= link_to "Edit", edit_voucher_path(@voucher), :class=>'btn btn-primary', "data-no-turbolink" => true%> 
+        <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
       <%end%>
     </div>
     <div class ="print_voucher">
-      <%= link_to "Print", "javascript:print()", :class=>'btn btn-primary onprint'%> 
+      <%= link_to "Print", "javascript:print()", :class => 'btn btn-primary onprint'%> 
     </div>
   <div class = "separator">
   </div>
   <div class = "column_separator">
     <div class = "payment">
-      <div class="amount">
+      <div class = "amount">
         <%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %>
       </div>
     </div>    
@@ -41,9 +41,9 @@
       </div>
       <% @voucher.debit_from.each do |debit| %>
         <div>
-          <%= link_to debit.name, account_vouchers_path(getaccount(debit))%>
+          <%= link_to debit.name, account_vouchers_path(getaccount(debit)) %>
           <strong><%=" - ₹ " + @voucher.debited_transactions[0].amount.to_s  %></strong>
-           <span> Payment Mode: <%= @voucher.debited_transactions[0].payment_type%></span>
+           <span> Payment Mode: <%= @voucher.debited_transactions[0].payment_type %></span>
           <% if  @voucher.debited_transactions[0].payment_reference.present? %>
             <span>Payment Reference: <%= @voucher.debited_transactions[0].payment_reference  %>
             </span>
@@ -75,8 +75,8 @@
     <%end%>
    <%if(@voucher.approved?  && @voucher.assignee?(current_user))%>
       <div class ="final_state onprint">
-        <%= link_to "Accept" , increment_state_voucher_path(id: @voucher ,:voucher => {assignee_id: current_user.id}),:class=>'btn btn-primary',method: :post%>
-        <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger',method: :post,data: {confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to #{@voucher.creator.name}.Press OK to continue "}%>
+        <%= link_to "Accept" , increment_state_voucher_path(id: @voucher ,:voucher => {assignee_id: current_user.id}), :class => 'btn btn-primary', method: :post %>
+        <%= link_to "Reject" , decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger', method: :post, data: {confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to #{@voucher.creator.name}.Press OK to continue "}%>
       </div>
     <%end%>
     <% counter = 0 %>
@@ -91,31 +91,31 @@
     <%end%>
     <%if @voucher.tag_list.length >0 %>
       <div class="tags">
-        Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t),:class=>"taglist"}.join(' ') %>
+        Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t), :class => "taglist" }.join(' ') %>
       </div>
     <%end%>
-    <%if !@voucher.creator_id.nil?%>
+    <%if @voucher.creator_id.present? %>
       <div class="status_label">
         <div class ="created_by">
           <div>
             <%= "Created By :   " %>
-            <%= link_to @voucher.creator.name ,user_vouchers_path(@voucher.creator_id)%>
+            <%= link_to @voucher.creator.name, user_vouchers_path(@voucher.creator_id)%>
           </div>
         </div>
       <%end%>
-      <%if !@voucher.approved_by.nil?%>
+      <%if @voucher.approved_by.present? %>
         <div class ="approved_by">
           <div>
             <%= "Approved By :   " %>
-            <%= link_to @voucher.approved_by_user.name ,user_vouchers_path(@voucher.approved_by)%>
+            <%= link_to @voucher.approved_by_user.name, user_vouchers_path(@voucher.approved_by)%>
           </div>
         </div>
       <%end%>
-      <%if !@voucher.accepted_by.nil?%>
+      <%if @voucher.accepted_by.present?%>
         <div class ="accepted_by">
           <div>
             <%= "Accepted By : " %>
-            <%= link_to @voucher.accepted_by_user.name,user_vouchers_path(@voucher.accepted_by)%>   
+            <%= link_to @voucher.accepted_by_user.name, user_vouchers_path(@voucher.accepted_by)%>   
           </div>
         </div>
       <%end%>

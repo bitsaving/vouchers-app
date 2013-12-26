@@ -6,7 +6,7 @@ class VouchersController < ApplicationController
   before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
 
-  helper_method :get_vouchers
+
 
   def index
     @vouchers = Voucher.all
@@ -149,71 +149,6 @@ class VouchersController < ApplicationController
         redirect_to_back_or_default_url
       end
     end
-
-    #FIXME_AB: I think we can decompose this method. Lets first use query builder approach for this. I have tried a first draft of that below this method. please check
-    # def get_vouchers(state)
-    #   if params[:account_id]
-    #     if params[:account_type]
-    #       @vouchers = Voucher.transaction_account(params[:account_id]).transaction_type(params[:account_type]).send(state)
-    #     else
-    #       @vouchers = Voucher.transaction_account(params[:account_id]).send(state)
-    #     end
-    #   elsif params[:user_id]
-    #     @vouchers = Voucher.creator(params[:user_id]).send(state)
-    #   elsif params[:tag]
-    #     @vouchers = Voucher.tagged_with(params[:tag]).send(state)
-    #   elsif(params[:to] && params[:from])
-    #     @vouchers = Voucher.where('date between (?) and (?)', params[:from], params[:to]).send(state)
-    #     filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
-    #   elsif state == "drafted"
-    #     @vouchers = current_user.vouchers.drafted
-    #   else
-    #     @vouchers = Voucher.send(state)
-    #   end
-    #   @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
-    # end
-
-
-    def get_vouchers(state)
-      @vouchers = Voucher.all
-
-      if params[:account_id]
-        @vouchers = @vouchers.by_account(params[:account_id])
-        if params[:transaction_type]
-          @vouchers = @vouchers.by_transaction_type(params[:transaction_type])
-        end
-      end
-
-      if params[:user_id] 
-        @vouchers = @vouchers.created_by(params[:user_id])
-      end
-
-      if params[:tag]
-        @vouchers = @vouchers.tagged_with(params[:tag])
-      end
-
-      if(params[:to] && params[:from])
-        @vouchers = @vouchers.between_dates(params[:from], params[:to])
-        filter_by_name_and_type(@vouchers, params[:report_account], params[:transaction_type])
-      end
-
-      if state == "drafted"
-        @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id)
-      end
-
-      @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
- 
-    end
-
-
-    def filter_by_name_and_type(vouchers ,name, type)
-      if name.present?
-        @vouchers = vouchers.by_account(name)
-        @vouchers = @vouchers.by_transaction_type(type) if type.present?
-      end
-      @vouchers
-    end
- 
   # Use callbacks to share common setup or constraints between actions.
    
     def set_voucher

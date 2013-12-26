@@ -28,7 +28,6 @@
   Amount :  <%= number_to_currency(@voucher.amount, :unit => "₹  ") %>
 </td>
 <td width="40px"></td>
-<%#end%>
 <% if @voucher.to_date %>
   <td  class="paymentmode"> 
     From : <%= @voucher.from_date.to_s(:normal_format) %>  To : <%= @voucher.to_date.to_s(:normal_format) %>

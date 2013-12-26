@@ -42,14 +42,14 @@
                   <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
                 </td>
                 <% if voucher.assignee.nil? %>
-                <td> <%=" "%>
+                  <td> <%=" "%>
                 <%else%>
-                <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
-                  <%end%>
-                 <td><%= voucher.workflow_state%></td> 
+                  <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
+                <%end%>
+                <td><%= voucher.workflow_state%></td> 
                 <td>
                   <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
-                    <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary','data-no-turbolinks' => true %>
+                    <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary', 'data-no-turbolinks' => true %>
                     <%= link_to "Delete", voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s}, :class => 'btn btn-mini btn-danger' %>
                   <%end%>
                   <%= link_to "Details", voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
@@ -58,7 +58,7 @@
                   <%end%>
                   <% if voucher.archived? %>
                     <%= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>Show
-                    <%=render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
+                    <%= render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
                   <%end%>
                 </td>
               </tr>
