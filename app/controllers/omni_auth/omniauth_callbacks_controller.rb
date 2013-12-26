@@ -16,5 +16,13 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
       flash.notice = "You are not authorized to login. Kindly contact administrator "
     end 
   end
+
+  def sign_in_and_redirect(resource_or_scope)
+    if resource_or_scope == :user
+      redirect_to assigned_vouchers_path
+    else
+      super
+    end
+  end
   
 end

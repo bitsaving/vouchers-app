@@ -19,4 +19,10 @@ class Account < ActiveRecord::Base
   	errors.add :base, "We are not allowing destroy or delete for Account" 
   	return false 
   end
+
+  def self.get_autocomplete_suggestions(term)
+    account_name = "%".concat(term.concat("%"))
+    Account.where('name LIKE (?)', account_name)
+  end
+  
 end

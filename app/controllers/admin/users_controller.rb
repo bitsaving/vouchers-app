@@ -4,7 +4,7 @@ class Admin::UsersController < ApplicationController
   #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
   
   before_action :check_admin
-  before_action :redirect_if_logged_in_first_time, :only => [:show]
+  #before_action :redirect_if_logged_in_first_time, :only => [:show]
 
   #caches_action :show
   # GET /users
@@ -66,17 +66,15 @@ class Admin::UsersController < ApplicationController
 
     def set_user
       @user = User.find_by(id: params[:id])
-      if @user.nil?
-        redirect_to_back_or_default_url
-      end  
+      redirect_to_back_or_default_url if @user.nil?
     end
     
 
-  def redirect_if_logged_in_first_time 
-    if params[:id].nil?
-      #FIXME_AB: This redirection should be done from the before filter itself
-      #fixed
-      redirect_to assigned_vouchers_path
-    end
-  end
+  # def redirect_if_logged_in_first_time 
+  #   if params[:id].nil?
+  #     #FIXME_AB: This redirection should be done from the before filter itself
+  #     #fixed
+  #     redirect_to assigned_vouchers_path
+  #   end
+  # end
 end

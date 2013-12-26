@@ -4,6 +4,7 @@ VoucherApp::Application.routes.draw do
   get 'tags' ,to: 'tags#index'
   get 'tags/:tag', to: 'vouchers#index', as: :tag, constraints: { tag: /.*/ }
   get 'search' , to: 'vouchers#search' ,as: :search
+  get 'auto-complete', to: 'accounts#autocomplete_suggestions', as: :autocomplete
   resources :comments
   resources :uploads
   root :to => 'vouchers#assigned'

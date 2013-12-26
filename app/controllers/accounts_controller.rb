@@ -2,16 +2,7 @@ class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
   def index
-    if params[:term]
-      account_name = "%".concat(params[:term].concat("%"))
-      @accounts = Account.where('name LIKE (?)', account_name)
-    else
       @accounts = Account.page(params[:page])
-    end
-    respond_to do |format|
-      format.html
-      format.json { render :json => @accounts.collect { |x| { :label => x.name , :value => x.id } }.compact } 
-    end
   end
 
 
@@ -24,14 +15,11 @@ class AccountsController < ApplicationController
   
   def create
     @account = Account.new(account_params)
-    respond_to do |format|
-      if @account.save
-        format.html { redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @voucher }
-      else
-         format.html { render action: 'new' }
-         format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    if @account.save
+      redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.'
+    
+    else
+      render action: 'new'
     end
   end
   
@@ -44,18 +32,19 @@ class AccountsController < ApplicationController
   end
   
   def update
-     respond_to do |format|
-      if @account.update(account_params)
-        format.html { redirect_to account_vouchers_path(@account), notice: 'Account ' + @account.name + ' was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @account.errors, status: :unprocessable_entity }
-      end
+    if @account.update(account_params)
+      redirect_to account_vouchers_path(@account), notice: 'Account ' + @account.name + ' was successfully updated.' }
+    else
+      render action: 'edit' 
     end
   end
   
+
+  def autocomplete_suggestions
+    render :json => Account.get_autocomplete_suggestions(params[:term]).collect { |x| { :label => x.name , :value => x.id } }.compact 
+  end
  
+
   protected
     # Use callbacks to share common setup or constraints between actions.
     def set_account
@@ -70,6 +59,6 @@ class AccountsController < ApplicationController
     def account_params
       params.require(:account).permit(:name)
     end 
-  
+
  end
 
