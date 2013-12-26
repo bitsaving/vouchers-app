@@ -39,12 +39,12 @@ class Voucher < ActiveRecord::Base
   validate :check_debit_credit_equality
   
   has_many :transactions
-  has_many :debited_transactions ,-> { where(:transactions => { transaction_type: "debit" })} ,:class_name => 'Transaction'
-  has_many :credited_transactions, -> { where(:transactions => { transaction_type: "credit" }) } ,:class_name => 'Transaction'
+  has_many :debited_transactions, -> { where(:transactions => { transaction_type: "debit" })}, :class_name => 'Transaction'
+  has_many :credited_transactions, -> { where(:transactions => { transaction_type: "credit" }) }, :class_name => 'Transaction'
   has_many :debit_from, -> { where(:transactions => { transaction_type: "debit" }) }, through: :transactions, source: :account
-  has_many :credit_to, -> {  where(:transactions => { transaction_type: "credit"}) }, through: :transactions, source: :account
+  has_many :credit_to, -> {  where(:transactions => { transaction_type: "credit" }) }, through: :transactions, source: :account
   
-  with_options :class_name =>'User' do |user|
+  with_options :class_name => 'User' do |user|
     user.belongs_to :assignee
     user.belongs_to :creator
     user.belongs_to :approved_by_user, :foreign_key => "approved_by"
@@ -61,19 +61,20 @@ class Voucher < ActiveRecord::Base
   accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
   
   default_scope { order('date desc') }
+
   scope :drafted, -> { where(workflow_state: 'drafted') }
-  scope :pending, -> { where(workflow_state: 'pending')}
-  scope :approved, -> { where(workflow_state: 'approved')}
-  scope :accepted, -> { where(workflow_state: 'accepted')}
-  scope :rejected, -> { where(workflow_state: 'rejected')}
-  scope :archived, -> { where(workflow_state: 'archived')}
-  scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
-  scope :assignee, -> (id) { where(assignee_id: id)}
+  scope :pending, -> { where(workflow_state: 'pending') }
+  scope :approved, -> { where(workflow_state: 'approved') }
+  scope :accepted, -> { where(workflow_state: 'accepted') }
+  scope :rejected, -> { where(workflow_state: 'rejected') }
+  scope :archived, -> { where(workflow_state: 'archived') }
+  scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
+  scope :assignee, -> (id) { where(assignee_id: id) }
   
-  scope :created_by, -> (id) { where(creator_id: id)}
+  scope :created_by, -> (id) { where(creator_id: id) }
   scope :by_account, -> (id) { joins(:transactions).where(:transactions => {:account_id => id })}
   scope :by_transaction_type, -> (type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
-  scope :between_dates, -> (from, to) { where('date between (?) and (?)', from, to)}
+  scope :between_dates, -> (from, to) { where('date between (?) and (?)', from, to) }
   
   before_destroy :check_if_destroyable
 
