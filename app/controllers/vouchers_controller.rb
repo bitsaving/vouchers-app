@@ -159,7 +159,7 @@ class VouchersController < ApplicationController
 
       if(params[:to] && params[:from])
         @vouchers = @vouchers.between_dates(params[:from], params[:to])
-        filter_by_name_and_type(@vouchers, params[:report_account], params[:transaction_type])
+        filter_by_name_and_type(@vouchers, params[:account_id], params[:transaction_type])
       end
 
       if state == "drafted"
