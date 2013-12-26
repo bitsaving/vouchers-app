@@ -1,8 +1,0 @@
-<% local_params = { from: @start_date.to_date, to: @end_date.to_date } %>
-<%if @account_name.present? %>
-  <% local_params = local_params.merge({account_id: @account_name})%>
-<%end%>
-<%if @transaction_type.present? %>
-  <% local_params = local_params.merge({transaction_type: @transaction_type})%>
-<%end%>
-<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date(session[:previous_tab], @start_date,@end_date, @account_name, @transaction_type).page(params[:page])} %>
