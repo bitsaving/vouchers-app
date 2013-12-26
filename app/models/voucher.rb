@@ -39,10 +39,10 @@ class Voucher < ActiveRecord::Base
   validate :check_debit_credit_equality
   
   has_many :transactions
-  has_many :debited_transactions ,-> { where(:transactions => { account_type: "debit" })} ,:class_name => 'Transaction'
-  has_many :credited_transactions, -> { where(:transactions => { account_type: "credit" }) } ,:class_name => 'Transaction'
-  has_many :debit_from, -> { where(:transactions => { account_type: "debit" }) }, through: :transactions, source: :account
-  has_many :credit_to, -> {  where(:transactions => { account_type: "credit"}) }, through: :transactions, source: :account
+  has_many :debited_transactions ,-> { where(:transactions => { transaction_type: "debit" })} ,:class_name => 'Transaction'
+  has_many :credited_transactions, -> { where(:transactions => { transaction_type: "credit" }) } ,:class_name => 'Transaction'
+  has_many :debit_from, -> { where(:transactions => { transaction_type: "debit" }) }, through: :transactions, source: :account
+  has_many :credit_to, -> {  where(:transactions => { transaction_type: "credit"}) }, through: :transactions, source: :account
   
   with_options :class_name =>'User' do |user|
     user.belongs_to :assignee
@@ -72,7 +72,8 @@ class Voucher < ActiveRecord::Base
   scope :including_accounts_and_transactions, -> { includes(:debit_from, :credit_to, :debited_transactions,:credited_transactions)}
   scope :created_by, ->(id) { where(creator_id: id)}
   scope :by_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
-  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:account_type => type })}
+  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
+  scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to)}
   
   before_destroy :check_if_destroyable
 
@@ -89,7 +90,6 @@ class Voucher < ActiveRecord::Base
     current_state == :drafted || current_state == :rejected
   end
 
-  #FIXME_AB: Please add comments for these callback methods. We discussed it
   #It is a callback for event "accept" which gets called once we invoke the event.
   def accept(user)
     update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
@@ -122,6 +122,13 @@ class Voucher < ActiveRecord::Base
     end
   end
 
+  def amount
+    sum = 0
+    debited_transactions.each do | voucher|
+      sum += voucher.amount
+    end
+    sum
+  end
 
   def approve(user)
     #FIXME_AB: I would prefer Time.current
@@ -151,7 +158,7 @@ class Voucher < ActiveRecord::Base
 
   def total_amount(type)
     sum = 0
-    self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.account_type == type }.each do |transaction|
+    self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.transaction_type == type }.each do |transaction|
        sum = sum + transaction.amount
       end
     sum

@@ -39,7 +39,7 @@
                 <%# @sum += voucher.amount %>
               <%#end%> 
               <%#=voucher.total_amount('debit') %>
-        			<%= number_to_currency(voucher.debited_transactions.sum('amount'), :unit => "₹  ") %>
+        			<%= number_to_currency(voucher.amount, :unit => "₹  ") %>
               <%# voucher.debited_transactions.each do |a| %>
                <%#sum+= a.amount %>
 

@@ -14,18 +14,18 @@ module ApplicationHelper
     link_to("#{name}", "#", :onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\") ;return false")
   end
  
-  def account_options
-    Account.pluck( 'name', 'id' )
-  end
+  # def account_options
+  #   Account.pluck( 'name', 'id' )
+  # end
   
   def user_options
     User.where.not(id: current_user.id).order('first_name').pluck( 'first_name ', 'id' )
   end
 
   def get_by_date(state,to,from,name,type)
-    @vouchers = Voucher.where(workflow_state:state).where('date between (?) and (?)', to, from)
-    @vouchers  = @vouchers.transaction_account(name) if name.present?
-    @vouchers = @vouchers.transaction_type(type) if type.present?
+    @vouchers = Voucher.between_dates(from, to).send(state)
+    @vouchers  = @vouchers.by_account(name) if name.present?
+    @vouchers = @vouchers.by_transaction_type(type) if type.present?
     @vouchers
   end
 

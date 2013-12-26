@@ -43,6 +43,7 @@ class Admin::UsersController < Admin::AdminBaseController
     end
   end
 
+  #FIXME_AB: I don't think we need this action. Please remove if we need it
   def show
   end
 

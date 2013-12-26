@@ -1,3 +1,4 @@
+#FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
@@ -28,13 +29,11 @@ class AccountsController < ApplicationController
   end
   
   def show 
-    #FIXME_AB: Do we actually need this respond_to block
-    #fixed
   end
   
   def update
     if @account.update(account_params)
-      redirect_to account_vouchers_path(@account), notice: 'Account ' + @account.name + ' was successfully updated.' }
+      redirect_to account_vouchers_path(@account), notice: 'Account ' + @account.name + ' was successfully updated.' 
     else
       render action: 'edit' 
     end

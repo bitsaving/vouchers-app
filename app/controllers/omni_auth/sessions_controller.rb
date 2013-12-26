@@ -4,4 +4,5 @@ class OmniAuth::SessionsController < Devise::SessionsController
     flash[:notice] = nil
 
   end
+
 end

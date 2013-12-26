@@ -1,52 +1,54 @@
 class VouchersController < ApplicationController
+  
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_voucher_state, :check_user_type, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state ,only: [:edit]
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
-  #before_action :eager_load_associations, only: [:index, :show, :pending, :drafted, :accepted, :rejected, :approved, :archived]
+
   helper_method :get_vouchers
-  # GET /vouchers
-  # GET /vouchers.json
-  #FIXME_AB: Can we make more use of associations and scopes?
+
   def index
-    @vouchers = Voucher.scoped
+    @vouchers = Voucher.all
+
     if params[:tag]
-      @vouchers.tagged_with(params[:tag])
-    elsif params[:user_id]
-      @vouchers.created_by(params[:user_id])
-    elsif params[:account_id]
+      @vouchers = @vouchers.tagged_with(params[:tag])
+    end  
+
+    if params[:user_id]
+      @vouchers =  @vouchers.created_by(params[:user_id])
+    end
+
+    if params[:account_id]
       @vouchers = @vouchers.by_account(params[:account_id])
-    elsif default_tab == "drafted"
+    end
+
+    if default_tab == "drafted"
       @vouchers = @vouchers.created_by(current_user.id)
-    # else
-    #   @vouchers
-     end
-    @vouchers.send(default_tab).including_accounts_and_transactions.page(params[:page])
+    end
+
+    @vouchers = @vouchers.send(default_tab).including_accounts_and_transactions.page(params[:page])
+    
   end
 
 
-  # GET /vouchers/new
   def new
-    #FIXME_AB: where are we using these local variables. Also comment.user_id can be set at the time of building the object. no?
+
     @voucher = Voucher.new
     @uploads = @voucher.attachments.build  
     @comments = @voucher.comments.build
     @transactions = @voucher.transactions.build
+
   end
 
-  # GET /vouchers/1
-  # GET /vouchers/1.json
   def show
   end
 
   
-  # GET /vouchers/1/edit
   def edit
   end
 
-  # POST /vouchers
-  # POST /vouchers.json
+ 
   def create
    @voucher = current_user.vouchers.build(voucher_params)
     respond_to do |format|
@@ -57,7 +59,7 @@ class VouchersController < ApplicationController
         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
          format.html { render action: 'new' }
-         format.js 
+         format.js {render "shared/_error_messages", locals: {:target => @voucher} }
          format.json { render json: @voucher.errors, status: :unprocessable_entity }
       end
     end
@@ -65,8 +67,6 @@ class VouchersController < ApplicationController
 
 
 
-  # PATCH/PUT /vouchers/1
-  # PATCH/PUT /vouchers/1.json
   def update
     respond_to do |format|
       if @voucher.update(voucher_params)
@@ -77,39 +77,34 @@ class VouchersController < ApplicationController
       else
         format.html { render action: 'edit' }
         format.json { render json: @voucher.errors, status: :unprocessable_entity }
-        format.js { render 'vouchers/create.js.erb'}
+        format.js { render "shared/_error_messages", locals: {:target => @voucher}}
       end
     end
   end
 
   def pending
     get_vouchers('pending')
-    #set_default_tab('pending')
     render action: 'index'
   end
 
   def accepted
     get_vouchers('accepted')
-    #set_default_tab('accepted')
     render action: 'index' 
   end
 
   def archived
     get_vouchers('archived')
-    #set_default_tab('archived')
     render action: 'index'
   end
 
 
   def approved 
     get_vouchers('approved')
-    #set_default_tab('approved')  
     render action: 'index' 
   end
 
   def drafted
     get_vouchers('drafted')
-    #set_default_tab('drafted')
     render action: 'index'
   end
 
@@ -120,19 +115,13 @@ class VouchersController < ApplicationController
 
   def rejected
     get_vouchers('rejected')
-    #set_default_tab('rejected')
     render action: 'index'
   end
 
-  # DELETE /vouchers/1
-  # DELETE /vouchers/1.json
   def destroy
     notice = "Voucher #" + @voucher.id.to_s + " was deleted successfully"
     @voucher.destroy 
-    respond_to do |format|
-      format.html { redirect_to :back ,notice: notice }
-      format.json { head :no_content }
-    end
+      redirect_to :back, notice: notice 
   end
  
   def increment_state
@@ -159,45 +148,70 @@ class VouchersController < ApplicationController
       if !(@voucher.creator?(current_user) && @voucher.can_be_edited?)
         redirect_to_back_or_default_url
       end
-      # if (current_user.admin? || @voucher.creator?(current_user))
-      #   if !(@voucher.drafted? || @voucher.rejected?)
-      #     redirect_to_back_or_default_url
-      #   end
-      # else
-      #   redirect_to_back_or_default_url
-      # end
     end
+
+    #FIXME_AB: I think we can decompose this method. Lets first use query builder approach for this. I have tried a first draft of that below this method. please check
+    # def get_vouchers(state)
+    #   if params[:account_id]
+    #     if params[:account_type]
+    #       @vouchers = Voucher.transaction_account(params[:account_id]).transaction_type(params[:account_type]).send(state)
+    #     else
+    #       @vouchers = Voucher.transaction_account(params[:account_id]).send(state)
+    #     end
+    #   elsif params[:user_id]
+    #     @vouchers = Voucher.creator(params[:user_id]).send(state)
+    #   elsif params[:tag]
+    #     @vouchers = Voucher.tagged_with(params[:tag]).send(state)
+    #   elsif(params[:to] && params[:from])
+    #     @vouchers = Voucher.where('date between (?) and (?)', params[:from], params[:to]).send(state)
+    #     filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
+    #   elsif state == "drafted"
+    #     @vouchers = current_user.vouchers.drafted
+    #   else
+    #     @vouchers = Voucher.send(state)
+    #   end
+    #   @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
+    # end
+
 
     def get_vouchers(state)
-      if params[:account_id]
-        if params[:account_type]
-          @vouchers = Voucher.transaction_account(params[:account_id]).transaction_type(params[:account_type]).send(state)
-        else
-          @vouchers = Voucher.transaction_account(params[:account_id]).send(state)
-        end
-      elsif params[:user_id]
-        @vouchers = Voucher.creator(params[:user_id]).send(state)
-      elsif params[:tag]
-        @vouchers = Voucher.tagged_with(params[:tag]).send(state)
-      elsif(params[:to] && params[:from])
-        @vouchers = Voucher.where('date between (?) and (?)', params[:from], params[:to]).send(state)
-        filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
-      elsif state == "drafted"
-        @vouchers = current_user.vouchers.drafted
-      else
-        @vouchers = Voucher.send(state)
-      end
-      @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
-    end
+      @vouchers = Voucher.all
 
+      if params[:account_id]
+        @vouchers = @vouchers.by_account(params[:account_id])
+        if params[:transaction_type]
+          @vouchers = @vouchers.by_transaction_type(params[:transaction_type])
+        end
+      end
+
+      if params[:user_id] 
+        @vouchers = @vouchers.created_by(params[:user_id])
+      end
+
+      if params[:tag]
+        @vouchers = @vouchers.tagged_with(params[:tag])
+      end
+
+      if(params[:to] && params[:from])
+        @vouchers = @vouchers.between_dates(params[:from], params[:to])
+        filter_by_name_and_type(@vouchers, params[:report_account], params[:transaction_type])
+      end
+
+      if state == "drafted"
+        @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id)
+      end
+
+      @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
+ 
+    end
 
 
     def filter_by_name_and_type(vouchers ,name, type)
       if name.present?
-        @vouchers = vouchers.transactions(name)
-        @vouchers = @vouchers.transactions_type(type) if type.present?
+        @vouchers = vouchers.by_account(name)
+        @vouchers = @vouchers.by_transaction_type(type) if type.present?
       end
-     @vouchers
+      @vouchers
     end
  
   # Use callbacks to share common setup or constraints between actions.
@@ -212,29 +226,26 @@ class VouchersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
       #FIXME_AB: Can we break this into a multiline array. This is too long to understand
-      params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :account_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
+      params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :transaction_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
     end
 
     #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
+
     def set_default_tab
       session[:previous_tab] =  params[:action]
     end
+
 
     def default_tab
       session[:previous_tab] || 'drafted'
     end
   
-   def set_comment_owner
-    if params[:voucher][:comments_attributes].present?
-      params[:voucher][:comments_attributes].each do |comment_id, content|
-        content[:user_id] = current_user.id
+    def set_comment_owner
+      if params[:voucher][:comments_attributes].present?
+        params[:voucher][:comments_attributes].each do |comment_id, content|
+          content[:user_id] = current_user.id
+        end
       end
     end
-  end
 
-  # def eager_load_associations
-  #   @vouchers = @vouchers.includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
-  # end
-  #FIXME_AB: Better to have this line at the top. Just a good practice
-  
 end

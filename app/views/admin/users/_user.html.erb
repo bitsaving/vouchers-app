@@ -1,11 +1,11 @@
 <table class="table table-striped userss">
   <thead>
     <tr>
-      <th width= "10%"><%= "Id" %></th>
-      <th width= "30%"><%= "Name" %></th>
-      <th width= "30%"><%= "Email" %></th>
-      <th width= "10%"><%= "Privilege" %> </th>
-      <th width= "20%"><%= "Actions" %></th>
+      <th width= "10%">Id</th>
+      <th width= "30%">Name</th>
+      <th width= "30%">Email</th>
+      <th width= "10%">Privilege</th>
+      <th width= "20%">Actions</th>
     </tr>
   </thead>
   <tbody> 
@@ -16,7 +16,7 @@
         <td><%= user.email %></td>
         <td>
           <% if user.user_type == "normal" %>
-            <%= "User" %>
+            User
           <%else%>
             <%= user.user_type %>     
           <%end%>

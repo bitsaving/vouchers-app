@@ -1,15 +1,15 @@
 <table class="table table-striped accountss">
   <thead>
     <tr>
-      <th width= "90%"><%= "Name" %></th>
-      <th width= "10%"><%= "Actions" %></th>
+      <th width= "90%">Name</th>
+      <th width= "10%">Actions</th>
     </tr>
   </thead>
   <tbody>
    <% @accounts.each do |account| %>
       <tr>
         <td><%= link_to account.name, account_vouchers_path(account) %></td>
-        <td><%= link_to "Edit",edit_account_path(account), :class => 'btn btn-mini btn-primary' %></td>
+        <td><%= link_to "Edit", edit_account_path(account), :class => 'btn btn-mini btn-primary' %></td>
       </tr>
     <% end %>
   </tbody>

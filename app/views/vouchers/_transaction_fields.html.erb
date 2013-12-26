@@ -1,6 +1,6 @@
 <%@counter = @counter +1 %>
 <div class="controls">
-  <%= text_area_tag :account_id , get_entered_data(@account_type,@position) ,data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s,path: autocomplete_path} , :class => 'text-field autocomplete', :rows=>3, :columns=>8 %>
+  <%= text_area_tag :account_id , get_entered_data(@transaction_type, @position, @counter-2), data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s, path: autocomplete_path}, :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
   <div class="bank_amount"> 
   	<span class="transaction_label">Amount </span>
     <%= f.text_field :amount, :class => "filename" %>
@@ -14,9 +14,9 @@
     </div>
   </div>
 <div class="controls">
-  <%=  f.hidden_field :account_id, :id =>"account_debited_#{@counter}"  %>
+  <%=  f.hidden_field :account_id, :id => "account_debited_#{@counter}"  %>
 </div>
 
 <div class="controls">
-  <%=  f.hidden_field :account_type, :value => @account_type  %>
+  <%=  f.hidden_field :transaction_type, :value => @transaction_type  %>
 </div>

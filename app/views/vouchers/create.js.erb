@@ -1,7 +1,0 @@
-$('div.error_messages').removeClass('hidden')
-$('div.error_messages').find("#error_explanation").remove()
-<%if remotipart_submitted? %>
-$('div.error_messages').append('<%= escape_javascript "#{render "shared/error_messages", :target => @voucher}" %> ')
-<%else %>
-$('div.error_messages').append('<%= escape_javascript render "shared/error_messages", :target => @voucher%> ')
-<%end%>

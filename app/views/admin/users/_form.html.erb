@@ -1,5 +1,5 @@
 <div class="align">
-  <%= render "shared/error_messages", :target => @user %>   
+  <%= render "shared/error_messages", :target => @user  if @user.errors.present? %>   
   <%= form_for [:admin, @user], :html => { :class => 'form-horizontal one_click' } do |f| %>
     <div class="control-group">
       <%= f.label :email, "Email", :class => 'control-label compulsory-field' %>
@@ -29,11 +29,11 @@
       </span>
     </div>
     <div>
-      <%=f.hidden_field :user_type ,:class=>"user_type"%>
+      <%=f.hidden_field :user_type , :class=>"user_type"%>
     </div>
     <div class="form-actions">
       <%= f.submit nil, :class => 'btn btn-primary' %>
-       <%= link_to "Cancel", :back ,:class => 'btn btn-primary '%>
+       <%= link_to "Cancel", :back, :class => 'btn btn-primary '%>
     </div>
   <%end%>
 </div>

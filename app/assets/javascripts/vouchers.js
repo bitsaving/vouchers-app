@@ -17,6 +17,7 @@ VoucherEventsHandler.prototype = {
     document.addEventListener("page:load", this.hiddenFieldHandler());
     document.addEventListener("page:load", this.autoCompleteFieldHandler());
     document.addEventListener("page:load", this.getTags());
+    document.addEventListener("page:load", this.show)
   },
 
   getTags: function(){
@@ -94,12 +95,17 @@ VoucherEventsHandler.prototype = {
   });
   },
   hiddenFieldHandler: function(){
-    // if($('.voucher_payment_type').val() != "Cash")
-    //   $('.select').removeClass("hidden");
     $(document).on('change', '.voucher_payment_type select', function() {
       $(this).parents('.bank_amount').siblings('.select').removeClass("hidden");
       if($(this).val() == "Cash")
        $(this).parents('.bank_amount').siblings('.select').addClass("hidden");
     });
+    $(document).on('click', '.voucher_submit', function(){
+      $(document).on('ajax:error' , '.voucher_autocomplete', function(evt, xhr, status, error){
+        $('div.error_messages').removeClass('hidden')
+        $('div.error_messages').find("#error_explanation").remove()
+        $('div.error_messages').append(xhr.responseText)
+      })
+    })
   }
 } 

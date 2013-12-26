@@ -39,7 +39,7 @@
                   <%= voucher.date.to_s(:string_format)%>
                 </td>
                 <td>
-                  <%= number_to_currency(voucher.debited_transactions.sum('amount'), :unit => "₹  ") %>
+                  <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
                 </td>
                 <% if voucher.assignee.nil? %>
                 <td> <%=" "%>

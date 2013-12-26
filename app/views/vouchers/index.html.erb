@@ -27,5 +27,5 @@
 
 
 <script type= "text/javascript">
-  $('.associated_voucher li.'+ '<%=session[:previous_tab].presence || "drafted" %>').addClass('active').siblings().removeClass('active')
+  var current_highlighted_tab = '<%=session[:previous_tab].presence || "drafted" %>'
 </script>
