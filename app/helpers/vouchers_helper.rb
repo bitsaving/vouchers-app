@@ -1,16 +1,12 @@
 module VouchersHelper
-  def get_entered_data(field,position,transaction)
+  def get_entered_data(field,position1)
     if !@voucher.new_record?
    	  if field == "debit"
-	      @voucher.debit_from[position].name
+	      @voucher.debit_from[position1].name
 	    else
-	      @voucher.credit_to[position].name
+	      @voucher.credit_to[position1].name
 	    end
-	  elsif @voucher.errors.present?
-      Rails.logger.debug "!!!! #{transaction.to_s}"
-      Rails.logger.debug "@@@@@#{params["voucher"]["transactions_attributes"][transaction.to_s]["account_id"]}"
-      Account.find(params["voucher"]["transactions_attributes"][transaction.to_s]["account_id"]).name
-    end
+	  end
   end
 
   def set_date(type)
