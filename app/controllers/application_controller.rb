@@ -16,11 +16,7 @@ class ApplicationController < ActionController::Base
       !!current_user
     end
 
-    def check_admin
-      if ! current_user.admin?
-        redirect_to "/", flash: { error: "You are not authorized to view the requested page" }
-      end
-    end
+    
 
     def redirect_to_back_or_default_url(url = root_path)
       if request.referer

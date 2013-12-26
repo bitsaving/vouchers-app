@@ -1,8 +1,9 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
+
   def index
-      @accounts = Account.page(params[:page])
+    @accounts = Account.page(params[:page])
   end
 
 

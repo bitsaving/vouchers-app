@@ -1,31 +1,23 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::AdminBaseController
   #  cache_sweeper :user_sweeper, only: [:update, :destroy]
   before_action :set_user, :only => [:edit,:destroy, :update, :show]
   #FIXME_AB: Following before_action can be moved to AdminBaseController if we follow the approach I mentioned in the first line of this file
   
-  before_action :check_admin
-  #before_action :redirect_if_logged_in_first_time, :only => [:show]
-
+  #FIXME_AB: we can also name check_admin as authorize_as_admin
+  #before_action :authorize_as_admin
   #caches_action :show
-  # GET /users
-  # GET /users.json
+
   def index
     @users = User.order('first_name').page(params[:page])
-     respond_to do |format|
-      format.html
-     # format.json { render json: @users.to_json(:only => [:first_name])}
-    end
   end
 
   def new
-    @user =User.new
+    @user = User.new
   end
 
   def edit
   end
 
-  # POST /accounts
-  # POST /accounts.json
   def create
     @user = User.new(user_params)
     respond_to do |format|
@@ -68,13 +60,4 @@ class Admin::UsersController < ApplicationController
       @user = User.find_by(id: params[:id])
       redirect_to_back_or_default_url if @user.nil?
     end
-    
-
-  # def redirect_if_logged_in_first_time 
-  #   if params[:id].nil?
-  #     #FIXME_AB: This redirection should be done from the before filter itself
-  #     #fixed
-  #     redirect_to assigned_vouchers_path
-  #   end
-  # end
 end

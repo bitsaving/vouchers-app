@@ -1,8 +1,11 @@
 class User < ActiveRecord::Base
   acts_as_paranoid
+  
   include PublicActivity::Common
   include DisplayConcern
+  
   paginates_per 50
+  
   devise :database_authenticatable, :omniauthable,
     :recoverable, :rememberable, :trackable, :omniauth_providers => [:google_oauth2]
   #FIXME_AB: Please ensure proper code formatting. space after comma. Space after comma not before comma.

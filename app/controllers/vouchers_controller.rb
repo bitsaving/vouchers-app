@@ -3,24 +3,26 @@ class VouchersController < ApplicationController
   before_action :check_user_and_voucher_state ,only: [:edit]
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
+  before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
   #before_action :eager_load_associations, only: [:index, :show, :pending, :drafted, :accepted, :rejected, :approved, :archived]
   helper_method :get_vouchers
   # GET /vouchers
   # GET /vouchers.json
   #FIXME_AB: Can we make more use of associations and scopes?
   def index
+    @vouchers = Voucher.scoped
     if params[:tag]
-      @vouchers = Voucher.tagged_with(params[:tag]).send(default_tab)
+      @vouchers.tagged_with(params[:tag])
     elsif params[:user_id]
-      @vouchers = Voucher.creator(params[:user_id]).send(default_tab)
+      @vouchers.created_by(params[:user_id])
     elsif params[:account_id]
-      @vouchers = Voucher.transaction_account(params[:account_id]).send(default_tab)
+      @vouchers = @vouchers.by_account(params[:account_id])
     elsif default_tab == "drafted"
-      @vouchers = current_user.vouchers.send(default_tab)
-    else
-      @vouchers = Voucher.send(default_tab)
-    end
-    @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
+      @vouchers = @vouchers.created_by(current_user.id)
+    # else
+    #   @vouchers
+     end
+    @vouchers.send(default_tab).including_accounts_and_transactions.page(params[:page])
   end
 
 
@@ -82,32 +84,32 @@ class VouchersController < ApplicationController
 
   def pending
     get_vouchers('pending')
-    set_default_tab('pending')
+    #set_default_tab('pending')
     render action: 'index'
   end
 
   def accepted
     get_vouchers('accepted')
-    set_default_tab('accepted')
+    #set_default_tab('accepted')
     render action: 'index' 
   end
 
   def archived
     get_vouchers('archived')
-    set_default_tab('archived')
+    #set_default_tab('archived')
     render action: 'index'
   end
 
 
   def approved 
     get_vouchers('approved')
-    set_default_tab('approved')  
+    #set_default_tab('approved')  
     render action: 'index' 
   end
 
   def drafted
     get_vouchers('drafted')
-    set_default_tab('drafted')
+    #set_default_tab('drafted')
     render action: 'index'
   end
 
@@ -118,7 +120,7 @@ class VouchersController < ApplicationController
 
   def rejected
     get_vouchers('rejected')
-    set_default_tab('rejected')
+    #set_default_tab('rejected')
     render action: 'index'
   end
 
@@ -214,8 +216,8 @@ class VouchersController < ApplicationController
     end
 
     #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
-    def set_default_tab(type)
-      session[:previous_tab] =  type
+    def set_default_tab
+      session[:previous_tab] =  params[:action]
     end
 
     def default_tab

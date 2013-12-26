@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :check_admin
+  before_action :authorize_as_admin
 
   def show
     if(current_user)
