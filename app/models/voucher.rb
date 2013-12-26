@@ -31,10 +31,10 @@ class Voucher < ActiveRecord::Base
     state :archived
   end
 
-  PAYMENT_TYPES = [ "Cash" , "Cheque", "Credit card", "Bank transfers" ]
+  
 
   validates :to_date, :date => { :after_or_equal_to => :from_date,
-    :message => 'must be after start date of project'}, :allow_blank=> true
+    :message => 'must be after start date of project'}, :allow_blank => true
   validates :date,  presence: true
   validate :check_debit_credit_equality
   
@@ -68,17 +68,17 @@ class Voucher < ActiveRecord::Base
   scope :rejected, -> { where(workflow_state: 'rejected')}
   scope :archived, -> { where(workflow_state: 'archived')}
   scope :not_accepted, -> { where.not(workflow_state: 'accepted')}
-  scope :assignee, ->(id) { where(assignee_id: id)}
+  scope :assignee, -> (id) { where(assignee_id: id)}
   
-  scope :created_by, ->(id) { where(creator_id: id)}
-  scope :by_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
-  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
-  scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to)}
+  scope :created_by, -> (id) { where(creator_id: id)}
+  scope :by_account, -> (id) { joins(:transactions).where(:transactions => {:account_id => id })}
+  scope :by_transaction_type, -> (type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
+  scope :between_dates, -> (from, to) { where('date between (?) and (?)', from, to)}
   
   before_destroy :check_if_destroyable
 
   def self.including_accounts_and_transactions
-    includes(:debit_from, :credit_to, :debited_transactions,:credited_transactions)
+    includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
   end
   
   def check_debit_credit_equality
@@ -86,7 +86,6 @@ class Voucher < ActiveRecord::Base
     credit_amount = total_amount("credit")
     if credit_amount != debit_amount
       errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal."
-      return false
     end
   end
 
@@ -95,6 +94,7 @@ class Voucher < ActiveRecord::Base
   end
 
   #It is a callback for event "accept" which gets called once we invoke the event.
+
   def accept(user)
     update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
     comments.create(description: "Accepted", user_id: user.id)
