@@ -60,11 +60,11 @@ gem 'fog', '~> 1.4.0'
 gem 'thinking-sphinx', '3.0.6'
 group :development, :test do
 	gem "rspec-rails", "~> 2.14"
-	# gem "webrat", "0.7.2"
+  gem 'quiet_assets'
+  gem 'thin'
+  # gem "webrat", "0.7.2"
 end
 gem 'factory_girl_rails'
 #gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem "rails-observers"
-gem 'quiet_assets', :group => :development
-# gem 'thin'

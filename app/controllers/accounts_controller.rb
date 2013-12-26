@@ -1,8 +1,11 @@
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
+
   def index
+    #FIXME_AB: we can break this action in two. One for index and one for autocomplete. 
     if params[:term]
+      #FIXME_AB: Account.find_suggestions(term)
       account_name = "%".concat(params[:term].concat("%"))
       @accounts = Account.where('name LIKE (?)', account_name)
     else
