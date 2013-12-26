@@ -80,7 +80,6 @@ class Voucher < ActiveRecord::Base
     current_state == :drafted || current_state == :rejected
   end
 
-  #FIXME_AB: Please add comments for these callback methods. We discussed it
   #It is a callback for event "accept" which gets called once we invoke the event.
   def accept(user)
     update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})

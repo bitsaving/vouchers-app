@@ -1,3 +1,4 @@
+#FIXME_AB: I don't think we need this controller. please cross check
 class UsersController < ApplicationController
   before_action :check_admin
 

@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
     params[:to] = Date.today.end_of_month()
   end
 
-  #FIXME_AB: I think we should have separate controller for reporting.
+  #FIXME_AB: better if we have this named as generate. So that we can call it by /reports/generate?to=
   def generate_report
     @voucher_startDate = params[:from]
     @voucher_endDate = params[:to]

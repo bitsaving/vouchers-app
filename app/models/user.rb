@@ -5,8 +5,7 @@ class User < ActiveRecord::Base
   paginates_per 50
   devise :database_authenticatable, :omniauthable,
     :recoverable, :rememberable, :trackable, :omniauth_providers => [:google_oauth2]
-  #FIXME_AB: Please ensure proper code formatting. space after comma. Space after comma not before comma.
-  #fixed
+
   validates :first_name, :last_name, :email, presence: true
   validates_uniqueness_of :email, :case_sensitive => false
   validates_format_of :email, :with => EMAIL_FORMAT

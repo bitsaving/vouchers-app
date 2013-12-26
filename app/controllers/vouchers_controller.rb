@@ -166,6 +166,7 @@ class VouchersController < ApplicationController
       # end
     end
 
+    #FIXME_AB: I think we can decompose this method. Lets first use query builder approach for this. I have tried a first draft of that below this method. please check
     def get_vouchers(state)
       if params[:account_id]
         if params[:account_type]
@@ -188,6 +189,36 @@ class VouchersController < ApplicationController
       @vouchers = @vouchers.including_accounts_and_transactions.page(params[:page])
     end
 
+
+    # def get_vouchers(state)
+    #   @vouchers = Voucher.scoped
+
+    #   if params[:account_id]
+    #     @vouchers.by_account(params[:account_id])
+    #     if params[:account_type]
+    #       @vouchers.by_transaction_type(params[:account_type])
+    #     end
+    #   end
+
+    #   if params[:user_id] 
+    #     @vouchers.created_by(params[:user_id])
+    #   end
+
+    #   if params[:tag]
+    #     @vouchers.tagged_with(params[:tag])
+    #   end
+
+    #   if(params[:to] && params[:from])
+    #     @vouchers.date_between('date between (?) and (?)', params[:from], params[:to])
+    #     filter_by_name_and_type(@vouchers, params[:report_account], params[:account_type])
+    #   end
+
+    #   if state == "drafted"
+    #     @vouchers.created_by(current_user.id)
+    #   end
+    #   @vouchers = Voucher.send(state)
+    #   @vouchers.including_accounts_and_transactions.page(params[:page])
+    # end
 
 
     def filter_by_name_and_type(vouchers ,name, type)
@@ -213,7 +244,6 @@ class VouchersController < ApplicationController
       params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :account_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
     end
 
-    #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
     def set_default_tab(type)
       session[:previous_tab] =  type
     end
@@ -230,9 +260,4 @@ class VouchersController < ApplicationController
     end
   end
 
-  # def eager_load_associations
-  #   @vouchers = @vouchers.includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
-  # end
-  #FIXME_AB: Better to have this line at the top. Just a good practice
-  
 end
