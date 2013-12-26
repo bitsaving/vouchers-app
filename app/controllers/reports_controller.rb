@@ -1,12 +1,12 @@
 class ReportsController < VouchersController
-  before_action :check_validity, only: [:generate_report]
-  before_action :convert_date, only: [:generate_report]
+  before_action :check_validity, only: [:generate]
+  before_action :convert_date, only: [:generate]
   before_action :default_tab, only: [:report]
   
   def report 
     params[:from] = Date.today.beginning_of_month()
     params[:to] = Date.today.end_of_month()
-    @vouchers = Voucher.between_dates(params[:from], params[:to]).send(session[:previous_tab]).page(params[:page])
+    @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(session[:previous_tab]).page(params[:page])
     render  :template => 'vouchers/index', locals: {:@vouchers => @vouchers}
   end
 
@@ -14,15 +14,14 @@ class ReportsController < VouchersController
   def generate
     @start_date = params[:from]
     @end_date = params[:to]
-    @account_name = params[:account_id]
-    @transaction_type = params[:transaction_type]
+    @account_name = params[:account]
+    @transaction_type = params[:transactions_type]
   end
 
 
   protected
     def convert_date
       params[:from] = params[:from].to_date
-      #FIXME_AB: what if param[:to] is nil?
       params[:to] = params[:to].to_date
     end
 

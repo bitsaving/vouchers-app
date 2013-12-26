@@ -16,18 +16,18 @@
       <div class = "control-group from_date">
        <%=label_tag  :account_name, "Account", :class => 'control-label' %>
       <div class = "controls">
-          <%= text_area_tag :account_name, get_account_name(params[:account_id]]), data: { hidden_field_id: 'account_id',  textbox_id:'account_name', path: accounts_path } , :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
+          <%= text_area_tag :account_name, get_account_name(params[:account]), data: { hidden_field_id: 'account',  textbox_id:'account_name', path: autocomplete_path} , :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
         </div>
       </div>
-      <%= hidden_field_tag :account_id, params[:account_id]%>
+      <%= hidden_field_tag :account, params[:account]%>
       <div class="control-group account_dropdown to_date">
         <%=label_tag  :account_type , "Type", :class => 'control-label' %>
         <div class="controls">
-          <%= select_tag :transaction_type, options_for_select([['debit'], ['credit']], :selected => params[:transaction_type]), prompt: "Select"%>
+          <%= select_tag :transactions_type, options_for_select([['debit'], ['credit']], :selected => params[:transactions_type]), prompt: "Select"%>
         </div>
       </div>
       <div class="display_vouchers">
-        <%=submit_tag "Generate Report", :class => 'btn btn-primary', :id=> "generate_vouchers"%>
+        <%=submit_tag "Generate Report", :class => 'btn btn-primary', :id => "generate_vouchers"%>
       </div>
     </div>
   <%end%>
