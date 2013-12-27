@@ -1,6 +1,6 @@
 class VouchersController < ApplicationController
   
-  before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_voucher_state, :check_user_type, :increment_state, :decrement_state]
+  before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state, only: [:edit]
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
@@ -43,6 +43,7 @@ class VouchersController < ApplicationController
 
  
   def create
+
    @voucher = current_user.vouchers.build(voucher_params)
     respond_to do |format|
       if @voucher.save
@@ -52,19 +53,22 @@ class VouchersController < ApplicationController
         format.js {render "shared/_error_messages", locals: { :target => @voucher } }
       end
     end
+
   end
 
 
 
   def update
+
     respond_to do |format|
       if @voucher.update(voucher_params)
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
-        format.js {render js: %(window.location.href = '#{voucher_path @voucher}')}
+        format.js {render js: %(window.location.href = '#{voucher_path @voucher}') }
       else
         format.js { render "shared/_error_messages", locals: {:target => @voucher}}
       end
     end
+
   end
 
   def pending
@@ -102,9 +106,8 @@ class VouchersController < ApplicationController
   end
 
   def destroy
-    notice = "Voucher #" + @voucher.id.to_s + " was deleted successfully"
     @voucher.destroy 
-    redirect_to :back, notice: notice 
+    redirect_to :back, notice: "Voucher #" + @voucher.id.to_s + " was deleted successfully" 
   end
  
   def increment_state
@@ -119,40 +122,38 @@ class VouchersController < ApplicationController
   end
 
  
-  #FIXME_AB: I think we should have separate controller for reporting.
-    def get_vouchers(state)
+  def get_vouchers(state)
+  
+    @vouchers = Voucher.all
+
+    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
+
+    @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
+
+    @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
+
+    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
+
     
-      @vouchers = Voucher.all
+    @vouchers = @vouchers.between_dates(params[:from], params[:to]) if( params[:to] && params[:from] )
+    
+    filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if( params[:to] && params[:from] )
+    
+    @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
 
-      if params[:account_id]
-        @vouchers = @vouchers.by_account(params[:account_id])       
-        @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
-      end
+    @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
 
-      @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
+  end
 
-      @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
-
-      if( params[:to] && params[:from] )
-        @vouchers = @vouchers.between_dates(params[:from], params[:to])
-        filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type])
-      end
-
-      @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
-
-      @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
- 
+  def filter_by_name_and_type(vouchers ,name, type)
+  
+    if name.present?
+      @vouchers = vouchers.by_account(name)
+      @vouchers = @vouchers.by_transaction_type(type) if type.present?
     end
-
-    def filter_by_name_and_type(vouchers ,name, type)
-    
-      if name.present?
-        @vouchers = vouchers.by_account(name)
-        @vouchers = @vouchers.by_transaction_type(type) if type.present?
-      end
-      @vouchers
-    
-    end
+    @vouchers
+  
+  end
 
   protected
 
