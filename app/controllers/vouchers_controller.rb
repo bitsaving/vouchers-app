@@ -14,7 +14,7 @@ class VouchersController < ApplicationController
 
     @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
-    @vouchers =  @vouchers.created_by(params[:user_id]) if params[:user_id]
+    @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id]
 
     @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]
 
@@ -49,7 +49,7 @@ class VouchersController < ApplicationController
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
-        format.js {render "shared/_error_messages", locals: {:target => @voucher} }
+        format.js {render "shared/_error_messages", locals: { :target => @voucher } }
       end
     end
   end
@@ -110,14 +110,12 @@ class VouchersController < ApplicationController
   def increment_state
     @voucher.assignee_id = params[:voucher][:assignee_id]
     @voucher.increment_state(current_user)
-    notice = "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
-    redirect_to :back, notice: notice
+    redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
   end
  
   def decrement_state
-    @voucher.decrement_state(current_user)
-    notice = "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
-    redirect_to :back, notice: notice
+    @voucher.decrement_state(current_user) 
+    redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
   end
 
  

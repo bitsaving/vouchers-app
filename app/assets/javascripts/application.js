@@ -32,6 +32,7 @@ ApplicationHandler.prototype = {
     //this.getCookie('previous_tab'))
     this.dateFieldHandler();
     this.VoucherStateHandler();
+    // this.tabHiglight();
     this.oneclick();
     this.resetautocomplete();
     this.showDetails();
@@ -40,6 +41,7 @@ ApplicationHandler.prototype = {
     document.addEventListener("page:load", this.dateFieldHandler);
     document.addEventListener("page:load", this.resetautocomplete);
     document.addEventListener("page:load", this.VoucherStateHandler);
+    document.addEventListener("page:load", this.redirectToVouchers);
   },
   dateFieldHandler : function(){
     $(".date-field").datepicker({
@@ -48,19 +50,10 @@ ApplicationHandler.prototype = {
   },
   redirectToVouchers: function(){
     $(document).on('click','.assigned_vouchers',function(e){
+
       var voucherId = $(this).find('.voucher_id .voucher_contents').text();
       window.location.href = '/vouchers/'+ voucherId;
     })
-  },
-
-  getCookie: function(cname){
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
-      var c = ca[i].trim();
-      if (c.indexOf(name)==0) return c.substring(name.length,c.length);
-    }
-    return "";
   },
   resetautocomplete: function(){
      $('.voucher_autocomplete').submit(function() {
@@ -74,7 +67,9 @@ ApplicationHandler.prototype = {
   VoucherStateHandler: function(){
     var pathname = window.location.pathname.split('vouchers/')[1];
     $('.associated_voucher li.' + pathname).addClass('active').siblings().removeClass('active');
-    $('.associated_voucher li.'+ current_highlighted_tab).addClass('active').siblings().removeClass('active')
+  },
+  tabHiglight: function(current_highlighted_tab) {
+    $('.associated_voucher li.'+ current_highlighted_tab || "").addClass('active').siblings().removeClass('active')
   },
   oneclick: function(){
     $(document).on('submit', 'form.one_click', function (e) {
