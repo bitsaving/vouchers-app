@@ -19,7 +19,7 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
 
   def sign_in_and_redirect(resource_or_scope)
     if resource_or_scope == :user
-      redirect_to assigned_vouchers_path
+      redirect_to dashboard_path
     else
       super
     end

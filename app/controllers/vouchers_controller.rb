@@ -94,9 +94,7 @@ class VouchersController < ApplicationController
   end
 
   #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
-  def assigned
-    @vouchers =  Voucher.not_accepted.assignee(current_user.id).including_accounts_and_transactions.order('updated_at desc') 
-  end
+ 
 
   def rejected
     get_vouchers('rejected')
@@ -106,7 +104,7 @@ class VouchersController < ApplicationController
   def destroy
     notice = "Voucher #" + @voucher.id.to_s + " was deleted successfully"
     @voucher.destroy 
-      redirect_to :back, notice: notice 
+    redirect_to :back, notice: notice 
   end
  
   def increment_state
@@ -165,6 +163,7 @@ class VouchersController < ApplicationController
       if !(@voucher.creator?(current_user) && @voucher.can_be_edited?)
         redirect_to_back_or_default_url
       end
+    
     end
   # Use callbacks to share common setup or constraints between actions.
    

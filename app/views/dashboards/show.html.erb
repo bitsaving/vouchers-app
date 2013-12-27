@@ -1,0 +1,81 @@
+
+<div class = " outer_block">
+  <div class="outer_container">
+    <div class="voucher_content">
+      <% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries #fixed-%>
+      <div  class ="voucher_heading"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "No Vouchers Assigned" %></div>
+        <% @vouchers.each do |voucher| %>
+        <div class="assigned_vouchers">
+          <div class = "voucher_id"> 
+            <div class="voucher_label">Id </div>
+            <div class="voucher_contents"><%= voucher.id %></div>
+          </div>
+          <div class = "voucher_debit"> 
+            <div class="voucher_label">Debit</div>
+            <div class="voucher_contents"> 
+              <% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries #fixed-%>
+              <% voucher.debit_from.each_with_index do |debit, index| %>
+                <%= debit.name %>
+                <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
+                <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+              <%end%>
+            </div>
+          </div>
+          <div class = "voucher_credit"> 
+            <div class="voucher_label">Credit</div>
+            <div class="voucher_contents">
+              <% voucher.credit_to.each_with_index do |credit, index| %>
+                <%= credit.name %>
+                <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s %><br></strong>
+              <%end%>
+            </div>
+          </div>
+          <div class = "voucher_amount">
+            <div class="voucher_label">Amount</div>
+            <div class="voucher_contents">
+              <% #FIXME_AB: Do we have a better way. Also can we save some queries #fixed-%>
+              <%# @sum = 0 %>
+              <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
+                <%# @sum += voucher.amount %>
+              <%#end%> 
+              <%#=voucher.total_amount('debit') %>
+              <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
+              <%# voucher.debited_transactions.each do |a| %>
+               <%#sum+= a.amount %>
+
+            </div>
+          </div>
+          <div class="voucher_state">
+            <div class="voucher_label">State</div>
+            <div class="voucher_contents"><%= voucher.workflow_state%> </div>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  </div>  
+  <div id="tag_cloud">
+    <div class = "voucher_heading"> Tags </div>
+    <div class="voucher_tags">
+      <% tag_cloud Voucher.tag_counts, %w{s m l v} do |tag, css_class| %>
+      <div class ="tagname">
+        <%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class%></div>
+      <% end %>
+    </div>
+  </div>
+  <%vouchers_hash = get_vouchers_count %>
+  <div id= "voucher_count">
+    <div class = "voucher_heading"> Voucher Status </div>
+    <div class="voucher_count">
+      <%VOUCHER_STATES.each do |state| %>
+        <div class="vouchers">
+          <div class="voucher_label">
+            <%= link_to state, url_for({ controller: 'vouchers', action: state}) %>
+          </div>
+          <div class ="voucher_contents">
+           <%= vouchers_hash[state].nil? ? "0" : vouchers_hash[state].count.to_s %>
+          </div>
+        </div>
+      <%end%>
+    </div>
+  </div>
+</div>

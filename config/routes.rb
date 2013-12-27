@@ -7,7 +7,8 @@ VoucherApp::Application.routes.draw do
   get 'auto-complete', to: 'accounts#autocomplete_suggestions', as: :autocomplete
   resources :comments
   resources :uploads
-  root :to => 'vouchers#assigned'
+  resource :dashboard, only: :show
+  root :to => 'dashboards#show'
   resources :vouchers do
     get 'approved' ,on: :collection
     get 'drafted', on: :collection
