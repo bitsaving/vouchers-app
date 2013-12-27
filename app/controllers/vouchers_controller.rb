@@ -134,10 +134,13 @@ class VouchersController < ApplicationController
 
     @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
-    
-    @vouchers = @vouchers.between_dates(params[:from], params[:to]) if( params[:to] && params[:from] )
-    
-    filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if( params[:to] && params[:from] )
+    if( params[:to] && params[:from] )
+      
+      @vouchers = @vouchers.between_dates(params[:from], params[:to])
+      
+      filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) 
+
+    end
     
     @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
 
