@@ -42,7 +42,7 @@
                   <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
                 </td>
                 <% if voucher.assignee.nil? %>
-                  <td> <%=" "%>
+                  <td> <%=" "%></td>
                 <%else%>
                   <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
                 <%end%>
@@ -68,6 +68,6 @@
         <%#end%>
       </tbody>
     </table>
-    <%= paginate @vouchers%>
+    <%= paginate @vouchers %>
   <%end%>
 </div>

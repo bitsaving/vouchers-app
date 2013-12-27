@@ -3,7 +3,7 @@
 <div class="voucher_div">
   <div class ="voucher_form">
     <%= form_for @voucher, :html => { :class => 'voucher_autocomplete form-horizontal', :html => { :multipart => true  } } , :remote =>  true do |f| %>
-    <%= render "shared/error_messages", :target => @voucher if @voucher.errors.present? %>   
+       
       <legend><%= controller.action_name.capitalize %> voucher</legend>
       <div class="control-group">
         <%= f.label :date, :class => 'control-label compulsory-field' %>
@@ -86,7 +86,7 @@
       <div class="control-group">
         <%= f.fields_for :comments do |builder| %>
           <% if(builder.object.user_id == current_user.id ) || @voucher.new_record? %> 
-            <%=render 'comment_fields', :f => builder %>
+            <%= render 'comment_fields', :f => builder %>
           <%end%>
         <% end %>
         <% if !@voucher.new_record? %>

@@ -3,7 +3,7 @@
 	<div class="outer_container">
 		<div class="voucher_content">
 			<% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries #fixed-%>
-			<div  class ="voucher_heading"><%=(@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "No Vouchers Assigned" %></div>
+			<div  class ="voucher_heading"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "No Vouchers Assigned" %></div>
 		  	<% @vouchers.each do |voucher| %>
 		  	<div class="assigned_vouchers">
 			  	<div class = "voucher_id"> 

@@ -44,8 +44,7 @@ class Admin::UsersController < Admin::AdminBaseController
   end
 
   #FIXME_AB: I don't think we need this action. Please remove if we need it
-  def show
-  end
+
 
   def destroy
     redirect_to admin_users_path ,notice: "Sorry it cannot be deleted"

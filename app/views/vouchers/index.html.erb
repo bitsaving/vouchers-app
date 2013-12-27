@@ -4,7 +4,7 @@
   <%= render :template => 'reports/report_layout', locals: { :to => params[:to], :from => params[:from] } %>
 <% elsif params[:user_id].present? %>
   <%= render :template => 'users/_layout', locals: { :@user => get_user(params[:user_id]) }%>
-<% elsif params[:account_id].present?%>
+<% elsif params[:account_id].present? %>
   <%= render :template => 'accounts/_layout', locals: { :@account => getaccount(params[:account_id]) } %>  
 <% else %>
   <h3>Vouchers </h3>
