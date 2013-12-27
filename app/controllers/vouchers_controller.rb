@@ -9,19 +9,7 @@ class VouchersController < ApplicationController
 
 
   def index
-    
-    @vouchers = Voucher.all
-
-    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
-
-    @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id]
-
-    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]
-
-    @vouchers = @vouchers.created_by(current_user.id) if default_tab == "drafted"
-
-    @vouchers = @vouchers.send(default_tab).including_accounts_and_transactions.page(params[:page])
-    
+    get_vouchers(default_tab)
   end
 
 
@@ -135,7 +123,7 @@ class VouchersController < ApplicationController
     @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
     if( params[:to] && params[:from] )
-      
+
       @vouchers = @vouchers.between_dates(params[:from], params[:to])
       
       filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) 
