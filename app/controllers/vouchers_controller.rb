@@ -1,7 +1,7 @@
 class VouchersController < ApplicationController
   
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_voucher_state, :check_user_type, :increment_state, :decrement_state]
-  before_action :check_user_and_voucher_state ,only: [:edit]
+  before_action :check_user_and_voucher_state, only: [:edit]
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
@@ -12,21 +12,13 @@ class VouchersController < ApplicationController
     
     @vouchers = Voucher.all
 
-    if params[:tag]
-      @vouchers = @vouchers.tagged_with(params[:tag])
-    end  
+    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
-    if params[:user_id]
-      @vouchers =  @vouchers.created_by(params[:user_id])
-    end
+    @vouchers =  @vouchers.created_by(params[:user_id]) if params[:user_id]
 
-    if params[:account_id]
-      @vouchers = @vouchers.by_account(params[:account_id])
-    end
+    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]
 
-    if default_tab == "drafted"
-      @vouchers = @vouchers.created_by(current_user.id)
-    end
+    @vouchers = @vouchers.created_by(current_user.id) if default_tab == "drafted"
 
     @vouchers = @vouchers.send(default_tab).including_accounts_and_transactions.page(params[:page])
     
@@ -173,7 +165,6 @@ class VouchersController < ApplicationController
       @vouchers
     
     end
-    # p
 
   protected
 
