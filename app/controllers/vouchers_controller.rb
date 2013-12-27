@@ -129,28 +129,20 @@ class VouchersController < ApplicationController
       @vouchers = Voucher.all
 
       if params[:account_id]
-        @vouchers = @vouchers.by_account(params[:account_id])
-        if params[:transaction_type]
-          @vouchers = @vouchers.by_transaction_type(params[:transaction_type])
-        end
+        @vouchers = @vouchers.by_account(params[:account_id])       
+        @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
       end
 
-      if params[:user_id] 
-        @vouchers = @vouchers.created_by(params[:user_id])
-      end
+      @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
 
-      if params[:tag]
-        @vouchers = @vouchers.tagged_with(params[:tag])
-      end
+      @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
-      if(params[:to] && params[:from])
+      if( params[:to] && params[:from] )
         @vouchers = @vouchers.between_dates(params[:from], params[:to])
         filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type])
       end
 
-      if state == "drafted"
-        @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id)
-      end
+      @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
 
       @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
  
@@ -201,11 +193,11 @@ class VouchersController < ApplicationController
     end
   
     def set_comment_owner
-      if params[:voucher][:comments_attributes].present?
+      #if params[:voucher][:comments_attributes].present?
         params[:voucher][:comments_attributes].each do |comment_id, content|
           content[:user_id] = current_user.id
         end
-      end
+      #end
     end
 
 end
