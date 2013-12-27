@@ -54,13 +54,13 @@ class VouchersController < ApplicationController
     respond_to do |format|
       if @voucher.save
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
-        format.html
-        format.json { render action: 'show', status: :created, location: @voucher }
+        # format.html
+        # format.json { render action: 'show', status: :created, location: @voucher }
         format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
       else
-         format.html { render action: 'new' }
+         # format.html { render action: 'new' }
          format.js {render "shared/_error_messages", locals: {:target => @voucher} }
-         format.json { render json: @voucher.errors, status: :unprocessable_entity }
+         # format.json { render json: @voucher.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -71,12 +71,12 @@ class VouchersController < ApplicationController
     respond_to do |format|
       if @voucher.update(voucher_params)
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
-        format.html
-        format.json { head :no_content }
+        # format.html
+        # format.json { head :no_content }
         format.js {render js: %(window.location.href = '#{voucher_path @voucher}')}
       else
-        format.html { render action: 'edit' }
-        format.json { render json: @voucher.errors, status: :unprocessable_entity }
+        # format.html { render action: 'edit' }
+        # format.json { render json: @voucher.errors, status: :unprocessable_entity }
         format.js { render "shared/_error_messages", locals: {:target => @voucher}}
       end
     end
