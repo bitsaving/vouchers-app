@@ -69,12 +69,12 @@ class Voucher < ActiveRecord::Base
   scope :rejected, -> { where(workflow_state: 'rejected') }
   scope :archived, -> { where(workflow_state: 'archived') }
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
-  scope :assignee, -> (id) { where(assignee_id: id) }
+  scope :assignee, ->(id) { where(assignee_id: id) }
   
-  scope :created_by, -> (id) { where(creator_id: id) }
-  scope :by_account, -> (id) { joins(:transactions).where(:transactions => {:account_id => id })}
-  scope :by_transaction_type, -> (type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
-  scope :between_dates, -> (from, to) { where('date between (?) and (?)', from, to) }
+  scope :created_by, ->(id) { where(creator_id: id) }
+  scope :by_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
+  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
+  scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
   
   before_destroy :check_if_destroyable
 
