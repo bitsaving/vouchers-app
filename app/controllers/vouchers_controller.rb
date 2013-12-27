@@ -114,13 +114,14 @@ class VouchersController < ApplicationController
   
     @vouchers = Voucher.all
 
-    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
-
-    @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
-
     @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
 
     @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
+
+    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
+
+    @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
+ 
 
     if( params[:to] && params[:from] )
 
