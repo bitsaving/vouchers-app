@@ -9,6 +9,7 @@ class VouchersController < ApplicationController
 
 
   def index
+    
     @vouchers = Voucher.all
 
     if params[:tag]
@@ -131,7 +132,8 @@ class VouchersController < ApplicationController
 
  
   #FIXME_AB: I think we should have separate controller for reporting.
-      def get_vouchers(state)
+    def get_vouchers(state)
+    
       @vouchers = Voucher.all
 
       if params[:account_id]
@@ -163,11 +165,13 @@ class VouchersController < ApplicationController
     end
 
     def filter_by_name_and_type(vouchers ,name, type)
+    
       if name.present?
         @vouchers = vouchers.by_account(name)
         @vouchers = @vouchers.by_transaction_type(type) if type.present?
       end
       @vouchers
+    
     end
     # p
 
