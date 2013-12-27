@@ -19,11 +19,13 @@ class ApplicationController < ActionController::Base
     
 
     def redirect_to_back_or_default_url(url = root_path)
+      alert = "You are not authorized to view the requested page"
       #FIXME_AB: You are repeating you flash message twice in this method
+      #fixed
       if request.referer
-        redirect_to :back, flash: { error: "You are not authorized to view the requested page" }
+        redirect_to :back, alert: alert
       else
-        redirect_to url, flash: { error: "You are not authorized to view the requested page" }
+        redirect_to url, alert: alert 
       end
     end
 

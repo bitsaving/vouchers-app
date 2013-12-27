@@ -137,7 +137,7 @@ class VouchersController < ApplicationController
 
   end
 
-  def filter_by_name_and_type(vouchers ,name, type)
+  def filter_by_name_and_type(vouchers, name, type)
   
     if name.present?
       @vouchers = vouchers.by_account(name)

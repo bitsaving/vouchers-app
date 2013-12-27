@@ -20,30 +20,23 @@ class Admin::UsersController < Admin::AdminBaseController
 
   def create
     @user = User.new(user_params)
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to [:admin, @user], notice: @user.name + ' was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @voucher }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to [:admin, @user], notice: @user.name + ' was successfully created.'
+    else
+      render action: 'new' 
     end
   end
 
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to [:admin, @user], notice: @user.name + ' was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(user_params)
+      redirect_to [:admin, @user], notice: @user.name + ' was successfully updated.'
+    else
+      render action: 'edit' 
     end
   end
 
-  #FIXME_AB: I don't think we need this action. Please remove if we need it
+  def show
+  end
 
 
   def destroy
