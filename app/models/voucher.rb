@@ -34,15 +34,17 @@ class Voucher < ActiveRecord::Base
   
 
   validates :to_date, :date => { :after_or_equal_to => :from_date,
-    :message => 'must be after start date of project'}, :allow_blank => true
+    :message => 'must be after start date of project' }, :allow_blank => true
   validates :date,  presence: true
   validate :check_debit_credit_equality
   
   has_many :transactions
+
   has_many :debited_transactions, -> { where(:transactions => { transaction_type: "debit" })}, :class_name => 'Transaction'
   has_many :credited_transactions, -> { where(:transactions => { transaction_type: "credit" }) }, :class_name => 'Transaction'
+  
   has_many :debit_from, -> { where(:transactions => { transaction_type: "debit" }) }, through: :transactions, source: :account
-  has_many :credit_to, -> {  where(:transactions => { transaction_type: "credit" }) }, through: :transactions, source: :account
+  has_many :credit_to, -> { where(:transactions => { transaction_type: "credit" }) }, through: :transactions, source: :account
   
   with_options :class_name => 'User' do |user|
     user.belongs_to :assignee
@@ -69,11 +71,13 @@ class Voucher < ActiveRecord::Base
   scope :rejected, -> { where(workflow_state: 'rejected') }
   scope :archived, -> { where(workflow_state: 'archived') }
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
-  scope :assignee, ->(id) { where(assignee_id: id) }
   
+  scope :assignee, ->(id) { where(assignee_id: id) }
   scope :created_by, ->(id) { where(creator_id: id) }
+  
   scope :by_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
   scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
+  
   scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
   
   before_destroy :check_if_destroyable
@@ -91,40 +95,23 @@ class Voucher < ActiveRecord::Base
   end
 
   def check_if_destroyable
-    current_state == :drafted || current_state == :rejected
+    drafted? || rejected?
   end
 
   #It is a callback for event "accept" which gets called once we invoke the event.
 
   def accept(user)
-    update_attributes({assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
-    comments.create(description: "Accepted", user_id: user.id)
+    update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
+    comments.create( description: "Accepted", user_id: user.id )
   end
 
   def archive
-    update_attributes({assignee_id: nil})
+    update_attributes({ assignee_id: nil })
   end
   
   def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
-    comments.create(description: "Rejected", user_id: user.id)
-  end
-
-  def increment_state(user)
-    case "#{current_state}"
-      when "rejected" then send_for_approval!
-      when "drafted" then send_for_approval!
-      when "pending" then approve!(user)
-      when "approved" then accept!(user)
-      when "accepted" then archive!
-    end 
-  end
-
-  def decrement_state(user)
-    case "#{current_state}"
-      when "pending" then reject!(user)
-      when "approved" then reject!(user)
-    end
+    comments.create( description: "Rejected", user_id: user.id )
   end
 
   def amount
@@ -167,6 +154,23 @@ class Voucher < ActiveRecord::Base
        sum = sum + transaction.amount
       end
     sum
+  end
+
+  def increment_state(user)
+    case "#{current_state}"
+      when "rejected" then send_for_approval!
+      when "drafted" then send_for_approval!
+      when "pending" then approve!(user)
+      when "approved" then accept!(user)
+      when "accepted" then archive!
+    end 
+  end
+
+  def decrement_state(user)
+    case "#{current_state}"
+      when "pending" then reject!(user)
+      when "approved" then reject!(user)
+    end
   end
 
 end
