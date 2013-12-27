@@ -3,5 +3,5 @@ class Transaction < ActiveRecord::Base
 	belongs_to :voucher
 	validates :account_id, :amount, :presence => true
 	validates :amount, numericality: { greater_than: 0.00 }
-	validates :payment_type, presence: true
+	validates :payment_type, :amount, presence: true
 end
