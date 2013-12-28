@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+ 
   before_action :set_comment, only: [:destroy]
   before_action :set_voucher, only: [:create]
   
@@ -20,7 +21,7 @@ class CommentsController < ApplicationController
   end
 
   private
-  # Use callbacks to share common setup or constraints between actions.
+ 
   def set_comment
     @comment = Comment.find_by(id: params[:id])
     redirect_to_back_or_default_url , notice: "Comment not found" if @comment.nil?
