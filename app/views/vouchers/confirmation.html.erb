@@ -1,0 +1,8 @@
+
+<%= current_user.name %>,
+<%#= session["_voucherApp_session"] = nil %>
+
+
+you have not done any activity in last one hour.kindly login again to continue
+<% current_user = nil %>
+<%= link_to "click here" , destroy_user_session_path , method: :delete%>

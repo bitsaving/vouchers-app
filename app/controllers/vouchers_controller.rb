@@ -1,13 +1,11 @@
 class VouchersController < ApplicationController
-  
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state, only: [:edit]
   before_action :default_tab, only: [:index]
   before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
   helper_method :get_vouchers
-
-
+ 
   def index
     get_vouchers(default_tab)
   end
@@ -85,9 +83,6 @@ class VouchersController < ApplicationController
     render action: 'index'
   end
 
-  #FIXME_AB: Home page is served by this action. I think you should have a dashboard resource(singular) for this.
- 
-
   def rejected
     get_vouchers('rejected')
     render action: 'index'
@@ -127,7 +122,7 @@ class VouchersController < ApplicationController
 
       @vouchers = @vouchers.between_dates(params[:from], params[:to])
       
-      filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) 
+      filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if params[:account]
 
     end
     
@@ -139,12 +134,8 @@ class VouchersController < ApplicationController
 
   def filter_by_name_and_type(vouchers, name, type)
   
-    if name.present?
       @vouchers = vouchers.by_account(name)
       @vouchers = @vouchers.by_transaction_type(type) if type.present?
-    end
-    @vouchers
-  
   end
 
   protected
@@ -159,10 +150,8 @@ class VouchersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
    
     def set_voucher
-      @voucher = Voucher.including_accounts_and_transactions.find_by(id: params[:id])
-      if @voucher.nil?
-        redirect_to vouchers_path, notice: "Voucher you are looking for does not exist."
-      end  
+      @voucher = Voucher.including_accounts_and_transactions.find_by(id: params[:id])    
+      redirect_to vouchers_path, notice: "Voucher you are looking for does not exist." if @voucher.nil?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

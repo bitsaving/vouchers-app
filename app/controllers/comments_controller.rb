@@ -13,10 +13,7 @@ class CommentsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html do
-          redirect_to :back
-          flash[:notice] = "Comment could not be added because there was no content in it"
-        end
+        format.html {redirect_to :back, notice: "Comment could not be added because there was no content in it" }
         format.js
       end
     end
@@ -26,18 +23,12 @@ class CommentsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
     @comment = Comment.find_by(id: params[:id])
-    if(@comment.nil?)  
-      flash[:notice] = "Comment not found"
-      redirect_to_back_or_default_url
-    end
+    redirect_to_back_or_default_url , notice: "Comment not found" if @comment.nil?
   end
 
   def set_voucher
     @voucher = Voucher.find(params[:voucher_id])
-    if(@voucher.nil?)  
-      flash[:notice] = "Voucher not found"
-      redirect_to_back_or_default_url
-    end 
+    redirect_to_back_or_default_url, notice: "Voucher not found" if(@voucher.nil?)  
   end   
 
   # Never trust parameters from the scary internet, only allow the white list through.

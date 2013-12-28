@@ -1,5 +1,7 @@
 class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+ 
   skip_before_action :authorize ,only: :google_oauth2
+
 	def google_oauth2
     auth_details = request.env["omniauth.auth"]
     # if Rails.env.production?
@@ -10,19 +12,12 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     # end
     if user && user.persisted?
         flash.notice = user.name + " signed in successfully"
-        sign_in_and_redirect user
+        sign_in user
+        redirect_to session["user_return_to"]  || "/"
     else
       redirect_to new_user_session_path
       flash.notice = "You are not authorized to login. Kindly contact administrator "
     end 
   end
 
-  def sign_in_and_redirect(resource_or_scope)
-    if resource_or_scope == :user
-      redirect_to dashboard_path
-    else
-      super
-    end
-  end
-  
 end
