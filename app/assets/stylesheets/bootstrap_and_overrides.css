@@ -116,7 +116,7 @@ td{
   position: absolute;
   width:60px;
   right:10px;
-  top:40px;
+  top:46px;
 }
 .table-striped tbody>tr:nth-child(odd)>td, .table-striped tbody>tr:nth-child(odd)>th {
   background-color:#e8f0ff ;
