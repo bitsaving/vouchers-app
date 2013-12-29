@@ -8,7 +8,7 @@ class ReportsController < VouchersController
     params[:from] = Date.today.beginning_of_month()
     params[:to] = Date.today.end_of_month()
     @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
-    render  :template => 'vouchers/index', locals: { :@vouchers => @vouchers }
+    render  action: 'index' 
   end
 
   #FIXME_AB: better if we have this named as generate. So that we can call it by /reports/generate?to=
