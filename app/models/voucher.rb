@@ -1,6 +1,4 @@
 class Voucher < ActiveRecord::Base 
-  
-  include PublicActivity::Common
   include Workflow
   
   acts_as_taggable
@@ -31,6 +29,9 @@ class Voucher < ActiveRecord::Base
     state :archived
   end
 
+  workflow_spec.states.keys.each do |state|
+   scope state,  -> { where(workflow_state: state) } 
+  end
   
 
   validates :to_date, :date => { :after_or_equal_to => :from_date,
@@ -64,12 +65,6 @@ class Voucher < ActiveRecord::Base
   
   default_scope { order('date desc') }
 
-  scope :drafted, -> { where(workflow_state: 'drafted') }
-  scope :pending, -> { where(workflow_state: 'pending') }
-  scope :approved, -> { where(workflow_state: 'approved') }
-  scope :accepted, -> { where(workflow_state: 'accepted') }
-  scope :rejected, -> { where(workflow_state: 'rejected') }
-  scope :archived, -> { where(workflow_state: 'archived') }
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
   
   scope :assignee, ->(id) { where(assignee_id: id) }
@@ -123,8 +118,6 @@ class Voucher < ActiveRecord::Base
   end
 
   def approve(user)
-    #FIXME_AB: I would prefer Time.current
-    #fixed
     update_attributes({ approved_by: user.id, approved_at: Time.current })
   end
 
@@ -136,12 +129,8 @@ class Voucher < ActiveRecord::Base
     assignee_id == user.id
   end
 
-  def creator?(user)
-    creator_id == user.id
-  end
-  
-  def can_be_edited?
-    drafted? || rejected?
+  def can_be_edited?(user)
+    ((creator_id == user.id) && (drafted? || rejected?))
   end
 
   def can_be_commented?
@@ -151,8 +140,8 @@ class Voucher < ActiveRecord::Base
   def total_amount(type)
     sum = 0
     self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.transaction_type == type }.each do |transaction|
-       sum = sum + transaction.amount
-      end
+      sum = sum + transaction.amount
+    end
     sum
   end
 

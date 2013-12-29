@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to_back_or_default_url, notice: "Comment could not be added because there was no content in it" }
+        format.html { redirect_to :back, alert: "Comment could not be added because there was no content in it" }
         format.js
       end
     end
@@ -22,12 +22,18 @@ class CommentsController < ApplicationController
  
   def set_comment
     @comment = Comment.find_by(id: params[:id])
-    redirect_to_back_or_default_url, notice: "Comment not found" if @comment.nil?
+    if @comment.nil?
+      flash[:alert] = "Comment not found"
+      redirect_to_back_or_default_url
+    end 
   end
 
   def set_voucher
     @voucher = Voucher.find(params[:voucher_id])
-    redirect_to_back_or_default_url, notice: "Voucher not found" if @voucher.nil?  
+    if @voucher.nil?
+      flash[:alert] = "Voucher not found"
+      redirect_to_back_or_default_url
+    end
   end   
 
   # Never trust parameters from the scary internet, only allow the white list through.

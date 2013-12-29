@@ -48,7 +48,7 @@
                 <%end%>
                 <td><%= voucher.workflow_state%></td> 
                 <td>
-                  <% if voucher.creator?(current_user) && voucher.can_be_edited? %>
+                  <% if voucher.can_be_edited?(current_user) %>
                     <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary', 'data-no-turbolinks' => true %>
                     <%= link_to "Delete", voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s}, :class => 'btn btn-mini btn-danger' %>
                   <%end%>

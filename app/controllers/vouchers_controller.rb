@@ -135,21 +135,17 @@ class VouchersController < ApplicationController
   end
 
   def filter_by_name_and_type(vouchers, name, type)
-  
-      @vouchers = vouchers.by_account(name)
-      @vouchers = @vouchers.by_transaction_type(type) if type.present?
+    @vouchers = vouchers.by_account(name)
+    @vouchers = @vouchers.by_transaction_type(type) if type.present?
   end
 
   protected
 
     def check_user_and_voucher_state
-      #FIXME_AB: This logic can be written little better
-      if !(@voucher.creator?(current_user) && @voucher.can_be_edited?)
+      if !(@voucher.can_be_edited?(current_user) ) 
         redirect_to_back_or_default_url
       end
-    
     end
-  # Use callbacks to share common setup or constraints between actions.
    
     def set_voucher
       @voucher = Voucher.including_accounts_and_transactions.find_by(id: params[:id])    
@@ -158,11 +154,8 @@ class VouchersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
-      #FIXME_AB: Can we break this into a multiline array. This is too long to understand
       params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :transaction_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
     end
-
-    #FIXME_AB: This method is not setting session so the name of this method can be something else like set_default_tab.
 
     def set_default_tab
       session[:previous_tab] =  params[:action]
@@ -175,7 +168,7 @@ class VouchersController < ApplicationController
   
     def set_comment_owner
       #if params[:voucher][:comments_attributes].present?
-        params[:voucher][:comments_attributes].each do |comment_id, content|
+        params[:voucher][:comments_attributes].each_value do |content|
           content[:user_id] = current_user.id
         end
       #end
