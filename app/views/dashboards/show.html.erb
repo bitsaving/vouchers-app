@@ -2,7 +2,6 @@
 <div class = " outer_block">
   <div class="outer_container">
     <div class="voucher_content">
-      <% #FIXME_AB: You should use size to save a query. Right now following line is sending two queries #fixed-%>
       <div  class ="voucher_heading"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "No Vouchers Assigned" %></div>
         <% @vouchers.each do |voucher| %>
         <div class="assigned_vouchers">
@@ -13,7 +12,6 @@
           <div class = "voucher_debit"> 
             <div class="voucher_label">Debit</div>
             <div class="voucher_contents"> 
-              <% #FIXME_AB: Can we use some sort of eager loading to avoid extra queries #fixed-%>
               <% voucher.debit_from.each_with_index do |debit, index| %>
                 <%= debit.name %>
                 <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
@@ -33,7 +31,6 @@
           <div class = "voucher_amount">
             <div class="voucher_label">Amount</div>
             <div class="voucher_contents">
-              <% #FIXME_AB: Do we have a better way. Also can we save some queries #fixed-%>
               <%# @sum = 0 %>
               <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
                 <%# @sum += voucher.amount %>

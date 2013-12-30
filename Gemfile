@@ -61,7 +61,7 @@ gem 'thinking-sphinx', '3.0.6'
 group :development, :test do
 	gem "rspec-rails", "~> 2.14"
   gem 'quiet_assets'
-  # gem 'thin'
+  gem 'thin'
   # gem "webrat", "0.7.2"
 end
 gem 'factory_girl_rails'
