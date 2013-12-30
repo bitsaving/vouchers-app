@@ -136,9 +136,7 @@ class VouchersController < ApplicationController
   protected
 
     def check_user_and_voucher_state
-      if !@voucher.can_be_edited?(current_user) 
-        redirect_to_back_or_default_url
-      end
+      redirect_to_back_or_default_url if !@voucher.can_be_edited?(current_user) 
     end
    
     def set_voucher
