@@ -84,9 +84,7 @@ class Voucher < ActiveRecord::Base
   def check_debit_credit_equality
     debit_amount = total_amount("debit")
     credit_amount = total_amount("credit")
-    if credit_amount != debit_amount
-      errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal."
-    end
+    errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal." if credit_amount != debit_amount
   end
 
   def check_if_destroyable
