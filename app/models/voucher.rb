@@ -96,7 +96,7 @@ class Voucher < ActiveRecord::Base
   #It is a callback for event "accept" which gets called once we invoke the event.
 
   def accept(user)
-    update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.zone.now})
+    update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.current})
     comments.create( description: "Accepted", user_id: user.id )
   end
 

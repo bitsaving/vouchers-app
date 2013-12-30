@@ -1,4 +1,4 @@
-#FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
+ #FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
@@ -18,8 +18,7 @@ class AccountsController < ApplicationController
   def create
     @account = Account.new(account_params)
     if @account.save
-      redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.'
-    
+      redirect_to new_account_url, notice: 'Account ' + @account.name + ' was successfully created.'   
     else
       render action: 'new'
     end

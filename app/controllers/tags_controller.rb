@@ -1,8 +1,7 @@
 class TagsController < ApplicationController
 
   def index
-  	@tags = Tag.pluck('name')
-    render :json => @tags
+  	render :json => Tag.get_autocomplete_suggestions
   end
 
 end
