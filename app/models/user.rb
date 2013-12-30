@@ -33,12 +33,12 @@ class User < ActiveRecord::Base
     first_name + " " + last_name
   end
 
-  def getNotifications
-    notifications = PublicActivity::Activity.where('owner_id = ? and visited = false', id).order('id desc').count
-    if notifications > 0
-      notifications
-    else
-     ""
-    end 
-  end
+  # def getNotifications
+  #   notifications = PublicActivity::Activity.where('owner_id = ? and visited = false', id).order('id desc').count
+  #   if notifications > 0
+  #     notifications
+  #   else
+  #    ""
+  #   end 
+  # end
 end

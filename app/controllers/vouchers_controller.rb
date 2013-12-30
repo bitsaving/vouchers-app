@@ -60,33 +60,27 @@ class VouchersController < ApplicationController
   end
 
   def pending
-    get_vouchers('pending')
     render action: 'index'
   end
 
   def accepted
-    get_vouchers('accepted')
     render action: 'index' 
   end
 
   def archived
-    get_vouchers('archived')
     render action: 'index'
   end
 
 
   def approved 
-    get_vouchers('approved')
     render action: 'index' 
   end
 
   def drafted
-    get_vouchers('drafted')
     render action: 'index'
   end
 
   def rejected
-    get_vouchers('rejected')
     render action: 'index'
   end
 
@@ -159,6 +153,7 @@ class VouchersController < ApplicationController
 
     def set_default_tab
       session[:previous_tab] =  params[:action]
+      get_vouchers(params[:action])
     end
 
 
