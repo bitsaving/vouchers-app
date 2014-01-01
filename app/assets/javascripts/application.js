@@ -79,7 +79,6 @@ ApplicationHandler.prototype = {
     });
   },
   showDetails: function() {
-    
     $('.shows').click(function(){
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggle('blind', 1000);
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggleClass('hidden').animate(2000);
