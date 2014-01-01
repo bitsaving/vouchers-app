@@ -3,7 +3,7 @@ class Account < ActiveRecord::Base
   
   paginates_per 50
   
-  validates :name, presence:  true
+  validates :name, presence: true
   validates_uniqueness_of :name, :case_sensitive => false
   
   before_validation :strip_blanks

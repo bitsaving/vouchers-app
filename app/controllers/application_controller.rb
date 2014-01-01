@@ -18,11 +18,12 @@ class ApplicationController < ActionController::Base
 
     def redirect_to_back_or_default_url(url = root_path)
       #FIXME_AB: variable name?
-      alert = "You are not authorized to view the requested page"
+      #fixed
+      alert_message = "You are not authorized to view the requested page"
       if request.referer
-        redirect_to :back, alert: alert
+        redirect_to :back, alert: alert_message
       else
-        redirect_to url, alert: alert 
+        redirect_to url, alert: alert_message
       end
     end
 

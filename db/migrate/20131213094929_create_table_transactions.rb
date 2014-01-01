@@ -3,7 +3,7 @@ class CreateTableTransactions < ActiveRecord::Migration
     create_table :transactions do |t|
     	t.references :voucher
     	t.integer :amount
-    	t.string :transaction_type
+    	t.string :account_type
     	t.string :payment_type
     	t.string :payment_reference
     	t.references :account

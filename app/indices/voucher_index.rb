@@ -5,7 +5,7 @@ ThinkingSphinx::Index.define :voucher, :with => :active_record,:delta=> true do
   indexes transactions.amount
   indexes transactions.payment_type
   indexes transactions.payment_reference
-  indexes transactions.account_type
+  indexes transactions.transaction_type
   #indexes amount
   indexes (:id)
   #indexes payment_type

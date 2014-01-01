@@ -29,10 +29,9 @@ var ApplicationHandler = function() {
 ApplicationHandler.prototype = {
   init: function() {
     
-    //this.getCookie('previous_tab'))
+   
     this.dateFieldHandler();
     this.VoucherStateHandler();
-    // this.tabHiglight();
     this.oneclick();
     this.resetautocomplete();
     this.showDetails();

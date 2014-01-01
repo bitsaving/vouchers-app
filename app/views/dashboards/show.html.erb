@@ -14,7 +14,7 @@
             <div class="voucher_contents"> 
               <% voucher.debit_from.each_with_index do |debit, index| %>
                 <%= debit.name %>
-                <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts -%>
+                <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts #fixed-%>
                 <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
               <%end%>
             </div>

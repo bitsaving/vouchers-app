@@ -22,7 +22,7 @@ VoucherEventsHandler.prototype = {
 
   getTags: function(){
     var that = this
-    $(document).on("focus",".tag", function() {
+    $(document).on("focus", ".tag", function() {
       $.ajax({
         type: 'get',
         // #FIXME_AB: User a better selector not just .tag. Why don't you add a data-attribute to the textarea itself. Ask me if you are not sure what I am saying 
@@ -35,7 +35,7 @@ VoucherEventsHandler.prototype = {
               data, that.extractLast( request.term ) ) );
             },
             minLength: 3,
-            delay:500,
+            delay: 500,
             focus: function() {
               return false;
             },
@@ -75,24 +75,24 @@ VoucherEventsHandler.prototype = {
       .appendTo( ul );
     };
     $('.date-field').css('cursor', 'pointer');
-  $(document).on("focus",".autocomplete", function() {
-    $('.autocomplete').autocomplete({
-      source: $('.autocomplete').data('path'),
-      minLength: 3,
-      delay:500,
-      select: function(event, ui) { 
-        event.preventDefault();
-        this.value = ui.item.label;
-        $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
-        console.log($('#'+ $(this).data('hidden-field-id')).val(ui.item.value));
-      },
-      focus: function(event, ui) {
-        event.preventDefault();
-        this.value = ui.item.label;
-        $('#'+ $(this).data('textbox-id')).val(ui.item.label);
-      }
+    $(document).on("focus",".autocomplete", function() {
+      $('.autocomplete').autocomplete({
+        source: $('.autocomplete').data('path'),
+        minLength: 3,
+        delay: 500,
+        select: function(event, ui) { 
+          event.preventDefault();
+          this.value = ui.item.label;
+          $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
+          console.log($('#'+ $(this).data('hidden-field-id')).val(ui.item.value));
+        },
+        focus: function(event, ui) {
+          event.preventDefault();
+          this.value = ui.item.label;
+          $('#'+ $(this).data('textbox-id')).val(ui.item.label);
+        }
+      });
     });
-  });
   },
   hiddenFieldHandler: function(){
     $(document).on('change', '.voucher_payment_type select', function() {

@@ -5,6 +5,6 @@ FactoryGirl.define do
     email "divya@vinsol.com"
     first_name "divya"
     last_name "talwar"
-    user_type "normal"
+    user_type "admin"
   end
 end

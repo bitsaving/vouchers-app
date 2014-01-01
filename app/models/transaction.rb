@@ -4,4 +4,6 @@ class Transaction < ActiveRecord::Base
 	validates :account_id, :amount, :presence => true
 	validates :amount, numericality: { greater_than: 0.00 }
 	validates :payment_type, :amount, presence: true
+  validates :payment_reference, :presence  => { :message =>" cannot be blank" }, :unless => Proc.new { |a| a['payment_type'] == "Cash" }
+
 end

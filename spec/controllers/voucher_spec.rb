@@ -2,13 +2,14 @@ require 'spec_helper'
 describe VouchersController do
     login_user
     @current_user  = @user
-  before :each do   
+     before :each do   
     controller.stub(:authorize).and_return(true)
     controller.stub(:set_i18n_locale_from_params).and_return(true)
 
     request.env["HTTP_REFERER"] =  'http://test.host/'
    # @current_user = FactoryGirl.create(:user)
-    session[:previous_tab] = "drafted"
+    default_tab = "drafted"
+
 #     @request.env["devise.mapping"] = Devise.mappings[:user]
 #      #@user = FactoryGirl.create(:user)
 #       sign_in FactoryGirl.create(:user,first_name: "divya",last_name: "talwar" ,email: "divya@vinsol.com")
@@ -103,6 +104,10 @@ describe VouchersController do
     it "displays the voucher" do
       #Voucher.stub(:check_user_and_voucher_state).and_return(true)
 #      get :edit ,:id => @voucher.id
+@current_user = User.find_by_email("divya@vinsol.com")
+        @voucher.creator_id = @current_user.id
+        #@current_user.should be_nil
+        # assigns[:voucher].should be_nil
            expect(response).to render_template("edit")
     end
   #end
@@ -176,11 +181,11 @@ end
  #    end
  #      it "creates a new voucher" do
  #      #@voucher_attributes = FactoryGirl.attributes_for(:voucher)
- #      post :create, voucher: @voucher_attributes
+ #      post :create, voucher: @voucher_attributes, :format => "js"
  #    end
  #    context "when the voucher saves successfully" do
  #      before do
- #        @voucher = FactoryGirl.build(:voucher)
+ #        @voucher = FactoryGirl.create(:voucher)
  # Voucher.should_receive(:new).and_return(@voucher)
  #      @voucher.should_receive(:save).and_return(true)      
  #       # @voucher.should_receive :save
@@ -207,7 +212,7 @@ end
  #        @voucher.stub(:save).and_return(false)
         
  #        #Voucher.stub new: @voucher
- #        post :create, voucher: @voucher_attributes
+ #        post :create, voucher: @voucher_attributes, :format => "js"
  #      end
  #      # it "assigns @voucher" do
  #      #   # voucher = FactoryGirl.build(:voucher)
@@ -296,28 +301,28 @@ end
     end
   end
 
-  describe "Get all vouchers" do
-   it "assigns @vouchers" do
-      get :all
-      assigns(:vouchers).should_not be_nil
-    end
+  # describe "Get all vouchers" do
+  #  it "assigns @vouchers" do
+  #     get :all
+  #     assigns(:vouchers).should_not be_nil
+  #   end
 
-    it "renders the index template" do
-      get :all
-      expect(response).to render_template("index")
-    end
-  end
-   describe "Get assigned vouchers" do
-   it "assigns @vouchers" do
-      get :assigned
-      assigns(:vouchers).should_not be_nil
-    end
+  #   it "renders the index template" do
+  #     get :all
+  #     expect(response).to render_template("index")
+  #   end
+  # end
+  #  describe "Get assigned vouchers" do
+  #  it "assigns @vouchers" do
+  #     get :assigned
+  #     assigns(:vouchers).should_not be_nil
+  #   end
 
-    it "renders the assigned template" do
-      get :assigned
-      expect(response).to render_template("assigned")
-    end
-  end
+  #   it "renders the assigned template" do
+  #     get :assigned
+  #     expect(response).to render_template("assigned")
+  #   end
+  # end
   # describe "vouchers edit" do
   #   before do
   #     @voucher = FactoryGirl.create(:voucher)
@@ -398,12 +403,12 @@ end
     it 'user should call save' do
       Voucher.should_receive(:new).and_return(@voucher)
       @voucher.should_receive(:save).and_return(@voucher)
-     post :create , {voucher: FactoryGirl.attributes_for(:voucher) ,:format => :json}
+     post :create , {voucher: FactoryGirl.attributes_for(:voucher) ,:format => :js}
     end
 
     context 'when saved' do
       before do
-        post :create , {voucher: FactoryGirl.attributes_for(:voucher),:format => :json}
+        post :create , {voucher: FactoryGirl.attributes_for(:voucher),:format => :js}
       end
 
       it 'should redirect to show' do
@@ -417,11 +422,11 @@ end
 
     context 'when not saved' do
       before do
-          post :create , voucher: FactoryGirl.attributes_for(:voucher), account_credited: nil
+          post :create , {voucher: {date: nil} ,:format => :js }
       end
 
       it 'should render new' do
-        response.should render_template :new
+        response.should render_template "shared/_error_messages"
       end
 
     end
@@ -443,11 +448,11 @@ end
       end
       it "should call update" do
         @voucher.should_receive(:update).and_return(@voucher)
-        patch :update , { id: @voucher.id , voucher: {account_credited: 10} ,:format => :json}    
+        patch :update , { id: @voucher.id , voucher: {date: Date.yesterday()} ,:format => :js}    
       end
       context 'when updation is successful' do
         before do
-      patch :update , { id: @voucher.id , voucher: {account_credited: 10},:format => :json }
+      patch :update , { id: @voucher.id , voucher: {date: Date.yesterday()},:format => :js }
         end
 
         it 'should redirect to show' do
@@ -461,11 +466,11 @@ end
 
       context 'when not successfully update attributes' do
         before do
-          patch :update , { id: @voucher.id , voucher: {amount: nil}}
+          patch :update , { id: @voucher.id , voucher: {date: nil}, :format => :js}
         end
 
         it 'should render edit' do
-          response.should render_template :edit
+          response.should render_template "shared/_error_messages"
         end
         it 'should have errors' do
           @voucher.errors.count > 1

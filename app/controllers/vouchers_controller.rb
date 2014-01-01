@@ -160,11 +160,11 @@ class VouchersController < ApplicationController
     end
   
     def set_comment_owner
-      #if params[:voucher][:comments_attributes].present?
+      if params[:voucher][:comments_attributes].present?
         params[:voucher][:comments_attributes].each_value do |content|
           content[:user_id] = current_user.id
         end
-      #end
+      end
     end
 
 end
