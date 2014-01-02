@@ -103,28 +103,28 @@ class VouchersController < ApplicationController
  
   def get_vouchers(state)
   
-    # @vouchers = Voucher.all
+    @vouchers = Voucher.all
 
-    # @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
+    @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
 
-    # @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
+    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
 
-    # @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
+    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
 
-    # @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
+    @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]
  
 
-    # if( params[:to] && params[:from] )
+    if( params[:to] && params[:from] )
 
-    #   @vouchers = @vouchers.between_dates(params[:from], params[:to])
+      @vouchers = @vouchers.between_dates(params[:from], params[:to])
       
-    #   filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if params[:account]
+      filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if params[:account]
 
-    # end
+    end
     
-    # @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
+    @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
 
-    # @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
+    @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])
 
   end
 
