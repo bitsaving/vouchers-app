@@ -106,11 +106,8 @@ class Voucher < ActiveRecord::Base
   end
 
   def amount
-    sum = 0
-    debited_transactions.each do | voucher|
-      sum += voucher.amount
-    end
-    sum
+    amount = debited_transactions.inject(0) { |sum, transaction| sum + transaction.amount}
+    amount
   end
 
   def approve(user)
