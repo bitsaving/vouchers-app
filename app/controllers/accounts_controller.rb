@@ -1,4 +1,4 @@
- #FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
+#FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
 #fixed
 class AccountsController < ApplicationController
 
@@ -45,7 +45,7 @@ class AccountsController < ApplicationController
  
 
   protected
-    # Use callbacks to share common setup or constraints between actions.
+ 
     def set_account
       @account = Account.find_by(id: params[:id])
       if(@account.nil?)  
@@ -54,7 +54,6 @@ class AccountsController < ApplicationController
       end
     end
 
-    # Never trust parameters from the scary INTERNET, only allow the white list through.
     def account_params
       params.require(:account).permit(:name)
     end 
