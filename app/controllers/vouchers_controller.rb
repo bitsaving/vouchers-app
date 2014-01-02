@@ -91,12 +91,12 @@ class VouchersController < ApplicationController
  
   def increment_state
     @voucher.assignee_id = params[:voucher][:assignee_id]
-    @voucher.increment_state(current_user)
+    @voucher.change_state(current_user, "increment")
     redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
   end
  
   def decrement_state
-    @voucher.decrement_state(current_user) 
+    @voucher.change_state(current_user, "decrement") 
     redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
   end
 

@@ -143,21 +143,13 @@ class Voucher < ActiveRecord::Base
     sum
   end
 
-  def increment_state(user)
+  def change_state(user, state)
     case "#{current_state}"
       when "rejected" then send_for_approval!
       when "drafted" then send_for_approval!
-      when "pending" then approve!(user)
-      when "approved" then accept!(user)
+      when "pending" then state == "increment" ? approve!(user) : reject!(user)
+      when "approved" then state == "increment" ? accept!(user) : reject!(user)
       when "accepted" then archive!
     end 
   end
-
-  def decrement_state(user)
-    case "#{current_state}"
-      when "pending" then reject!(user)
-      when "approved" then reject!(user)
-    end
-  end
-
 end
