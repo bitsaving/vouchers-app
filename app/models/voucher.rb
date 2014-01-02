@@ -1,5 +1,4 @@
 class Voucher < ActiveRecord::Base 
-  
   include Workflow
   
   acts_as_taggable
@@ -60,12 +59,10 @@ class Voucher < ActiveRecord::Base
     voucher.has_many :attachments 
   end
 
-
-  accepts_nested_attributes_for :attachments, reject_if: proc { |attributes| attributes['bill_attachment'].blank? },update_only: true, allow_destroy: true
-  accepts_nested_attributes_for :transactions,update_only: true, allow_destroy: true
-  accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes['description'].blank? },update_only: true, allow_destroy: true
-
-
+  accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
+  accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
+  
   default_scope { order('date desc') }
 
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
@@ -74,13 +71,12 @@ class Voucher < ActiveRecord::Base
   scope :created_by, ->(id) { where(creator_id: id) }
   
   scope :by_account, ->(id) { joins(:transactions).where(:transactions => { :account_id => id })}
-  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => { :transaction_type => type })}
+  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
   
   scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
   
   before_destroy :check_if_destroyable
 
-  
   def self.including_accounts_and_transactions
     includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
   end
@@ -97,7 +93,7 @@ class Voucher < ActiveRecord::Base
 
   def accept(user)
     update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.current})
-    add_comment("Accepted", user)
+    comments.create( description: "Accepted", user_id: user.id )
   end
 
   def archive
@@ -106,7 +102,7 @@ class Voucher < ActiveRecord::Base
   
   def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
-    add_comment("Rejected", user)
+    comments.create( description: "Rejected", user_id: user.id )
   end
 
   def amount
@@ -115,10 +111,6 @@ class Voucher < ActiveRecord::Base
       sum += voucher.amount
     end
     sum
-  end
-
-  def add_comment(type, user)
-    comments.create( description: type, user_id: user.id )
   end
 
   def approve(user)
