@@ -28,6 +28,6 @@
 
 <script type= "text/javascript">
   var current_highlighted_tab = '<%=session[:previous_tab].presence || "drafted" %>';
-  var applicationHandler = new ApplicationHandler();
-  applicationHandler.tabHiglight(current_highlighted_tab);
+  var object = new VoucherEventsHandler();
+  object.tabHiglight(current_highlighted_tab);
 </script>

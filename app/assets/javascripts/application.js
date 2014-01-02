@@ -38,6 +38,7 @@ ApplicationHandler.prototype = {
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
+    document.addEventListener("page:load", this.showDetails);
     document.addEventListener("page:load", this.resetautocomplete);
     document.addEventListener("page:load", this.VoucherStateHandler);
     document.addEventListener("page:load", this.redirectToVouchers);
@@ -67,9 +68,6 @@ ApplicationHandler.prototype = {
     var pathname = window.location.pathname.split('vouchers/')[1];
     $('.associated_voucher li.' + pathname).addClass('active').siblings().removeClass('active');
   },
-  tabHiglight: function(current_highlighted_tab) {
-    $('.associated_voucher li.'+ current_highlighted_tab || "").addClass('active').siblings().removeClass('active')
-  },
   oneclick: function(){
     $(document).on('submit', 'form.one_click', function (e) {
       $(this).submit(function() {
@@ -79,11 +77,10 @@ ApplicationHandler.prototype = {
     });
   },
   showDetails: function() {
-    $('.shows').click(function(){
+     $('.shows').click(function(){
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggle('blind', 1000);
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggleClass('hidden').animate(2000);
-
-    });
+   });
   }
 
 }

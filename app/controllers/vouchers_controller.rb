@@ -32,7 +32,7 @@ class VouchersController < ApplicationController
  
   def create
 
-   @voucher = current_user.vouchers.build(voucher_params)
+    @voucher = current_user.vouchers.build(voucher_params)
     respond_to do |format|
       if @voucher.save
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
@@ -41,7 +41,6 @@ class VouchersController < ApplicationController
         format.js {render "shared/_error_messages", locals: { :target => @voucher } }
       end
     end
-
   end
 
 
@@ -90,14 +89,15 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
-    @voucher.assignee_id = params[:voucher][:assignee_id]
+    @voucher.assignee_id = params[:voucher][:assignee_id] if params[:voucher]
     @voucher.change_state(current_user, "increment")
-    redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
+    flash[:notice] =  "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
+    redirect_to voucher_path(@voucher)
   end
  
   def decrement_state
     @voucher.change_state(current_user, "decrement") 
-    redirect_to :back, notice: "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
+    redirect_to voucher_path(@voucher), notice: "Voucher #"  + @voucher.id.to_s + " rejected successfully and assigned back to " + @voucher.creator.name
   end
 
  
@@ -139,7 +139,6 @@ class VouchersController < ApplicationController
       redirect_to vouchers_path, notice: "Voucher you are looking for does not exist." if @voucher.nil?
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def voucher_params
       params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :transaction_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})
     end

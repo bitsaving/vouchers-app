@@ -75,7 +75,7 @@
     <%end%>
    <%if(@voucher.approved?  && @voucher.assignee?(current_user))%>
       <div class ="final_state onprint">
-        <%= link_to "Accept", increment_state_voucher_path(id: @voucher, :voucher => {assignee_id: current_user.id}), :class => 'btn btn-primary', method: :post %>
+        <%= link_to "Accept", increment_state_voucher_path(id: @voucher), :class => 'btn btn-primary', method: :post %>
         <%= link_to "Reject", decrement_state_voucher_path(id: @voucher), :class=>'btn btn-danger', method: :post, data: {confirm: "Voucher ##{@voucher.id} will be rejected and assigned back to #{@voucher.creator.name}.Press OK to continue "}%>
       </div>
     <%end%>

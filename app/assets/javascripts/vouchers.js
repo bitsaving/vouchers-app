@@ -14,6 +14,7 @@ VoucherEventsHandler.prototype = {
     this.hiddenFieldHandler(); 
     this.autoCompleteFieldHandler();
     this.getTags();
+    this.tabHiglight();
     document.addEventListener("page:load", this.hiddenFieldHandler());
     document.addEventListener("page:load", this.autoCompleteFieldHandler());
     document.addEventListener("page:load", this.getTags());
@@ -93,6 +94,9 @@ VoucherEventsHandler.prototype = {
         }
       });
     });
+  },
+  tabHiglight: function(current_highlighted_tab) {
+    $('.associated_voucher li.'+ current_highlighted_tab || "").addClass('active').siblings().removeClass('active')
   },
   hiddenFieldHandler: function(){
     $(document).on('change', '.voucher_payment_type select', function() {
