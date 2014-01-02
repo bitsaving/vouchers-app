@@ -1,4 +1,5 @@
 class Voucher < ActiveRecord::Base 
+  
   include Workflow
   
   acts_as_taggable
@@ -59,11 +60,10 @@ class Voucher < ActiveRecord::Base
     voucher.has_many :attachments 
   end
 
-  with_options update_only: true, allow_destroy: true do |attribute|
-    accepts_nested_attributes_for :attachments, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
-    accepts_nested_attributes_for :transactions
-    accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes['description'].blank? }
-  end
+
+  accepts_nested_attributes_for :attachments, reject_if: proc { |attributes| attributes['bill_attachment'].blank? },update_only: true, allow_destroy: true
+  accepts_nested_attributes_for :transactions,update_only: true, allow_destroy: true
+  accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes['description'].blank? },update_only: true, allow_destroy: true
 
 
   default_scope { order('date desc') }
@@ -80,6 +80,7 @@ class Voucher < ActiveRecord::Base
   
   before_destroy :check_if_destroyable
 
+  
   def self.including_accounts_and_transactions
     includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
   end
