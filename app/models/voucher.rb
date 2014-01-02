@@ -41,7 +41,7 @@ class Voucher < ActiveRecord::Base
   
   has_many :transactions
 
-  has_many :debited_transactions, -> { where(:transactions => { transaction_type: "debit" })}, :class_name => 'Transaction'
+  has_many :debited_transactions, -> { where(:transactions => { transaction_type: "debit" }) }, :class_name => 'Transaction'
   has_many :credited_transactions, -> { where(:transactions => { transaction_type: "credit" }) }, :class_name => 'Transaction'
   
   has_many :debit_from, -> { where(:transactions => { transaction_type: "debit" }) }, through: :transactions, source: :account
@@ -70,8 +70,8 @@ class Voucher < ActiveRecord::Base
   scope :assignee, ->(id) { where(assignee_id: id) }
   scope :created_by, ->(id) { where(creator_id: id) }
   
-  scope :by_account, ->(id) { joins(:transactions).where(:transactions => {:account_id => id })}
-  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
+  scope :by_account, ->(id) { joins(:transactions).where(:transactions => { :account_id => id })}
+  scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => { :transaction_type => type })}
   
   scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
   
@@ -82,9 +82,7 @@ class Voucher < ActiveRecord::Base
   end
   
   def check_debit_credit_equality
-    debit_amount = total_amount("debit")
-    credit_amount = total_amount("credit")
-    errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal." if credit_amount != debit_amount
+    errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal." if total_amount("debit") != total_amount("credit")
   end
 
   def check_if_destroyable
