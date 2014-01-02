@@ -134,11 +134,8 @@ class Voucher < ActiveRecord::Base
   end
 
   def total_amount(type)
-    sum = 0
-    self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.transaction_type == type }.each do |transaction|
-      sum = sum + transaction.amount
-    end
-    sum
+    amount = self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.transaction_type == type }.inject(0) {|sum, transaction| sum + transaction.amount }#.each do |transaction|
+    amount 
   end
 
   def change_state(user, state)
