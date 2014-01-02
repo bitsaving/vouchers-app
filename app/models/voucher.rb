@@ -59,10 +59,13 @@ class Voucher < ActiveRecord::Base
     voucher.has_many :attachments 
   end
 
-  accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
-  accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
-  accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
-  
+  with_options update_only: true, allow_destroy: true do |attribute|
+    accepts_nested_attributes_for :attachments, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
+    accepts_nested_attributes_for :transactions
+    accepts_nested_attributes_for :comments, reject_if: proc { |attributes| attributes['description'].blank? }
+  end
+
+
   default_scope { order('date desc') }
 
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
@@ -93,7 +96,7 @@ class Voucher < ActiveRecord::Base
 
   def accept(user)
     update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.current})
-    comments.create( description: "Accepted", user_id: user.id )
+    add_comment("Accepted", user)
   end
 
   def archive
@@ -102,7 +105,7 @@ class Voucher < ActiveRecord::Base
   
   def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
-    comments.create( description: "Rejected", user_id: user.id )
+    add_comment("Rejected", user)
   end
 
   def amount
@@ -111,6 +114,10 @@ class Voucher < ActiveRecord::Base
       sum += voucher.amount
     end
     sum
+  end
+
+  def add_comment(type, user)
+    comments.create( description: type, user_id: user.id )
   end
 
   def approve(user)
