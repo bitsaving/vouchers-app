@@ -89,7 +89,7 @@ class VouchersController < ApplicationController
   end
  
   def increment_state
-    @voucher.assignee_id = params[:voucher][:assignee_id] if params[:voucher]
+    @voucher.assignee_id = params[:voucher][:assignee_id] 
     @voucher.change_state(current_user, "increment")
     flash[:notice] =  "Voucher #"  + @voucher.id.to_s + " has been assigned to " + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))
     redirect_to voucher_path(@voucher)
