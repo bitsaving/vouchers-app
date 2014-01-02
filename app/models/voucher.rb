@@ -1,4 +1,5 @@
 class Voucher < ActiveRecord::Base 
+ 
   include Workflow
   
   acts_as_taggable
@@ -127,7 +128,8 @@ class Voucher < ActiveRecord::Base
   end
 
   def can_be_commented?
-    current_state >= :pending && current_state < :accepted
+    pending? || approved?
+    # current_state >= :pending && current_state < :accepted
   end
 
   def total_amount(type)
