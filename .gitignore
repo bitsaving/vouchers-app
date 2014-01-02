@@ -19,4 +19,4 @@
 /db/sphinx/development/
 /config/development.sphinx.conf
 /config/test.sphinx.conf
-
+/db/sphinx/test/

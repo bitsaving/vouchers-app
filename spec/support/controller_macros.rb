@@ -3,10 +3,6 @@ module ControllerMacros
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @user = FactoryGirl.create(:user)
-       #@user.confirm!
-         
-
-      #@current_user = user
       sign_in @user
     end
   end

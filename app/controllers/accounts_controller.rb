@@ -1,4 +1,5 @@
  #FIXME_AB: Remove format html and json blocks where we don't need them, as discussed.
+#fixed
 class AccountsController < ApplicationController
 
   before_action :set_account, only: [:show, :edit, :update] 
@@ -12,8 +13,7 @@ class AccountsController < ApplicationController
     @account = Account.new
   end
  
-  # POST /accounts
-  # POST /accounts.json
+ 
   
   def create
     @account = Account.new(account_params)

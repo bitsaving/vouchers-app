@@ -79,161 +79,13 @@ describe VouchersController do
       get :edit , :id => @voucher.id
 
     end
-    #context "when user is admin" do
-      # let(:user) do
-      #   @user = subject.current_user
-       
-      # end
-     # it "gfg" do
-     #   subject.current_user.should_not be_nil
-     #   subject.current_user.user_type = "admin"
-     # end
-     #  #controller.stub(:current_user) do FactoryGirl.create(:user)   end
-  #@user.user_type = "admin"
-      # context "when user is the creator of voucher" do
-    #   before(:each)  do
-    #   @voucher.stub(:check_user_and_voucher_state).and_return(true)
-    # end
-  #@voucher.creator_id = @user.id
     it "assigns voucher" do
-     # subject.current_user.user_type = "admin"
-     #  @voucher.creator_id = subject.current_user.id
- # @voucher.stub(:check_user_and_voucher_state).and_return(true)
           assigns[:voucher].should_not be_nil
     end
     it "displays the voucher" do
-      #Voucher.stub(:check_user_and_voucher_state).and_return(true)
-#      get :edit ,:id => @voucher.id
-@current_user = User.find_by_email("divya@vinsol.com")
-        @voucher.creator_id = @current_user.id
-        #@current_user.should be_nil
-        # assigns[:voucher].should be_nil
-           expect(response).to render_template("edit")
+          expect(response).to render_template("edit")
     end
-  #end
-#   context "when user is not the creator of voucher" do
-#    before(:each)  do
-#       @voucher.stub(:check_user_and_voucher_state).and_return(@voucher)
-#     end
-#   it "assigns voucher" do
-#     # @voucher.creator_id = 200
-#     #  subject.current_user.user_type = "admin"
-#       assigns[:voucher].should_not be_nil
-#     end
-#     it "displays the voucher" do
-#      # get :show ,:id => voucher.id
-#            expect(response).to render_template("edit")
-#     end
-# # context "when voucher is in rejected or drafted state" do
-#  # # @voucher.creato
-#  #  it "assigns voucher" do
-     
-#  #      assigns[:voucher].should_not be_nil
-#  #    end
-#  #    it "displays the voucher" do
-#  #     # get :show ,:id => voucher.id
-#  #           expect(response).to render_template("edit")
-#  #    end
-# end
-#end
-# context "when user is not the admin" do
-
-#       context "when user is the creator of voucher" do
-#     # before(:each)  do
-#     #   @voucher.should_receive(:check_user_and_voucher_state).and_return(true)
-#     # end
-#     it "assigns voucher" do
-# #      @voucher.stub(:check_user_and_voucher_state).and_return(true)
-#      # subject.current_user.user_type = "normal"
-#      # @voucher.creator_id = subject.current_user.id
-#      get :edit , :id => @voucher.id
-#       assigns[:voucher].should_not be_nil
-#     end
-#     it "displays the voucher" do
-#       #Voucher.stub(:check_user_and_voucher_state).and_return(true)
-#      #   subject.current_user.user_type = "normal"
-#      # @voucher.creator_id = subject.current_user.id
-#      get :edit ,:id => @voucher.id
-#            expect(response).to render_template("edit")
-#     end
-#   end
-# context " when user is not the creator of voucher" do
-#  # before(:each)  do
-#  #      @voucher.stub(:check_user_and_voucher_state).and_return(false)
-#  #    end
-#   it "redirects to the home page" do
-#     subject.current_user.user_type = "normal"
-#       @voucher.creator_id = FactoryGirl.create(:user,email: "ds@gmail.com")
-#       #subject.current_user.should be_nil
-#       # expect(response).to render_template("edit")
-#       #Voucher.stub(:check_user_and_voucher_state).and_return(false)
-#      #get :edit ,:id => @voucher.id
-     
-#       response.should redirect_to request.env["HTTP_REFERER"]
-#         end
-# end   
-# end
 end
- #  describe "Post Create" do
- #    #let(:voucher) {@voucher = FactoryGirl.create(:voucher)}
- #    before(:each) do
- #      @voucher_attributes = FactoryGirl.attributes_for(:voucher)
- #    end
- #      it "creates a new voucher" do
- #      #@voucher_attributes = FactoryGirl.attributes_for(:voucher)
- #      post :create, voucher: @voucher_attributes, :format => "js"
- #    end
- #    context "when the voucher saves successfully" do
- #      before do
- #        @voucher = FactoryGirl.create(:voucher)
- # Voucher.should_receive(:new).and_return(@voucher)
- #      @voucher.should_receive(:save).and_return(true)      
- #       # @voucher.should_receive :save
- #  #Voucher.stub new: @voucher
- #   # @voucher.save!
- #        #@voucher = Voucher.stub new:voucher
- #        # @voucher.should_receive(:save).and_return(true)
- #        post :create, voucher: @voucher_attributes, :format => "js"
- #      end
- #      # it "sets a flash[:notice] message" do
- #      #   #post :create#, voucher: @voucher_attributes
- #      #   flash[:notice].should eq("Voucher #" + @voucher.id.to_s + " was successfully created.")
- #      # end
- #      it "redirects to the Vouchers show" do
- #        #post :create#,voucher: @voucher_attributes
- #        get :show , id: @voucher.id
- #        response.should render_template("show") 
- #      end
- #    end
- #    context "when the voucher fails to save" do
- #      before(:each) do
- #               @voucher = FactoryGirl.create(:voucher)
- #        #@voucher = Voucher.stub new:voucher
- #        @voucher.stub(:save).and_return(false)
-        
- #        #Voucher.stub new: @voucher
- #        post :create, voucher: @voucher_attributes, :format => "js"
- #      end
- #      # it "assigns @voucher" do
- #      #   # voucher = FactoryGirl.build(:voucher)
- #      #   # #@voucher = Voucher.stub new:voucher
- #      #   # voucher.stub(:save).and_return(false)
-        
- #      #   # #Voucher.stub new: @voucher
- #      #   # post :create, voucher: @voucher_attributes
- #      #   assigns[:voucher].should eq(@voucher)
- #      # end 
- #      it "renders the new template" do
- #        #  #@voucher = Voucher.stub new:voucher
- #        # voucher = FactoryGirl.build(:voucher)
- #        # voucher.stub(:save).and_return(false)
- #        #     #Voucher.stub new: @voucher
- #        # post :create, voucher: @voucher_attributes
- #        response.should render_template("new")
- #      end
- #    end
- #  end
-
   describe "Get pending vouchers" do
    it "assigns @vouchers" do
       get :pending
@@ -444,7 +296,7 @@ end
 
     context "when voucher is found" do
       before do
-        Voucher.stub(:find_by).with(id: "#{@voucher.id}").and_return(@voucher)
+        Voucher.stub(:find_by).with(id: "#{@voucher.id}",:includes  => [:voucher_with_debit_from, :voucher_with_credit_to, :voucher_with_debited_transactions, :voucher_with_credited_transactions]).and_return(@voucher)
       end
       it "should call update" do
         @voucher.should_receive(:update).and_return(@voucher)
