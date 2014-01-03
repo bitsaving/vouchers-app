@@ -1,7 +1,7 @@
 <tr></tr>
 <%= tag("tr", data: {id: @voucher.id} ,:class => "show_details hidden" )%>
 <td class ="upper"> 
-  #<%= @voucher.id %>
+  <%= @voucher.id %>
 </td>
 <td class="date">
   <%= @voucher.date.to_s(:string_format) %>
@@ -23,6 +23,14 @@
     <%= link_to credit.name, account_vouchers_path(credit), :class=>'debit_credit'%>
     <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %><br></strong>
   <%end%>
+</td>
+<td class = "comments">
+  COMMENTS<br>
+  <% @voucher.comments.each do |comment| %>
+    <div class ="comment_decription">
+    <%= simple_format comment.description %>
+  </div>
+    <%end%>
 </td>
 <td class="amount">
   Amount :  <%= number_to_currency(@voucher.amount, :unit => "₹  ") %>

@@ -68,3 +68,4 @@ gem 'factory_girl_rails'
 #gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
 gem "rails-observers"
+gem 'simplecov', :require => false, :group => :test

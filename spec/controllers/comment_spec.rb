@@ -1,9 +1,8 @@
 require_relative '../spec_helper'
 
 describe CommentsController do
-    login_user
-    @current_user  = @user
-    before :each do   
+  login_user
+  before :each do   
     request.env["HTTP_REFERER"] =  'http://test.host/'
     controller.stub(:authorize).and_return(true)
   end
@@ -43,7 +42,4 @@ describe CommentsController do
       end
     end
   end
-
-  
-  # end
 end

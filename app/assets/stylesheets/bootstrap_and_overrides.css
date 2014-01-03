@@ -301,16 +301,33 @@ border-right: dotted 1px black !important;
     padding-left: 20px;
     float:left;
     font-size: 12px !important;
-width:900px !important;
+width:586px !important;
   }
+  td.comments{
+ border:dotted 1px black;
+    width:300px !important;}
   td.amount{
     text-align: center !important;
     font-size: 18px !important;
     position: relative;
     top:-60px;
-    float: left;
+    float: right;
     padding-top: 30px;
     padding-bottom: 30px;
-  width:275px !important;
+  width:241px !important;
   border-bottom: dotted 1px black !important;
+  border-left: dotted 1px black !important;
+  }
+
+  .comment_decription{
+   
+  border-radius: 5px;
+  min-height :15px; 
+  width: 250px;
+  border:  1px dotted #e0eacc;
+  background-color:#f6fbff;
+  padding-left:10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom:10px;
   }

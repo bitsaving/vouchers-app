@@ -4,9 +4,8 @@ FactoryGirl.define do
   factory :voucher do
   	date Date.today
   	association :assignee, factory: :user, email: "abc@vinsol.com"
-    #association :creator, factory: :user, email: "abcd@vinsol.com"
     creator_id { User.find_by_email("divya@vinsol.com").id }
-  	workflow_state "rejected"
+  	workflow_state "drafted"
     factory :voucher_with_comments do
        ignore do
         comments_count 5

@@ -1,9 +1,7 @@
 require_relative '../spec_helper'
 
 describe Admin::UsersController do
-   login_user
-    @current_user  = @user
-    # request.env["HTTP_REFERER"] =  'http://test.host/'
+  login_user
   before :each do   
     request.env["HTTP_REFERER"] =  'http://test.host/admin'
     controller.stub(:authorize).and_return(true)
