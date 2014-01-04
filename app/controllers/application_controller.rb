@@ -27,6 +27,10 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def default_tab
+      session[:previous_tab] || 'drafted'
+    end
+
  protected
     # def set_i18n_locale_from_params
     #   if params[:locale]

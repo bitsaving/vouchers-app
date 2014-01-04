@@ -146,9 +146,7 @@ class VouchersController < ApplicationController
     end
 
 
-    def default_tab
-      session[:previous_tab] || 'drafted'
-    end
+    
   
     def set_comment_owner
       if params[:voucher][:comments_attributes].present?

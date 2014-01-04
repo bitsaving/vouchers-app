@@ -6,8 +6,7 @@ class ReportsController < VouchersController
   before_action :default_tab, only: [:report]
   
   
-  def report 
-    
+  def report   
     render  action: 'index' 
   end
 
@@ -35,9 +34,5 @@ class ReportsController < VouchersController
       params[:to] = Date.today.end_of_month()
       @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
     end  
-
-    def default_tab
-      session[:previous_tab] || 'drafted'
-    end
 
 end
