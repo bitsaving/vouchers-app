@@ -2,8 +2,9 @@ class ReportsController < VouchersController
   
   before_action :check_validity, only: [:generate]
   before_action :convert_date, only: [:generate]
-  before_action :default_tab, only: [:report]
   before_action :set_params, only: [:report]
+  before_action :default_tab, only: [:report]
+  
   
   def report 
     

@@ -29,7 +29,7 @@ class CommentsController < ApplicationController
   end
 
   def set_voucher
-    @voucher = Voucher.find(params[:voucher_id])
+    @voucher = Voucher.find_by(id: params[:voucher_id])
     if @voucher.nil?
       flash[:alert] = "Voucher not found"
       redirect_to_back_or_default_url
