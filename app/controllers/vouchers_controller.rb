@@ -52,7 +52,7 @@ class VouchersController < ApplicationController
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully updated"
         format.js {render js: %(window.location.href = '#{voucher_path @voucher}') }
       else
-        format.js { render "shared/_error_messages", locals: { :target => @voucher } }
+        format.js { render :template => "shared/_error_messages", locals: { :target => @voucher } }
       end
     end
 
