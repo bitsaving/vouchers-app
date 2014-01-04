@@ -14,10 +14,6 @@ class ReportsController < VouchersController
   #FIXME_AB: better if we have this named as generate. So that we can call it by /reports/generate?to=
   #fixed
   def generate
-    @start_date = params[:from]
-    @end_date = params[:to]
-    @account_name = params[:account]
-    @transaction_type = params[:transactions_type]
   end
 
 
