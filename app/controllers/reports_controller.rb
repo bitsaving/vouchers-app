@@ -3,11 +3,10 @@ class ReportsController < VouchersController
   before_action :check_validity, only: [:generate]
   before_action :convert_date, only: [:generate]
   before_action :default_tab, only: [:report]
+  before_action :set_params, only: [:report]
   
   def report 
-    params[:from] = Date.today.beginning_of_month()
-    params[:to] = Date.today.end_of_month()
-    @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
+    
     render  action: 'index' 
   end
 
@@ -29,6 +28,12 @@ class ReportsController < VouchersController
         redirect_to report_path, notice: "PLease enter valid values!!"
       end
     end
+
+    def set_params
+      params[:from] = Date.today.beginning_of_month()
+      params[:to] = Date.today.end_of_month()
+      @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
+    end  
 
     def default_tab
       session[:previous_tab] || 'drafted'
