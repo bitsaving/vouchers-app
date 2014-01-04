@@ -22,18 +22,12 @@ class CommentsController < ApplicationController
  
   def set_comment
     @comment = Comment.find_by(id: params[:id])
-    if @comment.nil?
-      flash[:alert] = "Comment not found"
-      redirect_to_back_or_default_url
-    end 
+    redirect_to_back_or_default_url if @comment.nil?
   end
 
   def set_voucher
     @voucher = Voucher.find_by(id: params[:voucher_id])
-    if @voucher.nil?
-      flash[:alert] = "Voucher not found"
-      redirect_to_back_or_default_url
-    end
+    redirect_to_back_or_default_url if @voucher.nil?
   end   
 
   # Never trust parameters from the scary internet, only allow the white list through.
