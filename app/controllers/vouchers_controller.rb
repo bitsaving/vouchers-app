@@ -36,7 +36,7 @@ class VouchersController < ApplicationController
     respond_to do |format|
       if @voucher.save
         flash[:notice] = "Voucher #" + @voucher.id.to_s + " was successfully created."
-        format.js {render js: %(window.location.href='#{voucher_path @voucher}')}
+        format.js { render js: %(window.location.href='#{voucher_path @voucher}')}
       else
         format.js {render "shared/_error_messages", locals: { :target => @voucher } }
       end
@@ -66,7 +66,6 @@ class VouchersController < ApplicationController
 
   def archived
   end
-
 
   def approved 
   end
@@ -109,7 +108,7 @@ class VouchersController < ApplicationController
  
     @vouchers = @vouchers.between_dates(params[:from], params[:to]) if params[:from]
      
-    filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type]) if params[:account]
+    filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type])
     
     @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == "drafted"
 
@@ -117,9 +116,12 @@ class VouchersController < ApplicationController
 
   end
 
+
   def filter_by_name_and_type(vouchers, name, type)
-    @vouchers = vouchers.by_account(name)
+
+    @vouchers = vouchers.by_account(name) if name.present?
     @vouchers = @vouchers.by_transaction_type(type) if type.present?
+
   end
 
   protected
