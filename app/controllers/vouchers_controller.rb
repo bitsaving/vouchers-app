@@ -3,7 +3,7 @@ class VouchersController < ApplicationController
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state, only: [:edit]
   before_action :default_tab, only: [:index]
-  before_action :set_comment_owner, only: [:create, :update]
+  # before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
 
   helper_method :get_vouchers
@@ -148,12 +148,12 @@ class VouchersController < ApplicationController
 
     
   
-    def set_comment_owner
-      if params[:voucher][:comments_attributes].present?
-        params[:voucher][:comments_attributes].each_value do |content|
-          content[:user_id] = current_user.id
-        end
-      end
-    end
+    # def set_comment_owner
+    #   # if params[:voucher][:comments_attributes].present?
+    #   #   params[:voucher][:comments_attributes].each_value do |content|
+    #   #     content[:user_id] = current_user.id
+    #   #   end
+    #   # end
+    # end
 
 end
