@@ -55,11 +55,10 @@ class Voucher < ActiveRecord::Base
     user.belongs_to :accepted_by_user, :foreign_key => "accepted_by"
   end
 
-  with_options :dependent => :destroy do |voucher|
-    voucher.has_many :comments
-    voucher.has_many :attachments 
-  end
 
+  has_many :comments, :dependent => :destroy
+  has_many :attachments, :dependent => :destroy
+  
   accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
   accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }

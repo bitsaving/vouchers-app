@@ -59,28 +59,22 @@ class VouchersController < ApplicationController
   end
 
   def pending
-    # render action: 'index'
   end
 
   def accepted
-    # render action: 'index' 
   end
 
   def archived
-    # render action: 'index'
   end
 
 
   def approved 
-    # render action: 'index' 
   end
 
   def drafted
-    # render action: 'index'
   end
 
   def rejected
-    # render action: 'index'
   end
 
   def destroy
