@@ -9,6 +9,7 @@ describe CommentsController do
   describe 'Post Create' do
     before do 
       @voucher = FactoryGirl.create(:voucher)
+      Voucher.stub(:find_by).with(id: "#{@voucher.id}").and_return(@voucher)
       @comment = FactoryGirl.create(:comment,description: "abc", voucher_id: @voucher.id)
     end
 

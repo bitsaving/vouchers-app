@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
  
-  before_action :set_comment, only: [:destroy]
+  # before_action :set_comment, only: [:destroy]
   before_action :set_voucher, only: [:create]
   
   def create
@@ -20,10 +20,10 @@ class CommentsController < ApplicationController
 
   private
  
-  def set_comment
-    @comment = Comment.find_by(id: params[:id])
-    redirect_to_back_or_default_url if @comment.nil?
-  end
+  # def set_comment
+  #   @comment = Comment.find_by(id: params[:id])
+  #   redirect_to_back_or_default_url if @comment.nil?
+  # end
 
   def set_voucher
     @voucher = Voucher.find_by(id: params[:voucher_id])
