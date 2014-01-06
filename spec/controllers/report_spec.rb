@@ -19,6 +19,10 @@ describe ReportsController do
   end
   
   describe "Post generate report" do
+    before do
+      Voucher.stub(:check_validity).and_return(true)
+      Voucher.stub(:convert_date).and_return(true)
+    end
     it "assigns @vouchers" do
       get :report
       assigns(:vouchers).should_not be_nil
