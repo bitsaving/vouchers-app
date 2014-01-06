@@ -176,4 +176,27 @@ describe Admin::UsersController do
     end
   end
 
+  describe "User destroy" do
+   
+      before do
+        @user = FactoryGirl.create(:user, :email => "abcd@vinsol.com")
+        User.stub(:find_by).with(id: "#{@user.id}").and_return(@user)
+      end
+      
+      it "should call destroy" do
+        @user.stub(:destroy).and_return(@user)
+        delete :destroy, id: @user.id
+      end
+
+      context 'should not destory ' do
+         before do
+          @user.stub(:destroy).and_return(false)
+          delete :destroy, id: @user.id
+        end
+        it 'should redirect' do
+          @user.should redirect_to admin_users_path
+        end
+      end
+    end
+
 end

@@ -14,14 +14,14 @@
       <img src="./assets/0.8.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2014-01-06T12:36:12+05:30">2014-01-06T12:36:12+05:30</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2014-01-06T18:57:36+05:30">2014-01-06T18:57:36+05:30</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">90.81%</span></span>
+    (<span class="covered_percent"><span class="green">91.48%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
@@ -32,9 +32,9 @@
   <a name="AllFiles"></a>
   <div>
     <b>25</b> files in total.
-    <b>762</b> relevant lines. 
-    <span class="green"><b>692</b> lines covered</span> and
-    <span class="red"><b>70</b> lines missed </span>
+    <b>775</b> relevant lines. 
+    <span class="green"><b>709</b> lines covered</span> and
+    <span class="red"><b>66</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -52,12 +52,12 @@
       
       <tr>
         <td class="strong"><a href="#f641895fa4d1e96e5e52b9293eb592713aa74aad" class="src_link" title="app/controllers/accounts_controller.rb">app/controllers/accounts_controller.rb</a></td>
-        <td class="green strong">96.3 %</td>
+        <td class="green strong">100.0 %</td>
         <td>62</td>
         <td>27</td>
-        <td>26</td>
-        <td>1</td>
-        <td>3.3</td>
+        <td>27</td>
+        <td>0</td>
+        <td>3.4</td>
       </tr>
       
       <tr>
@@ -67,17 +67,17 @@
         <td>5</td>
         <td>4</td>
         <td>1</td>
-        <td>5.6</td>
+        <td>6.0</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#4b31e705d7d05e1f7df40882c040aee9e7dc839b" class="src_link" title="app/controllers/admin/users_controller.rb">app/controllers/admin/users_controller.rb</a></td>
-        <td class="green strong">96.0 %</td>
+        <td class="green strong">100.0 %</td>
         <td>56</td>
         <td>25</td>
-        <td>24</td>
-        <td>1</td>
-        <td>3.4</td>
+        <td>25</td>
+        <td>0</td>
+        <td>3.6</td>
       </tr>
       
       <tr>
@@ -123,7 +123,7 @@
       <tr>
         <td class="strong"><a href="#fed94b5574e09b060168df4d0431209e01404c7c" class="src_link" title="app/controllers/vouchers_controller.rb">app/controllers/vouchers_controller.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>159</td>
+        <td>160</td>
         <td>70</td>
         <td>70</td>
         <td>0</td>
@@ -142,12 +142,12 @@
       
       <tr>
         <td class="strong"><a href="#16dd79121dcd4f0b07640830c6399e097bca1810" class="src_link" title="app/models/account.rb">app/models/account.rb</a></td>
-        <td class="red strong">71.43 %</td>
+        <td class="yellow strong">80.95 %</td>
         <td>34</td>
         <td>21</td>
-        <td>15</td>
-        <td>6</td>
-        <td>2.5</td>
+        <td>17</td>
+        <td>4</td>
+        <td>2.8</td>
       </tr>
       
       <tr>
@@ -263,11 +263,11 @@
       <tr>
         <td class="strong"><a href="#88a82d86c98446c0194048bf69b7539d7387fe46" class="src_link" title="spec/controllers/user_spec.rb">spec/controllers/user_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>179</td>
-        <td>106</td>
-        <td>106</td>
+        <td>202</td>
+        <td>119</td>
+        <td>119</td>
         <td>0</td>
-        <td>1.8</td>
+        <td>1.7</td>
       </tr>
       
       <tr>
@@ -297,7 +297,7 @@
         <td>6</td>
         <td>6</td>
         <td>0</td>
-        <td>49.8</td>
+        <td>52.3</td>
       </tr>
       
     </tbody>
@@ -319,11 +319,11 @@
         <div class="source_table" id="f641895fa4d1e96e5e52b9293eb592713aa74aad">
   <div class="header">
     <h3>app/controllers/accounts_controller.rb</h3>
-    <h4><span class="green">96.3 %</span> covered</h4>
+    <h4><span class="green">100.0 %</span> covered</h4>
     <div>
       <b>27</b> relevant lines. 
-      <span class="green"><b>26</b> lines covered</span> and
-      <span class="red"><b>1</b> lines missed.</span>
+      <span class="green"><b>27</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
   
@@ -582,8 +582,8 @@
           <code class="ruby">  def autocomplete_suggestions</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="43">
-          
+        <li class="covered" data-hits="2" data-linenumber="43">
+          <span class="hits">2</span>
           
           <code class="ruby">    render :json =&gt; Account.get_autocomplete_suggestions(params[:term]).collect { |x| { :label =&gt; x.name , :value =&gt; x.id } }.compact </code>
         </li>
@@ -750,8 +750,8 @@
           <code class="ruby">  def authorize_as_admin</code>
         </li>
       
-        <li class="covered" data-hits="25" data-linenumber="6">
-          <span class="hits">25</span>
+        <li class="covered" data-hits="27" data-linenumber="6">
+          <span class="hits">27</span>
           
           <code class="ruby">    if ! current_user.admin?</code>
         </li>
@@ -793,11 +793,11 @@
         <div class="source_table" id="4b31e705d7d05e1f7df40882c040aee9e7dc839b">
   <div class="header">
     <h3>app/controllers/admin/users_controller.rb</h3>
-    <h4><span class="green">96.0 %</span> covered</h4>
+    <h4><span class="green">100.0 %</span> covered</h4>
     <div>
       <b>25</b> relevant lines. 
-      <span class="green"><b>24</b> lines covered</span> and
-      <span class="red"><b>1</b> lines missed.</span>
+      <span class="green"><b>25</b> lines covered</span> and
+      <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
   
@@ -1056,8 +1056,8 @@
           <code class="ruby">  def destroy</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="43">
-          
+        <li class="covered" data-hits="2" data-linenumber="43">
+          <span class="hits">2</span>
           
           <code class="ruby">    redirect_to admin_users_path ,notice: &quot;Sorry it cannot be deleted&quot;</code>
         </li>
@@ -1116,14 +1116,14 @@
           <code class="ruby">    def set_user</code>
         </li>
       
-        <li class="covered" data-hits="15" data-linenumber="53">
-          <span class="hits">15</span>
+        <li class="covered" data-hits="17" data-linenumber="53">
+          <span class="hits">17</span>
           
           <code class="ruby">      @user = User.find_by(id: params[:id])</code>
         </li>
       
-        <li class="covered" data-hits="15" data-linenumber="54">
-          <span class="hits">15</span>
+        <li class="covered" data-hits="17" data-linenumber="54">
+          <span class="hits">17</span>
           
           <code class="ruby">      redirect_to_back_or_default_url if @user.nil?</code>
         </li>
@@ -2028,88 +2028,88 @@
   <pre>
     <ol>
       
-        <li class="covered" data-hits="1" data-linenumber="1">
+        <li class="never" data-hits="" data-linenumber="1">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="2">
           <span class="hits">1</span>
           
           <code class="ruby">class VouchersController &lt; ApplicationController</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="2">
+        <li class="never" data-hits="" data-linenumber="3">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="3">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="4">
           <span class="hits">1</span>
           
-          <code class="ruby">  before_action :check_user_and_voucher_state, only: [:edit]</code>
+          <code class="ruby">  before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="5">
           <span class="hits">1</span>
           
+          <code class="ruby">  before_action :check_user_and_voucher_state, only: [:edit]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="6">
+          <span class="hits">1</span>
+          
           <code class="ruby">  before_action :default_tab, only: [:index]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="6">
+        <li class="never" data-hits="" data-linenumber="7">
           
           
           <code class="ruby">  # before_action :set_comment_owner, only: [:create, :update]</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="7">
+        <li class="covered" data-hits="1" data-linenumber="8">
           <span class="hits">1</span>
           
           <code class="ruby">  before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="8">
+        <li class="never" data-hits="" data-linenumber="9">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="9">
+        <li class="covered" data-hits="1" data-linenumber="10">
           <span class="hits">1</span>
           
           <code class="ruby">  helper_method :get_vouchers</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="10">
+        <li class="never" data-hits="" data-linenumber="11">
           
           
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="11">
+        <li class="covered" data-hits="1" data-linenumber="12">
           <span class="hits">1</span>
           
           <code class="ruby">  def index</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="12">
+        <li class="covered" data-hits="2" data-linenumber="13">
           <span class="hits">2</span>
           
           <code class="ruby">    get_vouchers(default_tab)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="13">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="14">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="15">
@@ -2118,184 +2118,184 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="16">
+        <li class="never" data-hits="" data-linenumber="16">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="17">
           <span class="hits">1</span>
           
           <code class="ruby">  def new</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="17">
+        <li class="never" data-hits="" data-linenumber="18">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="18">
-          <span class="hits">2</span>
-          
-          <code class="ruby">    @voucher = Voucher.new</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="19">
           <span class="hits">2</span>
           
-          <code class="ruby">    @uploads = @voucher.attachments.build  </code>
+          <code class="ruby">    @voucher = Voucher.new</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="20">
           <span class="hits">2</span>
           
-          <code class="ruby">    @comments = @voucher.comments.build</code>
+          <code class="ruby">    @uploads = @voucher.attachments.build  </code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="21">
           <span class="hits">2</span>
           
-          <code class="ruby">    @transactions = @voucher.transactions.build</code>
+          <code class="ruby">    @comments = @voucher.comments.build</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="22">
+        <li class="covered" data-hits="2" data-linenumber="22">
+          <span class="hits">2</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">    @transactions = @voucher.transactions.build</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="23">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="24">
           
           
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="25">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="25">
+        <li class="covered" data-hits="1" data-linenumber="26">
           <span class="hits">1</span>
           
           <code class="ruby">  def show</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="26">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="27">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="28">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
           <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="29">
+        <li class="covered" data-hits="1" data-linenumber="30">
           <span class="hits">1</span>
           
           <code class="ruby">  def edit</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="30">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="31">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="32">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="33">
+          
+          
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="33">
+        <li class="covered" data-hits="1" data-linenumber="34">
           <span class="hits">1</span>
           
           <code class="ruby">  def create</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="34">
+        <li class="never" data-hits="" data-linenumber="35">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="35">
-          <span class="hits">3</span>
-          
-          <code class="ruby">    @voucher = current_user.vouchers.build(voucher_params)</code>
         </li>
       
         <li class="covered" data-hits="3" data-linenumber="36">
           <span class="hits">3</span>
           
-          <code class="ruby">    respond_to do |format|</code>
+          <code class="ruby">    @voucher = current_user.vouchers.build(voucher_params)</code>
         </li>
       
         <li class="covered" data-hits="3" data-linenumber="37">
           <span class="hits">3</span>
           
+          <code class="ruby">    respond_to do |format|</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="38">
+          <span class="hits">3</span>
+          
           <code class="ruby">      if @voucher.save</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="38">
+        <li class="covered" data-hits="2" data-linenumber="39">
           <span class="hits">2</span>
           
           <code class="ruby">        flash[:notice] = &quot;Voucher #&quot; + @voucher.id.to_s + &quot; was successfully created.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="39">
+        <li class="covered" data-hits="4" data-linenumber="40">
           <span class="hits">4</span>
           
           <code class="ruby">        format.js { render js: %(window.location.href='#{voucher_path @voucher}')}</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="40">
+        <li class="never" data-hits="" data-linenumber="41">
           
           
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="41">
+        <li class="covered" data-hits="2" data-linenumber="42">
           <span class="hits">2</span>
           
           <code class="ruby">        format.js {render &quot;shared/_error_messages&quot;, locals: { :target =&gt; @voucher } }</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="42">
+        <li class="never" data-hits="" data-linenumber="43">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="43">
+        <li class="never" data-hits="" data-linenumber="44">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="44">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="45">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="46">
@@ -2310,430 +2310,430 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="48">
+        <li class="never" data-hits="" data-linenumber="48">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="49">
           <span class="hits">1</span>
           
           <code class="ruby">  def update</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="49">
+        <li class="never" data-hits="" data-linenumber="50">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="50">
-          <span class="hits">5</span>
-          
-          <code class="ruby">    respond_to do |format|</code>
         </li>
       
         <li class="covered" data-hits="5" data-linenumber="51">
           <span class="hits">5</span>
           
+          <code class="ruby">    respond_to do |format|</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="52">
+          <span class="hits">5</span>
+          
           <code class="ruby">      if @voucher.update(voucher_params)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="52">
+        <li class="covered" data-hits="3" data-linenumber="53">
           <span class="hits">3</span>
           
           <code class="ruby">        flash[:notice] = &quot;Voucher #&quot; + @voucher.id.to_s + &quot; was successfully updated&quot;</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="53">
+        <li class="covered" data-hits="6" data-linenumber="54">
           <span class="hits">6</span>
           
           <code class="ruby">        format.js {render js: %(window.location.href = '#{voucher_path @voucher}') }</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="54">
+        <li class="never" data-hits="" data-linenumber="55">
           
           
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="55">
+        <li class="covered" data-hits="4" data-linenumber="56">
           <span class="hits">4</span>
           
           <code class="ruby">        format.js { render :template =&gt; &quot;shared/_error_messages&quot;, locals: { :target =&gt; @voucher } }</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="56">
+        <li class="never" data-hits="" data-linenumber="57">
           
           
           <code class="ruby">      end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="57">
+        <li class="never" data-hits="" data-linenumber="58">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="58">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="59">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="60">
           
           
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="61">
+        <li class="covered" data-hits="1" data-linenumber="62">
           <span class="hits">1</span>
           
           <code class="ruby">  def pending</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="62">
+        <li class="never" data-hits="" data-linenumber="63">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="63">
+        <li class="never" data-hits="" data-linenumber="64">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="64">
+        <li class="covered" data-hits="1" data-linenumber="65">
           <span class="hits">1</span>
           
           <code class="ruby">  def accepted</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="65">
+        <li class="never" data-hits="" data-linenumber="66">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="never" data-hits="" data-linenumber="67">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="67">
+        <li class="covered" data-hits="1" data-linenumber="68">
           <span class="hits">1</span>
           
           <code class="ruby">  def archived</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="68">
+        <li class="never" data-hits="" data-linenumber="69">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="never" data-hits="" data-linenumber="70">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="70">
+        <li class="covered" data-hits="1" data-linenumber="71">
           <span class="hits">1</span>
           
           <code class="ruby">  def approved </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="71">
+        <li class="never" data-hits="" data-linenumber="72">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="72">
+        <li class="never" data-hits="" data-linenumber="73">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="73">
+        <li class="covered" data-hits="1" data-linenumber="74">
           <span class="hits">1</span>
           
           <code class="ruby">  def drafted</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="74">
+        <li class="never" data-hits="" data-linenumber="75">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="75">
+        <li class="never" data-hits="" data-linenumber="76">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="76">
+        <li class="covered" data-hits="1" data-linenumber="77">
           <span class="hits">1</span>
           
           <code class="ruby">  def rejected</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="77">
+        <li class="never" data-hits="" data-linenumber="78">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="78">
+        <li class="never" data-hits="" data-linenumber="79">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="79">
+        <li class="covered" data-hits="1" data-linenumber="80">
           <span class="hits">1</span>
           
           <code class="ruby">  def destroy</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="80">
+        <li class="covered" data-hits="5" data-linenumber="81">
           <span class="hits">5</span>
           
           <code class="ruby">    @voucher.destroy </code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="81">
+        <li class="covered" data-hits="5" data-linenumber="82">
           <span class="hits">5</span>
           
           <code class="ruby">    redirect_to :back, notice: &quot;Voucher #&quot; + @voucher.id.to_s + &quot; was deleted successfully&quot; </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="82">
+        <li class="never" data-hits="" data-linenumber="83">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="never" data-hits="" data-linenumber="84">
           
           
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="84">
+        <li class="covered" data-hits="1" data-linenumber="85">
           <span class="hits">1</span>
           
           <code class="ruby">  def increment_state</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="85">
+        <li class="covered" data-hits="2" data-linenumber="86">
           <span class="hits">2</span>
           
           <code class="ruby">    @voucher.assignee_id = params[:voucher][:assignee_id] </code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="86">
+        <li class="covered" data-hits="2" data-linenumber="87">
           <span class="hits">2</span>
           
           <code class="ruby">    @voucher.change_state(current_user, &quot;increment&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="87">
+        <li class="covered" data-hits="2" data-linenumber="88">
           <span class="hits">2</span>
           
           <code class="ruby">    flash[:notice] =  &quot;Voucher #&quot;  + @voucher.id.to_s + &quot; has been assigned to &quot; + @voucher.assignee.first_name  if(!(@voucher.accepted? || @voucher.archived?))</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="88">
+        <li class="covered" data-hits="2" data-linenumber="89">
           <span class="hits">2</span>
           
           <code class="ruby">    redirect_to voucher_path(@voucher)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="89">
+        <li class="never" data-hits="" data-linenumber="90">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="90">
+        <li class="never" data-hits="" data-linenumber="91">
           
           
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="91">
+        <li class="covered" data-hits="1" data-linenumber="92">
           <span class="hits">1</span>
           
           <code class="ruby">  def decrement_state</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="92">
+        <li class="covered" data-hits="3" data-linenumber="93">
           <span class="hits">3</span>
           
           <code class="ruby">    @voucher.change_state(current_user, &quot;decrement&quot;) </code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="93">
+        <li class="covered" data-hits="3" data-linenumber="94">
           <span class="hits">3</span>
           
           <code class="ruby">    redirect_to voucher_path(@voucher), notice: &quot;Voucher #&quot;  + @voucher.id.to_s + &quot; rejected successfully and assigned back to &quot; + @voucher.creator.name</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="94">
-          
-          
-          <code class="ruby">  end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="95">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="96">
           
           
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="97">
+          
+          
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="97">
+        <li class="covered" data-hits="1" data-linenumber="98">
           <span class="hits">1</span>
           
           <code class="ruby">  def get_vouchers(state)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="98">
+        <li class="never" data-hits="" data-linenumber="99">
           
           
           <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="99">
+        <li class="covered" data-hits="14" data-linenumber="100">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = Voucher.all</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="100">
+        <li class="never" data-hits="" data-linenumber="101">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="101">
+        <li class="covered" data-hits="14" data-linenumber="102">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="102">
+        <li class="never" data-hits="" data-linenumber="103">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="103">
+        <li class="covered" data-hits="14" data-linenumber="104">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="105">
+        <li class="covered" data-hits="14" data-linenumber="106">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="106">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="107">
+        <li class="covered" data-hits="14" data-linenumber="108">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.by_transaction_type(params[:transaction_type]) if params[:transaction_type]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="never" data-hits="" data-linenumber="109">
           
           
           <code class="ruby"> </code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="109">
+        <li class="covered" data-hits="14" data-linenumber="110">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.between_dates(params[:from], params[:to]) if params[:from]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="110">
+        <li class="never" data-hits="" data-linenumber="111">
           
           
           <code class="ruby">     </code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="111">
+        <li class="covered" data-hits="14" data-linenumber="112">
           <span class="hits">14</span>
           
           <code class="ruby">    filter_by_name_and_type(@vouchers, params[:account], params[:transactions_type])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="112">
+        <li class="never" data-hits="" data-linenumber="113">
           
           
           <code class="ruby">    </code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="113">
+        <li class="covered" data-hits="14" data-linenumber="114">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.created_by(params[:user_id].presence || current_user.id) if state == &quot;drafted&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="114">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="115">
+        <li class="covered" data-hits="14" data-linenumber="116">
           <span class="hits">14</span>
           
           <code class="ruby">    @vouchers = @vouchers.send(state).including_accounts_and_transactions.page(params[:page])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="116">
-          
-          
-          <code class="ruby"></code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="117">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="118">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="119">
@@ -2742,172 +2742,172 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="120">
+        <li class="never" data-hits="" data-linenumber="120">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="121">
           <span class="hits">1</span>
           
           <code class="ruby">  def filter_by_name_and_type(vouchers, name, type)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="121">
+        <li class="never" data-hits="" data-linenumber="122">
           
           
           <code class="ruby"></code>
-        </li>
-      
-        <li class="covered" data-hits="14" data-linenumber="122">
-          <span class="hits">14</span>
-          
-          <code class="ruby">    @vouchers = vouchers.by_account(name) if name.present?</code>
         </li>
       
         <li class="covered" data-hits="14" data-linenumber="123">
           <span class="hits">14</span>
           
-          <code class="ruby">    @vouchers = @vouchers.by_transaction_type(type) if type.present?</code>
+          <code class="ruby">    @vouchers = vouchers.by_account(name) if name.present?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
+        <li class="covered" data-hits="14" data-linenumber="124">
+          <span class="hits">14</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">    @vouchers = @vouchers.by_transaction_type(type) if type.present?</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="125">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="126">
           
           
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="127">
+          
+          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="127">
+        <li class="covered" data-hits="1" data-linenumber="128">
           <span class="hits">1</span>
           
           <code class="ruby">  protected</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="129">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="129">
+        <li class="covered" data-hits="1" data-linenumber="130">
           <span class="hits">1</span>
           
           <code class="ruby">    def check_user_and_voucher_state</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="130">
+        <li class="covered" data-hits="2" data-linenumber="131">
           <span class="hits">2</span>
           
           <code class="ruby">      redirect_to_back_or_default_url if !@voucher.can_be_edited?(current_user) </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="never" data-hits="" data-linenumber="132">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="132">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby">   </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="133">
+        <li class="covered" data-hits="1" data-linenumber="134">
           <span class="hits">1</span>
           
           <code class="ruby">    def set_voucher</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="134">
+        <li class="covered" data-hits="21" data-linenumber="135">
           <span class="hits">21</span>
           
           <code class="ruby">      @voucher = Voucher.including_accounts_and_transactions.find_by(id: params[:id])    </code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="135">
+        <li class="covered" data-hits="21" data-linenumber="136">
           <span class="hits">21</span>
           
           <code class="ruby">      redirect_to vouchers_path, notice: &quot;Voucher you are looking for does not exist.&quot; if @voucher.nil?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="136">
+        <li class="never" data-hits="" data-linenumber="137">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="137">
+        <li class="never" data-hits="" data-linenumber="138">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="138">
+        <li class="covered" data-hits="1" data-linenumber="139">
           <span class="hits">1</span>
           
           <code class="ruby">    def voucher_params</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="139">
+        <li class="covered" data-hits="8" data-linenumber="140">
           <span class="hits">8</span>
           
           <code class="ruby">      params.require(:voucher).permit(:date, :tag_list, :from_date, :to_date, :assignee_id, :account_credited, transactions_attributes: [:account_id, :voucher_id, :id, :_destroy, :transaction_type, :amount, :payment_type, :payment_reference], comments_attributes: [:description, :id, :_destroy, :user_id], attachments_attributes:[ :tagname, :id, :_destroy, :bill_attachment] ).merge({ assignee_id: current_user.id})</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="140">
+        <li class="never" data-hits="" data-linenumber="141">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="141">
+        <li class="never" data-hits="" data-linenumber="142">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="142">
+        <li class="covered" data-hits="1" data-linenumber="143">
           <span class="hits">1</span>
           
           <code class="ruby">    def set_default_tab</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="143">
+        <li class="covered" data-hits="12" data-linenumber="144">
           <span class="hits">12</span>
           
           <code class="ruby">      session[:previous_tab] =  params[:action]</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="144">
+        <li class="covered" data-hits="12" data-linenumber="145">
           <span class="hits">12</span>
           
           <code class="ruby">      get_vouchers(params[:action])</code>
         </li>
       
-        <li class="covered" data-hits="12" data-linenumber="145">
+        <li class="covered" data-hits="12" data-linenumber="146">
           <span class="hits">12</span>
           
           <code class="ruby">      render action: 'index'</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="146">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="147">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="148">
@@ -2919,64 +2919,70 @@
         <li class="never" data-hits="" data-linenumber="149">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="150">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="151">
           
           
-          <code class="ruby">    # def set_comment_owner</code>
+          <code class="ruby">  </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="152">
           
           
-          <code class="ruby">    #   # if params[:voucher][:comments_attributes].present?</code>
+          <code class="ruby">    # def set_comment_owner</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="153">
           
           
-          <code class="ruby">    #   #   params[:voucher][:comments_attributes].each_value do |content|</code>
+          <code class="ruby">    #   # if params[:voucher][:comments_attributes].present?</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="154">
           
           
-          <code class="ruby">    #   #     content[:user_id] = current_user.id</code>
+          <code class="ruby">    #   #   params[:voucher][:comments_attributes].each_value do |content|</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="155">
           
           
-          <code class="ruby">    #   #   end</code>
+          <code class="ruby">    #   #     content[:user_id] = current_user.id</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="156">
           
           
-          <code class="ruby">    #   # end</code>
+          <code class="ruby">    #   #   end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="157">
           
           
-          <code class="ruby">    # end</code>
+          <code class="ruby">    #   # end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="158">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">    # end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="159">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby">end</code>
@@ -3175,11 +3181,11 @@
         <div class="source_table" id="16dd79121dcd4f0b07640830c6399e097bca1810">
   <div class="header">
     <h3>app/models/account.rb</h3>
-    <h4><span class="red">71.43 %</span> covered</h4>
+    <h4><span class="yellow">80.95 %</span> covered</h4>
     <div>
       <b>21</b> relevant lines. 
-      <span class="green"><b>15</b> lines covered</span> and
-      <span class="red"><b>6</b> lines missed.</span>
+      <span class="green"><b>17</b> lines covered</span> and
+      <span class="red"><b>4</b> lines missed.</span>
     </div>
   </div>
   
@@ -3282,8 +3288,8 @@
           <code class="ruby">  </code>
         </li>
       
-        <li class="covered" data-hits="38" data-linenumber="17">
-          <span class="hits">38</span>
+        <li class="covered" data-hits="42" data-linenumber="17">
+          <span class="hits">42</span>
           
           <code class="ruby">  default_scope { order('name') }  </code>
         </li>
@@ -3360,14 +3366,14 @@
           <code class="ruby">  def self.get_autocomplete_suggestions(term)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="30">
-          
+        <li class="covered" data-hits="1" data-linenumber="30">
+          <span class="hits">1</span>
           
           <code class="ruby">    account_name = &quot;%&quot;.concat(term.concat(&quot;%&quot;))</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="31">
-          
+        <li class="covered" data-hits="1" data-linenumber="31">
+          <span class="hits">1</span>
           
           <code class="ruby">    Account.where('name LIKE (?)', account_name)</code>
         </li>
@@ -4623,7 +4629,7 @@
         <li class="missed" data-hits="0" data-linenumber="10">
           
           
-          <code class="ruby">    admin =User.new(:first_name=&gt; first_name, :last_name=&gt;last_name,:email=&gt;email,:user_type=&gt;&quot;admin&quot;)</code>
+          <code class="ruby">    admin = User.new(:first_name=&gt; first_name, :last_name=&gt;last_name,:email=&gt;email,:user_type=&gt;&quot;admin&quot;)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="11">
@@ -5493,8 +5499,8 @@
     <h3>spec/controllers/user_spec.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>106</b> relevant lines. 
-      <span class="green"><b>106</b> lines covered</span> and
+      <b>119</b> relevant lines. 
+      <span class="green"><b>119</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -5532,14 +5538,14 @@
           <code class="ruby">  before :each do   </code>
         </li>
       
-        <li class="covered" data-hits="24" data-linenumber="6">
-          <span class="hits">24</span>
+        <li class="covered" data-hits="26" data-linenumber="6">
+          <span class="hits">26</span>
           
           <code class="ruby">    request.env[&quot;HTTP_REFERER&quot;] =  'http://test.host/admin'</code>
         </li>
       
-        <li class="covered" data-hits="24" data-linenumber="7">
-          <span class="hits">24</span>
+        <li class="covered" data-hits="26" data-linenumber="7">
+          <span class="hits">26</span>
           
           <code class="ruby">    controller.stub(:authorize).and_return(true)</code>
         </li>
@@ -6570,7 +6576,145 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="179">
+        <li class="covered" data-hits="1" data-linenumber="179">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  describe &quot;Account destroy&quot; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="180">
+          
+          
+          <code class="ruby">   </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="181">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      before do</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="182">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        @user = FactoryGirl.create(:user, :email =&gt; &quot;abcd@vinsol.com&quot;)</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="183">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        User.stub(:find_by).with(id: &quot;#{@user.id}&quot;).and_return(@user)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="184">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="185">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="186">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &quot;should call destroy&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="187">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        @user.stub(:destroy).and_return(@user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="188">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        delete :destroy, id: @user.id</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="189">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="190">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="191">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      context 'should not destory ' do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="192">
+          <span class="hits">1</span>
+          
+          <code class="ruby">         before do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="193">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          @user.stub(:destroy).and_return(false)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="194">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          delete :destroy, id: @user.id</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="195">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="196">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        it 'should redirect' do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="197">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          @user.should redirect_to admin_users_path</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="198">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="199">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="200">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="201">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="202">
           
           
           <code class="ruby">end</code>
@@ -8922,20 +9066,20 @@
           <code class="ruby">    before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="97" data-linenumber="4">
-          <span class="hits">97</span>
+        <li class="covered" data-hits="102" data-linenumber="4">
+          <span class="hits">102</span>
           
           <code class="ruby">      @request.env[&quot;devise.mapping&quot;] = Devise.mappings[:user]</code>
         </li>
       
-        <li class="covered" data-hits="97" data-linenumber="5">
-          <span class="hits">97</span>
+        <li class="covered" data-hits="102" data-linenumber="5">
+          <span class="hits">102</span>
           
           <code class="ruby">      @user = FactoryGirl.create(:user)</code>
         </li>
       
-        <li class="covered" data-hits="97" data-linenumber="6">
-          <span class="hits">97</span>
+        <li class="covered" data-hits="102" data-linenumber="6">
+          <span class="hits">102</span>
           
           <code class="ruby">      sign_in @user</code>
         </li>

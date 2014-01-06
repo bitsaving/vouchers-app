@@ -1,3 +1,4 @@
+
 class VouchersController < ApplicationController
 
   before_action :set_voucher, only: [:show, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]

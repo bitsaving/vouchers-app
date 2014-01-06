@@ -171,6 +171,41 @@ describe AccountsController do
       end
     end
   end
+  describe "Account destroy" do
+   
+      before do
+        @account = FactoryGirl.create(:account)
+        Account.stub(:find_by).with(id: "#{@account.id}").and_return(@account)
+      end
+      
+      it "should call destroy" do
+        @account.stub(:destroy).and_return(@account)
+      end
+
+      context 'should not destory account' do
+         before do
+          @account.stub(:destroy).and_return(false)
+        end
+        it 'should have errors' do
+          @account.errors.count > 1
+        end
+      end
+    end
+
+    describe 'get autocomplete_suggestions'  do
+      before do
+        @account = FactoryGirl.create(:account, name: "abcd")
+        get :autocomplete_suggestions, :term => "abc"
+        Account.stub(:get_autocomplete_suggestions).and_return(@account)
+        #
+      end
+
+      it "should render json content" do
+        
+        @account.should_not render_template("new")
+      end
+    end
+
 
   # end
 end
