@@ -2,6 +2,7 @@ require 'spec_helper'
 describe ReportsController do
   login_user
   before :each do   
+    controller.stub(:logged_in).and_return(true)
     controller.stub(:authorize).and_return(true)
     request.env["HTTP_REFERER"] =  'http://test.host/'
   end
@@ -20,16 +21,16 @@ describe ReportsController do
   
   describe "Post generate report" do
     before do
-      Voucher.stub(:check_validity).and_return(true)
-      Voucher.stub(:convert_date).and_return(true)
+      # params: { @from =  "1/2/2013".to_date, @to = '2/3/2013'.to_date }
+      controller.stub(:convert_date)
     end
     it "assigns @vouchers" do
-      get :report
+      get :report, params: { from: @from, to: @to }
       assigns(:vouchers).should_not be_nil
     end
 
     it "renders the index template" do
-     get :report
+      get :report, params: { from: @from, to: @to }
       expect(response).to render_template("index")
     end
   end

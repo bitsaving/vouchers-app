@@ -4,11 +4,15 @@ describe Admin::UsersController do
   login_user
   before :each do   
     request.env["HTTP_REFERER"] =  'http://test.host/admin'
+    # controller.should_receive(:authorize_as_admin).and_return(true)
+    # controller.should_receive(:authorize_as_admin).and_return(true)
     controller.stub(:authorize).and_return(true)
+
+    # controller.should_receive(:logged_in?).and_return(true)
   end
   describe "GET Index" do
     before do
-      @user = FactoryGirl.create(:user, email: "abc@vinsol.com", first_name: "abc",last_name: "cde")
+      @user = FactoryGirl.create(:user, email: "abcde@vinsol.com", first_name: "abc",last_name: "cde")
     end
 
     it "assigns @users" do

@@ -2,8 +2,10 @@ require 'spec_helper'
 describe VouchersController do
   login_user
   @current_user  = @user
-  before :each do   
+  before :each do 
+    controller.stub(:logged_in?).and_return(true)  
     controller.stub(:authorize).and_return(true)
+
     request.env["HTTP_REFERER"] =  'http://test.host/'
   end
   describe "get user" do

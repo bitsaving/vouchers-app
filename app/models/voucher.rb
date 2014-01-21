@@ -79,6 +79,7 @@ class Voucher < ActiveRecord::Base
 
   def self.including_accounts_and_transactions
     includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
+
   end
   
   def check_debit_credit_equality
@@ -94,15 +95,18 @@ class Voucher < ActiveRecord::Base
   def accept(user)
     update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.current})
     comments.create( description: "Accepted", user_id: user.id )
+    return true
   end
 
   def archive
     update_attributes({ assignee_id: nil })
+    return true
   end
   
   def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
     comments.create( description: "Rejected", user_id: user.id )
+    return true
   end
 
   def amount
@@ -112,10 +116,12 @@ class Voucher < ActiveRecord::Base
 
   def approve(user)
     update_attributes({ approved_by: user.id, approved_at: Time.current })
+    return true
   end
 
   def send_for_approval
     update_attributes(updated_at: Time.current)
+    return true
   end
 
   def assignee?(user)
@@ -140,9 +146,10 @@ class Voucher < ActiveRecord::Base
     case "#{current_state}"
       when "rejected" then send_for_approval!
       when "drafted" then send_for_approval!
+      when "accepted" then archive!
       when "pending" then state == "increment" ? approve!(user) : reject!(user)
       when "approved" then state == "increment" ? accept!(user) : reject!(user)
-      when "accepted" then archive!
+      
     end 
   end
 end

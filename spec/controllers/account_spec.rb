@@ -4,6 +4,7 @@ describe AccountsController do
    login_user
     @current_user  = @user
     before :each do   
+    controller.stub(:logged_in).and_return(true)
     request.env["HTTP_REFERER"] =  'http://test.host/'
     controller.stub(:authorize).and_return(true)
   end
@@ -171,26 +172,7 @@ describe AccountsController do
       end
     end
   end
-  describe "Account destroy" do
-   
-      before do
-        @account = FactoryGirl.create(:account)
-        Account.stub(:find_by).with(id: "#{@account.id}").and_return(@account)
-      end
-      
-      it "should call destroy" do
-        @account.stub(:destroy).and_return(@account)
-      end
-
-      context 'should not destory account' do
-         before do
-          @account.stub(:destroy).and_return(false)
-        end
-        it 'should have errors' do
-          @account.errors.count > 1
-        end
-      end
-    end
+  
 
     describe 'get autocomplete_suggestions'  do
       before do
