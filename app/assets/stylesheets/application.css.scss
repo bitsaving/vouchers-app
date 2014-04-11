@@ -121,20 +121,7 @@ padding-top:10px;
   width:500px;
   background-color: #f5f9f9;
 }
-form {
-  label {
-    width: 3em;
-    text-align: center;
-    padding-top: 0.2em;
-    display: block;
-  }
-  select, textarea, input {
-    margin-left: 0.5em;
-  }
-  br {
-    display: none;
-  }
-}
+
 #notifications_panel {
   position: absolute;
   right:325px;

@@ -1,9 +1,9 @@
-<% if params[:tag].present? %>
-  <h3> Vouchers tagged with: <%= params[:tag] %> </h3>
-<% elsif params[:from].present? || params[:to].present? %>
+<% if params[:from].present? || params[:to].present? %>
   <%= render :template => 'reports/report_layout', locals: { :to => params[:to], :from => params[:from] } %>
 <% elsif params[:user_id].present? %>
   <%= render :template => 'users/_layout', locals: { :@user => get_user(params[:user_id]) }%>
+<% elsif params[:tag].present? %>
+  <h3> Vouchers tagged with: <%= params[:tag] %> </h3>
 <% elsif params[:account_id].present? %>
   <%= render :template => 'accounts/_layout', locals: { :@account => getaccount(params[:account_id]) } %>  
 <% else %>

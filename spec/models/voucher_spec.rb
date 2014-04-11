@@ -3,9 +3,8 @@ describe Voucher do
 	before(:each) do
 		@user = FactoryGirl.create(:user)
 		@voucher = Voucher.create(:date => Date.today, :assignee_id => @user.id, :creator_id => @user.id)
-		@transaction = Transaction.create(:voucher_id => @voucher.id,:payment_type => "cash" ,:payment_reference => "12345", :transaction_type => "debit",:amount =>100, :account_id => "2")
-		
-		@comment =  FactoryGirl.create(:comment, voucher_id: @voucher.id, :description => "Accepted")
+		@transaction = Transaction.create(:voucher_id => @voucher.id, :payment_type => "cash", :payment_reference => "12345", :transaction_type => "debit", :amount => 100, :account_id => "2")
+	  @comment =  FactoryGirl.create(:comment, voucher_id: @voucher.id, :description => "Accepted")
 
 	end
 	it "is valid with valid attributes" do

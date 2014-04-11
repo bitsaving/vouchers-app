@@ -5,4 +5,7 @@
 <%if params[:transactions_type] %>
   <% local_params = local_params.merge({transactions_type: params[:transactions_type]})%>
 <%end%>
-<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date(session[:previous_tab], params[:from], params[:to], params[:account], params[:transactions_type]).page(params[:page])} %>
+<% if params[:tag] %>
+  <% local_params = local_params.merge({tag: params[:tag]}) %>
+<%end%>
+<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date(session[:previous_tab], params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")).page(params[:page])} %>

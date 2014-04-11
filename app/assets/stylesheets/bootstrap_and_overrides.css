@@ -55,11 +55,11 @@ input,select,textarea{
   margin-left:-80px;
 } 
 .link  a {
-margin-left:630px;
+margin-left:200px;
 
 }
 .radioBox > .link > a {
-margin-left: 345px;
+margin-left: 195px;
 
 }
 
@@ -295,22 +295,22 @@ text-align:  left !important;
     border-bottom: dotted 1px black !important;
   }
   td.lower{
-border-right: dotted 1px black !important;
     line-height:5px !important;
     text-align: left !important;
     padding-left: 20px;
     float:left;
     font-size: 12px !important;
-width:586px !important;
+width:426px !important;
   }
   td.comments{
- border:dotted 1px black;
-    width:300px !important;}
+ border-left: dotted 1px black !important;
+    width:440px !important;
+    text-align: left !important;
+  }
   td.amount{
     text-align: center !important;
     font-size: 18px !important;
     position: relative;
-    top:-60px;
     float: right;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -319,15 +319,24 @@ width:586px !important;
   border-left: dotted 1px black !important;
   }
 
-  .comment_decription{
-   
-  border-radius: 5px;
-  min-height :15px; 
+  td.comment_decription{
   width: 250px;
   border:  1px dotted #e0eacc;
   background-color:#f6fbff;
-  padding-left:10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-bottom:10px;
-  }
+    text-align: left !important;
+
+    }
+
+    span.comment_by {
+      position: relative;
+      top:-12px;
+      float:right;
+
+    }
+
+td.comments hr {
+  margin: 20px 0;
+border: 0;
+border-top: 1px solid #eeeeee;
+border-bottom: 1px solid black;
+}

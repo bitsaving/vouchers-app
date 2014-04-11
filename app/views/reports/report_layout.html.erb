@@ -26,6 +26,14 @@
           <%= select_tag :transactions_type, options_for_select([['debit'], ['credit']], :selected => params[:transactions_type]), prompt: "Select"%>
         </div>
       </div>
+
+      <div class = "control-group tagslist">
+        <%= label_tag :tag, "Tags" , :class => "control-label"%>
+        <div class="controls">
+         <%= text_field_tag :tag, params[:tag],  :class=>"tag", data: {path: tags_path(:json)}%>
+        </div>
+      </div> 
+
       <div class="display_vouchers">
         <%=submit_tag "Generate Report", :class => 'btn btn-primary', :id => "generate_vouchers"%>
       </div>

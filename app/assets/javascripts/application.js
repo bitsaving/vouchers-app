@@ -27,8 +27,9 @@ var ApplicationHandler = function() {
 
 }
 ApplicationHandler.prototype = {
+
   init: function() {
-    
+   i = 7;   
    
     this.dateFieldHandler();
     this.VoucherStateHandler();

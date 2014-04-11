@@ -8,6 +8,7 @@ VoucherApp::Application.routes.draw do
 
   get 'confirmation' ,to: 'vouchers#confirmation'
   resources :comments
+  resources :transactions
   resources :uploads
   resource :dashboard, only: :show
   root :to => 'dashboards#show'

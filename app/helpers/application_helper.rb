@@ -4,28 +4,30 @@ module ApplicationHelper
     f.hidden_field(:_destroy) + link_to("#{name}", '#', :onclick => "remove_fields(this); return false")
   end
   
-  def link_to_add_fields(name, f, association)
+  def link_to_add_fields(name, f, association, counter)
     new_object = f.object.class.reflect_on_association(association).klass.new
     array = name.split(" ")
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_fields", :f => builder, locals: { :@account_type => array[1]})
+      @count = @count + 1
+      render(association.to_s.singularize + "_fields", :f => builder, :count => @count , :@transaction_type => array[2])
     end
 
-    link_to("#{name}", "#", :onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\") ;return false")
+    link_to("#{name}", "#", :onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields.gsub!(/_\d+/)  {|f| f.next.next  })}\") ;return false")
   end
  
   # def account_options
   #   Account.pluck( 'name', 'id' )
   # end
   
-  def user_options
-    User.where.not(id: current_user.id).order('first_name').pluck( 'first_name ', 'id' )
+  def user_options(voucher)
+    User.where.not(id: [current_user.id, voucher] ).order('first_name').pluck( 'first_name ', 'id' )
   end
 
-  def get_by_date(state,from, to, name,type)
+  def get_by_date(state,from, to, name,type, tag)
     @vouchers = Voucher.between_dates(from, to).send(state)
     @vouchers  = @vouchers.by_account(name) if name.present?
     @vouchers = @vouchers.by_transaction_type(type) if type.present?
+    @vouchers = @vouchers.tagged_with(tag) if tag.present?
     @vouchers
   end
 

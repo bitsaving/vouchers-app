@@ -1,11 +1,15 @@
 <%# cache @voucher do %>
+<div class = "edit_voucher onprint">
+      <% if @voucher.can_be_edited?(current_user) %>
+        <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
+      <%end%>
+    </div>
+    <div class ="print_voucher">
+      <%= link_to "Print", "javascript:print()", :class => 'btn btn-primary onprint'%> 
+    </div>
 <div class ="voucher_display">
   <div></div>
-  <div class ="content">
-    <div class = "voucherId"> 
-      <%= @voucher.id %>
-    </div>
-  </div>
+
   <div class = "status onprint">
     <%= @voucher.workflow_state.capitalize %>
     <% if @voucher.assignee_id && !@voucher.assignee?(current_user) %>
@@ -17,14 +21,7 @@
   <div class ="date">
     <%= @voucher.date.to_s(:string_format) %> 
   </div>
-   <div class = "edit_voucher onprint">
-      <% if @voucher.can_be_edited?(current_user) %>
-        <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
-      <%end%>
-    </div>
-    <div class ="print_voucher">
-      <%= link_to "Print", "javascript:print()", :class => 'btn btn-primary onprint'%> 
-    </div>
+   
   <div class = "separator">
   </div>
   <div class = "column_separator">
@@ -33,33 +30,35 @@
         <%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %>
       </div>
     </div>    
-    <% if ((@voucher.drafted? || @voucher.pending?) && @voucher.assignee?(current_user)) %>
+    <% if ((@voucher.drafted? || @voucher.pending? || @voucher.rejected? ) && @voucher.assignee?(current_user)) %>
       <%=  render 'assign' %>
     <%end%>
+    
     <div class = "debitCredit">
       <div class="labels">Debit
       </div>
-      <% @voucher.debit_from.each do |debit| %>
+      <% @voucher.debited_transactions.each do |debit| %>
         <div>
-          <%= link_to debit.name, account_vouchers_path(getaccount(debit)) %>
-          <strong><%=" - ₹ " + @voucher.debited_transactions[0].amount.to_s  %></strong>
-           <span> Payment Mode: <%= @voucher.debited_transactions[0].payment_type %></span>
-          <% if  @voucher.debited_transactions[0].payment_reference.present? %>
-            <span>Payment Reference: <%= @voucher.debited_transactions[0].payment_reference  %>
+          <%= link_to debit.account.name, account_vouchers_path(debit.account) %>
+          <strong><%=" - ₹ " + debit.amount.to_s  %></strong>
+           <span> Payment Mode: <%= debit.payment_type %></span>
+          <% if  debit.payment_reference.present? %>
+            <span>Payment Reference: <%= debit.payment_reference  %>
             </span>
           <%end%>
         </div>
       <%end%>
     </div>
+    <div class="debit_separator"></div>
     <div class="debitCredit">
       <div class ="labels">Credit</div> 
-      <% @voucher.credit_to.each do |credit| %>
+      <% @voucher.credited_transactions.each do |credit| %>
         <div>
-          <%= link_to credit.name, account_vouchers_path(getaccount(credit))%>
-          <strong><%=" - ₹ " + @voucher.credited_transactions[0].amount.to_s  %></strong>
-          <span> Payment Mode: <%= @voucher.credited_transactions[0].payment_type  %></span>
-          <% if  @voucher.credited_transactions[0].payment_reference.present? %>
-            <span>Payment Reference: <%= @voucher.credited_transactions[0].payment_reference  %>
+          <%= link_to credit.account.name, account_vouchers_path(credit.account)%>
+          <strong><%=" - ₹ " + credit.amount.to_s  %></strong>
+          <span> Payment Mode: <%= credit.payment_type  %></span>
+          <% if  credit.payment_reference.present? %>
+            <span>Payment Reference: <%= credit.payment_reference  %>
             </span>
           <%end%>
         </div>
@@ -92,6 +91,11 @@
     <%if @voucher.tag_list.length >0 %>
       <div class="tags">
         Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t), :class => "taglist" }.join(' ') %>
+      </div>
+    <%end%>
+    <% if @voucher.description.present? %>
+      <div >
+        <%= @voucher.description %>
       </div>
     <%end%>
     <%if @voucher.creator_id.present? %>

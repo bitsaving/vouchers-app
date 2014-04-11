@@ -1,7 +1,7 @@
 class ReportsController < VouchersController
   
   before_action :check_validity, only: [:generate]
-  # before_action :convert_date, only: [:generate]
+  before_action :convert_date, only: [:generate]
   before_action :set_params, only: [:report]
   before_action :default_tab, only: [:report]
   
@@ -18,17 +18,17 @@ class ReportsController < VouchersController
 
   protected
 
-    # def convert_date
-    #   if params[:from] && params[:to]
-    #     params[:from] = params[:from].to_date
-    #     params[:to] = params[:to].to_date
-    #   end
-    # end
+    def convert_date
+      if params[:from] && params[:to]
+        params[:from] = params[:from].to_date
+        params[:to] = params[:to].to_date
+      end
+    end
 
     def check_validity
-      # if params[:from].nil? || params[:to].nil? || params[:from] > params[:to]
-      #   redirect_to report_path, notice: "PLease enter valid values!!"
-      # end
+      if params[:from].nil? || params[:to].nil? || params[:from] > params[:to]
+        redirect_to report_path, notice: "PLease enter valid values!!"
+      end
     end
 
     def set_params

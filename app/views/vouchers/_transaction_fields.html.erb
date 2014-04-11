@@ -1,22 +1,55 @@
-<%@counter = @counter +1 %>
-<div class="controls">
-  <%= text_area_tag :account_id , get_entered_data(@transaction_type, @position), data: { hidden_field_id: 'account_debited_' + @counter.to_s,  textbox_id:'debit_'+ @counter.to_s, path: autocomplete_path }, :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
+<%# @count += 1 %>
+<% if @remove_counter != 0 %>
+<div>
+
+
+  
+  <%end%>
+
+<div class="contentt account_form radioBox">
+
+  <%= text_area_tag :account_id , get_entered_data(@transaction_type, @position), data: { hidden_field_id: 'account_debited_' + @count.to_s,  textbox_id:'debit_'+ @count.to_s, path: autocomplete_path }, :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
+  <% if @remove_counter != 0 || (f.object != @voucher.debited_transactions.first && f.object != @voucher.credited_transactions.first) %>
+    <%= link_to_remove_fields " X ", f %>
+  <%else%>
+  <%# if  !@voucher.new_record?  && (f.object != @voucher.debited_transactions.first && f.object != @voucher.credited_transactions.first) %>
+    <%#= link_to " X ", transaction_path(f.object), method: :delete %>
+    <%#end%>
+    <%end%>
+
   <div class="bank_amount"> 
-  	<span class="transaction_label">Amount </span>
-    <%= f.text_field :amount, :class => "filename" %>
+  	<span class="transaction_label amount_label">Amount </span>
+    <%= f.text_field :amount, :class => "filename amount" %>
+
   </div>
 <div class = "bank_amount"> <span class="transaction_label">Payment Mode</span> 
-<span class = "voucher_payment_type"><%= f.select :payment_type, PAYMENT_TYPES, :class => 'text_field' %></span>
+<span class = "voucher_payment_type select_payment"><%= f.select :payment_type, PAYMENT_TYPES, :class => 'text_field' %></span>
   </div>
     <div class ="select bank_amount hidden">
-    	<span class="transaction_label">Cheque/Credit/Bank Reference No </span>
-  	<span class="reference_field"><%= f.text_field :payment_reference, :class => 'text-field'%></span>
+    	<span class="transaction_label">Reference No </span>
+  	     <%= f.text_field :payment_reference, :class => "reference"%>
     </div>
-  </div>
-<div class="controls">
-  <%=  f.hidden_field :account_id, :id => "account_debited_#{@counter}"  %>
+
+    <div>
+  <%=  f.hidden_field :account_id, :id => "account_debited_#{@count}"  %>
+
 </div>
 
-<div class="controls">
-  <%=  f.hidden_field :transaction_type, :value => @transaction_type  %>
+<div class="banking">
+  <%=  f.hidden_field :transaction_type, :value => @transaction_type %>
 </div>
+
+
+
+  </div>
+  <% if !@voucher.new_record? && !f.object.id.nil?  %>
+  <br/>
+  <div class="labell">  </div>
+<%end%>
+
+
+
+<% if @remove_counter != 0 %>
+</div>
+  <%end%>
+<% @remove_counter = @remove_counter.to_i + 1 %>

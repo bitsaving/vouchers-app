@@ -2,7 +2,7 @@
   <div class ="assignment onprint">
     <div class="control-group">    
       <div class="controls dropDown">
-        <%= select_tag 'voucher[assignee_id]', options_for_select(user_options )%>
+        <%= select_tag 'voucher[assignee_id]', options_for_select(user_options(@voucher.creator_id))%>
       </div>
     </div>
     <div class="actions approval_button">

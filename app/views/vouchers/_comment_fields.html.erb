@@ -1,8 +1,11 @@
-<div class="controls">
+<div>
+  <div class="labell"></div>
+<div class="contentt">
 	<%= f.text_area :description, :cols => 80, :rows => 5, placeholder: 'Enter your comment..'%>
 </div>
 
-<div class="controls">
+<div>
 	<%= f.hidden_field :user_id ,:value => current_user.id%>
 </div>
 
+</div>

@@ -1,3 +1,4 @@
+
 class Attachment < ActiveRecord::Base
   belongs_to :voucher 
   #FIXME_AB: Attachment could be anything. So name it as attachment not bill_attachment.

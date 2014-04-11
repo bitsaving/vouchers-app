@@ -110,6 +110,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def amount
+
     amount = debited_transactions.inject(0) { |sum, transaction| sum + transaction.amount}
     amount
   end
@@ -138,6 +139,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def total_amount(type)
+    return false if self.transactions.select { |transaction| transaction.amount.nil? }.length > 0
     amount = self.transactions.reject { |n| n.account_id.blank? }.select {|n| n.transaction_type == type }.inject(0) {|sum, transaction| sum + transaction.amount }#.each do |transaction|
     amount 
   end

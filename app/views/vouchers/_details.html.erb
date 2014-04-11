@@ -1,44 +1,55 @@
 <tr></tr>
 <%= tag("tr", data: {id: @voucher.id} ,:class => "show_details hidden" )%>
 <td class ="upper"> 
-  <%= @voucher.id %>
+.
 </td>
 <td class="date">
   <%= @voucher.date.to_s(:string_format) %>
 </td>
 <td class="lower">
   DEBIT 
-</td>
-<td class="lower">
-  <% @voucher.debit_from.each_with_index do |debit, index| %>
-    <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
-    <strong><%=" - ₹ " + @voucher.debited_transactions[index].amount.to_s  %><br></strong>
-  <%end%>
-</td>
-<td class="lower">
+<% @voucher.debit_from.each_with_index do |debit, index| %>
+    [ <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
+    <strong><%=" - ₹ " + @voucher.debited_transactions[index].amount.to_s  %> ] </strong>
+  <%end%><br/><br/><br/><br/><br/>
+
   CREDIT 
-</td>
-<td class="lower">
-  <% @voucher.credit_to.each_with_index do |credit, index| %>
+  [ <% @voucher.credit_to.each_with_index do |credit, index| %>
     <%= link_to credit.name, account_vouchers_path(credit), :class=>'debit_credit'%>
-    <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %><br></strong>
-  <%end%>
-</td>
+    <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %> ]</strong>
+ <%end%><br/><br/><br/><br/><br/>
+<% if @voucher.to_date %>
+
+    From : <%= @voucher.from_date.to_s(:normal_format) %>  To : <%= @voucher.to_date.to_s(:normal_format) %>
+ 
+<%end%><br/><br/><br/><br/><br/>
+<% counter = 0 %>
+ <%if @voucher.attachments.length > 0 %>
+  <% @voucher.attachments.each do |attachment|  %> 
+          <div><%= (counter += 1).to_s + "." %><%= link_to attachment.tagname, attachment.bill_attachment.url(:original, false), :target => "_blank" %></div>     
+        <%end%>
+        <%end%><br/><br/><br/><br/>
+
+        <%if @voucher.tag_list.length >0 %>
+      <div>
+        Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t), :class => "taglist" }.join(' ') %>
+      </div>
+    <%end%>
+
+ </td>
 <td class = "comments">
-  COMMENTS<br>
+  COMMENTS
   <% @voucher.comments.each do |comment| %>
     <div class ="comment_decription">
     <%= simple_format comment.description %>
+      <span class="comment_by">By- <%= comment.user.name %></span>
   </div>
-    <%end%>
+  <hr/>
+  <%end%>
 </td>
 <td class="amount">
   Amount :  <%= number_to_currency(@voucher.amount, :unit => "₹  ") %>
 </td>
 <td width="40px"></td>
-<% if @voucher.to_date %>
-  <td  class="paymentmode"> 
-    From : <%= @voucher.from_date.to_s(:normal_format) %>  To : <%= @voucher.to_date.to_s(:normal_format) %>
-  </td>
-<%end%>
+
 </tr>
