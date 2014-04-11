@@ -1,5 +1,5 @@
 class Voucher < ActiveRecord::Base 
- 
+# after_save ThinkingSphinx::RealTime.callback_for(:voucher) 
   include Workflow
   
   acts_as_taggable
@@ -58,6 +58,7 @@ class Voucher < ActiveRecord::Base
 
   has_many :comments, :dependent => :destroy
   has_many :attachments, :dependent => :destroy
+  # has_many :tags
   
   accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true

@@ -4,6 +4,7 @@ require 'capistrano/ext/multistage'
 set :application, "vouchers.domain4now.com"
 set :repository,  "git@github.com:vinsol/vouchers-app.git"
 set :scm, :git
+set :branch, "CR_review"
 set :deploy_via, :remote_cache
 set :git_enable_submodules, 1
 set :server, :passenger
