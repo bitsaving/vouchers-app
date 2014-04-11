@@ -1,4 +1,14 @@
-<% if params[:from].present? || params[:to].present? %>
+
+<%string = []%>
+<% if params[:from].present? || params[:to].present?%>
+  <% if @vouchers_all.present? %>
+    <% @vouchers_all.each do |voucher| %>
+      <% string << voucher.id %>
+    <%end%>
+  <%end%>  
+  <div class ="print_voucher">
+      <%= link_to "Print",'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
+</div>
   <%= render :template => 'reports/report_layout', locals: { :to => params[:to], :from => params[:from] } %>
 <% elsif params[:user_id].present? %>
   <%= render :template => 'users/_layout', locals: { :@user => get_user(params[:user_id]) }%>

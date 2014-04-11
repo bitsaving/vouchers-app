@@ -197,6 +197,7 @@ padding-right: 10px;
 .status_label {
   margin-top: 5px;
   border-top: dotted 1px black;
+  padding-bottom:20px;
 }
 .approved_by,.accepted_by ,.created_by{ 
 padding-top: 18px; 
@@ -707,4 +708,26 @@ font-weight: bold;
   border: dotted 1px black !important;
   position:relative;
   bottom:50px;
+}
+
+.description {
+  position:relative;
+  bottom:50px;
+  padding-left:30px;
+
+.description_label {
+  display:inline-block;
+  font-weight:bold;
+
+}
+.description_content {
+  padding-top:3px;
+  padding-bottom:10px;
+}
+}
+
+.update_amount_debited , .update_amount_credited {
+  font-weight: bold;
+padding-left: 10px;
+
 }

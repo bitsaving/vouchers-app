@@ -1,6 +1,6 @@
-
   function remove_fields(link) {
     $(link).prev("input[type=hidden]").val("1");
+    $(link).siblings(".bank_amount").find('.total_amount').val('0')
     $(link).closest(".radioBox").hide();
     $(link).closest(".radioBox").closest('.labell').hide();
     $(link).siblings('.banking').find("input[type=hidden]").val("another")

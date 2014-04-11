@@ -94,8 +94,9 @@
       </div>
     <%end%>
     <% if @voucher.description.present? %>
-      <div >
-        <%= @voucher.description %>
+      <div class="description">
+        <div class="description_label"> Description </div>
+        <div class="description_content"><%= @voucher.description %></div>
       </div>
     <%end%>
     <%if @voucher.creator_id.present? %>

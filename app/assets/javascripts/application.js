@@ -29,13 +29,14 @@ var ApplicationHandler = function() {
 ApplicationHandler.prototype = {
 
   init: function() {
-   i = 7;   
-   
+   i = 30;   
+    this.setTotalAmount();   
     this.dateFieldHandler();
     this.VoucherStateHandler();
     this.oneclick();
     this.resetautocomplete();
     this.showDetails();
+    this.printVouchers();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
@@ -67,7 +68,8 @@ ApplicationHandler.prototype = {
 
   VoucherStateHandler: function(){
     var pathname = window.location.pathname.split('vouchers/')[1];
-    $('.associated_voucher li.' + pathname).addClass('active').siblings().removeClass('active');
+    if(pathname && pathname.indexOf("edit") < 0) 
+      $('.associated_voucher li.' + pathname).addClass('active').siblings().removeClass('active');
   },
   oneclick: function(){
     $(document).on('submit', 'form.one_click', function (e) {
@@ -82,6 +84,55 @@ ApplicationHandler.prototype = {
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggle('blind', 1000);
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggleClass('hidden').animate(2000);
    });
-  }
+  },
+
+  setTotalAmount: function() {
+    var that = this
+    $(document).on("focusout", 'input.total_amount', function(){
+      that.displayAmount();
+    });
+    $('.remove_amountt').on('click', function(){
+      $(this).siblings(".bank_amount").find('.total_amount').val('0')
+      that.displayAmount();
+    })
+  },
+
+  displayAmount: function(){
+    value = 0;
+    $('.debitedd').each(function(){
+      if($(this).val())
+        value += parseInt($(this).val());
+    });
+    $('.update_amount_debited').text("Total amount debited : ₹ " + value);
+    value = 0;
+    $('.creditedd').each(function(){
+      if($(this).val())
+        value += parseInt($(this).val());
+    });
+    $('.update_amount_credited').text("Total amount credited : ₹ " + value);
+  }, 
+
+  printVouchers: function(){
+
+   $(document).on('click', '.print_vouchers', function(){
+    newWin = window.open();
+    $.ajax({
+      type: "GET",
+       url: $('.print_vouchers').data('url') + '?vouchers=' + $('.print_vouchers').data('name') , 
+       success: function(data){
+        newWin.document.write(data);
+        newWin.document.close();
+        // newWin.focus();
+        newWin.print();
+ 
+      }
+      ,error: function() {
+      }
+    });
+  });
+  },
+
+
+
 
 }

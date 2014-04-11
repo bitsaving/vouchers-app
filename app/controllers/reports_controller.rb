@@ -35,6 +35,7 @@ class ReportsController < VouchersController
       params[:from] = Date.today.beginning_of_month()
       params[:to] = Date.today.end_of_month()
       @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
+      @vouchers_all = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).page(params[:page])
     end  
 
 end

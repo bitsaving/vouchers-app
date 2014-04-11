@@ -19,6 +19,7 @@ VoucherApp::Application.routes.draw do
     get 'accepted',on: :collection
     get 'rejected',on: :collection
     get 'archived' , on: :collection
+    get 'print', on: :collection
     post 'increment_state' ,on: :member
     post 'decrement_state',on: :member   
   end

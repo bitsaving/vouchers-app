@@ -24,10 +24,11 @@ module ApplicationHelper
   end
 
   def get_by_date(state,from, to, name,type, tag)
-    @vouchers = Voucher.between_dates(from, to).send(state)
+    @vouchers = Voucher.between_dates(from, to)
     @vouchers  = @vouchers.by_account(name) if name.present?
     @vouchers = @vouchers.by_transaction_type(type) if type.present?
     @vouchers = @vouchers.tagged_with(tag) if tag.present?
+    @vouchers = @vouchers.send(state) if state.present?
     @vouchers
   end
 

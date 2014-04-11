@@ -1,0 +1,7 @@
+<% @vouchers.split(",").map(&:to_i).each do |voucher| %>
+  <% @voucher = Voucher.find(voucher.to_i) %>
+  <%= render template: 'vouchers/show', locals: { :@voucher => @voucher} %>
+<%end%>
+
+
+

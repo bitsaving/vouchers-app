@@ -125,6 +125,11 @@ class VouchersController < ApplicationController
 
   end
 
+
+  def print
+    @vouchers = params[:vouchers]
+  end
+
   protected
 
     def check_user_and_voucher_state
