@@ -9,7 +9,7 @@
 <div class="contentt account_form radioBox">
 
   <%= text_area_tag :account_id , get_entered_data(@transaction_type, @position), data: { hidden_field_id: 'account_debited_' + @count.to_s,  textbox_id:'debit_'+ @count.to_s, path: autocomplete_path }, :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
-  <% if @remove_counter != 0 || (f.object != @voucher.debited_transactions.first && f.object != @voucher.credited_transactions.first) %>
+  <% if @remove_counter != 0 || (f.object != @voucher.debited_transactions.first && f.object != @voucher.credited_transactions.first && !@voucher.new_record?)  %>
     <span class="remove_amountt">
     <%= link_to_remove_fields " X ", f %></span>
   <%else%>

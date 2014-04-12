@@ -1,4 +1,4 @@
-set :branch, "master"
+set :branch, "CR_review"
 set :rails_env, 'production'
 set :deploy_to, "/var/www/#{application}"
 set :ssh_options, { :forward_agent => true }
