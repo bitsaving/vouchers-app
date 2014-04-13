@@ -56,10 +56,10 @@
                   <% if voucher.accepted? && voucher.assignee?(current_user) %>
                     <%= link_to "Archive", increment_state_voucher_path(id: voucher.id, voucher: {assignee_id: current_user.id}), :class=>'btn btn-mini btn-primary', method: :post %>
                   <%end%>
-                  <% if voucher.archived? %>
-                    <%= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>Show
-                    <%= render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
-                  <%end%>
+                  <%# if voucher.archived? %>
+                    <%#= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>
+                    <%#= render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
+                  <%#end%>
                 </td>
               </tr>
             <%end%>
