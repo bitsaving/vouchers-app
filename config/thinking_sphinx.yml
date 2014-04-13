@@ -4,3 +4,6 @@ test:
   mysql41: 9313
 production:
   mysql41: 9312
+  pid_file: /var/www/vouchers.domain4now.com/shared/pids/searchd.pid
+  indices_location: /var/www/vouchers.domain4now.com/shared/db/sphinx
+  configuration_file: /var/www/vouchers.domain4now.com/shared/config/production.sphinx.conf
