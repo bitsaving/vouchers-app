@@ -29,7 +29,7 @@ var ApplicationHandler = function() {
 ApplicationHandler.prototype = {
 
   init: function() {
-   i = 30;   
+   i = 100;   
     this.setTotalAmount();   
     this.dateFieldHandler();
     this.VoucherStateHandler();

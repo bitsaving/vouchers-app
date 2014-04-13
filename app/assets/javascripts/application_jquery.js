@@ -17,13 +17,13 @@
     i = i+1;
     var new_id = new Date().getTime();
     var regexp = new RegExp("new_" + association, "g")
-    console.log($('.ui-autocomplete-input').size())
+    content = content.replace($(content).find('div').find('.autocomplete').val(), '')
    
     content = content.replace(/_\d+/g, function(val) {  return ("_" + (parseInt(val.split('_')[1], 10)+i).toString()) })
      number  =  $(content).find('div').find('.autocomplete').data('textbox-id').split('_')[1]
     content= content.replace(/\[new_transactions/g, function(val) { return ("[" + number.toString()) })
     $(link).before(content.replace(regexp, $('.ui-autocomplete-input').size() + 1));
-     $(content).find('div').find('.autocomplete').val(' ')
+    
     
   }
   
