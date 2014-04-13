@@ -11,12 +11,14 @@
 <% @voucher.debit_from.each_with_index do |debit, index| %>
     [ <%= link_to debit.name, account_vouchers_path(getaccount(debit)),:class=>'debit_credit'%>
     <strong><%=" - ₹ " + @voucher.debited_transactions[index].amount.to_s  %> ] </strong>
+    <br/><br/><br/>
   <%end%><br/><br/><br/><br/><br/>
 
   CREDIT 
-  [ <% @voucher.credit_to.each_with_index do |credit, index| %>
-    <%= link_to credit.name, account_vouchers_path(credit), :class=>'debit_credit'%>
+  <% @voucher.credit_to.each_with_index do |credit, index| %>
+     [<%= link_to credit.name, account_vouchers_path(credit), :class=>'debit_credit'%>
     <strong><%=" - ₹ " + @voucher.credited_transactions[index].amount.to_s  %> ]</strong>
+    <br/><br/><br/>
  <%end%><br/><br/><br/><br/><br/>
 <% if @voucher.to_date %>
 
