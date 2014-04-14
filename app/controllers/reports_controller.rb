@@ -37,6 +37,7 @@ class ReportsController < VouchersController
       @vouchers = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
       @vouchers = @vouchers.created_by(current_user.id) if default_tab == "drafted"
       @vouchers_all = Voucher.including_accounts_and_transactions.between_dates(params[:from], params[:to]).page(params[:page])
+      @vouchers_all = @vouchers_all.created_by(current_user.id) if default_tab == "drafted"
     end  
 
 end
