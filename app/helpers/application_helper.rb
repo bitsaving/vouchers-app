@@ -24,7 +24,8 @@ module ApplicationHelper
   end
 
   def get_by_date(state,from, to, name,type, tag)
-    @voucherss = Voucher.between_dates(from, to)
+    @voucherss = Voucher.between_dates(session[:start_date], session[:end_date])
+    @voucherss = @voucherss.between_dates(from, to)
     @voucherss  = @voucherss.by_account(name) if name.present?
     @voucherss = @voucherss.by_transaction_type(type) if type.present?
     @voucherss = @voucherss.tagged_with(tag) if tag.present?

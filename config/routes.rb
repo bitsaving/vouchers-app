@@ -4,6 +4,7 @@ VoucherApp::Application.routes.draw do
   get 'tags' ,to: 'tags#index'
   get 'tags/:tag', to: 'vouchers#index', as: :tag, constraints: { tag: /.*/ }
   get 'search' , to: 'searches#search' ,as: :search
+  get 'filter', to: 'application#filter_by_year', as: :filter
   get 'auto-complete', to: 'accounts#autocomplete_suggestions', as: :autocomplete
 
   get 'confirmation' ,to: 'vouchers#confirmation'

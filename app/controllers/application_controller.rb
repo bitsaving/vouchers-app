@@ -1,13 +1,32 @@
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+ 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
 
   protect_from_forgery with: :exception
   
   before_action :authorize
+  before_action :get_vouchers_by_year
+  skip_before_action :get_vouchers_by_year, only: [:filter_by_year, :authorize]
 
-  protected
-    
+   def filter_by_year
+      session[:date] = params[:year]   
+      redirect_to :back if params[:year].present?
+    end
+
+
+    def get_vouchers_by_year
+      session[:date] = session[:date] || populate_dropdown[0][1]
+      date = session[:date].split("->")
+      session[:start_date] =date[0]
+      session[:end_date] = date[1]
+      @vouchers = Voucher.between_dates(session[:start_date], session[:end_date])
+    end
+
+ 
+    protected
+
     def authorize    
       redirect_to new_user_session_path, notice: "Please log in" if !logged_in?
     end

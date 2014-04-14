@@ -8,4 +8,5 @@
 <% if params[:tag] %>
   <% local_params = local_params.merge({tag: params[:tag]}) %>
 <%end%>
-<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date((session[:previous_tab].presence || 'drafted'), params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")).page(params[:page]), :@vouchers_all => get_by_date(nil, params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")).page(params[:page]) } %>
+<%= render :template => 'vouchers/index', locals: { params: local_params, :@vouchers =>  get_by_date((session[:previous_tab].presence || 'drafted'), params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")).page(params[:page]), :@vouchers_all => get_by_date(" " , params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")).page(params[:page]) } %>
+

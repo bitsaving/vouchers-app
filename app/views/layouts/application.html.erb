@@ -89,23 +89,21 @@
             <div class="settings">
               <%= link_to t('.logout'), destroy_user_session_path, method: :delete %>
             </div>
-                <div id ="notifications_panel">
-                <div id="notifications">
-                  <%#= link_to "<div id='notification-icon'></div>".html_safe, notifications_index_path, remote: true %>
-                  <div class ="number_of_notifications notifications_link">
-                    <%#= current_user.getNotifications %>
-                  </div>
-                  <div id="notifications-box" class="notifications_output">
-                  </div>
-                </div>
-              </div>
-              <% end %>
+            <% end %>
         </div>
       </div>
     </div>
   </div>
   <div class="container-fluid">    
       <div class="row-fluid">
+        <div class="financial_year">
+        <% if current_user %>
+         <form action="<%= filter_path %>" method="get">
+              <%= select_tag :year, options_for_select(populate_dropdown, :selected => session[:date]) %>
+          </form>
+          <%end%>
+        </div>
+
         <%= bootstrap_flash %>
         <%=yield%>
       </div>
