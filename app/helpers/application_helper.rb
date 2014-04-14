@@ -29,6 +29,7 @@ module ApplicationHelper
     @vouchers = @vouchers.by_transaction_type(type) if type.present?
     @vouchers = @vouchers.tagged_with(tag) if tag.present?
     @vouchers = @vouchers.send(state) if state.present?
+    @vouchers = @vouchers.created_by(current_user.id) if state == "drafted"
     @vouchers
   end
 
