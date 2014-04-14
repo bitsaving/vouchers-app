@@ -1,3 +1,15 @@
+<% string =[] %>
+<% if params[:query].present?%>
+  <% if @vouchers.present? %>
+    <% @vouchers.each do |voucher| %>
+      <% string << voucher.id %>
+    <%end%>
+  <%end%>  
+  <div class ="printing">
+      <%= link_to "Print",'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
+</div>
+<%end%>
+
 <div class = "account_vouchers" >
   <div class="header_spacing ">
   </div>
