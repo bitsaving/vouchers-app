@@ -4,7 +4,12 @@
   <% if @vouchers_all.present? %>
     <% @vouchers_all.each do |voucher| %>
       <% string << voucher.id %>
-    <%end%>
+      <%end%>
+    <%else %>
+      <% @vouchers_all = get_by_date("", params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")) %>
+      <% @vouchers_all.each do |voucher| %>
+      <% string << voucher.id %>
+      <%end%>
   <%end%>  
   <div class ="print_voucher">
       <%= link_to "Print",'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 

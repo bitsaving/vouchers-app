@@ -24,13 +24,13 @@ module ApplicationHelper
   end
 
   def get_by_date(state,from, to, name,type, tag)
-    @vouchers = Voucher.between_dates(from, to)
-    @vouchers  = @vouchers.by_account(name) if name.present?
-    @vouchers = @vouchers.by_transaction_type(type) if type.present?
-    @vouchers = @vouchers.tagged_with(tag) if tag.present?
-    @vouchers = @vouchers.send(state) if state.present?
-    @vouchers = @vouchers.created_by(current_user.id) if state == "drafted"
-    @vouchers
+    @voucherss = Voucher.between_dates(from, to)
+    @voucherss  = @voucherss.by_account(name) if name.present?
+    @voucherss = @voucherss.by_transaction_type(type) if type.present?
+    @voucherss = @voucherss.tagged_with(tag) if tag.present?
+    @voucherss = @voucherss.send(state) if state.present?
+    @voucherss = @voucherss.created_by(current_user.id) if state == "drafted"
+    @voucherss
   end
 
     
