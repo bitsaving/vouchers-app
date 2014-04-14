@@ -37,6 +37,7 @@ ApplicationHandler.prototype = {
     this.resetautocomplete();
     this.showDetails();
     this.printVouchers();
+    this.submitDateForm();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
@@ -79,6 +80,12 @@ ApplicationHandler.prototype = {
       return true;
     });
   },
+  submitDateForm: function(){
+    $(document).on('change', '#year', function (e) {
+      $(this).closest('form').submit();
+    });
+
+  },
   showDetails: function() {
      $('.shows').click(function(){
       $('tr.show_details[data-id = "' + $(this).attr('data-name') + '"]').toggle('blind', 1000);
@@ -91,8 +98,10 @@ ApplicationHandler.prototype = {
     $(document).on("focusout", 'input.total_amount', function(){
       that.displayAmount();
     });
-    $('.remove_amountt').on('click', function(){
+
+    $(document).on('click', '.remove_amountt', function(){
       $(this).siblings(".bank_amount").find('.total_amount').val('0')
+      $(this).parent('span').siblings(".bank_amount").find('.total_amount').val('0')
       that.displayAmount();
     })
   },

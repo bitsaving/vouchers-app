@@ -10,9 +10,9 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, :child_index => "new_#{association}") do |builder|
       @count = @count + 1
       render(association.to_s.singularize + "_fields", :f => builder, :count => @count , :@transaction_type => array[2])
+    
     end
-
-    link_to("#{name}", "#", :onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields.gsub!(/_\d+/)  {|f| f.next.next  })}\") ;return false")
+    link_to("#{name}", "#", :onclick=> "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\") ;return false")
   end
  
   # def account_options
@@ -28,8 +28,8 @@ module ApplicationHelper
     @vouchers  = @vouchers.by_account(name) if name.present?
     @vouchers = @vouchers.by_transaction_type(type) if type.present?
     @vouchers = @vouchers.tagged_with(tag) if tag.present?
-    @vouchers = @vouchers.send(state) if state.present?
-    @vouchers = @vouchers.created_by(current_user.id) if state == "drafted"
+    # @vouchers = @vouchers.send(state) if state.present?
+    # @vouchers = @vouchers.created_by(current_user.id) if state == "drafted"
     @vouchers
   end
 
@@ -60,6 +60,21 @@ module ApplicationHelper
     current_user.vouchers.drafted
   end
   
-  
-  
+  def populate_dropdown
+    time = Time.new
+    i = 0
+    years = []
+    year = time.year
+    j =-1
+    while(i < 10)
+      date = []
+      date << Date.new.change(day: 31, month: 3, year: year - i).year.to_s  + "-"  + Date.new.change(day: 1, month: 4, year: year - j).year.to_s
+      date << Date.new.change(day: 31, month: 3, year: year - i).to_s  + "->"  + Date.new.change(day: 1, month: 4, year: year - j).to_s
+      years << date
+      j = j + 1
+      i = i+1
+    end
+    years
+  end
+    
 end

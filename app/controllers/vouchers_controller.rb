@@ -96,12 +96,11 @@ class VouchersController < ApplicationController
 
  
   def get_vouchers(state)
-  
     @vouchers = Voucher.all
 
     @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
 
-    @vouchers = @vouchers.tagged_with(params[:tag]) if params[:tag]
+    @vouchers = @vouchers.tagged_with(params[:tags]) if params[:tags]
 
     @vouchers = @vouchers.by_account(params[:account_id]) if params[:account_id]       
 
