@@ -2,7 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .hidden{
-  display:none;
+  display:none !important;
+}
+
+.company_tag {
+    text-align:center;
+    font-weight:bold;
+    position:relative;
+    bottom:40px;
+    margin: 0 auto;
+    color: #fafdff;
+    font-size:20px;
 }
 
 ul.ui-autocomplete {

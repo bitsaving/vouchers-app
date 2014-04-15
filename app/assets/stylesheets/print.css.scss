@@ -1,5 +1,10 @@
 
 @media print {
+
+  .company_tag {
+    color:black !important;
+  }
+  
   .onprint {
     display:none !important;
   }
@@ -9,4 +14,5 @@
   a[href]:after {
    display:none;
   }
+
 } 
