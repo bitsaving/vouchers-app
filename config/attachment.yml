@@ -1,9 +1,0 @@
-production:
-  bucket: "voucher-app-attachments"
-  access_key_id: "AKIAI266SBJ7R3PRK7YA"
-  secret_access_key: "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"
-development:
-  bucket: "voucher-app-attachments_1"
-  access_key_id: "AKIAI266SBJ7R3PRK7YA"
-  secret_access_key: "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"
-
