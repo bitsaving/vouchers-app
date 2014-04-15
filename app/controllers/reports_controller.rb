@@ -34,10 +34,10 @@ class ReportsController < VouchersController
     def set_params
       params[:from] = session[:start_date] || Date.today.beginning_of_month()
       params[:to] = session[:end_date] || Date.today.end_of_month()
-      @vouchers = @vouchers.including_accounts_and_transactions.between_dates(params[:from], params[:to]).send(default_tab).page(params[:page])
+      @vouchers = @vouchers.including_accounts_and_transactions.between_dates(params[:from], params[:to]).page(params[:page])
+      @vouchers_all = @vouchers
       @vouchers = @vouchers.created_by(current_user.id) if default_tab == "drafted"
-      @vouchers_all = @vouchers.including_accounts_and_transactions.between_dates(params[:from], params[:to]).page(params[:page])
-      @vouchers_all = @vouchers_all.created_by(current_user.id) if default_tab == "drafted"
+      # @vouchers_all = @vouchers_all.created_by(current_user.id) if default_tab == "drafted"
     end  
 
 end
