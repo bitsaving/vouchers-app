@@ -7,7 +7,7 @@ class Attachment < ActiveRecord::Base
                     :s3_credentials => Proc.new{|a| a.instance.s3_credentials }
 
   def s3_credentials
-    { :bucket => bucket, :access_key_id => access_key, :secret_access_key => secret_access }
+    { :bucket => BUCKET, :access_key_id => ACCESS_KEY, :secret_access_key => SECRET_ACCESS }
   end
   
 end

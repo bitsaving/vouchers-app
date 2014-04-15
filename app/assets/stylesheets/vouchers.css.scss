@@ -87,14 +87,14 @@ border: solid 1px black;
   width:38%;
   display: inline-block;
   margin-top: 100px;
-    .s { font-size: 1.2em;
+    .s { font-size: 0.8em;
       color:#837e7e;
      }
-  .m { font-size: 1.9em;
+  .m { font-size: 1.2em;
   color:#5f5959; }
-  .l { font-size: 2.5em; 
+  .l { font-size: 1.9em; 
     color:#363131;}
-  .v {font-size:  2.8em;
+  .v {font-size:  2.4em;
   color:#000000; }
   div.voucher_tags{
     border: dotted 1px black;
@@ -614,7 +614,7 @@ text-align: right;
   .bank_amount {
     position:relative;
     right:25%;
-    width:116%;
+    width:118%;
     padding-top:2px;
     padding-bottom:3px;
     .transaction_label {
