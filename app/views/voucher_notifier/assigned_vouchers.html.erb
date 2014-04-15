@@ -7,7 +7,7 @@
 	 	<div >
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
 			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span>
-      <% @voucher.debited_transactions.each do |debit| %>
+      <% voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
@@ -28,7 +28,7 @@
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
       <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span>
-      <% @voucher.debited_transactions.each do |debit| %>
+      <% voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
@@ -48,7 +48,7 @@
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
       <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span>
-      <% @voucher.debited_transactions.each do |debit| %>
+      <% voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
@@ -68,7 +68,7 @@
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
       <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span>
-      <% @voucher.debited_transactions.each do |debit| %>
+      <% voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
