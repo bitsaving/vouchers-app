@@ -565,6 +565,7 @@ padding:10px;
  .control-group{
 width:375px;
   display: inline-table !important;
+  text-align:center;
 }
   .controls{
     display: inline-block;
@@ -572,12 +573,12 @@ width:375px;
   }
   .display_vouchers{
 float: left;
-margin-left: 49%;
+margin-left: 41%;
   }
 
  .control-label{
-width:81px;
-text-align: right;
+  width:auto;
+  padding-right:6px;
  }
 }
 .voucher_report{
@@ -632,7 +633,7 @@ text-align: right;
       width:auto;
     }
     input, select {
-      padding-left:50px;
+      
     }
 
     .amount_label {
@@ -642,11 +643,11 @@ text-align: right;
 
     .amount {
       position:relative;
-      left:-35px;
+      left:-45px;
     }
     .select_payment {
       position:relative;
-      left:-47px; 
+      left:-37px; 
       select {
         width:200px !important;
       }
@@ -654,7 +655,7 @@ text-align: right;
     .reference {
         width:150px !important;
         position:relative;
-        left:-35px;
+        left:-50px;
     }
 
   }
@@ -670,9 +671,9 @@ text-align: right;
 
 .add_more_uploads {
   position: relative;
-left: 47%;
+left: 55%;
 padding-bottom: 2px;
-width:668px;
+width:644px;
 
 
 }
@@ -749,4 +750,21 @@ padding-left: 10px;
 .voucher_placing {
   position:relative;
   right:340px;
+}
+
+span.remove_amountt a {
+  color: red!important;
+}
+
+span.file_remove {
+  position:relative;
+  bottom:22px;
+
+  a {
+    color:red!important;
+  }
+}
+
+.print_voucher_report {
+  float:right;
 }

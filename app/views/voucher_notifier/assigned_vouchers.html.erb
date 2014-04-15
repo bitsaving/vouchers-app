@@ -2,89 +2,107 @@
 <h4>Following is the list of vouchers assigned to you</h5>
 	<div style="font-weight:normal;">
 <%if @user.assigned_vouchers.drafted.count > 0 %>
-  <h3> Drafted </h3>
+  <h2> Drafted Vouchers</h2>
   <% @user.assigned_vouchers.drafted.each do |voucher| %>
 	 	<div >
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span><br>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><br/>
+			<span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
-          <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
+          <%= link_to debit.account.name, account_vouchers_url(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
-    	<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span><br/> 
+    	<span><span style="font-weight:bold; font-size:12px;">Credit : </span><br/> 
 				<% voucher.credited_transactions.each do |credit| %>
-          <%= link_to credit.account.name, account_vouchers_path(credit.account),:class=>'debit_credit'%>
+          <%= link_to credit.account.name, account_vouchers_url(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
         <%end%>
       </span>
-			<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+			<span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <% if voucher.description.present? %>
+        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= voucher.description %></span>
+      <%end%>
 		</div>
+	   <span style="padding-left:16px;">--------------</span>
     <br/>
-	<%end%>
+  <%end%>
+
+  
 <%end%>	
 
 <%if @user.assigned_vouchers.pending.count > 0 %>
-	<h3> Pending </h3>
+	<h2> Pending Vouchers</h2>
 	<% @user.assigned_vouchers.pending.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span><br/>
-      <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><br/>
+      <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
-          <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
+          <%= link_to debit.account.name, account_vouchers_url(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> <br/>
+      <span><span style="font-weight:bold; font-size:12px;">Credit : </span> <br/>
         <% voucher.credited_transactions.each do |credit| %>
-          <%= link_to credit.account.name, account_vouchers_path(credit.account),:class=>'debit_credit'%>
+          <%= link_to credit.account.name, account_vouchers_url(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
         <%end%>
       </span>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <% if voucher.description.present? %>
+        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= voucher.description %></span>
+      <%end%>
     </div>
+   <span style="padding-left:16px;">--------------</span>
     <br/>
-	<%end%>
+  <%end%>
 <%end%>
 <%if @user.assigned_vouchers.approved.count > 0 %>
-	<h3> Approved </h3>
+	<h2> Approved Vouchers</h2>
 	<% @user.assigned_vouchers.approved.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span><br/>
-      <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><br/>
+      <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
-          <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
+          <%= link_to debit.account.name, account_vouchers_url(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span><br/> 
+      <span><span style="font-weight:bold; font-size:12px;">Credit : </span><br/> 
         <% voucher.credited_transactions.each do |credit| %>
-          <%= link_to credit.account.name, account_vouchers_path(credit.account),:class=>'debit_credit'%>
+          <%= link_to credit.account.name, account_vouchers_url(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
         <%end%>
       </span>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <% if voucher.description.present? %>
+        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= voucher.description %></span>
+      <%end%>
     </div>
+   <span style="padding-left:16px;">--------------</span>
     <br/>
-	<%end%>
+  <%end%>
 <%end%>
 <%if @user.assigned_vouchers.rejected.count > 0 %>
-	<h3> Rejected </h3>
+	<h2> Rejected Vouchers </h2>
 	<% @user.assigned_vouchers.rejected.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span><br/>
-      <span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><br/>
+      <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
-          <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
+          <%= link_to debit.account.name, account_vouchers_url(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span><br/> 
+      <span><span style="font-weight:bold; font-size:12px;">Credit : </span><br/> 
         <% voucher.credited_transactions.each do |credit| %>
-          <%= link_to credit.account.name, account_vouchers_path(credit.account),:class=>'debit_credit'%>
+          <%= link_to credit.account.name, account_vouchers_url(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
         <%end%>
       </span>
-      <span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Amount :</span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <% if voucher.description.present? %>
+        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= voucher.description %></span>
+      <%end%>
     </div>
+   <span style="padding-left:16px;">--------------</span>
     <br/>
-	<%end%>
+  <%end%>
 <%end%>
 <div style = "padding-top:34px; font-size:14px;">
 	This is an auto generated mail.Please do not reply.
