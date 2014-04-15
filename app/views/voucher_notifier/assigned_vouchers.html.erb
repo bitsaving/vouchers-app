@@ -6,12 +6,12 @@
   <% @user.assigned_vouchers.drafted.each do |voucher| %>
 	 	<div >
 		  <span><span style="font-weight:bold; font-size:12px;">#<%= voucher.id %></span></span>
-			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span>
+			<span><span style="font-weight:bold; font-size:12px;padding-left:16px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_path(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
-    	<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span> 
+    	<span><span style="font-weight:bold; font-size:12px; padding-left:16px;">Credit : </span><br/> 
 				<% voucher.credited_transactions.each do |credit| %>
           <%= link_to credit.account.name, account_vouchers_path(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
