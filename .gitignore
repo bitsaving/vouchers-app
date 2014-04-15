@@ -20,3 +20,4 @@
 /config/development.sphinx.conf
 /config/test.sphinx.conf
 /db/sphinx/test/
+/config/attachment.yml

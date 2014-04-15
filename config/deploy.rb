@@ -34,6 +34,7 @@ namespace :deploy do
    
   before "deploy:assets:precompile" do
     run "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+    run "ln -s #{shared_path}/config/attachment.yml #{release_path}/config/attachment.yml"
     # run "ln -s #{shared_path}/config/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
   end
     

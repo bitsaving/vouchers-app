@@ -68,7 +68,12 @@
             </form>
             </div>
           </li>
-                 <!-- <div class="dropdown">
+          <li>
+            <form action="<%= filter_path %>" method="get">
+              <%= select_tag :year, options_for_select(populate_dropdown, :selected => session[:date]) %>
+            </form>
+          </li>
+                <!-- <div class="dropdown">
                     <a id="reportUrl" href="#" role="button" class="dropdown-toggle siteLink" data-toggle="dropdown">
                       <span class="voucher">Reports</span>
                       <span class="caret"></span>

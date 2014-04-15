@@ -11,7 +11,7 @@
         <%= f.label :date, :class => 'compulsory-field' %>
       </div>
         <div class="contentt">
-          <%= f.text_field :date, :class => 'date-field ', :value => Date.today.to_s(:normal_format)  %>
+          <%= f.text_field :date, :class => 'date-field ', :value => (@voucher.date.presence.to_s(:normal_format) || Date.today.to_s(:normal_format))  %>
         </div>
       </div>
       <div>

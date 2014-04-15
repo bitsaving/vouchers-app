@@ -22,7 +22,8 @@ module VouchersHelper
   end
 
   def get_vouchers_count
-    Voucher.all.group_by(&:workflow_state)
+    @vouchers =Voucher.between_dates(session[:start_date], session[:end_date])
+    @vouchers.all.group_by(&:workflow_state)
   end
 
 end

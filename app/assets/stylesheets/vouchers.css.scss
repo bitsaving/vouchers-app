@@ -602,6 +602,10 @@ margin-left: 41%;
     text-align:center;
   }
 
+  .form-actions {
+   padding-left:0px !important;
+   text-align:center !important;
+  }
   .labell, .contentt {
     width:47% !important;
     text-align: center !important;
@@ -671,9 +675,9 @@ margin-left: 41%;
 
 .add_more_uploads {
   position: relative;
-left: 55%;
+left: 47%;
 padding-bottom: 2px;
-width:644px;
+width:668px;
 
 
 }
@@ -759,6 +763,7 @@ span.remove_amountt a {
 span.file_remove {
   position:relative;
   bottom:22px;
+  left:75px;
 
   a {
     color:red!important;

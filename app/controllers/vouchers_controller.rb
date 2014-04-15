@@ -96,7 +96,7 @@ class VouchersController < ApplicationController
 
  
   def get_vouchers(state)
-    @vouchers = Voucher.all
+    @vouchers = Voucher.between_dates(session[:start_date], session[:end_date])
 
     @vouchers = @vouchers.created_by(params[:user_id]) if params[:user_id] 
 
