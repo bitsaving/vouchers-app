@@ -70,3 +70,4 @@ gem 'actionpack-action_caching'
 gem "rails-observers"
 gem 'simplecov', :require => false, :group => :test
 gem 'aws-sdk'
+

@@ -1,4 +1,28 @@
 <% string =[] %>
+<% if params[:from].present? || params[:to].present?%>
+   <% if @vouchers.present? %>
+    <%@vouchers.each do |voucher| %>
+      <% if voucher.drafted? %>
+        <% if voucher.creator_id == current_user.id %>
+          <% string << voucher.id %>
+        <%end%>
+      <% else %>
+        <% string << voucher.id %>
+      <%end%>
+    <%end%>    
+  <%else %>
+    <%# @vouchers_all = get_by_date("", params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")) %>
+    <%@vouchers.each do |voucher| %>
+      <% if voucher.drafted? %>
+        <% if voucher.creator_id == current_user.id %>
+          <% string << voucher.id %>
+        <%end%>
+      <% else %>
+        <% string << voucher.id %>
+      <%end%>
+    <%end%>
+  <%end%>
+  <%end%>
 <% if params[:query].present?%>
   <% if @vouchers.present? %>
     <% @vouchers.each do |voucher| %>

@@ -44,9 +44,9 @@
         <%= link_to state + " (" + get_vouchers(state).total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
       </li>
     <%end%>
-    
+
     <div class="voucher_status">
-      <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers => @vouchers } %>
+      <%= render :template => 'vouchers/_vouchers' , locals: { :@vouchers => @vouchers, :string => string } %>
     </div>
   </ul>
 </div>
