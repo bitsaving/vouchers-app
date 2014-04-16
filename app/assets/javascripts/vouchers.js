@@ -87,6 +87,7 @@ VoucherEventsHandler.prototype = {
           event.preventDefault();
           this.value = ui.item.label;
           $('#'+ $(this).data('hidden-field-id')).val(ui.item.id);
+          console.log($('#'+ $(this).data('hidden-field-id')).val(ui.item.value));
         },
         focus: function(event, ui) {
           event.preventDefault();
