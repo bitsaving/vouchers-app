@@ -1,26 +1,24 @@
 <p>Dear, <%= @user.name %> </p>
 
-<p> You have been assigned the following vouchers </p>
-<%= @user.assigned_vouchers.inspect %>
-<% @user.assigned_vouchers.where(workflow_state:['pending', 'approved']).each_with_index do |voucher, index| %>
+<p> You have been assigned the following voucher </p>
     <div >
       <span><span style="font-weight:bold; font-size:12px;">
-        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br/><br/>
-      <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= voucher.date.to_s(:normal_format) %></span><br/>
+        <%= link_to  "Voucher #" +  @voucher.id.to_s, @voucher_url(voucher) %></span></span><br/><br/>
+      <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= @voucher.date.to_s(:normal_format) %></span><br/>
       <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
-      <% voucher.debited_transactions.each do |debit| %>
+      <% @voucher.debited_transactions.each do |debit| %>
           <%= link_to debit.account.name, account_vouchers_url(debit.account) ,:class=>'debit_credit' %>
           <strong><%=" - ₹ " + debit.amount.to_s  %><br/></strong>
       <%end%>
       <span><span style="font-weight:bold; font-size:12px;">Credit : </span><br/> 
-        <% voucher.credited_transactions.each do |credit| %>
+        <% @voucher.credited_transactions.each do |credit| %>
           <%= link_to credit.account.name, account_vouchers_url(credit.account),:class=>'debit_credit'%>
           <strong><%=" - ₹ " + credit.amount.to_s  %><br></strong>
         <%end%>
       </span>
-      <span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(voucher.total_amount('debit'), :unit => "₹  ") %></span>
-      <% if voucher.description.present? %>
-        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= voucher.description %></span>
+      <span><span style="font-weight:bold; font-size:12px;">Total : </span><%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %></span>
+      <% if @voucher.description.present? %>
+        <br/><span><span style="font-weight:bold; font-size:12px;">Description : </span><%= @voucher.description %></span>
       <%end%>
     </div>
     <br/>

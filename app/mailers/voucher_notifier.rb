@@ -9,8 +9,9 @@ class VoucherNotifier < ActionMailer::Base
     end
   end
 
-  def notify_assignee(user)
+  def notify_assignee(user, voucher)
     @user = user
+    @voucher = voucher
     mail_with_subject("Vouchers pending for approval", @user)
   end
 

@@ -119,13 +119,13 @@ class Voucher < ActiveRecord::Base
 
   def approve(user)
     update_attributes({ approved_by: user.id, approved_at: Time.current })
-    VoucherNotifier.notify_assignee(assignee).deliver
+    VoucherNotifier.notify_assignee(assignee, self).deliver
     return true
   end
 
   def send_for_approval
     update_attributes(updated_at: Time.current)
-    VoucherNotifier.notify_assignee(assignee).deliver
+    VoucherNotifier.notify_assignee(assignee, self).deliver
     return true
   end
 
