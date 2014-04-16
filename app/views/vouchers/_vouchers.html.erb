@@ -39,7 +39,7 @@
   </div>
   <% if params[:from].present? || params[:to].present?%>
     <div class ="print_voucher_report">
-      <%= link_to "Printing " + @vouchers.size.to_s +  " " + @vouchers.first.workflow_state + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
+      <%= link_to "Printing " + @vouchers.size.to_s +  " " + (@vouchers.present? ? @vouchers.first.workflow_state : default_tab) + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
     </div>
     <%end%>
   <% if @vouchers.count > 0 %>

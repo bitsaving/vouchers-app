@@ -78,6 +78,7 @@ class ApplicationController < ActionController::Base
       session[:previous_tab] || 'drafted'
     end
 
+    helper_method :default_tab
  protected
     # def set_i18n_locale_from_params
     #   if params[:locale]
