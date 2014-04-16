@@ -1,0 +1,6 @@
+development: 
+  mailer:
+    from: 'divya@vinsol.com'
+production: 
+  mailer:
+    from: 'voucherapp@vinsol.com'

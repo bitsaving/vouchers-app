@@ -67,10 +67,13 @@ module ApplicationHelper
     years = []
     year = time.year
     j =-1
-    while(i < 10)
+    max_year = Voucher.order(date: :desc).first.date.year
+    min_year = Voucher.order(date: :asc).first.date.year
+    difference = max_year -min_year
+    while(i <= difference)
       date = []
-      date << Date.new.change(day: 31, month: 3, year: year - i).year.to_s  + "-"  + Date.new.change(day: 1, month: 4, year: year - j).year.to_s
-      date << Date.new.change(day: 31, month: 3, year: year - i).to_s  + "->"  + Date.new.change(day: 1, month: 4, year: year - j).to_s
+      date << Date.new.change(day: 31, month: 3, year: max_year - i).year.to_s  + "-"  + Date.new.change(day: 1, month: 4, year: max_year - j).year.to_s
+      date << Date.new.change(day: 31, month: 3, year: max_year - i).to_s  + "->"  + Date.new.change(day: 1, month: 4, year: max_year - j).to_s
       years << date
       j = j + 1
       i = i+1

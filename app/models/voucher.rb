@@ -94,7 +94,7 @@ class Voucher < ActiveRecord::Base
   #It is a callback for event "accept" which gets called once we invoke the event.
 
   def accept(user)
-    update_attributes({ assignee_id: user.id, accepted_by: user.id, accepted_at: Time.current})
+    update_attributes({ assignee_id: nil, accepted_by: user.id, accepted_at: Time.current})
     comments.create( description: "Accepted", user_id: user.id )
     return true
   end
@@ -107,6 +107,7 @@ class Voucher < ActiveRecord::Base
   def reject(user)
     update_attributes({ accepted_by: nil, approved_by: nil, assignee_id: creator_id })
     comments.create( description: "Rejected", user_id: user.id )
+    VoucherNotifier.notify_creator(creator, self).deliver
     return true
   end
 
@@ -118,11 +119,13 @@ class Voucher < ActiveRecord::Base
 
   def approve(user)
     update_attributes({ approved_by: user.id, approved_at: Time.current })
+    VoucherNotifier.notify_assignee(assignee).deliver
     return true
   end
 
   def send_for_approval
     update_attributes(updated_at: Time.current)
+    VoucherNotifier.notify_assignee(assignee).deliver
     return true
   end
 

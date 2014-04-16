@@ -40,32 +40,47 @@
     <div class = "debitCredit">
       <div class="labels">Debit
       </div>
+           <table class="debited_credited_vouchers">
+          <th width = 40%>Account</th>
+          <th width = 20%>Amount</th>
+          <th width = 40%> Details</th>
+          <tbody>
+
       <% @voucher.debited_transactions.each do |debit| %>
-        <div>
-          <%= link_to debit.account.name, account_vouchers_path(debit.account) %>
-          <strong><%=" - ₹ " + debit.amount.to_s  %></strong>
-           <span> Payment Mode: <%= debit.payment_type %></span>
+        <tr>
+              <td><%= link_to debit.account.name, account_vouchers_path(debit.account) %></td>
+          <td><%=" ₹ " + debit.amount.to_s  %></td>
+           <td> Payment Mode: <%= debit.payment_type %></br>
           <% if  debit.payment_reference.present? %>
-            <span>Payment Reference: <%= debit.payment_reference  %>
-            </span>
+          Payment Reference: <%= debit.payment_reference  %>
           <%end%>
-        </div>
+        </td>
+        </tr>
       <%end%>
+    </table>
+
     </div>
     <div class="debit_separator"></div>
     <div class="debitCredit">
       <div class ="labels">Credit</div> 
+       <table class="debited_credited_vouchers" >
+          <th width  = 40% >Account</th>
+          <th width  = 20% >Amount</th>
+          <th width = 40%> Details</th>
+          <tbody>
+
       <% @voucher.credited_transactions.each do |credit| %>
-        <div>
-          <%= link_to credit.account.name, account_vouchers_path(credit.account)%>
-          <strong><%=" - ₹ " + credit.amount.to_s  %></strong>
-          <span> Payment Mode: <%= credit.payment_type  %></span>
+        <tr>
+          <td><%= link_to credit.account.name, account_vouchers_path(credit.account) %></td>
+          <td><%=" ₹ " + credit.amount.to_s  %></td>
+           <td> Payment Mode: <%= credit.payment_type %></br>
           <% if  credit.payment_reference.present? %>
-            <span>Payment Reference: <%= credit.payment_reference  %>
-            </span>
+          Payment Reference: <%= credit.payment_reference  %>
           <%end%>
-        </div>
+        </td>
+        </tr>
       <%end%>
+    </table>
     </div>
     <% if @voucher.to_date %>
       <div class="date_period" >
