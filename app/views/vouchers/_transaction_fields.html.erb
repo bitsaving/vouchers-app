@@ -7,8 +7,8 @@
   <%end%>
 
 <div class="contentt account_form radioBox">
-
-  <%= text_area_tag :account_id , get_entered_data(@transaction_type, @position), data: { hidden_field_id: 'account_debited_' + @count.to_s,  textbox_id:'debit_'+ @count.to_s, path: autocomplete_path }, :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
+<%=  f.hidden_field :account_id, :id => "account_debited_#{@count}"  %>
+  <%= f.text_area :account_id , data: { hidden_field_id: 'account_debited_' + @count.to_s,  textbox_id:'debit_'+ @count.to_s, path: autocomplete_path }, :class => 'text-field autocomplete', :rows => 3, :columns => 8, :value => get_entered_data(@transaction_type, @position) %>
   <% if @remove_counter != 0 || (f.object != @voucher.debited_transactions.first && f.object != @voucher.credited_transactions.first && !@voucher.new_record?)  %>
     <span class="remove_amountt">
     <%= link_to_remove_fields " X ", f %></span>
@@ -32,7 +32,7 @@
     </div>
 
     <div>
-  <%=  f.hidden_field :account_id, :id => "account_debited_#{@count}"  %>
+  
 
 </div>
 

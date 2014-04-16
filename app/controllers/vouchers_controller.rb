@@ -6,7 +6,7 @@ class VouchersController < ApplicationController
   before_action :default_tab, only: [:index]
   # before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
-
+  before_action :set_account, only: [:update, :create]
   helper_method :get_vouchers
  
   def index
@@ -150,7 +150,13 @@ class VouchersController < ApplicationController
       render action: 'index'
     end
 
-
+    def set_account
+      params[:voucher][:transactions_attributes].each_value do |content|
+        account = Account.find_by(name: content[:account_id])
+        account_id = account.nil? ? " " : account.id
+        content[:account_id] = account_id
+      end
+    end  
     
   
     # def set_comment_owner
