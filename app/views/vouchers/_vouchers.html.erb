@@ -13,6 +13,11 @@
 <div class = "account_vouchers" >
   <div class="header_spacing ">
   </div>
+  <% if params[:from].present? || params[:to].present?%>
+    <div class ="print_voucher_report">
+      <%= link_to "Printing " + @vouchers.size.to_s +  " " + @vouchers.first.workflow_state + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
+    </div>
+    <%end%>
   <% if @vouchers.count > 0 %>
     <table class="table table-striped account_vouchers">
       <thead>

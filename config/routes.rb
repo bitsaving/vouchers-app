@@ -7,10 +7,14 @@ VoucherApp::Application.routes.draw do
   get 'auto-complete', to: 'accounts#autocomplete_suggestions', as: :autocomplete
   get 'filter', to: 'application#filter_by_year', as: :filter
   get 'confirmation' ,to: 'vouchers#confirmation'
+  # get 'download', to: 'attachments#download'
   resources :comments
   resources :transactions
   resources :uploads
   resource :dashboard, only: :show
+  resources :attachments, only: [:download] do
+    get 'download', on: :member
+  end
   root :to => 'dashboards#show'
   resources :vouchers do
     get 'approved' ,on: :collection

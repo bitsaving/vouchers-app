@@ -1,6 +1,7 @@
 class Voucher < ActiveRecord::Base 
 # after_save ThinkingSphinx::RealTime.callback_for(:voucher) 
   include Workflow
+  acts_as_paranoid
   
   acts_as_taggable
   

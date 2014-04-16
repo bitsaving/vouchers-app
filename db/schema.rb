@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140411063856) do
+ActiveRecord::Schema.define(version: 20140416124605) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20140411063856) do
     t.datetime "approved_at"
     t.boolean  "delta",          default: true, null: false
     t.text     "description"
+    t.time     "deleted_at"
   end
 
   add_index "vouchers", ["assignee_id"], name: "index_vouchers_on_assignee_id", using: :btree

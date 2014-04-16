@@ -50,7 +50,7 @@ gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 gem 'capistrano', '2.15.5', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development, :test]
 gem "workflow", "1.0.0"
 gem 'paranoia', '~> 2.0'
 gem 'public_activity'

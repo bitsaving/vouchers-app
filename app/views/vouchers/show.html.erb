@@ -38,7 +38,7 @@
     <%end%>
     
     <div class = "debitCredit">
-      <div class="labels">Debit
+      <div class="labels">Debit :
       </div>
            <table class="debited_credited_vouchers">
           <th width = 40%>Account</th>
@@ -62,7 +62,7 @@
     </div>
     <div class="debit_separator"></div>
     <div class="debitCredit">
-      <div class ="labels">Credit</div> 
+      <div class ="labels">Credit :</div> 
        <table class="debited_credited_vouchers" >
           <th width  = 40% >Account</th>
           <th width  = 20% >Amount</th>
@@ -99,16 +99,16 @@
     <% counter = 0 %>
     <%if @voucher.attachments.length > 0 %>
       <div class ="debitCredit">
-        <div class="labels">Bill attachments
+        <div class="labels">Bill attachments :
         </div>
         <% @voucher.attachments.each do |attachment|  %> 
-          <div><%= (counter += 1).to_s + "." %><%= link_to (attachment.tagname.presence || attachment.bill_attachment_file_name), attachment.bill_attachment.url(:original, false), :target => "_blank" %></div>     
+          <div><%= (counter += 1).to_s + "." %><%= link_to (attachment.tagname.presence || attachment.bill_attachment_file_name), download_attachment_path(attachment), :target => "_blank" %></div>     
         <%end%>
       </div> 
     <%end%>
     <% if @voucher.description.present? %>
       <div class="description">
-        <div class="description_label"> Description </div>
+        <div class="description_label"> Description : </div>
         <div class="description_content"><%= @voucher.description %></div>
       </div>
     <%end%>
