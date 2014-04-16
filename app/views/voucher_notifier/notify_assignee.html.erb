@@ -1,7 +1,7 @@
 <p>Dear, <%= @user.name %> </p>
 
 <p> You have been assigned the following vouchers </p>
-<%#= @user.assigned_vouchers.where(workflow_state:['pending', 'approved']).inspect %>
+<%= @user.assigned_vouchers.inspect %>
 <% @user.assigned_vouchers.where(workflow_state:['pending', 'approved']).each_with_index do |voucher, index| %>
     <div >
       <span><span style="font-weight:bold; font-size:12px;">
