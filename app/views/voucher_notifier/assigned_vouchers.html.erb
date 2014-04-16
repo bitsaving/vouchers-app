@@ -6,7 +6,7 @@
   <% @user.assigned_vouchers.drafted.each do |voucher| %>
 	 	<div >
 		  <span><span style="font-weight:bold; font-size:12px;">
-        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br>
+        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br/><br/>
       <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= voucher.date.to_s(:normal_format) %></span><br/>
 			<span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
@@ -27,6 +27,7 @@
     <br/>
 	   <span style="padding-left:16px;">--------------</span>
     <br/>
+    <br/>
   <%end%>
 
   
@@ -37,7 +38,7 @@
 	<% @user.assigned_vouchers.pending.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">
-        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br>
+        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br><br/>
       <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= voucher.date.to_s(:normal_format) %></span><br/>
       <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
@@ -58,6 +59,7 @@
     <br/>
    <span style="padding-left:16px;">--------------</span>
     <br/>
+    <br/>
   <%end%>
 <%end%>
 <%if @user.assigned_vouchers.approved.count > 0 %>
@@ -65,7 +67,7 @@
 	<% @user.assigned_vouchers.approved.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">
-        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br>
+        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br><br/>
       <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= voucher.date.to_s(:normal_format) %></span><br/>
       <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
@@ -85,6 +87,7 @@
     </div>
     <br/>
    <span style="padding-left:16px;">--------------</span>
+    <br/>
     <br/>
   <%end%>
 <%end%>
@@ -93,7 +96,7 @@
 	<% @user.assigned_vouchers.rejected.each do |voucher| %>
 		<div >
       <span><span style="font-weight:bold; font-size:12px;">
-        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br>
+        <%= link_to  "Voucher #" +  voucher.id.to_s, voucher_url(voucher) %></span></span><br><br/>
       <span><span style="font-weight:bold; font-size:12px;">Date : </span><%= voucher.date.to_s(:normal_format) %></span><br/>
       <span><span style="font-weight:bold; font-size:12px;">Debit : </span><br/>
       <% voucher.debited_transactions.each do |debit| %>
@@ -114,6 +117,8 @@
     <br/>
    <span style="padding-left:16px;">--------------</span>
     <br/>
+    <br/>
+
   <%end%>
 <%end%>
 <div style = "padding-top:34px; font-size:14px;">
