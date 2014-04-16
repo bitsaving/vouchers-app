@@ -5,10 +5,44 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery with: :exception
   
+  before_action :store_location
   before_action :authorize
 
   before_action :get_vouchers_by_year
   skip_before_action :get_vouchers_by_year, only: [:filter_by_year, :authorize]
+
+
+  def store_location
+    if current_path_useful? 
+      session[:previous_url] = request.fullpath
+    end
+  end
+
+  def after_sign_in_path_for(resource)
+    previous_or_root_path
+  end
+
+  def after_sign_out_path_for(resource)
+    previous_or_root_path
+  end
+
+  def after_sign_up_path_for(resource)
+    previous_or_root_path
+  end
+
+  def previous_or_root_path
+
+    session[:previous_url] || root_path
+  end
+  def after_confirmation_path_for(resource_name, resource)
+    previous_or_root_path
+  end
+
+ 
+  def current_path_useful?
+    request_path = request.fullpath unless request.fullpath =~ /user/  || request.post? || request.xhr? # don't store ajax calls
+    request_path
+  end
 
   def filter_by_year
     session[:date] = params[:year]   
@@ -32,10 +66,8 @@ class ApplicationController < ActionController::Base
     end
 
     def redirect_to_back_or_default_url(url = root_path)
-      #FIXME_AB: variable name?
-      #fixed
       alert_message = "You are not authorized to view the requested page"
-      if request.referer
+      if request.referer && !(request.referer =~ /user/)
         redirect_to :back, alert: alert_message
       else
         redirect_to url, alert: alert_message

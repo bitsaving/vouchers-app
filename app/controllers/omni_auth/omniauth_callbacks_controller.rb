@@ -13,7 +13,7 @@ class OmniAuth::OmniauthCallbacksController < Devise::OmniauthCallbacksControlle
     if user && user.persisted?
         flash.notice = user.name + " signed in successfully"
         sign_in user
-        redirect_to session["user_return_to"]  || "/"
+        redirect_to session[:previous_url]  || "/"
     else
       redirect_to new_user_session_path
       flash.notice = "You are not authorized to login. Kindly contact administrator "
