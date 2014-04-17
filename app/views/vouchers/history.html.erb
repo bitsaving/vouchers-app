@@ -5,6 +5,7 @@
   <th>New Value</th>
   <th>Changed By</th>
   <th>Time</th>
+  <th>Action</th>
   <tbody>
     <%@voucher.versions.where.not(object_changes: nil).each do |version| %>
       <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>
@@ -14,6 +15,7 @@
           <td><%= value[1] %></td>
           <td><%= User.find(version.whodunnit).name %></td>
           <td><%= version.created_at.to_s(:short_ordinal)%></td>
+          <td><%= version.event %></td>
         </tr>
       <%end%>
     <%end%>
@@ -26,6 +28,7 @@
             <td><%= (key == "account_id" ? Account.find(value[1]).name : value[1]) %></td>
             <td><%= User.find(version.whodunnit).name %></td>
             <td><%= version.created_at.to_s(:short_ordinal)%></td>
+            <td><%= version.event %></td>
           </tr>
         <%end%>
       <%end%>
@@ -39,6 +42,7 @@
             <td><%= value[1] %></td>
             <td><%= User.find(version.whodunnit).name %></td>
             <td><%= version.created_at.to_s(:short_ordinal)%></td>
+            <td><%= version.event %></td>
           </tr>
         <%end%>
       <%end%>
