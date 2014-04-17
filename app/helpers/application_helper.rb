@@ -67,8 +67,9 @@ module ApplicationHelper
     years = []
     year = time.year
     j =-1
-    max_year = Voucher.order(date: :desc).first.date.year
-    min_year = Voucher.order(date: :asc).first.date.year
+
+    max_year = (Voucher.count > 0  ? Voucher.order(date: :desc).first.date.year : time.year)
+    min_year = (Voucher.count > 0  ? Voucher.order(date: :asc).first.date.year : time.year)
     difference = max_year -min_year
     while(i <= difference)
       date = []
