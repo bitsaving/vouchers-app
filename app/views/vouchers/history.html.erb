@@ -1,3 +1,4 @@
+
 <table class="debited_credited_vouchers">
   <th>Field </th>
   <th>Old Value</th>
@@ -21,7 +22,7 @@
         <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>
           <tr>
             <td><%= (key == "account_id" ? "Account " : key ) +  " ( " + transaction.account.name + ")" %></td>
-            <td><%=  (key == "account_id" ? Account.find(value[0]).name : value[0]) %></td>
+            <td><%=  (key == "account_id" ? (value[0].blank? ? "-" : Account.find(value[0]).name) : value[0]) %></td>
             <td><%= (key == "account_id" ? Account.find(value[1]).name : value[1]) %></td>
             <td><%= User.find(version.whodunnit).name %></td>
             <td><%= version.created_at.to_s(:short_ordinal)%></td>
