@@ -1,0 +1,46 @@
+<table class="debited_credited_vouchers">
+  <th>Field </th>
+  <th>Old Value</th>
+  <th>New Value</th>
+  <th>Changed By</th>
+  <th>Time</th>
+  <tbody>
+    <%@voucher.versions.where.not(object_changes: nil).each do |version| %>
+      <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>
+        <tr>
+          <td><%= key %></td>
+          <td><%= value[0].blank? ? "-" : value[0] %></td>
+          <td><%= value[1] %></td>
+          <td><%= User.find(version.whodunnit).name %></td>
+          <td><%= version.created_at.to_s(:short_ordinal)%></td>
+        </tr>
+      <%end%>
+    <%end%>
+    <%@voucher.transactions.each do |transaction| %>
+      <% transaction.versions.where.not(object_changes: nil).each do |version| %>
+        <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>
+          <tr>
+            <td><%= (key == "account_id" ? "Account " : key ) +  " ( " + transaction.account.name + ")" %></td>
+            <td><%=  (key == "account_id" ? Account.find(value[0]).name : value[0]) %></td>
+            <td><%= (key == "account_id" ? Account.find(value[1]).name : value[1]) %></td>
+            <td><%= User.find(version.whodunnit).name %></td>
+            <td><%= version.created_at.to_s(:short_ordinal)%></td>
+          </tr>
+        <%end%>
+      <%end%>
+    <%end%>
+    <%@voucher.comments.each do |comment| %>
+      <% comment.versions.where.not(object_changes: nil).each do |version| %>
+        <% version.changeset.select {|k,v| k != 'updated_at' && k != 'created_at' && k != 'user_id' && k !='voucher_id' && k != 'id' }.each do |key, value|%>
+          <tr>
+            <td><%= key + "- Comment" %></td>
+            <td><%=  value[0].blank? ? "-" : value[0]%></td>
+            <td><%= value[1] %></td>
+            <td><%= User.find(version.whodunnit).name %></td>
+            <td><%= version.created_at.to_s(:short_ordinal)%></td>
+          </tr>
+        <%end%>
+      <%end%>
+    <%end%>
+  </tbody>
+</table>

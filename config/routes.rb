@@ -26,6 +26,7 @@ VoucherApp::Application.routes.draw do
     get 'print', on: :collection
     post 'increment_state' ,on: :member
     post 'decrement_state',on: :member   
+    get 'history', on: :member
   end
   concern :voucher_states do
     get 'vouchers', to: 'vouchers#index'

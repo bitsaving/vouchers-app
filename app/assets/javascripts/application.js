@@ -38,6 +38,7 @@ ApplicationHandler.prototype = {
     this.showDetails();
     this.printVouchers();
     this.submitDateForm();
+    this.showHistory();
     $('div.error_messages').addClass('hidden')
     this.redirectToVouchers();
     document.addEventListener("page:load", this.dateFieldHandler);
@@ -50,6 +51,13 @@ ApplicationHandler.prototype = {
     $(".date-field").datepicker({
       dateFormat: "dd/mm/yy"
     });
+  },
+
+  showHistory: function(){
+    $(document).on('click', '#voucher_history', function(){
+      $('.history').toggle('blind', 1000);
+      $('.history').toggleClass('hidden').animate(2000);
+    })
   },
   redirectToVouchers: function(){
     $(document).on('click','.assigned_vouchers',function(e){

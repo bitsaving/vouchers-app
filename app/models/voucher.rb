@@ -2,7 +2,7 @@ class Voucher < ActiveRecord::Base
 # after_save ThinkingSphinx::RealTime.callback_for(:voucher) 
   include Workflow
   acts_as_paranoid
-  
+  has_paper_trail :on => [:update]
   acts_as_taggable
   
   workflow_column :workflow_state

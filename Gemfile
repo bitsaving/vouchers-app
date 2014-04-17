@@ -71,3 +71,4 @@ gem "rails-observers"
 gem 'simplecov', :require => false, :group => :test
 gem 'aws-sdk'
 
+gem 'paper_trail', '~> 3.0.1'

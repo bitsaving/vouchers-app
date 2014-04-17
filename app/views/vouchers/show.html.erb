@@ -1,16 +1,27 @@
+
+
 <%# cache @voucher do %>
+<div id="voucher_history", class ="onprint">
+  <%= link_to "History" , "#" ,:class => 'btn btn-primary'%>
+</div> 
 <div class = "edit_voucher onprint">
-      <% if @voucher.can_be_edited?(current_user) %>
-        <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
-      <%end%>
-    </div>
+  <% if @voucher.can_be_edited?(current_user) %>
+    <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
+  <%end%>
+</div>
     <div class ="print_voucher">
       <%= link_to "Print", "javascript:print()", :class => 'btn btn-primary onprint'%> 
     </div>
+<% if current_user.admin? %>
+   <div class ="history hidden onprint">
+     <%= render :template => 'vouchers/history', locals: { :@voucher => @voucher } %>
+   </div>
+<%end%>
+
 <div class ="voucher_display">
   <div></div>
 <div class ="company_tag">
-      VINAYAK SOLUTIONS
+      Vinayak Solutions Pvt. Ltd.
   </div>
   <div class = "status onprint">
     <%= @voucher.workflow_state.capitalize %>
@@ -147,3 +158,4 @@
   </div>
 </div>
 <%#end%>
+

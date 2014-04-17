@@ -5,7 +5,7 @@ class Account < ActiveRecord::Base
   
   validates :name, presence: true
   validates_uniqueness_of :name, :case_sensitive => false
-  
+  has_paper_trail :on => [:update]  
   before_validation :strip_blanks
   before_destroy :prevent_destroy
   
