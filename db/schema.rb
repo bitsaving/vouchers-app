@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140416124605) do
+ActiveRecord::Schema.define(version: 20140417050637) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20140416124605) do
 
   create_table "transactions", force: true do |t|
     t.integer "voucher_id"
-    t.integer "amount"
+    t.decimal "amount",            precision: 10, scale: 2
     t.string  "transaction_type"
     t.string  "payment_type"
     t.string  "payment_reference"

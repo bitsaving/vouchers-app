@@ -77,7 +77,7 @@ class Voucher < ActiveRecord::Base
   
   scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
   
-  before_destroy :check_if_destroyable
+  # before_destroy :check_if_destroyable
 
   def self.including_accounts_and_transactions
     includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)

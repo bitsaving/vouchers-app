@@ -110,13 +110,13 @@ ApplicationHandler.prototype = {
     value = 0;
     $('.debitedd').each(function(){
       if($(this).val())
-        value += parseInt($(this).val());
+        value += parseFloat($(this).val());
     });
     $('.update_amount_debited').text("Total amount debited : ₹ " + value);
     value = 0;
     $('.creditedd').each(function(){
       if($(this).val())
-        value += parseInt($(this).val());
+        value += parseFloat($(this).val());
     });
     $('.update_amount_credited').text("Total amount credited : ₹ " + value);
   }, 
