@@ -19,7 +19,7 @@
     <%end%>
     <%@voucher.transactions.each do |transaction| %>
       <% transaction.versions.where.not(object_changes: nil).each do |version| %>
-        <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>
+        <% version.changeset.select {|k,v| k != 'updated_at' && k != 'created_at' && k !='voucher_id' && k != 'id'}.each do |key, value|%>
           <tr>
             <td><%= (key == "account_id" ? "Account " : key ) +  " ( " + transaction.account.name + ")" %></td>
             <td><%=  (key == "account_id" ? (value[0].blank? ? "-" : Account.find(value[0]).name) : value[0]) %></td>
