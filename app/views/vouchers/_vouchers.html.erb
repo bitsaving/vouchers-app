@@ -110,5 +110,14 @@
       </tbody>
     </table>
     <%= paginate @vouchers %>
+    <%else%>
+      <% if params[:query].present?%>
+        <div class="results">
+          <h4> No results found !! </h4>
+        </div>
+      <%end%>
+
+
   <%end%>
+
 </div>

@@ -41,7 +41,7 @@
   <ul class="nav nav-tabs">
     <% VOUCHER_STATES.each do |state| %>
       <li class=<%= state %>>
-        <%= link_to state + " (" + get_vouchers(state).total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
+        <%= link_to state.capitalize + " (" + get_vouchers(state).total_count.to_s + ")", url_for(params.merge({ controller: 'vouchers', action: state, :page => 1 })), 'data-no-turbolink'=> true %>
       </li>
     <%end%>
 
