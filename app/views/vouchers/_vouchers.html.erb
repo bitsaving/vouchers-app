@@ -28,19 +28,22 @@
     <% @vouchers.each do |voucher| %>
       <% string << voucher.id %>
     <%end%>
-  <%end%>  
+  
   <div class ="printing">
       <%= link_to "Print " + string.size.to_s + " vouchers",'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
 </div>
+<%end%>  
 <%end%>
 
 <div class = "account_vouchers" >
   <div class="header_spacing ">
   </div>
   <% if params[:from].present? || params[:to].present?%>
+    <% if @vouchers.present? %>
     <div class ="print_voucher_report">
-      <%= link_to "Printing " + @vouchers.size.to_s +  " " + (@vouchers.present? ? @vouchers.first.workflow_state : default_tab) + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
+      <%= link_to "Printing " + @vouchers.size.to_s +  " " + @vouchers.first.workflow_state  + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
     </div>
+    <%end%>
     <%end%>
   <% if @vouchers.count > 0 %>
     <table class="table table-striped account_vouchers">
