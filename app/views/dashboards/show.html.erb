@@ -3,51 +3,57 @@
   <div class="outer_container">
     <div class="voucher_content">
       <div  class ="voucher_heading"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "Vouchers Assigned To Me" %></div>
-        <% @vouchers.each do |voucher| %>
-        <div class="assigned_vouchers">
-          <div class = "voucher_id"> 
-            <div class="voucher_label">Id </div>
-            <div class="voucher_contents"><%= voucher.id %></div>
-          </div>
-          <div class = "voucher_debit"> 
-            <div class="voucher_label">Debit</div>
-            <div class="voucher_contents"> 
-              <% voucher.debit_from.each_with_index do |debit, index| %>
-                <%= debit.name %>
-                <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts #fixed-%>
-                <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
-              <%end%>
-            </div>
-          </div>
-          <div class = "voucher_credit"> 
-            <div class="voucher_label">Credit</div>
-            <div class="voucher_contents">
-              <% voucher.credit_to.each_with_index do |credit, index| %>
-                <%= credit.name %>
-                <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s %><br></strong>
-              <%end%>
-            </div>
-          </div>
-          <div class = "voucher_amount">
-            <div class="voucher_label">Amount</div>
-            <div class="voucher_contents">
-              <%# @sum = 0 %>
-              <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
-                <%# @sum += voucher.amount %>
-              <%#end%> 
-              <%#=voucher.total_amount('debit') %>
-              <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
-              <%# voucher.debited_transactions.each do |a| %>
-               <%#sum+= a.amount %>
+        <% if @vouchers.present? %>
+          <% @vouchers.each do |voucher| %>
+            <div class="assigned_vouchers">
+              <div class = "voucher_id"> 
+                <div class="voucher_label">Id </div>
+                <div class="voucher_contents"><%= voucher.id %></div>
+              </div>
+              <div class = "voucher_debit"> 
+                <div class="voucher_label">Debit</div>
+                <div class="voucher_contents"> 
+                  <% voucher.debit_from.each_with_index do |debit, index| %>
+                    <%= debit.name %>
+                    <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts #fixed-%>
+                    <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+                  <%end%>
+                </div>
+              </div>
+              <div class = "voucher_credit"> 
+                <div class="voucher_label">Credit</div>
+                <div class="voucher_contents">
+                  <% voucher.credit_to.each_with_index do |credit, index| %>
+                    <%= credit.name %>
+                    <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s %><br></strong>
+                  <%end%>
+                </div>
+              </div>
+              <div class = "voucher_amount">
+                <div class="voucher_label">Amount</div>
+                <div class="voucher_contents">
+                  <%# @sum = 0 %>
+                  <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
+                    <%# @sum += voucher.amount %>
+                  <%#end%> 
+                  <%#=voucher.total_amount('debit') %>
+                  <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
+                  <%# voucher.debited_transactions.each do |a| %>
+                   <%#sum+= a.amount %>
 
+                </div>
+              </div>
+              <div class="voucher_state">
+                <div class="voucher_label">State</div>
+                <div class="voucher_contents"><%= voucher.workflow_state%> </div>
+              </div>
             </div>
-          </div>
-          <div class="voucher_state">
-            <div class="voucher_label">State</div>
-            <div class="voucher_contents"><%= voucher.workflow_state%> </div>
-          </div>
-        </div>
-      <%end%>
+        <%end%>
+        <%else %>
+         <div>
+             <h5 style = "text-align:center"> No vouchers assigned</h5>
+           </div>
+           <%end%>
     </div>
   </div>  
   <div id="tag_cloud">
@@ -66,7 +72,7 @@
       <%VOUCHER_STATES.each do |state| %>
         <div class="vouchers">
           <div class="voucher_label">
-            <%= link_to state, url_for({ controller: 'vouchers', action: state}) %>
+            <%= link_to state.capitalize, url_for({ controller: 'vouchers', action: state}) %>
           </div>
           <div class ="voucher_contents">
            <%= vouchers_hash[state].nil? ? "0" : vouchers_hash[state].count.to_s %>
