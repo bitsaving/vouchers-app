@@ -38,18 +38,20 @@
    
   <div class = "separator">
   </div>
+    
   <div class = "column_separator">
+
     <div class = "payment">
       <div class = "amount">
         <%= number_to_currency(@voucher.total_amount('debit'), :unit => "₹  ") %>
       </div>
-    </div>    
-    <% if ((@voucher.drafted? || @voucher.pending? || @voucher.rejected? ) && @voucher.assignee?(current_user)) %>
-      <%=  render 'assign' %>
-    <%end%>
     
+         <% if ((@voucher.drafted? || @voucher.pending? || @voucher.rejected? ) && @voucher.assignee?(current_user)) %>
+      <%=  render 'assign' %>
+    <%end%> 
+    </div>    
     <div class = "debitCredit">
-      <div class="labels">Debit :
+      <div class="labels debited_label">Debit :
       </div>
            <table class="debited_credited_vouchers">
           <th width = 40%>Account</th>
@@ -124,7 +126,7 @@
       </div>
     <%end%>
     <%if @voucher.tag_list.length >0 %>
-      <div class="tags">
+      <div class="tags onprint">
         Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t), :class => "taglist" }.join(' ') %>
       </div>
     <%end%>

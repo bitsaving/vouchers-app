@@ -17,18 +17,57 @@
 
   .voucher_display {
      page-break-after: always;
-  }
+     font-size: 10px !important;
+    width: 102% !important;
+    margin-top:20px !important;
+    padding-top:38px !important;
+
+    }
+
+    .created_by, .accepted_by, .approved_by {
+      font-size:11px !important;
+    }
 
   .debited_credited_vouchers {
+    th {
+      font-size:12px !important;
+    }
     td {
-      font-size:14px !important;
+      font-size:12px !important;
+  
 
     }
 
   }
-  .voucher_display {
-  
+
+  .company_tag {
+    font-size:15px !important;
+    position:relative;
+    top:-25px;
   }
+
+  .status {
+    height: 0px !important;
+  }
+
+  .debitCredit {
+    padding-left: 5px !important;
+    margin-left: 0px !important;
+  }
+
+  .date_period, .date_field, .description, .tags {
+    padding-left:5px !important;
+    margin-left: 0px !important;
+  }
+
+
+  .debited_label {
+      position:relative;
+      left:0% !important;
+    }
+
+
+ 
 
 
 
