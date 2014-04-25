@@ -59,7 +59,7 @@
   <div id="tag_cloud">
     <div class = "voucher_heading"> Tags </div>
     <div class="voucher_tags">
-      <% tag_cloud @vouchers.tag_counts, %w{s m l v} do |tag, css_class| %>
+      <% tag_cloud Voucher.between_dates(session[:start_date], session[:end_date]).tag_counts, %w{s m l v} do |tag, css_class| %>
       <div class ="tagname">
         <%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class%></div>
       <% end %>
