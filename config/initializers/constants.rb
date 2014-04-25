@@ -5,4 +5,4 @@ Time::DATE_FORMATS[:short_ordinal]  = ->(time) { time.strftime("%e-%b-%y , %I:%M
 ACCOUNT_FILTER_OPTIONS = ["Both" ,"debit" ,"credit"]
 EMAIL_FORMAT =  /\A([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})\Z/i
 VOUCHER_STATES = ['drafted', 'pending', 'approved', 'accepted', 'rejected']
-PAYMENT_TYPES = [ "Cash" , "Cheque", "Credit card", "Bank transfers" ]
+PAYMENT_TYPES = [ "Cash" , "Cheque", "Credit card", "Bank transfers", "General" ]

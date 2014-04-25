@@ -103,7 +103,7 @@ VoucherEventsHandler.prototype = {
   hiddenFieldHandler: function(){
     $(document).on('change', '.voucher_payment_type select', function() {
       $(this).parents('.bank_amount').siblings('.select').removeClass("hidden");
-      if($(this).val() == "Cash")
+      if($(this).val() == "Cash" || $(this).val() == "General")
        $(this).parents('.bank_amount').siblings('.select').addClass("hidden");
     });
     $(document).on('click', '.voucher_submit', function(){
