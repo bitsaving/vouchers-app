@@ -3,7 +3,7 @@
 </div>
 <div class="voucher_div">
   <div class ="voucher_form">
-    <%= form_for @voucher, :html => { :class => 'voucher_autocomplete form-horizontal', :html => { :multipart => true  } } , :remote =>  true do |f| %>
+    <%= form_for @voucher, :html => { :class => 'voucher_autocomplete form-horizontal one_click', :html => { :multipart => true  } } , :remote =>  true do |f| %>
        
       <legend><%= controller.action_name.capitalize %> voucher</legend>
       <div>
