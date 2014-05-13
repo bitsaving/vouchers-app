@@ -727,6 +727,7 @@ font-weight: bold;
 }
 
 .description {
+  padding-top:10px;
   position:relative;
   bottom:50px;
   padding-left:30px;
@@ -828,7 +829,7 @@ span.file_remove {
   position: relative;
   top: 7px;
   padding-left: 10px;
-  }
+}
 
   .debited_label {
     position: relative;
@@ -838,4 +839,8 @@ span.file_remove {
 
   .buttton {
     text-align:center;
+  }
+
+  ul {
+    list-style-type:decimal;
   }

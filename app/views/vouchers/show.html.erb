@@ -113,9 +113,11 @@
       <div class ="debitCredit">
         <div class="labels">Bill attachments :
         </div>
-        <% @voucher.attachments.each do |attachment|  %> 
-          <div><%= (counter += 1).to_s + "." %><%= link_to (attachment.tagname.presence || attachment.bill_attachment_file_name), download_attachment_path(attachment), :target => "_blank" %></div>     
-        <%end%>
+        <ul>
+          <% @voucher.attachments.each do |attachment|  %> 
+           <li><%= link_to (attachment.tagname.presence || attachment.bill_attachment_file_name), download_attachment_path(attachment), :target => "_blank" %></li>     
+          <%end%>
+        </ul>
       </div> 
     <%end%>
     <% if @voucher.description.present? %>
