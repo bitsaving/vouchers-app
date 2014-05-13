@@ -65,7 +65,7 @@ class Voucher < ActiveRecord::Base
   accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
   accepts_nested_attributes_for :comments, allow_destroy: true, update_only: true, reject_if: proc { |attributes| attributes['description'].blank? }
   
-  default_scope { order(id: :desc) }
+  default_scope { order(date: :desc) }
 
   scope :not_accepted, -> { where.not(workflow_state: 'accepted') }
   

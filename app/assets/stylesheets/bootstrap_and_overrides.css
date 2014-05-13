@@ -224,120 +224,142 @@ span.current{
   color:black;
 }
 .account_vouchers th {
-text-align: center !important;
-  }
+  text-align: center !important;
+}
 
-  .account_vouchers td{
-text-align: center !important;
+.account_vouchers td{
+  text-align: center !important;
 }
 #error_explanation h4{
-text-align: left;
-font-weight: bold;
-padding: 5px 5px 5px 15px;
-font-size: 12px;
-margin: -7px;
-margin-bottom: 0px;
-background-color: #c00;
-color: #fff;
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  margin-bottom: 0px;
+  background-color: #c00;
+  color: #fff;
 
 }
 
 .show_details {
-float: left;
-width:1226px;
-position: relative;
-margin: 0 auto;
-clear: both;
-display: inline-block;
-background-color: #f6fbff !important;
-border:dotted 1px black;
+  float: left;
+  width:1226px;
+  position: relative;
+  margin: 0 auto;
+  clear: both;
+  display: inline-block;
+  background-color: #f6fbff !important;
+  border:dotted 1px black;
 }
-  .show_details  td{
-
-    border: none !important;
-    margin: 0 auto;
-
-position: relative;
-
-font-weight: bold;
-display: inline-block;
-width:245px !important;
+.show_details  td{
+  border: none !important;
+  margin: 0 auto;
+  position: relative;
+  font-weight: bold;
+  display: inline-block;
+  width:245px !important;
 
 }
+
 .show_details td:nth-child(odd),.show_details td:nth-child(even){
-background-color: #f6fbff !important;
+  background-color: #f6fbff !important;
 }
 td.upper, td.paymentmode{
-text-align:  left !important;
+  text-align:  left !important;
   float: left;
   padding-left: 20px;
-    font-style: 15px !important;
-    width: 600px !important;
+  font-style: 15px !important;
+  width: 600px !important;
   line-height: 5px !important;
   border-bottom: dotted 1px black !important;
-  }
-  td.paymentmode {
-    position: relative;
-    top:-60px;
-    width:700px !important;
-    border-bottom: none !important;
-    line-height:5px !important;
-    display: inline-block;
-  }
+}
+td.paymentmode {
+  position: relative;
+  top:-60px;
+  width:700px !important;
+  border-bottom: none !important;
+  line-height:5px !important;
+  display: inline-block;
+}
 
-  td.date{
-    padding-left: 35px;
-    line-height: 5px !important;
-    float: left;
-    text-align: right !important;
-    font-size: 15px !important;
-    width:550px !important;
-    border-bottom: dotted 1px black !important;
-  }
-  td.lower{
-    line-height:5px !important;
-    text-align: left !important;
-    padding-left: 20px;
-    float:left;
-    font-size: 12px !important;
-width:426px !important;
-border-right: dotted 1px black !important;
-  }
-  td.comments{
- border-left: dotted 1px black !important;
-    width:440px !important;
-    text-align: left !important;
-  }
-  td.amount{
-    text-align: center !important;
-    font-size: 18px !important;
-    position: relative;
-    float: right;
-    padding-top: 30px;
-    padding-bottom: 30px;
+td.date{
+  padding-left: 35px;
+  line-height: 5px !important;
+  float: left;
+  text-align: right !important;
+  font-size: 15px !important;
+  width:550px !important;
+  border-bottom: dotted 1px black !important;
+}
+td.lower{
+  line-height:5px !important;
+  text-align: left !important;
+  padding-left: 20px;
+  float:left;
+  font-size: 12px !important;
+  width:426px !important;
+  border-right: dotted 1px black !important;
+}
+td.comments{
+  border-left: dotted 1px black !important;
+  width:440px !important;
+  text-align: left !important;
+}
+td.amount{
+  text-align: center !important;
+  font-size: 18px !important;
+  position: relative;
+  float: right;
+  padding-top: 30px;
+  padding-bottom: 30px;
   width:241px !important;
   border-bottom: dotted 1px black !important;
   border-left: dotted 1px black !important;
-  }
-
-  td.comment_decription{
+}
+td.comment_decription{
   width: 250px;
   border:  1px dotted #e0eacc;
   background-color:#f6fbff;
-    text-align: left !important;
+  text-align: left !important;
+}
 
-    }
+span.comment_by {
+  position: relative;
+  top:-12px;
+  float:right;
 
-    span.comment_by {
-      position: relative;
-      top:-12px;
-      float:right;
-
-    }
+}
 
 td.comments hr {
   margin: 20px 0;
-border: 0;
-border-top: 1px solid #eeeeee;
-border-bottom: 1px solid black;
+  border: 0;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid black;
+}
+
+
+.debited_credited_vouchers  th{
+  padding: 5px;
+  background: #e9e8d7;
+  margin: 5px;
+  font-weight: normal;
+  font-style: normal;
+}
+.debited_credited_vouchers  tr:nth-child(odd){
+  background: white;
+  margin: 5px;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.debited_credited_vouchers td {
+  padding: 8px;
+}
+
+.debited_credited_vouchers  tr:nth-child(even){
+  background: beige;
+  margin: 5px;
+  font-weight: normal;
+  font-style: normal;
 }

@@ -448,7 +448,7 @@ padding-right: 5px;
   margin: 0 auto;
   border: solid 1px black;
   margin-top: 80px;
-padding-top: 69px;
+padding-top:39px;
   padding-bottom: 70px !important;
   overflow:hidden;
   select {
@@ -730,21 +730,31 @@ font-weight: bold;
   position:relative;
   bottom:50px;
   padding-left:30px;
+  margin-bottom:10px;
 
 .description_label {
   display:inline-block;
   font-weight:bold;
+  padding-bottom:8px;
 
 }
 .description_content {
-  padding-top:3px;
-  padding-bottom:10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  -moz-box-shadow: 0 0 5px #fafdff;
+  -webkit-box-shadow: 0 0 3px #afb4b8;
+  padding-left: 10px;
+  margin-right: 26px;
+  background:beige;
 }
 }
 
 .update_amount_debited , .update_amount_credited {
   font-weight: bold;
-padding-left: 10px;
+  padding-left: 10px;
 
 }
 
@@ -781,9 +791,9 @@ span.file_remove {
 
 
 .debited_credited_vouchers{
-width:90%;
-text-align:center;
-border:dotted 1px black;
+  width:90%;
+  text-align:left;
+  border:dotted 1px black;
   th {
       
     border:dotted 1px black;
@@ -799,7 +809,7 @@ border:dotted 1px black;
 }
 
 .history {
-margin-top:50px;
+  margin-top:50px;
   padding-top:30px;
   padding-bottom:20px;
   border:solid 1px black;
@@ -822,8 +832,8 @@ margin-top:50px;
 
   .debited_label {
     position: relative;
-top: 45px;
-left: -2px;
+    top: 45px;
+    left: -2px !important;
   }
 
   .buttton {

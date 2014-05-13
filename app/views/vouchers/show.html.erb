@@ -19,7 +19,6 @@
 <%end%>
 
 <div class ="voucher_display">
-  <div></div>
 <div class ="company_tag">
       Vinayak Solutions Pvt. Ltd.
   </div>
@@ -61,8 +60,8 @@
 
       <% @voucher.debited_transactions.each do |debit| %>
         <tr>
-              <td><%= link_to debit.account.name, account_vouchers_path(debit.account) %></td>
-          <td><%=" ₹ " + debit.amount.to_s  %></td>
+          <td><%= link_to debit.account.name, account_vouchers_path(debit.account) %></td>
+          <td><%= number_to_currency(debit.amount, :unit => "₹  ") %></td>
            <td> Payment Mode: <%= debit.payment_type %></br>
           <% if  debit.payment_reference.present? %>
           Payment Reference: <%= debit.payment_reference  %>
@@ -85,8 +84,8 @@
       <% @voucher.credited_transactions.each do |credit| %>
         <tr>
           <td><%= link_to credit.account.name, account_vouchers_path(credit.account) %></td>
-          <td><%=" ₹ " + credit.amount.to_s  %></td>
-           <td> Payment Mode: <%= credit.payment_type %></br>
+          <td><%= number_to_currency(credit.amount, :unit => "₹  ") %></td>
+          <td> Payment Mode: <%= credit.payment_type %></br>
           <% if  credit.payment_reference.present? %>
           Payment Reference: <%= credit.payment_reference  %>
           <%end%>
