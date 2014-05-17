@@ -13,19 +13,18 @@
               <div class = "voucher_debit"> 
                 <div class="voucher_label">Debit</div>
                 <div class="voucher_contents"> 
-                  <% voucher.debit_from.each_with_index do |debit, index| %>
-                    <%= debit.name %>
-                    <% #FIXME_AB: If there are n number of account debited then it would fire n queries. Need to reduce it. same for credit accounts #fixed-%>
-                    <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+                  <% voucher.debited_transactions.each do |debit| %>
+                    <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
+                    <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
                   <%end%>
                 </div>
               </div>
               <div class = "voucher_credit"> 
                 <div class="voucher_label">Credit</div>
                 <div class="voucher_contents">
-                  <% voucher.credit_to.each_with_index do |credit, index| %>
-                    <%= credit.name %>
-                    <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s %><br></strong>
+                  <% voucher.credited_transactions.each do |credit| %>
+                    <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
+                    <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
                   <%end%>
                 </div>
               </div>

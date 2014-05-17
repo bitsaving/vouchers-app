@@ -68,15 +68,15 @@
                   <%= link_to voucher.id, voucher_path(voucher) %>
                 </td>
                 <td>
-                  <% voucher.debit_from.each_with_index do |debit, index| %>
-                    <%= link_to debit.name, account_vouchers_path(debit)%>
-                    <strong><%=" - ₹ " + voucher.debited_transactions[index].amount.to_s  %><br></strong>
+                  <% voucher.debited_transactions.each do |debit| %>
+                    <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
+                    <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
                   <%end%>
                 </td>
                 <td>
-                  <% voucher.credit_to.each_with_index do |credit, index| %>
-                     <%= link_to credit.name, account_vouchers_path(credit)%>
-                      <strong><%=" - ₹ " + voucher.credited_transactions[index].amount.to_s  %><br></strong>
+                  <% voucher.credited_transactions.each do |credit| %>
+                    <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
+                    <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
                   <%end%>
                 </td>
                 <td>
