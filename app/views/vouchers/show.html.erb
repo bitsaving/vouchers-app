@@ -1,6 +1,9 @@
 
 
 <%# cache @voucher do %>
+<div class="new-voucher">
+  <%= link_to "New", new_voucher_path, :class => 'btn btn-primary', "data-no-turbolink" => true %>
+</div>
 <div id="voucher_history", class ="onprint">
   <%= link_to "History" , "#" ,:class => 'btn btn-primary'%>
 </div> 
@@ -17,6 +20,7 @@
      <%= render :template => 'vouchers/history', locals: { :@voucher => @voucher } %>
    </div>
 <%end%>
+
 
 <div class ="voucher_display">
 <div class ="company_tag">
