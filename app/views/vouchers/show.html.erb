@@ -4,6 +4,8 @@
 <div class="new-voucher onprint">
   <%= link_to "New", new_voucher_path, :class => 'btn btn-primary', "data-no-turbolink" => true %>
 </div>
+
+
 <div id="voucher_history", class ="onprint">
   <%= link_to "History" , "#" ,:class => 'btn btn-primary'%>
 </div> 
@@ -113,4 +115,56 @@
       </div>
     <%end%>
     <% counter = 0 %>
- 
+    <%if @voucher.attachments.length > 0 %>
+      <div class ="debitCredit">
+        <div class="labels">Bill attachments :
+        </div>
+        <ul>
+          <% @voucher.attachments.each do |attachment|  %> 
+           <li><%= link_to (attachment.tagname.presence || attachment.bill_attachment_file_name), download_attachment_path(attachment), :target => "_blank" %></li>     
+          <%end%>
+        </ul>
+      </div> 
+    <%end%>
+    <% if @voucher.description.present? %>
+      <div class="description">
+        <div class="description_label"> Description : </div>
+        <div class="description_content"><%= @voucher.description %></div>
+      </div>
+    <%end%>
+    <%if @voucher.tag_list.length >0 %>
+      <div class="tags onprint">
+        Tags:<%=  raw @voucher.tag_list.map {|t| link_to t,  tag_path(URI::escape t), :class => "taglist" }.join(' ') %>
+      </div>
+    <%end%>
+    <%if @voucher.creator_id.present? %>
+      <div class="status_label">
+        <div class ="created_by">
+          <div>
+            <%= "Created By :   " %>
+            <%= link_to @voucher.creator.name, user_vouchers_path(@voucher.creator_id)%>
+          </div>
+        </div>
+      <%end%>
+      <%if @voucher.approved_by.present? %>
+        <div class ="approved_by">
+          <div>
+            <%= "Approved By :   " %>
+            <%= link_to @voucher.approved_by_user.name, user_vouchers_path(@voucher.approved_by)%>
+          </div>
+        </div>
+      <%end%>
+      <%if @voucher.accepted_by.present?%>
+        <div class ="accepted_by">
+          <div>
+            <%= "Accepted By : " %>
+            <%= link_to @voucher.accepted_by_user.name, user_vouchers_path(@voucher.accepted_by)%>   
+          </div>
+        </div>
+      <%end%>
+    </div>
+    <%= render :template => 'comments/_comments', locals: {voucher: @voucher } %>
+  </div>
+</div>
+<%#end%>
+
