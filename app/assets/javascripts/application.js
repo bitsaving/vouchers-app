@@ -120,13 +120,13 @@ ApplicationHandler.prototype = {
       if($(this).val())
         value += parseFloat($(this).val());
     });
-    $('.update_amount_debited').text("Total amount debited : ₹ " + value);
+    $('.update_amount_debited').text("Total amount debited : ₹ " + value.toFixed(2));
     value = 0;
     $('.creditedd').each(function(){
       if($(this).val())
         value += parseFloat($(this).val());
     });
-    $('.update_amount_credited').text("Total amount credited : ₹ " + value);
+    $('.update_amount_credited').text("Total amount credited : ₹ " + value.toFixed(2));
   }, 
 
   printVouchers: function(){
