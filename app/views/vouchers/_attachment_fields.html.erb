@@ -1,6 +1,6 @@
 <div>
 	<p class ="radioBox link controls">
-	  <%= f.file_field :bill_attachment, :id => "file" + @counter.to_s %>    
+	  <%= f.file_field :bill_attachment, :id => "file" + @count.to_s,  :class => 'file-upload'%>    
 	   
     <span class="file_remove"><%= link_to_remove_fields "X", f %></span>
 	</p>

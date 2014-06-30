@@ -88,7 +88,7 @@
                 <%= builder.text_field :tagname, :class => "filename", placeholder: "caption" %>
               </p>
             <%else%>
-              <%= link_to ( @voucher.attachments[counter].tagname.presence || @voucher.attachments[counter].bill_attachment_file_name) , download_attachment_path(@voucher.attachments[counter]), :target => "_blank", :class => 'voucher_placing'%>
+              <%= link_to ( @voucher.attachments[counter].tagname.presence || @voucher.attachments[counter].bill_attachment_file_name) , download_attachment_path(@voucher.attachments[counter]), :target => "_blank", :class => 'voucher_placing file-upload'%>
               <span class="file_remove"><%= link_to_remove_fields "X", builder %></span>     
             <%end%>            
             <% counter += 1 %>
