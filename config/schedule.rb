@@ -29,10 +29,10 @@ every 1.day, at: '02:00' do
   # custom_rake 'db:backup'
   
 end
-every 2.hours do
-  custom_rake "thinking_sphinx:rebuild"
+every 1.hours do
+  custom_rake "ts:rebuild"
 end
 
 every :reboot do
-  custom_rake "thinking_sphinx:start"
+  custom_rake "ts:start"
 end
