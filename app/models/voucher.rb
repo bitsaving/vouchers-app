@@ -86,7 +86,7 @@ class Voucher < ActiveRecord::Base
   end
 
   def destroyable_by?(user)
-    (!accepted? || user.admin?)
+    (!accepted? || !approved? || user.admin?)
   end
   #It is a callback for event "accept" which gets called once we invoke the event.
 
