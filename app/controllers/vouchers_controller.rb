@@ -4,9 +4,9 @@ class VouchersController < ApplicationController
   before_action :set_voucher, only: [:show, :history, :edit, :update, :destroy, :check_user_and_voucher_state, :increment_state, :decrement_state]
   before_action :check_user_and_voucher_state, only: [:edit]
   before_action :default_tab, only: [:index]
-  # before_action :set_comment_owner, only: [:create, :update]
   before_action :set_default_tab, only: [:pending, :drafted, :accepted, :approved, :rejected, :archived]
   before_action :set_account, only: [:update, :create]
+  before_action :check_if_destroyable, only: [:destroy]
   helper_method :get_vouchers
  
   def index
@@ -160,14 +160,11 @@ class VouchersController < ApplicationController
         content[:account_id] = account_id
       end
     end  
-    
-  
-    # def set_comment_owner
-    #   # if params[:voucher][:comments_attributes].present?
-    #   #   params[:voucher][:comments_attributes].each_value do |content|
-    #   #     content[:user_id] = current_user.id
-    #   #   end
-    #   # end
-    # end
+   
+    def check_if_destroyable
+      if !@voucher.destroyable_by?(current_user)
+        redirect_to_back_or_default_url
+      end
+    end
 
 end

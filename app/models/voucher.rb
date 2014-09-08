@@ -59,7 +59,6 @@ class Voucher < ActiveRecord::Base
 
   has_many :comments, :dependent => :destroy
   has_many :attachments, :dependent => :destroy
-  # has_many :tags
   
   accepts_nested_attributes_for :attachments, update_only: true, reject_if: proc { |attributes| attributes['bill_attachment'].blank? }, allow_destroy: true
   accepts_nested_attributes_for :transactions, update_only: true, allow_destroy: true
@@ -76,8 +75,6 @@ class Voucher < ActiveRecord::Base
   scope :by_transaction_type, ->(type) { joins(:transactions).where(:transactions => {:transaction_type => type })}
   
   scope :between_dates, ->(from, to) { where('date between (?) and (?)', from, to) }
-  
-  # before_destroy :check_if_destroyable
 
   def self.including_accounts_and_transactions
     includes(:debit_from, :credit_to, :debited_transactions, :credited_transactions)
@@ -88,10 +85,9 @@ class Voucher < ActiveRecord::Base
     errors.add :voucher, "debited and credited amounts does not match.Please make sure that they are equal." if total_amount("debit") != total_amount("credit")
   end
 
-  def check_if_destroyable
-    drafted? || rejected?
+  def destroyable_by?(user)
+    (!accepted? || user.admin?)
   end
-
   #It is a callback for event "accept" which gets called once we invoke the event.
 
   def accept(user)

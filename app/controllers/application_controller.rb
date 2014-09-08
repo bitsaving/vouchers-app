@@ -61,36 +61,22 @@ class ApplicationController < ActionController::Base
     redirect_to new_user_session_path, notice: "Please log in" if !logged_in?
   end
 
-    def logged_in?
-      !!current_user
-    end
+  def logged_in?
+    !!current_user
+  end
 
-    def redirect_to_back_or_default_url(url = root_path)
-      alert_message = "You are not authorized to view the requested page"
-      if request.referer && !(request.referer =~ /user/)
-        redirect_to :back, alert: alert_message
-      else
-        redirect_to url, alert: alert_message
-      end
+  def redirect_to_back_or_default_url(url = root_path)
+    alert_message = "You are not authorized"
+    if request.referer && !(request.referer =~ /user/)
+      redirect_to :back, alert: alert_message
+    else
+      redirect_to url, alert: alert_message
     end
+  end
 
-    def default_tab
-      session[:previous_tab] || 'drafted'
-    end
+  def default_tab
+    session[:previous_tab] || 'drafted'
+  end
 
-    helper_method :default_tab
- protected
-    # def set_i18n_locale_from_params
-    #   if params[:locale]
-    #     if I18n.available_locales.include?(params[:locale].to_sym)
-    #       I18n.locale = params[:locale]
-    #     else
-    #       flash.now[:notice] = "#{params[:locale]} translation not available"
-    #       logger.error flash.now[:notice]
-    #     end
-    #   end
-    # end
-    # def default_url_options
-    #   { locale: I18n.locale }
-    # end
+  helper_method :default_tab
 end

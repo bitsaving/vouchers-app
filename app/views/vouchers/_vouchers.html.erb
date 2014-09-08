@@ -11,8 +11,7 @@
       <%end%>
     <%end%>    
   <%else %>
-    <%# @vouchers_all = get_by_date("", params[:from], params[:to], (params[:account].presence || " "), (params[:transactions_type].presence || " " ), (params[:tag].presence || " ")) %>
-    <%@vouchers.each do |voucher| %>
+     <%@vouchers.each do |voucher| %>
       <% if voucher.drafted? %>
         <% if voucher.creator_id == current_user.id %>
           <% string << voucher.id %>
@@ -28,11 +27,10 @@
     <% @vouchers.each do |voucher| %>
       <% string << voucher.id %>
     <%end%>
-  
-  <div class ="printing">
+    <div class ="printing">
       <%= link_to "Print " + string.size.to_s + " vouchers",'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
-</div>
-<%end%>  
+    </div>
+  <%end%>  
 <%end%>
 
 <div class = "account_vouchers" >
@@ -60,67 +58,51 @@
         </tr>
       </thead>
       <tbody>
-        <%#cache @vouchers do %>
-          <% @vouchers.each do |voucher| %>
-            <%# cache voucher do %>
-              <tr>
-                <td>
-                  <%= link_to voucher.id, voucher_path(voucher) %>
-                </td>
-                <td>
-                  <% voucher.debited_transactions.each do |debit| %>
-                    <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
-                    <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
-                  <%end%>
-                </td>
-                <td>
-                  <% voucher.credited_transactions.each do |credit| %>
-                    <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
-                    <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
-                  <%end%>
-                </td>
-                <td>
-                  <%= voucher.date.to_s(:string_format)%>
-                </td>
-                <td>
-                  <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
-                </td>
-                <% if voucher.assignee.nil? %>
-                  <td> <%=" "%></td>
-                <%else%>
-                  <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
-                <%end%>
-                <td><%= voucher.workflow_state%></td> 
-                <td>
-                  <%# if voucher.can_be_edited?(current_user) %>
-                    <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary', 'data-no-turbolinks' => true %>
-                    <%= link_to "Delete", voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s}, :class => 'btn btn-mini btn-danger' %>
-                  <%#end%>
-                  <%= link_to "Details", voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
-                  <%# if voucher.accepted? && voucher.assignee?(current_user) %>
-                    <%#= link_to "Archive", increment_state_voucher_path(id: voucher.id, voucher: {assignee_id: current_user.id}), :class=>'btn btn-mini btn-primary', method: :post %>
-                  <%#end%>
-                  <%# if voucher.archived? %>
-                    <%#= tag("span", data: {name: voucher.id}, class: "btn btn-mini btn-primary shows")%>
-                    <%#= render :partial => 'vouchers/details', locals: {:@voucher => voucher} %>
-                  <%#end%>
-                </td>
-              </tr>
+     
+      <% @vouchers.each do |voucher| %>
+          <tr>
+            <td>
+              <%= link_to voucher.id, voucher_path(voucher) %>
+            </td>
+            <td>
+              <% voucher.debited_transactions.each do |debit| %>
+                <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
+                <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
+              <%end%>
+            </td>
+            <td>
+              <% voucher.credited_transactions.each do |credit| %>
+                <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
+                <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
+              <%end%>
+            </td>
+            <td>
+              <%= voucher.date.to_s(:string_format)%>
+            </td>
+            <td>
+              <%= number_to_currency(voucher.amount, :unit => "₹  ") %>
+            </td>
+            <% if voucher.assignee.nil? %>
+              <td> <%=" "%></td>
+            <%else%>
+              <td><%= link_to voucher.assignee.first_name, user_vouchers_path(voucher.assignee)%></td>
             <%end%>
-           
-          <%# end %> 
-        <%#end%>
+            <td><%= voucher.workflow_state%></td> 
+            <td>
+              <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary', 'data-no-turbolinks' => true %>
+              <%= link_to "Delete", voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s}, :class => 'btn btn-mini btn-danger' if voucher.destroyable_by?(current_user) %>
+              <%= link_to "Details", voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
+            </td>
+          </tr>
+        <%end%>
       </tbody>
     </table>
     <%= paginate @vouchers %>
-    <%else%>
-      <% if params[:query].present?%>
-        <div class="results">
-          <h4> No results found !! </h4>
-        </div>
-      <%end%>
-
-
+  <%else%>
+    <% if params[:query].present?%>
+      <div class="results">
+        <h4> No results found !! </h4>
+      </div>
+    <%end%>
   <%end%>
-
 </div>
