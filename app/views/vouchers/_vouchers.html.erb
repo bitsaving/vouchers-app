@@ -38,23 +38,23 @@
   </div>
   <% if params[:from].present? || params[:to].present?%>
     <% if @vouchers.present? %>
-    <div class ="print_voucher_report">
+    <div class ="print_voucher_report pull-right margin-top">
       <%= link_to "Printing " + @vouchers.size.to_s +  " " + @vouchers.first.workflow_state  + " vouchers" ,'#' , :class => 'btn btn-primary print_vouchers onprint', data: { name: string, url: print_vouchers_path } %> 
     </div>
     <%end%>
     <%end%>
   <% if @vouchers.count > 0 %>
-    <table class="table table-striped account_vouchers">
+    <br><table class="table table-striped account_vouchers bordered">
       <thead>
         <tr>
-          <th width= "3%"><%= "Id" %></th>
-          <th width= "23%"><%= "Debit" %></th>
-          <th width= "23%"><%= "Credit" %></th>
-          <th width= "10%"><%= "Date" %></th>
-          <th width= "10%"><%= "Total Amount" %></th>
-          <th width= "8%"><%= "Assigned" %></th>
-          <th width= "8%"><%= "State" %></th>
-          <th width= "15%"><%= "Actions" %></th>
+          <th><%= "Id" %></th>
+          <th><%= "Debit" %></th>
+          <th><%= "Credit" %></th>
+          <th><%= "Date" %></th>
+          <th><%= "Total" %></th>
+          <th><%= "Assigned" %></th>
+          <th><%= "State" %></th>
+          <th><%= "Actions" %></th>
         </tr>
       </thead>
       <tbody>
@@ -67,13 +67,13 @@
             <td>
               <% voucher.debited_transactions.each do |debit| %>
                 <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
-                <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
+                <%= number_to_currency(debit.amount, :unit => "₹  ") %><br>
               <%end%>
             </td>
             <td>
               <% voucher.credited_transactions.each do |credit| %>
                 <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
-                <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
+                <%= number_to_currency(credit.amount, :unit => "₹  ") %><br>
               <%end%>
             </td>
             <td>
@@ -89,7 +89,7 @@
             <%end%>
             <td><%= voucher.workflow_state%></td> 
             <td>
-              <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-primary', 'data-no-turbolinks' => true %>
+              <%= link_to "Edit", edit_voucher_path(voucher), :class => 'btn btn-mini btn-warning', 'data-no-turbolinks' => true %>
               <%= link_to "Delete", voucher_path(voucher), :method => :delete, :data => { :confirm => 'Are you sure  you want to delete voucher #' + voucher.id.to_s}, :class => 'btn btn-mini btn-danger' if voucher.destroyable_by?(current_user) %>
               <%= link_to "Details", voucher_path(voucher), :class => 'btn btn-mini btn-primary' %>
             </td>

@@ -1,5 +1,10 @@
 
 @media print {
+  body {
+    overflow: hidden;
+    margin:0; 
+    background-color:red;
+  }
 
   .company_tag {
     color:black !important;
@@ -9,98 +14,98 @@
     display:none !important;
   }
   .alert, .fade, .in,.alert-success {
-  display:none;
+    display:none;
   }
   a[href]:after {
    display:none;
+ }
+
+ .voucher_display {
+  page-break-after: always;
+  font-size: 10px !important;
+  width: 102% !important;
+  margin-top:20px !important;
+  padding-top:38px !important;
+
+}
+
+.created_by, .accepted_by, .approved_by {
+  font-size:11px !important;
+}
+
+.debited_credited_vouchers {
+  th {
+    font-size:12px !important;
   }
-
-  .voucher_display {
-    page-break-after: always;
-    font-size: 10px !important;
-    width: 102% !important;
-    margin-top:20px !important;
-    padding-top:38px !important;
-
+  td {
+    font-size:12px !important;
   }
+}
 
-  .created_by, .accepted_by, .approved_by {
-    font-size:11px !important;
-  }
+.company_tag {
+  font-size:15px !important;
+  position:relative;
+  top:-25px;
+}
 
-  .debited_credited_vouchers {
-    th {
-      font-size:12px !important;
-    }
-    td {
-      font-size:12px !important;
-    }
-  }
+.status {
+  height: 0px !important;
+}
 
-  .company_tag {
-    font-size:15px !important;
-    position:relative;
-    top:-25px;
-  }
+.debitCredit {
+  padding-left: 5px !important;
+  margin-left: 0px !important;
+}
 
-  .status {
-    height: 0px !important;
-  }
-
-  .debitCredit {
-    padding-left: 5px !important;
-    margin-left: 0px !important;
-  }
-
-  .date_period, .date_field, .description, .tags {
-    padding-left:5px !important;
-    margin-left: 0px !important;
-  }
-
-
-  .debited_label {
-    position:relative;
-    left:0% !important;
-  }
+.date_period, .date_field, .description, .tags {
+  padding-left:5px !important;
+  margin-left: 0px !important;
+}
 
 
-  .debited_credited_vouchers  th{
-    margin: 0px ;
-    padding: 0px;
-    padding-left:2px;
-    font-size:11px !important;
-  }
- .debited_credited_vouchers td {
-    padding: 0px;
-    font-size:10px !important;
-  }
+.debited_label {
+  position:relative;
+  left:0% !important;
+}
 
-  .debited_credited_vouchers  tr {
-    padding:0 px;
-  }
 
-  .description {
-    margin-top:-20px;
-  }
- 
-  .description_content {
-    padding-top:0px;
-    padding-bottom:0px;
-    margin-top:-20px;
-    margin-left:-3px;
-  }
+.debited_credited_vouchers  th{
+  margin: 0px ;
+  padding: 0px;
+  padding-left:2px;
+  font-size:11px !important;
+}
+.debited_credited_vouchers td {
+  padding: 0px;
+  font-size:10px !important;
+}
 
-  .description_label {
-    padding-bottom:0px;
-    padding-left:5px;
-    font-size:12px;
-    margin-bottom:0px;
-  }
+.debited_credited_vouchers  tr {
+  padding:0 px;
+}
 
-  .date_period .date_field {
-    font-size:12px;
-    font-weight:normal;
-  }
+.description {
+  margin-top:-20px;
+}
+
+.description_content {
+  padding-top:0px;
+  padding-bottom:0px;
+  margin-top:-20px;
+  margin-left:-3px;
+}
+
+.description_label {
+  padding-bottom:0px;
+  padding-left:5px;
+  font-size:12px;
+  margin-bottom:0px;
+}
+
+.date_period .date_field {
+  font-size:12px;
+  font-weight:normal;
+}
 
 } 
 

@@ -1,20 +1,20 @@
 
 
 <%# cache @voucher do %>
-<div class="new-voucher onprint">
+<div class="new-voucher inline onprint">
   <%= link_to "New", new_voucher_path, :class => 'btn btn-primary', "data-no-turbolink" => true %>
 </div>
 
 
-<div id="voucher_history", class ="onprint">
+<div id="voucher_history", class ="onprint inline">
   <%= link_to "History" , "#" ,:class => 'btn btn-primary'%>
 </div> 
-<div class = "edit_voucher onprint">
+<div class = "edit_voucher onprint inline ">
   <% if @voucher.can_be_edited?(current_user) %>
     <%= link_to "Edit", edit_voucher_path(@voucher), :class => 'btn btn-primary', "data-no-turbolink" => true%> 
   <%end%>
 </div>
-    <div class ="print_voucher">
+    <div class ="print_voucher inline ">
       <%= link_to "Print", "javascript:print()", :class => 'btn btn-primary onprint'%> 
     </div>
 <% if current_user.admin? %>
@@ -23,28 +23,15 @@
    </div>
 <%end%>
 
+<div class ="voucher_display row">
 
-<div class ="voucher_display">
-<div class ="company_tag">
+  <div class="span3 bordered radius row-col pull-right">
+<div class ="company_tag onprint">
       Vinayak Solutions Pvt. Ltd.
   </div>
-  <div class = "status onprint">
-    <%= @voucher.workflow_state.capitalize %>
-    <% if @voucher.assignee_id && !@voucher.assignee?(current_user) %>
-      <%= "(" %>
-      <%= @voucher.assignee.name %>
-      <%= ")"%>
-    <%end%>
-  </div>
-  
   <div class ="date">
     <%= @voucher.date.to_s(:string_format) %> 
   </div>
-   
-  <div class = "separator">
-  </div>
-    
-  <div class = "column_separator">
 
     <div class = "payment">
       <div class = "amount">
@@ -54,14 +41,26 @@
          <% if ((@voucher.drafted? || @voucher.pending? || @voucher.rejected? ) && @voucher.assignee?(current_user)) %>
       <%=  render 'assign' %>
     <%end%> 
-    </div>    
-    <div class = "debitCredit">
+    </div>
+  </div>
+    <div class="span8 row-col"> 
+      <hr>
+    <div class = "status onprint center"><strong>
+    <%= @voucher.workflow_state.capitalize %>
+    <% if @voucher.assignee_id && !@voucher.assignee?(current_user) %>
+      <%= "(" %>
+      <%= @voucher.assignee.name %>
+      <%= ")"%>
+    <%end%></strong>
+  </div>
+<hr>   
+    <div class = "debitCredit bordered radius row-col">
       <div class="labels debited_label">Debit :
       </div>
-           <table class="debited_credited_vouchers">
-          <th width = 40%>Account</th>
-          <th width = 20%>Amount</th>
-          <th width = 40%> Details</th>
+           <table class="debited_credited_vouchers table table-striped">
+          <th>Account</th>
+          <th>Amount</th>
+          <th> Details</th>
           <tbody>
 
       <% @voucher.debited_transactions.each do |debit| %>
@@ -79,12 +78,12 @@
 
     </div>
     <div class="debit_separator"></div>
-    <div class="debitCredit">
+    <div class="debitCredit bordered row-col radius">
       <div class ="labels">Credit :</div> 
-       <table class="debited_credited_vouchers" >
-          <th width  = 40% >Account</th>
-          <th width  = 20% >Amount</th>
-          <th width = 40%> Details</th>
+       <table class="debited_credited_vouchers table table-striped" >
+          <th>Account</th>
+          <th>Amount</th>
+          <th> Details</th>
           <tbody>
 
       <% @voucher.credited_transactions.each do |credit| %>

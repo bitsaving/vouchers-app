@@ -2,20 +2,20 @@
 <div class ="error_messages">
 </div>
 <div class="voucher_div">
-  <div class ="voucher_form">
+  <div class ="voucher_form table">
     <%= form_for @voucher, :html => { :class => 'voucher_autocomplete form-horizontal one_click', :html => { :multipart => true  } } , :remote =>  true do |f| %>
        
       <legend><%= controller.action_name.capitalize %> voucher</legend>
-      <div>
-        <div class="labell">
+      <div class="table-row">
+        <div class="labell row-col">
         <%= f.label :date, :class => 'compulsory-field' %>
       </div>
-        <div class="contentt">
+        <div class="contentt row-col">
           <%= f.text_field :date, :class => 'date-field ', :value => (@voucher.date.presence || Date.today.to_s(:normal_format))  %>
         </div>
       </div>
-      <div>
-        <div class="labell debit">
+      <div class="table-row">
+        <div class="labell debit row-col">
         <%= f.label :account_debited, "Debit To", :class => 'compulsory-field' %>
       </div>
       
@@ -124,7 +124,7 @@
           </div>
         <%#end%>
       </div>
-      <div class="form-actions">
+      <div class="form-actions center">
         <%= f.submit nil, :class => 'btn btn-primary submit voucher_submit' %>
         <%= link_to "Cancel", :back, :class => 'btn btn-primary cancel '%>
       </div>

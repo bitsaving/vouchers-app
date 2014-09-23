@@ -1,11 +1,13 @@
 
-<table class="debited_credited_vouchers">
+<table class="debited_credited_vouchers bordered table table-striped table-hover">
+<tr>
   <th>Field </th>
   <th>Old Value</th>
   <th>New Value</th>
   <th>Changed By</th>
   <th>Time</th>
   <th>Action</th>
+</tr>
   <tbody>
     <%@voucher.versions.where.not(object_changes: nil).each do |version| %>
       <% version.changeset.select {|k,v| k != 'updated_at'}.each do |key, value|%>

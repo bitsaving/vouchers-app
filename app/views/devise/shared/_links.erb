@@ -1,11 +1,12 @@
 
 <%- if controller_name != 'sessions' %>
   <%= link_to "Sign in", new_session_path(resource_name) %><br />
-<% end -%>
+<% end %>
 <div class = "login">
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Sign in with vinsol.com email", omniauth_authorize_path(resource_name, provider) , :class => 'btn login'%><br />
+  <div class="center"><%= image_tag("images.jpg") -%></div>
+    <%= link_to "Sign in with vinsol.com email", omniauth_authorize_path(resource_name, provider) , :class => 'btn login btn-primary'%><br />
   <% end -%>
 <% end -%>
 </div>

@@ -1,42 +1,49 @@
-<div class="reports">
+<div class="reports table bordered radius">
   <%= form_tag report_generate_path, :class => "voucher_autocomplete", :method => 'post' do %>
-    <div class = "report">
-      <div class = "control-group from_date"> 
-        <%=label_tag  :from, "From", :class => 'control-label' %>
-        <div class="controls">
-          <%= text_field_tag :from, params[:from].to_date.to_s(:normal_format), :class => 'date-field'  %>
-        </div>
-      </div>
-      <div class="control-group to_date">
-        <%=label_tag  :to, "To", :class => 'control-label' %>
-        <div class = "controls">
-          <%= text_field_tag :to, params[:to].to_date.to_s(:normal_format), :class => 'date-field' %>
-        </div>
-      </div>
-      <div class = "control-group from_date">
-       <%=label_tag  :account_name, "Account", :class => 'control-label' %>
-      <div class = "controls">
-          <%= text_area_tag :account_name, get_account_name(params[:account]), data: { hidden_field_id: 'account',  textbox_id:'account_name', path: autocomplete_path} , :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
-        </div>
-      </div>
-      <%= hidden_field_tag :account, params[:account]%>
-      <div class="control-group account_dropdown to_date">
-        <%=label_tag  :account_type , "Type", :class => 'control-label' %>
-        <div class="controls">
-          <%= select_tag :transactions_type, options_for_select([['debit'], ['credit']], :selected => params[:transactions_type]), prompt: "Select"%>
-        </div>
-      </div>
-
-      <div class = "control-group tagslist">
-        <%= label_tag :tag, "Tags" , :class => "control-label"%>
-        <div class="controls">
-         <%= text_field_tag :tag, params[:tag],  :class=>"tag", data: {path: tags_path(:json)}%>
-        </div>
-      </div> 
-
-      <div class="display_vouchers">
-        <%=submit_tag "Generate Report", :class => 'btn btn-primary', :id => "generate_vouchers"%>
+  <div class = "report table-row">
+    <div class = "control-group from_date row-col"> 
+      <%=label_tag  :from, "From", :class => 'control-label' %>
+      <div class="controls">
+        <%= text_field_tag :from, params[:from].to_date.to_s(:normal_format), :class => 'date-field'  %>
       </div>
     </div>
-  <%end%>
+    <div class="control-group to_date row-col">
+      <%=label_tag  :to, "To", :class => 'control-label' %>
+      <div class = "controls">
+        <%= text_field_tag :to, params[:to].to_date.to_s(:normal_format), :class => 'date-field' %>
+      </div>
+    </div>
+  </div>
+  <div class = "report table-row">
+      <%= hidden_field_tag :account, params[:account]%>
+  <div class="row-col">
+    <div class="control-group account_dropdown to_date">
+      <%=label_tag  :account_type , "Type :", :class => 'control-label' %>
+      <div class="controls">
+        <%= select_tag :transactions_type, options_for_select([['debit'], ['credit']], :selected => params[:transactions_type]), prompt: "Select"%>
+      </div>
+    </div>
+
+    <div class = "control-group tagslist">
+      <%= label_tag :tag, "Tags :" , :class => "control-label"%>
+      <div class="controls">
+       <%= text_field_tag :tag, params[:tag],  :class=>"tag", data: {path: tags_path(:json)}%>
+     </div>
+   </div>
+ </div>
+ <div class = "control-group from_date row-col">
+     <%=label_tag  :account_name, "Account", :class => 'control-label' %>
+     <div class = "controls">
+      <%= text_area_tag :account_name, get_account_name(params[:account]), data: { hidden_field_id: 'account',  textbox_id:'account_name', path: autocomplete_path} , :class => 'text-field autocomplete', :rows => 3, :columns => 8 %>
+    </div>
+  </div>
+
+</div> 
+  <div class = "report table-row">
+
+    <div class="display_vouchers row-col">
+  <%=submit_tag "Generate Report", :class => 'btn btn-primary', :id => "generate_vouchers"%>
+</div>
+</div>
+<%end%>
 </div>

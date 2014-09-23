@@ -7,9 +7,9 @@
     <%end%>
     <% voucher.comments.each do |comment| %>
       <div class = "commentator">
+          <strong><%= comment.user.first_name  + ":"%></strong>
         <%= simple_format(comment.description) %>
         <div class ="commentator_name">
-          <%= comment.user.first_name  + " ,"%>
           <%= comment.updated_at.to_s(:short_ordinal)%>
         </div>
       </div>

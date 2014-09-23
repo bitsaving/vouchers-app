@@ -1,36 +1,18 @@
 
-<div class = " outer_block">
-  <div class="outer_container">
-    <div class="voucher_content">
-      <div  class ="voucher_heading"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "Vouchers Assigned To Me" %></div>
+<div class = " outer_block row">
+  <div class="outer_container span9">
+    <div class="voucher_content table">
+      <div  class ="voucher_heading table-row center"><%= (@vouchers.size > 0) ? "Vouchers assigned to Me(" + @vouchers.size.to_s + ")" : "Vouchers Assigned To Me" %></div>
         <% if @vouchers.present? %>
           <% @vouchers.each do |voucher| %>
-            <div class="assigned_vouchers">
-              <div class = "voucher_id"> 
-                <div class="voucher_label">Id </div>
-                <div class="voucher_contents"><%= voucher.id %></div>
+            <div class="assigned_vouchers bordered border table">
+            <div class="table-row">
+              <div class = "voucher_id row-col margin-top"> 
+                <div class="voucher_label">Id: <%= voucher.id %></div>
               </div>
-              <div class = "voucher_debit"> 
-                <div class="voucher_label">Debit</div>
-                <div class="voucher_contents"> 
-                  <% voucher.debited_transactions.each do |debit| %>
-                    <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
-                    <strong><%= number_to_currency(debit.amount, :unit => "₹  ") %><br></strong>
-                  <%end%>
-                </div>
-              </div>
-              <div class = "voucher_credit"> 
-                <div class="voucher_label">Credit</div>
-                <div class="voucher_contents">
-                  <% voucher.credited_transactions.each do |credit| %>
-                    <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
-                    <strong><%= number_to_currency(credit.amount, :unit => "₹  ") %><br></strong>
-                  <%end%>
-                </div>
-              </div>
-              <div class = "voucher_amount">
-                <div class="voucher_label">Amount</div>
-                <div class="voucher_contents">
+            <div class="row-col">
+              <div class = "voucher_amount inline">
+                <div class="voucher_label inline">Amount: 
                   <%# @sum = 0 %>
                   <%#voucher.transactions.where(account_type: "debit").each do |voucher| %>
                     <%# @sum += voucher.amount %>
@@ -42,10 +24,31 @@
 
                 </div>
               </div>
-              <div class="voucher_state">
-                <div class="voucher_label">State</div>
-                <div class="voucher_contents"><%= voucher.workflow_state%> </div>
+              <div class="voucher_state pull-right inline">
+                <div class="voucher_label inline">State: <%= voucher.workflow_state%> </div>
               </div>
+            </div>
+          </div>
+            <div class="table-row">
+              <div class = "voucher_debit row-col"> 
+                <div class="voucher_label"><div class="inline" style="vertical-align: top;">Debit:&nbsp;  </div>
+                  <div class="inline"><span><% voucher.debited_transactions.each do |debit| %>
+                    <%= link_to debit.account.name, account_vouchers_path(debit.account) %> -
+                    <%= number_to_currency(debit.amount, :unit => "₹  ") %><br>
+                  <%end%></span>
+                </div>
+                </div>
+              </div>
+              <div class = "voucher_credit row-col"> 
+                <div class="voucher_label"><div class="inline" style="vertical-align: top;">Credit: &nbsp; </div>
+                  <div class="inline"><span><% voucher.credited_transactions.each do |credit| %>
+                    <%= link_to credit.account.name, account_vouchers_path(credit.account) %> -
+                    <%= number_to_currency(credit.amount, :unit => "₹  ") %><br>
+                  <%end%></span>
+                </div>
+                </div>
+              </div>
+            </div>
             </div>
         <%end%>
         <%else %>
@@ -54,30 +57,32 @@
            </div>
            <%end%>
     </div>
-  </div>  
-  <div id="tag_cloud">
-    <div class = "voucher_heading"> Tags </div>
-    <div class="voucher_tags">
-      <% tag_cloud Voucher.between_dates(session[:start_date], session[:end_date]).tag_counts, %w{s m l v} do |tag, css_class| %>
-      <div class ="tagname">
-        <%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class%></div>
-      <% end %>
-    </div>
   </div>
+  <div class="span3">  
   <%vouchers_hash = get_vouchers_count %>
   <div id= "voucher_count">
-    <div class = "voucher_heading"> Voucher Status </div>
-    <div class="voucher_count">
+    <div class = "voucher_heading center"> Voucher Status </div>
+    <div class="voucher_count table bordered">
       <%VOUCHER_STATES.each do |state| %>
-        <div class="vouchers">
-          <div class="voucher_label">
+        <div class="vouchers table-row">
+          <div class="voucher_label row-col">
             <%= link_to state.capitalize, url_for({ controller: 'vouchers', action: state}) %>
           </div>
-          <div class ="voucher_contents">
+          <div class ="voucher_contents row-col">
            <%= vouchers_hash[state].nil? ? "0" : vouchers_hash[state].count.to_s %>
           </div>
         </div>
       <%end%>
     </div>
   </div>
+  <div id="tag_cloud">
+    <div class = "voucher_heading center"> Tags </div>
+    <div class="voucher_tags center">
+      <% tag_cloud Voucher.between_dates(session[:start_date], session[:end_date]).tag_counts, %w{s m l v} do |tag, css_class| %>
+      <div class ="tagname label">
+        <%= link_to tag.name, tag_path(URI::escape tag.name), class: css_class%></div>
+      <% end %>
+    </div>
+  </div>
+</div>
 </div>
