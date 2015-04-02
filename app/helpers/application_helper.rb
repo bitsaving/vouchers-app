@@ -73,8 +73,8 @@ module ApplicationHelper
     difference = max_year -min_year
     while(i <= difference)
       date = []
-      date << Date.new.change(day: 31, month: 3, year: max_year - i).year.to_s  + "-"  + Date.new.change(day: 1, month: 4, year: max_year - j).year.to_s
-      date << Date.new.change(day: 31, month: 3, year: max_year - i).to_s  + "->"  + Date.new.change(day: 1, month: 4, year: max_year - j).to_s
+      date << Date.new.change(day: 1, month: 4, year: max_year - i).year.to_s  + "-"  + Date.new.change(day: 31, month: 3, year: max_year - j).year.to_s
+      date << Date.new.change(day: 1, month: 4, year: max_year - i).to_s  + "->"  + Date.new.change(day: 31, month: 3, year: max_year - j).to_s
       years << date
       j = j + 1
       i = i+1
